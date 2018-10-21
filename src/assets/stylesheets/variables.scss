@@ -1,0 +1,18 @@
+// Overschrijf BS variabelen en mixins
+$theme-colors: (
+  'yellow': #f9b054,
+  'yellow-light-1': #fac076,
+  'yellow-light-2': #fcd8aa,
+  'grey-dark': #343434,
+  'grey': #909090,
+  'grey-light-1': #cccccc,
+  'grey-light-2': #fafafa,
+
+  // bootstrap colors
+  'primary': #f9b054,
+  'secondary': #909090,
+  'warning': #f9b054,
+  'dark': #343434,
+  'muted': #cccccc,
+  'light': #fafafa,
+);
