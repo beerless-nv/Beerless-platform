@@ -14,3 +14,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('/bierTest', function () use ($router) {
+    return app('db')->select("SELECT * FROM Bier");
+});
