@@ -15,5 +15,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/bierTest', 'Controller@bierTest');
-$router->get('/brouwerijTest', 'Controller@brouwerijTest');
+$router->group(['prefix' => 'brouwerijen'], function () use ($router){
+    $router->get('all', 'BrouwerijController@getAll');
+    $router->get('get/{id}','BrouwerijController@get');
+});
