@@ -1,0 +1,11 @@
+.outer-glow-dark {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 40px ;
+}
+
+input, button {
+  height: 50px !important;
+}
+
+input {
+  border-color: $muted-light !important;
+}
