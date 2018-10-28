@@ -9,3 +9,26 @@ input, button {
 input {
   border-color: $muted-light !important;
 }
+
+.divider {
+  border-bottom: $muted-light solid 1px;
+}
+
+.divider-dark {
+  border-bottom: rgba(255, 255, 255, 0.1) solid 1px;
+}
+
+.fixedPosition
+{
+  position: fixed;
+  background-color: red !important;
+  color: red !important;
+}
+
+.icon-block {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

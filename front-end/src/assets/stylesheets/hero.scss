@@ -5,8 +5,9 @@
   background-size: cover;
 
   height: 70vh;
-  width: 100vw;
+  width: 100%;
 }
 
-#heroSubscribeCard {
+.sub-hero {
+  height: calc(30vh - 80.6px);
 }

@@ -8,6 +8,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HeroComponent } from './home/hero/hero.component';
 import { HomeComponent } from './home/home.component';
 import { HeroSubscribeComponent } from './home/hero/hero-subscribe/hero-subscribe.component';
+import { HomeModule } from './home/home.module';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +17,14 @@ import { HeroSubscribeComponent } from './home/hero/hero-subscribe/hero-subscrib
     NavbarComponent,
     HeroComponent,
     HomeComponent,
-    HeroSubscribeComponent
+    HeroSubscribeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
