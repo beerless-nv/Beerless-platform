@@ -1,0 +1,144 @@
+tabset {
+  .tabset {
+    width: 100%;
+  }
+
+  ul {
+    float: left;
+    width: 250px;
+    margin-right: 40px;
+    box-shadow: inset -4px 0px 0px $light;
+    padding-top: 0px;
+    padding-bottom: 80px;
+
+    li {
+      counter-increment: step-counter;
+      padding-bottom: 10px;
+
+      a span {
+        display: flex;
+        align-items: center;
+
+        &::before {
+          height: 40px !important;
+          min-width: 40px !important;
+          content: counter(step-counter);
+          margin-right: 15px;
+          color: $grey;
+          border: 1px solid $muted-light;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: 600;
+          font-size: 13px;
+
+        }
+      }
+    }
+
+    a {
+      border-radius: 0px !important;
+      color: $dark;
+
+      &.active {
+        background-color: transparent !important;
+        color: $yellow !important;
+        border-right: $yellow solid 4px;
+
+        span::before {
+          border-color: $yellow;
+          color: $yellow;
+        }
+      }
+    }
+  }
+
+  .tab-content {
+    margin-left: auto;
+    width: calc(100% - 290px);
+    display: flex;
+  }
+}
+
+.tab-content > .active {
+  animation: fadein 1s;
+
+  @keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  tabset {
+    ul {
+      max-width: 200px;
+    }
+
+    .tab-content {
+      width: calc(100% - 240px);
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  tabset {
+    .tabset {
+      width: auto;
+    }
+
+    ul {
+      width: 100%;
+      max-width: 100% !important;
+      box-shadow: none;
+      //display: flex !important;
+      justify-content: center;
+      padding-bottom: 0px;
+
+      li a span {
+        //padding-top: 12.5px;
+      }
+
+      li {
+        max-width: calc(100% - 110px);
+      }
+
+      a.active {
+        word-break: break-word;
+      }
+
+      a.nav-link {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+      }
+
+      a.active {
+        padding-right: 15px;
+      }
+
+      //a.nav-link {
+      //  padding-right: 0px !important;
+      //}
+
+
+      a span {
+        font-size: 0;
+        //display: block !important;
+      }
+
+      a.active {
+        border-right: none;
+
+        span {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .tab-content {
+      width: 100%;
+    }
+  }
+}

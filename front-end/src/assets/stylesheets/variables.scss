@@ -8,8 +8,9 @@ $theme-colors: (
   'yellow-light-2': #fcd8aa,
   'grey-dark': #4F4F4F,
   'grey': #909090,
-  'grey-light-1': #cccccc,
-  'grey-light-2': #fafafa,
+  'grey-light': #cccccc,
+  'super-light': #fafafa,
+
 
   // bootstrap colors
   'primary': #f9b054,
@@ -17,20 +18,21 @@ $theme-colors: (
   'warning': #f9b054,
   'dark': #343434,
   'muted': #cccccc,
-  'light': #fafafa,
+  'light': #eeeeee,
 );
 
-$yellow:    #f9b054;
-$primary:   #f9b054;
-$secondary: #909090;
-$warning:   #f9b054;
-$dark:      #343434;
-$grey-dark: #4F4F4F;
-$grey:      #909090;
-$muted:     #cccccc;
-$muted-light: #ddd;
-$light:     #fafafa;
-$black:     #000;
+$yellow:      #f9b054;
+$primary:     #f9b054;
+$secondary:   #909090;
+$warning:     #f9b054;
+$dark:        #343434;
+$grey-dark:   #4F4F4F;
+$grey:        #909090;
+$muted:       #cccccc;
+$muted-light: #dddddd;
+$light:       #eeeeee;
+$super-light: #fafafa;
+$black:       #000;
 
 //
 // Fonts
