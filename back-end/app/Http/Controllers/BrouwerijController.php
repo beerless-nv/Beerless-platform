@@ -5,22 +5,26 @@ namespace App\Http\Controllers;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 /**
- * Contains functions for returning data from table 'Brouwerij'
+ * Contains CRUD functions for table 'Brouwerij'.
  */
 class BrouwerijController extends BaseController
 {
     /**
-     * Returns a specific JSON object of type 'Brouwerij'
+     * Returns a specific JSON object of type 'Brouwerij'.
+     * Takes the id as a get parameter.
      * 
-     * @param [int] $id
      * @return void
      */
-    public function get($id) {
-        return json_encode(app('db')->select('SELECT * FROM Brouwerij Where ID =' . $id)); //SQL injectie nog dichten
+    public function get() {
+        if(app('request')->id){
+            return json_encode(app('db')->select('SELECT * FROM Brouwerij Where ID =' . app('request')->id)); //SQL injectie nog dichten
+        } else{
+            return "Not Found";
+        }
     }    
 
     /**
-     * returns a JSON array of all columns in table 'Brouwerij'
+     * returns a JSON array of all columns in table 'Brouwerij'.
      *
      * @return void
      */
