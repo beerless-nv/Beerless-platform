@@ -1,5 +1,5 @@
 .navbar {
-  min-height: 70px;
+  height: $navbar-height;
   padding: 0 1rem;
   border-bottom: $muted-light 1px solid;
 }
@@ -14,8 +14,7 @@
 }
 
 .navbar-brand {
-  min-height: 70px;
-  line-height: 70px;
+  line-height: $navbar-height;
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -42,14 +41,14 @@
 .nav-divider {
   position: absolute;
   top: -20px;
-  right: -24px;
+  right: -20px;
   height: 80px;
   width: 1px;
   background-color: $muted-light;
 }
 
 .sidenav {
-  top: 0px;
+  top: 0;
   width: 200px;
   height: 100%;
   z-index: 9999;

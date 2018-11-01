@@ -8,8 +8,6 @@ tabset {
     width: 250px;
     margin-right: 40px;
     box-shadow: inset -4px 0px 0px $light;
-    padding-top: 0px;
-    padding-bottom: 80px;
 
     li {
       counter-increment: step-counter;
@@ -35,6 +33,10 @@ tabset {
 
         }
       }
+    }
+
+    li:last-child {
+      padding-bottom: 0px;
     }
 
     a {
@@ -92,12 +94,10 @@ tabset {
       width: 100%;
       max-width: 100% !important;
       box-shadow: none;
-      //display: flex !important;
       justify-content: center;
       padding-bottom: 0px;
 
       li a span {
-        //padding-top: 12.5px;
       }
 
       li {
@@ -118,14 +118,8 @@ tabset {
         padding-right: 15px;
       }
 
-      //a.nav-link {
-      //  padding-right: 0px !important;
-      //}
-
-
       a span {
         font-size: 0;
-        //display: block !important;
       }
 
       a.active {

@@ -3,6 +3,7 @@
 //
 
 $theme-colors: (
+  'yellow-dark': #BB843F,
   'yellow': #f9b054,
   'yellow-light-1': #fac076,
   'yellow-light-2': #fcd8aa,
@@ -49,3 +50,9 @@ $font-family-sans-serif:  -apple-system, "Montserrat",BlinkMacSystemFont, "Segoe
 $box-shadow-sm: 0 .125rem .25rem rgba($black, .075) !default;
 $box-shadow:    0 .5rem 1rem rgba($black, .05) !default;
 $box-shadow-lg: 0 1rem 3rem rgba($black, .12) !default;
+
+//
+// Measurements
+//
+
+$navbar-height: 80px;
