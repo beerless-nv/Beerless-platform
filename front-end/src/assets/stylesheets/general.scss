@@ -6,38 +6,14 @@ body {
   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 40px;
 }
 
-input, button {
-  height: 50px !important;
-}
-
-a.btn {
-  padding: 0.75rem 0.75rem;
-}
-
-input {
-  border-color: $muted-light !important;
-}
-
-.divider {
-  border-bottom: $muted-light solid 1px;
-}
-
-.divider-dark {
-  border-bottom: rgba(255, 255, 255, 0.1) solid 1px;
+.outer-glow-dark-hover {
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 40px;
 }
 
 .fixedPosition {
   position: fixed;
   background-color: red !important;
   color: red !important;
-}
-
-.icon-block {
-  height: 50px;
-  width: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .top-offset-content {
@@ -48,6 +24,90 @@ input {
   font-size: 1rem;
 }
 
+//
+//  buttons, input fields
+//
+
+input, button {
+  height: 50px !important;
+}
+
+a.btn {
+  padding: 0.75rem 0.75rem;
+}
+
+input {
+  border-color: $muted-light !important;
+  color: $dark !important;
+
+  &::placeholder {
+    color: $grey !important;
+  }
+
+  &:focus {
+    box-shadow: none !important;
+    border-color: $input-focus-color !important;
+  }
+}
+
+input.input-dark {
+  background-color: $dark;
+  color: $grey !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+
+  &::placeholder {
+    color: $grey !important;
+  }
+
+  &:focus {
+    background-color: $dark;
+    box-shadow: none !important;
+    border-color: $grey !important;
+  }
+}
+
+
+.input-icon {
+  position: relative;
+
+  & i {
+    color: $grey;
+    position: absolute;
+    top: 50%;
+    left: 13px;
+    transform: translateY(-50%);
+  }
+
+  & input {
+    padding-left: 50px;
+  }
+}
+
+.icon-block {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+//
+// dividers
+//
+
+.divider {
+  border-bottom: $muted-light solid 1px;
+}
+
+.divider-dark {
+  border-bottom: rgba(255, 255, 255, 0.1) solid 1px;
+}
+
+//
+// links
+//
+
 .link-black-yellow {
   color: $dark;
 }
+

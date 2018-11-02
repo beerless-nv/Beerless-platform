@@ -12,6 +12,8 @@ import {HomeComponent} from './home/home.component';
 import {HeroSubscribeComponent} from './home/hero/hero-subscribe/hero-subscribe.component';
 import {HomeModule} from './home/home.module';
 import {FooterComponent} from './footer/footer.component';
+import {BierenModule} from './bieren/bieren.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -21,14 +23,16 @@ import {FooterComponent} from './footer/footer.component';
         HomeComponent,
         HeroSubscribeComponent,
         FooterComponent,
-        TabsetComponent
+        TabsetComponent,
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         NgBootstrapModule,
         NgxBootstrapModule,
-        HomeModule
+        HomeModule,
+        BierenModule,
+        HttpClientModule
     ],
     providers: [],
     bootstrap: [AppComponent]

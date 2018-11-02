@@ -1,0 +1,26 @@
+<div class="container">
+    <h1 class="mt-5">Bieren</h1>
+
+    <div class="col-12 d-flex flex-row p-0">
+        <div class="col-8 pl-0">
+            <form class="my-5">
+                <div class="form-group mb-1 input-icon">
+                    <input type="text" class="form-control" placeholder="Zoek een bier">
+                    <i class="fas fa-search"></i>
+                </div>
+                <small class="text-grey font-italic"><strong>6 resultaten</strong> voor <strong>"Gouden Carolus"</strong></small>
+            </form>
+
+            <app-bier-item *ngFor="let bier of bierenList; let i = index"
+                           [item]="bier"
+                           [index]="i"
+            ></app-bier-item>
+        </div>
+        <div class="col-4 pr-0">
+
+        </div>
+    </div>
+
+
+    <!--<pre>{{ bierenList | json }}</pre>-->
+</div>

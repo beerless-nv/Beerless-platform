@@ -1,0 +1,9 @@
+.bier-item-image {
+  height: 75px;
+}
+
+app-bier-item {
+  .card:hover {
+    border-left: 0.25rem solid $yellow;
+  }
+}

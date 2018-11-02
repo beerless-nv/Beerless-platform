@@ -53,22 +53,33 @@ tabset {
           color: $yellow;
         }
       }
+
+      &.nav-link {
+        transition: ease-in-out 0.2s;
+
+        &:hover {
+          color: $yellow;
+        }
+      }
     }
   }
 
   .tab-content {
-    margin-left: auto;
     width: calc(100% - 290px);
+  }
+
+  .tab-content tab {
     display: flex;
   }
-}
 
-.tab-content > .active {
-  animation: fadein 1s;
+  .tab-content tab.active {
+    opacity: 1 !important;
+    animation: fadein 1s;
 
-  @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    @keyframes fadein {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
   }
 }
 
