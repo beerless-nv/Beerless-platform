@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Contains CRUD functions for table 'Bier'.
@@ -17,7 +18,7 @@ class BierController extends BaseController
      */
     public function get() {
         if(app('request')->id){
-            return json_encode(app('db')->select('SELECT * FROM Bier Where ID =' . app('request')->id)); //SQL injectie nog dichten
+            return json_encode(DB::table('Bier')->where('ID', app('request')->id)->first());
         } else{
             return "Not Found";
         }        
@@ -29,6 +30,6 @@ class BierController extends BaseController
      * @return void
      */
     public function getAll() { 
-        return json_encode(app('db')->select('SELECT * FROM Bier')); 
+        return json_encode(DB::table('Bier')->get()); 
     }
 }
