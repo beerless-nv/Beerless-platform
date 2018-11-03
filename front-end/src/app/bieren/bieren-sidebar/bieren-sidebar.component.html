@@ -1,0 +1,9 @@
+<div class="d-flex align-items-center mb-2">
+    <div class="pr-4">
+        <img src="{{ item.image }}" alt="" class="bieren-sidebar-image">
+    </div>
+    <div class="mr-4 truncate-text">
+        <a routerLink="/bieren" class="link-black-yellow font-weight-bold m-0 small" ngbTooltip="naam bier">{{ item.name }}</a>
+        <p class="my-0 small">{{item.brewery}}</p>
+    </div>
+</div>
