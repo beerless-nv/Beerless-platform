@@ -18,6 +18,9 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => 'brouwerijen'], function () use ($router){
     $router->get('all', 'BrouwerijController@getAll');
     $router->get('get','BrouwerijController@get');
+    $router->post('insert', 'BrouwerijController@insert');
+    $router->post('delete', 'BrouwerijController@delete');
+    $router->post('update', 'BrouwerijController@update');
 });
 
 $router->group(['prefix' => 'bieren'], function () use ($router){
