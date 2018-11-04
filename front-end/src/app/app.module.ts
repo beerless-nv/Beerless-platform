@@ -5,15 +5,17 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {NgBootstrapModule} from './sharedModules/ng-bootstrap.module';
 import {NgxBootstrapModule} from './sharedModules/ngx-bootstrap.module';
-import {NavbarComponent} from './navbar/navbar.component';
-import {HeroComponent} from './home/hero/hero.component';
-import {TabsetComponent} from './home/tabset/tabset.component';
-import {HomeComponent} from './home/home.component';
-import {HeroSubscribeComponent} from './home/hero/hero-subscribe/hero-subscribe.component';
-import {HomeModule} from './home/home.module';
-import {FooterComponent} from './footer/footer.component';
-import {BierenModule} from './bieren/bieren.module';
+import {NavbarComponent} from './sharedComponents/navbar/navbar.component';
+import {HeroComponent} from './pagegroups/Visitor/home/hero/hero.component';
+import {TabsetComponent} from './pagegroups/Visitor/home/tabset/tabset.component';
+import {HomeComponent} from './pagegroups/Visitor/home/home.component';
+import {HeroSubscribeComponent} from './pagegroups/Visitor/home/hero/hero-subscribe/hero-subscribe.component';
+import {HomeModule} from './pagegroups/Visitor/home/home.module';
+import {FooterComponent} from './sharedComponents/footer/footer.component';
+import {BierenModule} from './pagegroups/Member/bieren/bieren.module';
 import {HttpClientModule} from '@angular/common/http';
+import {LoginModule} from './pagegroups/Visitor/login/login.module';
+import {LoginComponent} from './pagegroups/Visitor/login/login.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +26,7 @@ import {HttpClientModule} from '@angular/common/http';
         HeroSubscribeComponent,
         FooterComponent,
         TabsetComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
@@ -32,7 +35,8 @@ import {HttpClientModule} from '@angular/common/http';
         NgxBootstrapModule,
         HomeModule,
         BierenModule,
-        HttpClientModule
+        HttpClientModule,
+        LoginModule
     ],
     providers: [],
     bootstrap: [AppComponent]

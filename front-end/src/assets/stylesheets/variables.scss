@@ -3,37 +3,40 @@
 //
 
 $theme-colors: (
-  'yellow-dark': #BB843F,
-  'yellow': #f9b054,
-  'yellow-light-1': #fac076,
-  'yellow-light-2': #fcd8aa,
-  'grey-dark': #4F4F4F,
-  'grey': #909090,
-  'grey-light': #cccccc,
-  'super-light': #fafafa,
+        'yellow-dark': #BB843F,
+        'yellow': #f9b054,
+        'yellow-light-1': #fac076,
+        'yellow-light-2': #fcd8aa,
+        'grey-dark': #4F4F4F,
+        'grey': #909090,
+        'grey-light': #cccccc,
+        'super-light': #fafafa,
 
+        // bootstrap colors
+        'primary': #f9b054,
+        'secondary': #909090,
+        'warning': #f9b054,
+        'dark': #343434,
+        'muted': #cccccc,
+        'light': #eeeeee,
 
-  // bootstrap colors
-  'primary': #f9b054,
-  'secondary': #909090,
-  'warning': #f9b054,
-  'dark': #343434,
-  'muted': #cccccc,
-  'light': #eeeeee,
+        // brand colors
+        'facebook': #3B5999,
+        'google': #E62B33,
 );
 
-$yellow:      #f9b054;
-$primary:     #f9b054;
-$secondary:   #909090;
-$warning:     #f9b054;
-$dark:        #343434;
-$grey-dark:   #4F4F4F;
-$grey:        #909090;
-$muted:       #cccccc;
+$yellow: #f9b054;
+$primary: #f9b054;
+$secondary: #909090;
+$warning: #f9b054;
+$dark: #343434;
+$grey-dark: #4F4F4F;
+$grey: #909090;
+$muted: #cccccc;
 $muted-light: #dddddd;
-$light:       #eeeeee;
+$light: #eeeeee;
 $super-light: #fafafa;
-$black:       #000;
+$black: #000;
 
 //
 // Fonts
@@ -42,14 +45,14 @@ $black:       #000;
 @import url('https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
 @import '@fortawesome/fontawesome-free/webfonts/fa-solid-900.ttf';
 
-$font-family-sans-serif:  -apple-system, "Montserrat",BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Montserrat", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-sans-serif: -apple-system, "Montserrat", BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Montserrat", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 
 //
 // Shadows
 //
 
 $box-shadow-sm: 0 .125rem .25rem rgba($black, .075) !default;
-$box-shadow:    0 .5rem 1rem rgba($black, .05) !default;
+$box-shadow: 0 .5rem 1rem rgba($black, .05) !default;
 $box-shadow-lg: 0 1rem 3rem rgba($black, .12) !default;
 
 //

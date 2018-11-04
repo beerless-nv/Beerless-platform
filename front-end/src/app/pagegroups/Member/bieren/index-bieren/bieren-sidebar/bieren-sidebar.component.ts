@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {BierenService} from '../../services/bieren.service';
+import {BierenService} from '../../../../../services/bieren.service';
+
 
 @Component({
     selector: 'app-bieren-sidebar',
