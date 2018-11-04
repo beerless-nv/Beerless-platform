@@ -3,7 +3,32 @@
 }
 
 app-bier-item {
-  .card:hover {
-    border-left: 0.25rem solid $yellow;
+  .card {
+    i {
+      opacity: 0;
+      color: $yellow;
+      font-size: 20px;
+      transition: opacity ease-in-out 0.25s;
+    }
+
+    &:hover {
+      border-left: 0.25rem solid $yellow;
+
+      i {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.bieren-sidebar {
+  border-top: 0.25rem solid $yellow;
+
+  .card-header {
+    background-color: #fff;
+  }
+
+  .bieren-sidebar-image {
+    height: 50px;
   }
 }
