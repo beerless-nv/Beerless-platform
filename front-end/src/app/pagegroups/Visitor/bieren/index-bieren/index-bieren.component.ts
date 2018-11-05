@@ -15,11 +15,10 @@ export class IndexBierenComponent implements OnInit {
     constructor(private bierenService: BierenService) {    }
 
     ngOnInit() {
-        this.getBieren();
     }
 
-    getBieren() {
-        this.bierenList$ = this.bierenService.getBieren();
+    getBieren(naam) {
+        this.bierenList$ = this.bierenService.getBieren(naam);
             // .pipe(
             //     finalize(() => {
             //         this.loading = false;

@@ -8,7 +8,7 @@ import {catchError, share, tap} from 'rxjs/operators';
 })
 export class BierenService {
 
-    readonly url = 'http://localhost/Beerless-platform/back-end/public/bieren/all';
+    readonly url = 'http://localhost/Beerless-platform/back-end/public/bieren/getByNaam';
 
     // bierenList: { name: string, brewery: string, style: string, image: string }[] = [
     //     {
@@ -35,8 +35,11 @@ export class BierenService {
         console.log(this.url);
     }
 
-    getBieren(): Observable<any> {
-        return this.http.get(this.url)
+    getBieren(naam): Observable<any> {
+        const params = new HttpParams()                                 // (5)
+            .set('naam', naam);
+
+        return this.http.post(this.url, {params})
             .pipe(
                 tap(req => console.log('get-request', req)),          // (6)
                 catchError(                                                // (7)

@@ -9,7 +9,7 @@ import {BierenService} from '../../../../../services/bieren.service';
 })
 export class BierItemComponent implements OnInit {
 
-  @Input() item: { name: string, brewery: string, style: string, image: string };
+  @Input() item: any;
   @Input() index: number;
 
   constructor(private bierenService: BierenService) { }
