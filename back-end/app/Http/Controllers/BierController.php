@@ -31,7 +31,23 @@ class BierController extends BaseController
         } else{
             return "Not Found";
         }        
-    }    
+    }
+    
+    /**
+     * returns a specific JSON object of type 'Bier'.
+     * Tkakes the name as a request parameter.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function getByNaam(Request $request){
+        $naam = $request->input("naam");
+        if($naam){
+            return json_encode(DB::table('Bier')->whereRaw("LOWER(naam) Like %?%", [strtolower($naam)])->get());
+        } else{
+            return "Not Found";
+        }
+    }
 
     /**
      * returns a JSON array of all columns in table 'Bier'.
