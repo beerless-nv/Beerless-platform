@@ -1,17 +1,19 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-// import {BierenComponent} from './bieren.component';
-import {BierItemComponent} from './index-bieren/bier-item/bier-item.component';
-import {BierenSidebarComponent} from './index-bieren/bieren-sidebar/bieren-sidebar.component';
+import {BierItemComponent} from '../../Visitor/bieren/index-bieren/bier-item/bier-item.component';
+import {BierenSidebarComponent} from '../../Visitor/bieren/index-bieren/bieren-sidebar/bieren-sidebar.component';
 import {RouterModule} from '@angular/router';
-import { IndexBierenComponent } from './index-bieren/index-bieren.component';
+import { IndexBierenComponent } from '../../Visitor/bieren/index-bieren/index-bieren.component';
+import { AddBierenComponent } from '../../Member/bieren/add-bieren/add-bieren.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
     imports: [
         CommonModule,
-        RouterModule
+        RouterModule,
+        NgxPaginationModule
     ],
-    declarations: [BierItemComponent, BierenSidebarComponent, IndexBierenComponent]
+    declarations: [BierItemComponent, BierenSidebarComponent, IndexBierenComponent, AddBierenComponent]
 })
 export class BierenModule {
 }
