@@ -18,14 +18,14 @@
       </div>
 
     </div>
-    <small class="text-grey font-italic mb-5"><strong>{{bierenList.length}} resultaten</strong> voor <strong>"Gouden Carolus"</strong></small>
+    <small class="text-grey font-italic mb-5"><strong>{{ (bierenList$ | async)?.length }} resultaten</strong> voor <strong>"Gouden Carolus"</strong></small>
 
     <div class="col-12 d-flex flex-md-row flex-column p-0">
       <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 py-5 d-flex flex-column">
-        <app-bier-item *ngFor="let bier of bierenList | paginate: {itemsPerPage: 1, currentPage: p}; let i = index"
-                       [item]="bier"
-                       [index]="i"
-        ></app-bier-item>
+        <!--<app-bier-item *ngFor="let bier of bierenList | paginate: {itemsPerPage: 1, currentPage: p}; let i = index"-->
+                       <!--[item]="bier"-->
+                       <!--[index]="i"-->
+        <!--&gt;</app-bier-item>-->
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
         <a routerLink="/bieren" class="btn btn-yellow text-white mt-3">Meer laden ...</a>
       </div>
