@@ -41,4 +41,100 @@ class BierController extends BaseController
     public function getAll() { 
         return json_encode(DB::table('Bier')->get()); 
     }
+
+    /**
+     * Insert an item into table 'Bier'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'naam'.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function insert(Request $request){
+        $naam = $request->input('naam');
+        if($naam){
+            $bier = array(
+                'naam' => $naam,
+                'alcoholpercentage' => $request->input('alcoholpercentage'),
+                'IBU' => $request->input('IBU'),
+                'EBC' => $request->input('EBC'),
+                'ingredienten' => $request->input('ingredienten'),
+                'temperatuur' => $request->input('temperatuur'),
+                'gisting' => $request->input('gisting'),
+                'glas' => $request->input('glas'),
+                'afbeelding' => $request->input('afbeelding'),
+                'seizoen' => $request->input('seizoen'),
+                'sinds' => $request->input('sinds'),
+                'brouwerijID' => $request->input('brouwerijID'),
+                'biersoortID' => $request->input('biersoortID'),
+            );
+            if(DB::table('Bier')->insertGetId($bier)){
+                return "success";
+            } else{
+                return "fail";
+            }            
+        } else{
+            return "Not Found";
+        }
+        return $request;
+    }
+
+    /**
+     * Deletes an item in table 'Bier'.
+     * Takes the id as a request parameter.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function delete(Request $request){
+        $id = $request->input('id');
+        if($id){
+            $query = DB::table('Bier')->where('ID', $id);
+            if($query->exists()){
+                $query->delete();
+                return "success";
+            } else{
+                return "Not Found";
+            }
+        } else{
+            return "Not Found";
+        }
+    }
+
+    /**
+     * Updates an item in table 'Bier'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'id' and 'naam'.
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function update(Request $request){
+        $id = $request->input('id');
+        $naam = $request->input('naam');
+        if($naam && $id){
+            $bier = array(
+                'naam' => $naam,
+                'alcoholpercentage' => $request->input('alcoholpercentage'),
+                'IBU' => $request->input('IBU'),
+                'EBC' => $request->input('EBC'),
+                'ingredienten' => $request->input('ingredienten'),
+                'temperatuur' => $request->input('temperatuur'),
+                'gisting' => $request->input('gisting'),
+                'glas' => $request->input('glas'),
+                'afbeelding' => $request->input('afbeelding'),
+                'seizoen' => $request->input('seizoen'),
+                'sinds' => $request->input('sinds'),
+                'brouwerijID' => $request->input('brouwerijID'),
+                'biersoortID' => $request->input('biersoortID'),
+            );
+            if(DB::table('Bier')->where('ID', $id)->update($bier)){
+                return "success";
+            } else{
+                return "fail";
+            }            
+        } else{
+            return "Not Found";
+        }
+    }
 }
