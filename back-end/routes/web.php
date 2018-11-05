@@ -25,6 +25,7 @@ $router->group(['prefix' => 'brouwerijen'], function () use ($router){
 
 $router->group(['prefix' => 'bieren'], function () use ($router){
     $router->get('all', 'BierController@getAll');
+    $router->post('getByNaam', "BierController@getByNaam");
     $router->get('get','BierController@get');
     $router->post('insert', 'BierController@insert');
     $router->post('delete', 'BierController@delete');
