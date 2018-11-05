@@ -12,7 +12,7 @@
         </form>
       </div>
       <div class="mb-1 col-md-4 col-12 p-0 pl-md-3 pl-0 mb-md-0 mb-4 order-md-1 order-0">
-        <a routerLink="" class="btn btn-yellow d-flex text-white">
+        <a routerLink="/bieren/add" class="btn btn-yellow d-flex text-white">
           <i class="fas fa-plus my-auto mr-3"></i><span class="d-lg-block d-none">Nieuw bier toevoegen</span><span class="d-lg-none d-block">Bier toevoegen</span>
         </a>
       </div>
@@ -22,10 +22,11 @@
 
     <div class="col-12 d-flex flex-md-row flex-column p-0">
       <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 py-5 d-flex flex-column">
-        <app-bier-item *ngFor="let bier of bierenList; let i = index"
+        <app-bier-item *ngFor="let bier of bierenList | paginate: {itemsPerPage: 1, currentPage: p}; let i = index"
                        [item]="bier"
                        [index]="i"
         ></app-bier-item>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
         <a routerLink="/bieren" class="btn btn-yellow text-white mt-3">Meer laden ...</a>
       </div>
       <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 py-5">
@@ -40,6 +41,7 @@
                                 [item]="bier"
                                 [index]="i"
             ></app-bieren-sidebar>
+
             <p class="text-center pt-3 mb-0 font-weight-bold"><a routerLink="/bieren">Meer bieren ...</a></p>
           </div>
         </div>

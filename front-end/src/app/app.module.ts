@@ -16,6 +16,7 @@ import {BierenModule} from './pagegroups/Member/bieren/bieren.module';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginModule} from './pagegroups/Visitor/login/login.module';
 import {LoginComponent} from './pagegroups/Visitor/login/login.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,7 @@ import {LoginComponent} from './pagegroups/Visitor/login/login.component';
         HeroSubscribeComponent,
         FooterComponent,
         TabsetComponent,
-        LoginComponent
+        LoginComponent,
     ],
     imports: [
         BrowserModule,
@@ -36,7 +37,8 @@ import {LoginComponent} from './pagegroups/Visitor/login/login.component';
         HomeModule,
         BierenModule,
         HttpClientModule,
-        LoginModule
+        LoginModule,
+        NgxPaginationModule
     ],
     providers: [],
     bootstrap: [AppComponent]
