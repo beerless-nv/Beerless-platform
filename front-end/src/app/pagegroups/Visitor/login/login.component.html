@@ -1,0 +1,66 @@
+<div class="bg-super-light position-absolute h-100 vh-100 w-100 blank-page d-flex scroll-small">
+    <div class="container d-flex justify-content-center align-self-sm-center align-self-start px-sm-3 px-0 h-sm-100">
+        <div class="card col-lg-10 col-12 border-yellow-top p-0 border-sm-0">
+            <div class="card-body p-sm-5 p-4 pt-5">
+                <div class="text-center mb-5">
+                    <img src="/src/assets/images/logo_beerless_muted.svg" alt="Logo Beerless donker" style="height: 50px">
+                </div>
+                <div class=" d-flex flex-row">
+                    <div class="col-md-6 col-12 border-md-right pr-md-5 pr-0 pl-0" [ngbCollapse]="!isRegistrated">
+                        <h4 class="mb-3">Log in</h4>
+                        <form>
+                            <div class="form-group mb-3 input-icon">
+                                <input type="text" class="form-control" placeholder="Gebruikersnaam">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="form-group mb-3 input-icon">
+                                <input type="text" class="form-control" placeholder="Wachtwoord">
+                                <i class="fas fa-unlock-alt"></i>
+                            </div>
+                            <div class="form-group text-center">
+                                <button class="btn btn-primary text-white px-5" type="submit">Log in</button>
+                            </div>
+                            <p class="text-center d-md-none">Heeft u nog geen account? <strong><a routerLink="/login" (click)="isRegistrated = !isRegistrated">Registreren</a></strong></p>
+                            <div class="divider my-5">
+                                <div class="divider-text">OF</div>
+                            </div>
+                            <div class="form-group">
+                                <a routerLink="" class="btn btn-facebook text-white d-block"><i class="fab fa-facebook-f mr-3"></i> Log in met <strong>Facebook</strong></a>
+                            </div>
+                            <div class="form-group">
+                                <a routerLink="" class="btn btn-google text-white d-block"><i class="fab fa-google mr-3"></i> Log in met <strong>Google</strong></a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6 col-12 pl-md-5 pl-0 pr-0 d-md-block" [ngbCollapse]="isRegistrated">
+                        <h4 class="mb-3">Registreer</h4>
+                        <form>
+                            <div class="form-group mb-3 input-icon">
+                                <input type="text" class="form-control" placeholder="Gebruikersnaam">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="form-group mb-3 input-icon">
+                                <input type="text" class="form-control" placeholder="Email-adres">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="form-group mb-3 input-icon">
+                                <input type="text" class="form-control" placeholder="Wachtwoord">
+                                <i class="fas fa-unlock-alt"></i>
+                            </div>
+                            <div class="mb-3">
+                                <small>
+                                    U moet een legale leeftijd hebben om te drinken, in uw land, om je te registreren bij Beerless.
+                                    Door op <strong>Registreer</strong> te klikken, accepteer je onze <a href="https://www.beerless.be/assets/Voorwaarden/Privacy_Beleid_Beerless.pdf">voorwaarden</a>.
+                                </small>
+                            </div>
+                            <div class="form-group text-center">
+                                <button class="btn btn-primary text-white px-5" type="submit">Registreer</button>
+                            </div>
+                            <p class="text-center d-md-none">Heeft u al een account? <strong><a routerLink="/login" (click)="isRegistrated = !isRegistrated">Inloggen</a></strong></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

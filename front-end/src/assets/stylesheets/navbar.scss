@@ -49,13 +49,14 @@
 
 .sidenav {
   top: 0;
-  width: 200px;
+  width: 250px;
   height: 100%;
-  z-index: 9999;
+  z-index: 9989;
+  background-color: #fff;
 }
 
 .sidenav-overlay {
-  z-index: 9998;
+  z-index: 9988;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
