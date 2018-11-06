@@ -43,7 +43,7 @@ class BierController extends BaseController
     public function getByNaam(Request $request){
         $naam = $request->input("naam");
         if($naam){
-            return json_encode(DB::table('Bier')->whereRaw("LOWER(naam) Like %?%", [strtolower($naam)])->get());
+            return json_encode(DB::table('Bier')->whereRaw("LOWER(naam) Like ?", ['%' . strtolower($naam) . '%'])->get());
         } else{
             return "Not Found";
         }

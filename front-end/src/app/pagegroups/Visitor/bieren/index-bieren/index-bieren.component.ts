@@ -15,14 +15,14 @@ export class IndexBierenComponent implements OnInit {
     constructor(private bierenService: BierenService) {    }
 
     ngOnInit() {
+        this.getBieren('');
+
+        // if (this.bierenList$ == "false") {
+        //
+        // }
     }
 
     getBieren(naam) {
         this.bierenList$ = this.bierenService.getBieren(naam);
-            // .pipe(
-            //     finalize(() => {
-            //         this.loading = false;
-            //     })
-            // );
     }
 }
