@@ -1,12 +1,13 @@
 <div class="card mb-2 card-hover">
     <div class="card-body p-4 d-flex align-items-center">
         <div class="pr-4">
-            <img src="{{ item.image }}" alt="" class="bier-item-image">
+            <img src="{{ item.afbeelding }}" alt="afbeelding {{item.naam}}" [ngbCollapse]="item.afbeelding!= ' '" class="bier-item-image">
+            <img src="/src/assets/images/bier_no_image.svg" alt="bier zonder afbeelding" [ngbCollapse]="item.afbeelding == ' '" class="bier-item-image">
         </div>
         <div class="mr-4">
-            <a routerLink="/bieren" class="link-black-yellow font-weight-bold m-0">{{ item.name }}</a>
-            <p class="my-0 small"><a routerLink="/bieren" class="link-black-yellow">{{item.brewery}}</a></p>
-            <p class="text-grey m-0 small">{{item.style}}</p>
+            <a routerLink="/bieren" class="link-black-yellow font-weight-bold m-0">{{ item.naam }}</a>
+            <p class="my-0 small"><a routerLink="/bieren" class="link-black-yellow">{{item.brouwerijID}}</a></p>
+            <p class="text-grey m-0 small">{{item.biersoortID}}</p>
         </div>
         <i class="fas fa-arrow-circle-right ml-auto"></i>
     </div>

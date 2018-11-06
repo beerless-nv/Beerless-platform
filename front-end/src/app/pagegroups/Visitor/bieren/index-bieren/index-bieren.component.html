@@ -1,55 +1,71 @@
 <div class="bg-super-light">
-  <div class="container">
-    <h1 class="pt-5 mb-3">Bieren</h1>
+    <div class="container">
+        <h1 class="pt-5 mb-3">Bieren</h1>
 
-    <div class="col-12 p-0 d-flex flex-md-row flex-column mb-1">
-      <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1">
-        <form class="">
-          <div class="form-group mb-1 input-icon">
-            <input type="text" class="form-control" placeholder="Zoek een bier">
-            <i class="fas fa-search"></i>
-          </div>
-        </form>
-      </div>
-      <div class="mb-1 col-md-4 col-12 p-0 pl-md-3 pl-0 mb-md-0 mb-4 order-md-1 order-0">
-        <a routerLink="/bieren/add" class="btn btn-yellow d-flex text-white">
-          <i class="fas fa-plus my-auto mr-3"></i><span class="d-lg-block d-none">Nieuw bier toevoegen</span><span class="d-lg-none d-block">Bier toevoegen</span>
-        </a>
-      </div>
+        <div class="col-12 p-0 d-flex flex-md-row flex-column mb-1">
+            <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1">
+                <!--<form class="">-->
+                <div class="form-group mb-1 input-icon">
+                    <input type="text" class="form-control" placeholder="Zoek een bier"
+                           #bier
+                           (blur)="getBieren(bier.value)"
+                           (keyup.enter)="bier.blur()">
+                    <i class="fas fa-search"></i>
+                </div>
+                <!--</form>-->
+            </div>
+            <div class="mb-1 col-md-4 col-12 p-0 pl-md-3 pl-0 mb-md-0 mb-4 order-md-1 order-0">
+                <a routerLink="/bieren/add" class="btn btn-yellow d-flex text-white">
+                    <i class="fas fa-plus my-auto mr-3"></i><span
+                        class="d-lg-block d-none">Nieuw bier toevoegen</span><span class="d-lg-none d-block">Bier toevoegen</span>
+                </a>
+            </div>
 
-    </div>
-    <small class="text-grey font-italic mb-5"><strong>{{bierenList.length}} resultaten</strong> voor <strong>"Gouden Carolus"</strong></small>
-
-    <div class="col-12 d-flex flex-md-row flex-column p-0">
-      <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 py-5 d-flex flex-column">
-        <app-bier-item *ngFor="let bier of bierenList | paginate: {itemsPerPage: 1, currentPage: p}; let i = index"
-                       [item]="bier"
-                       [index]="i"
-        ></app-bier-item>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-        <a routerLink="/bieren" class="btn btn-yellow text-white mt-3">Meer laden ...</a>
-      </div>
-      <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 py-5">
-
-
-        <div class="card bieren-sidebar border-yellow-top">
-          <div class="card-header">
-            <strong>Nieuwste bieren</strong>
-          </div>
-          <div class="card-body">
-            <app-bieren-sidebar *ngFor="let bier of bierenList; let i = index"
-                                [item]="bier"
-                                [index]="i"
-            ></app-bieren-sidebar>
-
-            <p class="text-center pt-3 mb-0 font-weight-bold"><a routerLink="/bieren">Meer bieren ...</a></p>
-          </div>
         </div>
+        <small class="text-grey font-italic mb-5" [ngbCollapse]="!(bierenList$ | async)?.length"><strong>{{ (bierenList$
+            | async)?.length }} <span [ngbCollapse]="(bierenList$ | async)?.length==1">resultaten</span><span
+                    [ngbCollapse]="(bierenList$ | async)?.length!=1">resultaat</span></strong> voor <strong>"{{bier.value}}"</strong>
+        </small>
 
-      </div>
+        <div class="col-12 d-flex flex-md-row flex-column p-0">
+            <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 py-5 d-flex flex-column">
+                <div class="card mb-2 card-hover" [ngbCollapse]="(bierenList$ | async)?.length">
+                    <div class="card-body p-4 text-center">
+                        <strong>Zoek een bier met de zoekbalk bovenaan.</strong>
+                    </div>
+                </div>
+                <app-bier-item
+                        *ngFor="let bier of (bierenList$ | async) | paginate: {itemsPerPage: 10, currentPage: p}; let i = index"
+                        [item]="bier"
+                        [index]="i"
+                ></app-bier-item>
+                <div class="text-center mt-3">
+                    <pagination-controls (pageChange)="p = $event"
+                                         [autoHide]="!(bierenList$ | async)"
+                                         class="pagination-style"
+                                         [ngbCollapse]="!(bierenList$ | async)">
+                    </pagination-controls>
+                </div>
+            </div>
+            <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 py-5">
+
+
+                <div class="card bieren-sidebar border-yellow-top">
+                    <div class="card-header">
+                        <strong>Nieuwste bieren</strong>
+                    </div>
+                    <div class="card-body">
+                        <!--<app-bieren-sidebar *ngFor="let bier of bierenList; let i = index"-->
+                        <!--[item]="bier"-->
+                        <!--[index]="i"-->
+                        <!--&gt;</app-bieren-sidebar>-->
+
+                        <p class="text-center pt-3 mb-0 font-weight-bold"><a routerLink="/bieren">Meer bieren ...</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
-
-
-    <!--<pre>{{ bierenList | json }}</pre>-->
-  </div>
 </div>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {BierenService} from '../../../../services/bieren.service';
+import {Observable} from 'rxjs';
+import {finalize} from 'rxjs/operators';
 
 @Component({
   selector: 'app-index-bieren',
@@ -8,11 +10,19 @@ import {BierenService} from '../../../../services/bieren.service';
 })
 export class IndexBierenComponent implements OnInit {
 
-    bierenList: { name: string, brewery: string, style: string, image: string }[];
+    bierenList$: Observable<any>;
 
     constructor(private bierenService: BierenService) {    }
 
     ngOnInit() {
-        this.bierenList = this.bierenService.bierenList;
+        this.getBieren('');
+
+        // if (this.bierenList$ == "false") {
+        //
+        // }
+    }
+
+    getBieren(naam) {
+        this.bierenList$ = this.bierenService.getBieren(naam);
     }
 }
