@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\Bier;
 
 /**
  * Contains CRUD functions for table 'Bier'.
@@ -16,14 +17,14 @@ class BierController extends BaseController
      * Takes the id as a request parameter.
      *
      * @param Request $request
+     * @uses App\Models\Bier
      * @return void
      */
     public function get(Request $request) {
         $id = $request->input('id');
         if($id){
-            $bier = DB::table('Bier')->where('ID', $id)->first();
-            if($bier){
-                return $bier;
+            if(Bier::where('ID', $id)->exists()){
+                return Bier::where('ID', $id)->first();
             } else{
                 return "false";
             }
@@ -38,24 +39,28 @@ class BierController extends BaseController
      * Tkakes the name as a request parameter.
      *
      * @param Request $request
+     * @uses App\Models\Bier
      * @return void
      */
     public function getByNaam(Request $request){
         $naam = $request->input("naam");
         if($naam){
-            return json_encode(DB::table('Bier')->whereRaw("LOWER(naam) Like ?", ['%' . strtolower($naam) . '%'])->get());
-        } else{
-            return "false";
+            return json_encode(Bier::whereRaw("LOWER(Bier.naam) Like ?", ['%' . strtolower($naam) . '%'])
+                                        ->with('Brouwerij')
+                                        ->with('Biersoort')
+                                        ->get());
         }
     }
 
     /**
-     * returns a JSON array of all columns in table 'Bier'.
+     * returns a JSON array of all columns in table 'Bier'
      *
+     * @uses App\Models\Bier
      * @return void
      */
+
     public function getAll() { 
-        return json_encode(DB::table('Bier')->get()); 
+        return json_encode(Bier::with('Biersoort')->with('Brouwerij')->get());
     }
 
     /**

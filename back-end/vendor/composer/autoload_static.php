@@ -13,8 +13,8 @@ class ComposerStaticInit63289f1017fd16425a03c8de78ba653f
         '667aeda72477189d0494fecd327c3641' => __DIR__ . '/..' . '/symfony/var-dumper/Resources/functions/dump.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
-        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         'bee9632da3ca00a99623b9c35d0c4f8b' => __DIR__ . '/..' . '/laravel/lumen-framework/src/helpers.php',
     );
 
@@ -25,6 +25,7 @@ class ComposerStaticInit63289f1017fd16425a03c8de78ba653f
         ),
         'W' => 
         array (
+            'Wn\\Generators\\' => 14,
             'Webmozart\\Assert\\' => 17,
         ),
         'S' => 
@@ -112,8 +113,12 @@ class ComposerStaticInit63289f1017fd16425a03c8de78ba653f
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'Wn\\Generators\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/wn/lumen-generators/src',
         ),
         'Webmozart\\Assert\\' => 
         array (
@@ -339,17 +344,21 @@ class ComposerStaticInit63289f1017fd16425a03c8de78ba653f
     );
 
     public static $classMap = array (
+        'App\\Bier' => __DIR__ . '/../..' . '/app/Bier.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Events\\Event' => __DIR__ . '/../..' . '/app/Events/Event.php',
         'App\\Events\\ExampleEvent' => __DIR__ . '/../..' . '/app/Events/ExampleEvent.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\BierController' => __DIR__ . '/../..' . '/app/Http/Controllers/BierController.php',
+        'App\\Http\\Controllers\\BrouwerijController' => __DIR__ . '/../..' . '/app/Http/Controllers/BrouwerijController.php',
         'App\\Http\\Controllers\\ExampleController' => __DIR__ . '/../..' . '/app/Http/Controllers/ExampleController.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
+        'App\\Http\\Middleware\\CorsMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/CorsMiddleware.php',
         'App\\Http\\Middleware\\ExampleMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/ExampleMiddleware.php',
         'App\\Jobs\\ExampleJob' => __DIR__ . '/../..' . '/app/Jobs/ExampleJob.php',
         'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'App\\Listeners\\ExampleListener' => __DIR__ . '/../..' . '/app/Listeners/ExampleListener.php',
+        'App\\Models\\Bier' => __DIR__ . '/../..' . '/app/Models/Bier.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
@@ -2843,6 +2852,27 @@ class ComposerStaticInit63289f1017fd16425a03c8de78ba653f
         'TheSeer\\Tokenizer\\Tokenizer' => __DIR__ . '/..' . '/theseer/tokenizer/src/Tokenizer.php',
         'TheSeer\\Tokenizer\\XMLSerializer' => __DIR__ . '/..' . '/theseer/tokenizer/src/XMLSerializer.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
+        'Wn\\Generators\\Argument\\ArgumentFormat' => __DIR__ . '/..' . '/wn/lumen-generators/src/Argument/ArgumentFormat.php',
+        'Wn\\Generators\\Argument\\ArgumentFormatLoader' => __DIR__ . '/..' . '/wn/lumen-generators/src/Argument/ArgumentFormatLoader.php',
+        'Wn\\Generators\\Argument\\ArgumentParser' => __DIR__ . '/..' . '/wn/lumen-generators/src/Argument/ArgumentParser.php',
+        'Wn\\Generators\\CommandsServiceProvider' => __DIR__ . '/..' . '/wn/lumen-generators/src/CommandsServiceProvider.php',
+        'Wn\\Generators\\Commands\\BaseCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/BaseCommand.php',
+        'Wn\\Generators\\Commands\\ControllerCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/ControllerCommand.php',
+        'Wn\\Generators\\Commands\\ControllerRestActionsCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/ControllerRestActionsCommand.php',
+        'Wn\\Generators\\Commands\\FactoryCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/FactoryCommand.php',
+        'Wn\\Generators\\Commands\\MigrationCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/MigrationCommand.php',
+        'Wn\\Generators\\Commands\\ModelCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/ModelCommand.php',
+        'Wn\\Generators\\Commands\\PivotSeederCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/PivotSeederCommand.php',
+        'Wn\\Generators\\Commands\\PivotTableCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/PivotTableCommand.php',
+        'Wn\\Generators\\Commands\\ResourceCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/ResourceCommand.php',
+        'Wn\\Generators\\Commands\\ResourcesCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/ResourcesCommand.php',
+        'Wn\\Generators\\Commands\\RouteCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/RouteCommand.php',
+        'Wn\\Generators\\Commands\\SeederCommand' => __DIR__ . '/..' . '/wn/lumen-generators/src/Commands/SeederCommand.php',
+        'Wn\\Generators\\Exceptions\\ArgumentFormatException' => __DIR__ . '/..' . '/wn/lumen-generators/src/Exceptions/ArgumentFormatException.php',
+        'Wn\\Generators\\Exceptions\\ArgumentParserException' => __DIR__ . '/..' . '/wn/lumen-generators/src/Exceptions/ArgumentParserException.php',
+        'Wn\\Generators\\Exceptions\\TemplateException' => __DIR__ . '/..' . '/wn/lumen-generators/src/Exceptions/TemplateException.php',
+        'Wn\\Generators\\Template\\Template' => __DIR__ . '/..' . '/wn/lumen-generators/src/Template/Template.php',
+        'Wn\\Generators\\Template\\TemplateLoader' => __DIR__ . '/..' . '/wn/lumen-generators/src/Template/TemplateLoader.php',
         'phpDocumentor\\Reflection\\DocBlock' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlock.php',
         'phpDocumentor\\Reflection\\DocBlockFactory' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactory.php',
         'phpDocumentor\\Reflection\\DocBlockFactoryInterface' => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src/DocBlockFactoryInterface.php',
