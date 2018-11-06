@@ -25,11 +25,11 @@ class BrouwerijController extends BaseController
             if($brouwerij){
                 return $brouwerij;
             } else{
-                return "Not Found";
+                return "false";
             }
             return json_encode(); 
         } else{
-            return "Not Found";
+            return "false";
         }
     }    
 
@@ -66,12 +66,12 @@ class BrouwerijController extends BaseController
                 'contactID' => $request->input('contactID')
             );
             if(DB::table('Brouwerij')->insertGetId($brouwerij)){
-                return "success";
+                return "true";
             } else{
-                return "fail";
+                return "false";
             }            
         } else{
-            return "Not Found";
+            return "false";
         }
         return $request;
     }
@@ -89,12 +89,12 @@ class BrouwerijController extends BaseController
             $query = DB::table('Brouwerij')->where('ID', $id);
             if($query->exists()){
                 $query->delete();
-                return "success";
+                return "true";
             } else{
-                return "Not Found";
+                return "false";
             }
         } else{
-            return "Not Found";
+            return "false";
         }
     }
 
@@ -123,12 +123,12 @@ class BrouwerijController extends BaseController
                 'contactID' => $request->input('contactID')
             );
             if(DB::table('Brouwerij')->where('ID', $id)->update($brouwerij)){
-                return "success";
+                return "true";
             } else{
-                return "fail";
+                return "false";
             }            
         } else{
-            return "Not Found";
+            return "false";
         }
     }
 }

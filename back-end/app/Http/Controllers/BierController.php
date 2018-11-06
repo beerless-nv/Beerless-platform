@@ -25,11 +25,11 @@ class BierController extends BaseController
             if($bier){
                 return $bier;
             } else{
-                return "Not Found";
+                return "false";
             }
             return json_encode();
         } else{
-            return "Not Found";
+            return "false";
         }        
     }
     
@@ -43,9 +43,9 @@ class BierController extends BaseController
     public function getByNaam(Request $request){
         $naam = $request->input("naam");
         if($naam){
-            return json_encode(DB::table('Bier')->whereRaw("LOWER(naam) Like %?%", [strtolower($naam)])->get());
+            return json_encode(DB::table('Bier')->whereRaw("LOWER(naam) Like ?", ['%' . strtolower($naam) . '%'])->get());
         } else{
-            return "Not Found";
+            return "false";
         }
     }
 
@@ -85,12 +85,12 @@ class BierController extends BaseController
                 'biersoortID' => $request->input('biersoortID'),
             );
             if(DB::table('Bier')->insertGetId($bier)){
-                return "success";
+                return "true";
             } else{
-                return "fail";
+                return "false";
             }            
         } else{
-            return "Not Found";
+            return "false";
         }
         return $request;
     }
@@ -108,12 +108,12 @@ class BierController extends BaseController
             $query = DB::table('Bier')->where('ID', $id);
             if($query->exists()){
                 $query->delete();
-                return "success";
+                return "true";
             } else{
-                return "Not Found";
+                return "false";
             }
         } else{
-            return "Not Found";
+            return "false";
         }
     }
 
@@ -145,12 +145,12 @@ class BierController extends BaseController
                 'biersoortID' => $request->input('biersoortID'),
             );
             if(DB::table('Bier')->where('ID', $id)->update($bier)){
-                return "success";
+                return "true";
             } else{
-                return "fail";
+                return "false";
             }            
         } else{
-            return "Not Found";
+            return "false";
         }
     }
 }
