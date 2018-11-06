@@ -44,8 +44,6 @@ class BierController extends BaseController
         $naam = $request->input("naam");
         if($naam){
             return json_encode(DB::table('Bier')->whereRaw("LOWER(naam) Like ?", ['%' . strtolower($naam) . '%'])->get());
-        } else{
-            return "false";
         }
     }
 
