@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Models\Brouwerij;
 
 /**
  * Contains CRUD functions for table 'Brouwerij'.
@@ -16,18 +17,12 @@ class BrouwerijController extends BaseController
      * Takes the id as a request parameter.
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
     public function get(Request $request) {
         $id = $request->input('id');
-        if($id){
-            $brouwerij = DB::table('Brouwerij')->where('ID', $id)->first();
-            if($brouwerij){
-                return $brouwerij;
-            } else{
-                return "false";
-            }
-            return json_encode(); 
+        if($id && Brouwerij::where('ID', $id)->exists()){
+            return response()->json(Brouwerij::where('ID', $id)->first());
         } else{
             return "false";
         }
@@ -36,10 +31,11 @@ class BrouwerijController extends BaseController
     /**
      * returns a JSON array of all columns in table 'Brouwerij'.
      *
-     * @return void
+     * @uses App\Models\Brouwerij
+     * @return Response
      */
     public function getAll() { 
-        return json_encode(DB::table('Brouwerij')->get());
+        return response()->json(Brouwerij::get());
     }
 
     /**
@@ -48,28 +44,25 @@ class BrouwerijController extends BaseController
      * Requires the field 'naam'.
      *
      * @param Request $request
-     * @return void
+     * @return response
      */
     public function insert(Request $request){
         $naam = $request->input('naam');
         if($naam){
-            $brouwerij = array(
-                'naam' => $naam,
-                'beschrijving' => $request->input('beschrijving'),
-                'land' => $request->input('land'),
-                'provincie' => $request->input('provincie'),
-                'plaats' => $request->input('plaats'),
-                'postcode' => $request->input('postcode'),
-                'straatEnNummer' => $request->input('straatEnNummer'),
-                'logo' => $request->input('logo'),
-                'aantalBieren' => $request->input('aantalBieren'),
-                'contactID' => $request->input('contactID')
-            );
-            if(DB::table('Brouwerij')->insertGetId($brouwerij)){
-                return "true";
-            } else{
-                return "false";
-            }            
+            $brouwerij = new Brouwerij;
+
+            $brouwerij->naam = $naam;
+            $brouwerij->beschrijving = $request->input('beschrijving');
+            $brouwerij->land = $request->input('land');
+            $brouwerij->provincie = $request->input('provincie');
+            $brouwerij->plaats = $request->input('plaats');
+            $brouwerij->postcode = $request->input('postcode');
+            $brouwerij->straatEnNummer = $request->input('straatEnNummer');
+            $brouwerij->logo = $request->input('logo');
+            $brouwerij->aantalBieren = $request->input('aantalBieren');
+            $brouwerij->contactID = $request->input('contactID');
+
+            $brouwerij->save();          
         } else{
             return "false";
         }
@@ -85,14 +78,9 @@ class BrouwerijController extends BaseController
      */
     public function delete(Request $request){
         $id = $request->input('id');
-        if($id){
-            $query = DB::table('Brouwerij')->where('ID', $id);
-            if($query->exists()){
-                $query->delete();
-                return "true";
-            } else{
-                return "false";
-            }
+        if($id && Brouwerij::where('ID', $id)->exists()){
+            $brouwerij = Brouwerij::find($id);
+            $brouwerij->delete();
         } else{
             return "false";
         }
@@ -104,29 +92,25 @@ class BrouwerijController extends BaseController
      * Requires the field 'id' and 'naam'.
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
     public function update(Request $request){
         $id = $request->input('id');
         $naam = $request->input('naam');
         if($naam && $id){
-            $brouwerij = array(
-                'naam' => $naam,
-                'beschrijving' => $request->input('beschrijving'),
-                'land' => $request->input('land'),
-                'provincie' => $request->input('provincie'),
-                'plaats' => $request->input('plaats'),
-                'postcode' => $request->input('postcode'),
-                'straatEnNummer' => $request->input('straatEnNummer'),
-                'logo' => $request->input('logo'),
-                'aantalBieren' => $request->input('aantalBieren'),
-                'contactID' => $request->input('contactID')
-            );
-            if(DB::table('Brouwerij')->where('ID', $id)->update($brouwerij)){
-                return "true";
-            } else{
-                return "false";
-            }            
+            $brouwerij = Brouwerij::find($id);
+
+            $brouwerij->naam = $naam;
+            $brouwerij->beschrijving = $request->input('beschrijving');
+            $brouwerij->land = $request->input('land');
+            $brouwerij->provincie = $request->input('provincie');
+            $brouwerij->plaats = $request->input('plaats');
+            $brouwerij->postcode = $request->input('postcode');
+            $brouwerij->straatEnNummer = $request->input('straatEnNummer');
+            $brouwerij->logo = $request->input('logo');
+            $brouwerij->aantalBieren = $request->input('aantalBieren');
+            $brouwerij->contactID = $request->input('contactID');
+            $brouwerij->save();           
         } else{
             return "false";
         }

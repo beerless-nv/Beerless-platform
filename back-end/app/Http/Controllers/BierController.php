@@ -17,17 +17,12 @@ class BierController extends BaseController
      * Takes the id as a request parameter.
      *
      * @param Request $request
-     * @uses App\Models\Bier
      * @return Response
      */
     public function get(Request $request) {
         $id = $request->input('id');
-        if($id){
-            if(Bier::where('ID', $id)->exists()){
-                return Bier::where('ID', $id)->first();
-            } else{
-                return "false";
-            }
+        if($id && Bier::where('ID', $id)->exists()){
+            return Bier::where('ID', $id)->first();
         } else{
             return "false";
         }        
@@ -38,7 +33,6 @@ class BierController extends BaseController
      * Tkakes the name as a request parameter.
      *
      * @param Request $request
-     * @uses App\Models\Bier
      * @return Response
      */
     public function getByNaam(Request $request){
@@ -54,7 +48,6 @@ class BierController extends BaseController
     /**
      * returns a JSON array of all columns in table 'Bier'
      *
-     * @uses App\Models\Bier
      * @return Reponse
      */
     public function getAll() { 
@@ -67,7 +60,6 @@ class BierController extends BaseController
      * Requires the field 'naam'.
      *
      * @param Request $request
-     * @uses App\Models\Bier
      * @return void
      */
     public function insert(Request $request){
@@ -92,7 +84,6 @@ class BierController extends BaseController
         } else{
             return "false";
         }
-        return $request;
     }
 
     /**
@@ -100,7 +91,6 @@ class BierController extends BaseController
      * Takes the id as a request parameter.
      *
      * @param Request $request
-     * @uses App\Models\Bier
      * @return void
      */
     public function delete(Request $request){
@@ -119,7 +109,6 @@ class BierController extends BaseController
      * Requires the field 'id' and 'naam'.
      *
      * @param Request $request
-     * @uses App\Models\Bier
      * @return void
      */
     public function update(Request $request){
