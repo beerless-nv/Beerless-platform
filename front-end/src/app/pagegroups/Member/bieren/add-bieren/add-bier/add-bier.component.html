@@ -1,0 +1,95 @@
+<div class="alert alert-danger d-flex align-items-center my-3" role="alert">
+    <i class="fas fa-exclamation-circle ml-1 mr-4"></i>
+    <div class="w-100">
+        Bekijk eerst de richtlijnen over het toevoegen van een nieuw bier, alvorens een bier toe te voegen.
+    </div>
+</div>
+<div>
+    <h5 class="mb-3 mt-5">Bier toevoegen</h5>
+    <form>
+        <div class="form-group">
+            <label for="naam">Biernaam</label>
+            <input type="text" class="form-control" id="naam" required placeholder="Gouden Carolus Classic">
+        </div>
+        <div class="form-group">
+            <label for="brouwerijID">Brouwerij</label>
+            <input type="text" class="form-control" id="brouwerijID" required placeholder="Brouwerij Het Anker"
+                   #brouwerij
+                   (keyup)="getBrouwerijenByNaam(brouwerij.value)">
+        </div>
+        <div class="form-group">
+            <label for="biersoortID">Biersoort</label>
+            <select name="biersoortID" class="form-control" id="biersoortID" required>
+                <option value="0">Kies biersoort</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="gisting">Soort gisting</label>
+            <select name="gisting" class="form-control" id="gisting" required>
+                <option value="0" hidden selected>Kies soort gisting</option>
+                <option value="boven">Bovengisting</option>
+                <option value="onder">Ondergisting</option>
+                <option value="spontaan">Spontane gisting</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="omschrijving">Omschrijving</label>
+            <textarea type="text" class="form-control" id="omschrijving" required rows="4"
+                      placeholder="Gouden Carolus Classic vindt zijn oorsprong in de rijke Mechelse traditie..."></textarea>
+        </div>
+        <div class="form-group d-flex row">
+            <div class="col-6 mb-sm-0 mb-3">
+                <label for="abv">ABV</label>
+                <input type="text" class="form-control" id="abv" placeholder="8.5%" required>
+            </div>
+            <div class="col-6">
+                <label for="ibu">IBU/EBU</label>
+                <input type="text" class="form-control" id="ibu" placeholder="16" required>
+            </div>
+        </div>
+        <label for="afbeelding">Afbeelding bier</label>
+        <div class="custom-file mb-3">
+            <input type="file" class="custom-file-input" id="afbeelding" lang="nl">
+            <label class="custom-file-label" for="afbeelding"></label>
+        </div>
+        <div class="divider mt-5">
+            <div class="divider-text">OPTIONEEL</div>
+        </div>
+        <div class="form-group row mt-5">
+            <div class="col-6">
+                <label for="ebc">EBC</label>
+                <input type="text" class="form-control" id="ebc" placeholder="70">
+            </div>
+            <div class="col-6">
+                <label for="temperatuur">Temp.</label>
+                <input type="text" class="form-control" id="temperatuur" placeholder="9°C">
+            </div>
+        </div>
+        <!--<div class="form-group">-->
+        <!--<label for="glas">Soort glas</label>-->
+        <!--<select name="glas" class="form-control" id="glas" required>-->
+        <!--<option value="0" hidden selected>Kies soort glas</option>-->
+        <!--<option value="tulp">Tulp</option>-->
+        <!--<option value="vaasje">Vaasje</option>-->
+        <!--</select>-->
+        <!--</div>-->
+        <div class="form-group">
+            <label for="seizoen">Seizoensgebonden</label>
+            <select name="seizoen" class="form-control" id="seizoen" required>
+                <option value="0" hidden selected>Kies seizoen</option>
+                <option value="winter">Winter</option>
+                <option value="lente">Lente</option>
+                <option value="zomer">Zomer</option>
+                <option value="herfs">Herfst</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="sinds">Gebrouwen sinds</label>
+            <input type="number" class="form-control" id="sinds" min="0" max="{{dateToday | date:'yyyy'}}" placeholder="1998">
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary text-white px-5">Bier toevoegen</button>
+        </div>
+    </form>
+</div>
+
