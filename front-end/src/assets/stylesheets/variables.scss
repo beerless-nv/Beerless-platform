@@ -11,16 +11,14 @@ $theme-colors: (
         'grey': #909090,
         'grey-light': #cccccc,
         'super-light': #fafafa,
-
-        // bootstrap colors
+  // bootstrap colors
         'primary': #f9b054,
         'secondary': #909090,
         'warning': #f9b054,
         'dark': #343434,
         'muted': #cccccc,
         'light': #eeeeee,
-
-        // brand colors
+  // brand colors
         'facebook': #3B5999,
         'google': #E62B33,
 );
@@ -60,3 +58,12 @@ $box-shadow-lg: 0 1rem 3rem rgba($black, .12) !default;
 //
 
 $navbar-height: 80px;
+
+//
+// Text
+//
+
+$custom-file-text: (
+        en: "Browse",
+        nl: "Kies bestand"
+);

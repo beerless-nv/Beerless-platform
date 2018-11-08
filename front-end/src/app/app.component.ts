@@ -1,4 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {formatDate} from '@angular/common';
 
 @Component({
     selector: 'app-root',
@@ -7,6 +8,11 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 })
 export class AppComponent implements OnInit {
     title = 'Beerless-platform';
+
+    dateToday = new Date();
+
+    constructor() {
+    }
 
     ngOnInit() {
     }

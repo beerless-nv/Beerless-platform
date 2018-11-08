@@ -11,18 +11,15 @@ import {finalize} from 'rxjs/operators';
 export class IndexBierenComponent implements OnInit {
 
     bierenList$: Observable<any>;
+    dateToday = new Date();
 
     constructor(private bierenService: BierenService) {    }
 
     ngOnInit() {
-        this.getBieren('');
-
-        // if (this.bierenList$ == "false") {
-        //
-        // }
+        this.getBierenByNaam('');
     }
 
-    getBieren(naam) {
-        this.bierenList$ = this.bierenService.getBieren(naam);
+    getBierenByNaam(naam) {
+        this.bierenList$ = this.bierenService.getBierenByNaam(naam);
     }
 }

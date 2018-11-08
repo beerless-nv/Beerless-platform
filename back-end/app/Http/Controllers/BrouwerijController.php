@@ -26,7 +26,14 @@ class BrouwerijController extends BaseController
         } else{
             return "false";
         }
-    }    
+    }
+
+    public function getByNaam(Request $request){
+        $naam = $request->input("naam");
+        if($naam){
+            return json_encode(DB::table('Brouwerij')->whereRaw("LOWER(Brouwerij.naam) Like ?", ['%' . strtolower($naam) . '%'])->get());
+        }
+    }
 
     /**
      * returns a JSON array of all columns in table 'Brouwerij'.
@@ -36,6 +43,10 @@ class BrouwerijController extends BaseController
      */
     public function getAll() { 
         return response()->json(Brouwerij::get());
+    }
+
+    public function getAllNaamId() {
+        return json_encode(DB::table('Brouwerij')->select(['id', 'naam'])->get());
     }
 
     /**

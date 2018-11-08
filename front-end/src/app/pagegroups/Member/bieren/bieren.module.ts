@@ -7,15 +7,18 @@ import {IndexBierenComponent} from '../../Visitor/bieren/index-bieren/index-bier
 import {AddBierenComponent} from './add-bieren/add-bieren.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NgBootstrapModule} from '../../../sharedModules/ng-bootstrap.module';
+import {NgxBootstrapModule} from '../../../sharedModules/ngx-bootstrap.module';
+import {AddBierComponent} from './add-bieren/add-bier/add-bier.component';
 
 @NgModule({
     imports: [
         CommonModule,
         RouterModule,
         NgxPaginationModule,
-        NgBootstrapModule
+        NgBootstrapModule,
+        NgxBootstrapModule
     ],
-    declarations: [BierItemComponent, BierenSidebarComponent, IndexBierenComponent, AddBierenComponent]
+    declarations: [BierItemComponent, BierenSidebarComponent, IndexBierenComponent, AddBierenComponent, AddBierComponent]
 })
 export class BierenModule {
 }
