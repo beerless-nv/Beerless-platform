@@ -9,6 +9,7 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {NgBootstrapModule} from '../../../sharedModules/ng-bootstrap.module';
 import {NgxBootstrapModule} from '../../../sharedModules/ngx-bootstrap.module';
 import {AddBierComponent} from './add-bieren/add-bier/add-bier.component';
+import { AddBierBrouwerijItemComponent } from '../../Member/bieren/add-bieren/add-bier/add-bier-brouwerij-item/add-bier-brouwerij-item.component';
 
 @NgModule({
     imports: [
@@ -18,7 +19,7 @@ import {AddBierComponent} from './add-bieren/add-bier/add-bier.component';
         NgBootstrapModule,
         NgxBootstrapModule
     ],
-    declarations: [BierItemComponent, BierenSidebarComponent, IndexBierenComponent, AddBierenComponent, AddBierComponent]
+    declarations: [BierItemComponent, BierenSidebarComponent, IndexBierenComponent, AddBierenComponent, AddBierComponent, AddBierBrouwerijItemComponent]
 })
 export class BierenModule {
 }
