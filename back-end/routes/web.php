@@ -33,3 +33,8 @@ $router->group(['prefix' => 'bieren'], function () use ($router){
     $router->post('delete', 'BierController@delete');
     $router->post('update', 'BierController@update');
 });
+
+$router->group(['prefix' => 'gebruikers'], function () use ($router){
+    $router->get('all', 'GebruikerController@getAll');
+    $router->get('login', 'GebruikerController@login');
+});

@@ -29,8 +29,8 @@ class BierController extends BaseController
     }
     
     /**
-     * returns a specific JSON object or a JSON array of type 'Bier'.
-     * Tkakes the name as a request parameter.
+     * Returns a specific JSON object or a JSON array of type 'Bier'.
+     * Takes the name as a request parameter.
      *
      * @param Request $request
      * @return Response
@@ -46,7 +46,7 @@ class BierController extends BaseController
     }
 
     /**
-     * returns a JSON array of all columns in table 'Bier'
+     * Returns a JSON array of all columns in table 'Bier'
      *
      * @return Reponse
      */
@@ -136,4 +136,6 @@ class BierController extends BaseController
             return "false";
         }
     }
+
+    
 }

@@ -28,15 +28,22 @@ class BrouwerijController extends BaseController
         }
     }
 
+    /**
+     * Returns a specific JSON object or a JSON array of type 'Bier'.
+     * Takes the name as a request parameter.
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function getByNaam(Request $request){
         $naam = $request->input("naam");
         if($naam){
-            return json_encode(DB::table('Brouwerij')->whereRaw("LOWER(Brouwerij.naam) Like ?", ['%' . strtolower($naam) . '%'])->get());
+            return response()->json(Brouwerij::whereRaw("LOWER(Brouwerij.naam) Like ?", ['%' . strtolower($naam) . '%'])->get());
         }
     }
 
     /**
-     * returns a JSON array of all columns in table 'Brouwerij'.
+     * Returns a JSON array of all columns in table 'Brouwerij'.
      *
      * @uses App\Models\Brouwerij
      * @return Response
@@ -45,8 +52,13 @@ class BrouwerijController extends BaseController
         return response()->json(Brouwerij::get());
     }
 
+    /**
+     * Returns a JSON array of all records from table 'Brouwerij' with columns 'id' and 'naam'?
+     *
+     * @return Response
+     */
     public function getAllNaamId() {
-        return json_encode(DB::table('Brouwerij')->select(['id', 'naam'])->get());
+        return response()->json(Brouwerij::select('id', 'naam')->get());
     }
 
     /**
