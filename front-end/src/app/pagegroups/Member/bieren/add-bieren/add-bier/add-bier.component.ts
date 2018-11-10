@@ -1,34 +1,37 @@
-import {Component, OnInit, ViewChild, ViewChildren, AfterViewInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {BrouwerijenService} from '../../../../../services/brouwerijen.service';
-import { AddBierBrouwerijItemComponent } from './add-bier-brouwerij-item/add-bier-brouwerij-item.component';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
     selector: 'app-add-bier',
     templateUrl: './add-bier.component.html',
     styles: []
 })
-export class AddBierComponent implements OnInit, AfterViewInit {
+export class AddBierComponent implements OnInit {
 
     brouwerijenList: string[] = [];
     brouwerijenByNaamList: string[] = [];
     brouwerijenByNaamList$: Observable<any>;
     dateToday = new Date();
-    openBrouwerijItems = false;
-    brouwerijNaam = '';
+    openBrouwerijItems$: Observable<any>;
+    brouwerijNaam$: Observable<any>;
+    bierNaam = '';
 
-    @ViewChildren(AddBierBrouwerijItemComponent) addBierBrouwerijItem: AddBierBrouwerijItemComponent;
-
-    constructor(private brouwerijenService: BrouwerijenService) {
+    constructor(private brouwerijenService: BrouwerijenService, private route: ActivatedRoute) {
     }
 
     ngOnInit() {
         this.getAllBrouwerijen();
+
+        // query parameter ophalen
+        this.route.queryParamMap.subscribe(queryParams => {
+            this.bierNaam = queryParams.get('name');
+        });
     }
 
-    ngAfterViewInit() {
-        this.brouwerijNaam = this.addBierBrouwerijItem.brouwerijNaam;
-        console.log(this.brouwerijNaam);
+    setBrouwerijNaam(brouwerij: string) {
+        this.brouwerijNaam$ = of(brouwerij);
     }
 
     getAllBrouwerijen() {
@@ -37,22 +40,28 @@ export class AddBierComponent implements OnInit, AfterViewInit {
 
     getBrouwerijenByNaam(naam) {
         if (naam !== '') {
-            this.openBrouwerijItems = true;
+            this.openBrouwerijItems$ = of(true);
             this.brouwerijenByNaamList = [];
-            // console.log(naam);
 
             for (const x in this.brouwerijenList) {
-                // console.log(this.brouwerijenList[x]['naam']);
                 if ((this.brouwerijenList[x]['naam'].toLowerCase()).match(naam.toLowerCase())) {
                     this.brouwerijenByNaamList.push(this.brouwerijenList[x]);
-                    // console.log(this.brouwerijenList[x]['naam']);
                 }
             }
         } else {
             this.brouwerijenByNaamList = [];
-            this.openBrouwerijItems = false;
+            this.openBrouwerijItems$ = of(false);
         }
         this.brouwerijenByNaamList$ = of(this.brouwerijenByNaamList);
-        // console.log(this.brouwerijenByNaamList$);
+    }
+
+    hideBrouwerijDropdown() {
+        setTimeout(() => {
+            this.openBrouwerijItems$ = of(false);
+        }, 200);
+    }
+
+    showBrouwerijDropdown() {
+        this.openBrouwerijItems$ = of(true);
     }
 }

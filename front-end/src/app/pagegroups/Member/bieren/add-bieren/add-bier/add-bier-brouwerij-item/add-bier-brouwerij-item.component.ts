@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-add-bier-brouwerij-item',
@@ -9,8 +10,7 @@ export class AddBierBrouwerijItemComponent implements OnInit {
 
     @Input() item: any;
     @Input() index: number;
-
-    brouwerijNaam = '';
+    @Output() searchBrouwerij = new EventEmitter<string>();
 
     constructor() {
     }
@@ -19,6 +19,6 @@ export class AddBierBrouwerijItemComponent implements OnInit {
     }
 
     addBrouwerij(naam) {
-        this.brouwerijNaam = naam;
+        this.searchBrouwerij.emit(naam);
     }
 }

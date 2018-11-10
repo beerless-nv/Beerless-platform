@@ -31,4 +31,8 @@ export class BierenService {
                 share()                                                    // (8)
             );
     }
+
+    // insertBier(naam, alcoholpercentage, ibu, ebc, temperatuur, gisting, glas, afbeelding, seizoen, sinds, brouwerijID, biersoortID) {
+    //
+    // }
 }

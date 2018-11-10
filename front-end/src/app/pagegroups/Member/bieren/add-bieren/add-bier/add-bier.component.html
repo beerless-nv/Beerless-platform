@@ -9,21 +9,26 @@
     <form>
         <div class="form-group">
             <label for="naam">Biernaam</label>
-            <input type="text" class="form-control" id="naam" required placeholder="Gouden Carolus Classic">
+            <input type="text" class="form-control" id="naam" required placeholder="Gouden Carolus Classic" value="{{bierNaam}}">
         </div>
         <div class="form-group position-relative">
             <label for="brouwerijID">Brouwerij</label>
             <input type="text" class="form-control" id="brouwerijID" required placeholder="Brouwerij Het Anker"
                    #brouwerij
-                   (keyup)="getBrouwerijenByNaam(brouwerij.value)">
-            <div [ngbCollapse]="!openBrouwerijItems" class="position-absolute bg-super-light border rounded mt-2 w-100 dropdown-brouwerij-search shadow">
+                   (keyup)="getBrouwerijenByNaam(brouwerij.value)"
+                   value="{{(brouwerijNaam$ | async)}}"
+                   (blur)="hideBrouwerijDropdown()"
+                   >
+            <div [ngbCollapse]="!(openBrouwerijItems$ | async)" class="position-absolute bg-super-light border rounded mt-2 w-100 dropdown-brouwerij-search shadow">
                 <app-add-bier-brouwerij-item *ngFor="let brouwerij of (brouwerijenByNaamList$ | async); let i = index"
                                              [item]="brouwerij"
                                              [index]="i"
+                                             (searchBrouwerij)="setBrouwerijNaam($event)"
+                                             (mouseup)="hideBrouwerijDropdown()"
                 ></app-add-bier-brouwerij-item>
-                <div class="col my-3 text-center">
-                    <strong>Brouwerij bestaat nog niet?</strong>
-                    <a routerLink="" class="btn btn-primary px-5 mt-3 text-white">Voeg brouwerij toe</a>
+                <div class="col py-3 pb-4 text-center" (mouseup)="showBrouwerijDropdown()">
+                    <div><strong>Brouwerij bestaat nog niet?</strong></div>
+                    <a routerLink="" class="btn btn-primary px-5 mt-3 text-white" (mouseup)="hideBrouwerijDropdown()">Voeg brouwerij toe</a>
                 </div>
             </div>
         </div>
