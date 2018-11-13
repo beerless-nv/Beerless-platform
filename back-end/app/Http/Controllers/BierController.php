@@ -68,21 +68,24 @@ class BierController extends BaseController
     public function insert(Request $request)
     {
         $postdata = $request->all();
+
         if ($request->input('naam')) {
             $bier = new Bier;
+
             $bier->naam = $request->input('naam');
-            // $bier->alcoholpercentage = $request->input('alcoholpercentage');
+            $bier->alcoholpercentage = $request->input('alcoholpercentage');
             $bier->IBU = $request->input('ibu');
-//            $bier->EBC = $request->input('EBC');
-//            $bier->ingredienten = $request->input('ingredienten');
-//            $bier->temperatuur = $request->input('temperatuur');
-//            $bier->gisting = $request->input('gisting');
-//            $bier->glas = $request->input('glas');
-//            $bier->afbeelding = $request->input('afbeelding');
-//            $bier->seizoen = $request->input('seizoen');
-//            $bier->sinds = $request->input('sinds');
-//            $bier->brouwerijID = $request->input('brouwerijID');
-//            $bier->biersoortID = $request->input('biersoortID');
+            $bier->EBC = $request->input('EBC');
+            $bier->ingredienten = $request->input('ingredienten');
+            $bier->temperatuur = $request->input('temperatuur');
+            $bier->gisting = $request->input('gisting');
+            $bier->glas = $request->input('glas');
+            $bier->afbeelding = $request->input('afbeelding');
+            $bier->seizoen = $request->input('seizoen');
+            $bier->sinds = $request->input('sinds');
+            $bier->brouwerijID = $request->input('brouwerijID');
+            $bier->biersoortID = $request->input('biersoortID');
+
             $bier->save();
 
             return $bier;
