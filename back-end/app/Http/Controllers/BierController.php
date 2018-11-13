@@ -30,9 +30,9 @@ class BierController extends BaseController
             }
         } else{
             return "false";
-        }        
+        }
     }
-    
+
     /**
      * returns a specific JSON object or a JSON array of type 'Bier'.
      * Tkakes the name as a request parameter.
@@ -57,7 +57,7 @@ class BierController extends BaseController
      * @uses App\Models\Bier
      * @return Reponse
      */
-    public function getAll() { 
+    public function getAll() {
         return response()->json(Bier::with('Biersoort')->with('Brouwerij')->get());
     }
 
@@ -71,28 +71,39 @@ class BierController extends BaseController
      * @return void
      */
     public function insert(Request $request){
-        $naam = $request->input('naam');
-        if($naam){
-            $bier = new Bier;
-            $bier->naam = $naam;
-            $bier->alcoholpercentage = $request->input('alcoholpercentage');
-            $bier->IBU = $request->input('IBU');
-            $bier->EBC = $request->input('EBC');
-            $bier->ingredienten = $request->input('ingredienten');
-            $bier->temperatuur = $request->input('temperatuur');
-            $bier->gisting = $request->input('gisting');
-            $bier->glas = $request->input('glas');
-            $bier->afbeelding = $request->input('afbeelding');
-            $bier->seizoen = $request->input('seizoen');
-            $bier->sinds = $request->input('sinds');
-            $bier->brouwerijID = $request->input('brouwerijID');
-            $bier->biersoortID = $request->input('biersoortID');
+//        $postdata = $request->json()->all();
+//        $object = json_decode($postdata, true);
+        $object = json_decode(json_encode($request->input()), true);
+//        $data = Input::all();
 
-            $bier->save();           
-        } else{
-            return "false";
-        }
-        return $request;
+
+//        $resultaat = $request->input();
+
+
+//        if($naam){
+//            $bier = new Bier;
+//            $bier->naam = $object->naam;
+//            $bier->alcoholpercentage = $request->input('alcoholpercentage');
+//            $bier->IBU = $request->input('IBU');
+//            $bier->EBC = $request->input('EBC');
+//            $bier->ingredienten = $request->input('ingredienten');
+//            $bier->temperatuur = $request->input('temperatuur');
+//            $bier->gisting = $request->input('gisting');
+//            $bier->glas = $request->input('glas');
+//            $bier->afbeelding = $request->input('afbeelding');
+//            $bier->seizoen = $request->input('seizoen');
+//            $bier->sinds = $request->input('sinds');
+//            $bier->brouwerijID = $request->input('brouwerijID');
+//            $bier->biersoortID = $request->input('biersoortID');
+//
+//            var_dump($bier);
+//
+//            $bier->save();
+//        } else{
+//            return "false";
+//        }
+//        return $naam;
+        return $object;
     }
 
     /**
@@ -142,7 +153,7 @@ class BierController extends BaseController
             $bier->brouwerijID = $request->input('brouwerijID');
             $bier->biersoortID = $request->input('biersoortID');
 
-            $bier->save();          
+            $bier->save();
         } else{
             return "false";
         }

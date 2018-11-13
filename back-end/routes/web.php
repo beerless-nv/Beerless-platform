@@ -33,3 +33,8 @@ $router->group(['prefix' => 'bieren'], function () use ($router){
     $router->post('delete', 'BierController@delete');
     $router->post('update', 'BierController@update');
 });
+
+$router->group(['prefix' => 'biersoorten'], function () use ($router){
+    $router->get('all', 'BiersoortController@getAll');
+    $router->get('get','BiersoortController@get');
+});
