@@ -43,8 +43,9 @@ class GebruikerController extends BaseController
         }
     }
 
-    private function checkPassword($user, $password){
-        if($user->wachtwoord == $password){
+    public function checkPassword(Request $request){
+        $password = $request->input('password');
+        if($password == Gebruiker::select("wachtwoord")->where('gebruikersnaam', $username)->get()){
             return true;
         } else{
             return false;
