@@ -7,9 +7,6 @@ import {formatDate} from '@angular/common';
     styleUrls: ['./app.component.sass']
 })
 export class AppComponent implements OnInit {
-    title = 'Beerless-platform';
-
-    dateToday = new Date();
 
     constructor() {
     }

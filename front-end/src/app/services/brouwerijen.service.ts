@@ -16,33 +16,33 @@ export class BrouwerijenService {
     }
 
     getBrouwerijenByNaam(naam): Observable<any> {
-        const params = new HttpParams()                                     // (5)
+        const params = new HttpParams()
             .set('naam', naam);
 
         return this.http.get(this.urlGetBrouwerijenByNaam, {params})
             .pipe(
-                tap(req => console.log('get-request', req)),          // (6)
-                catchError(                                                // (7)
+                tap(req => console.log('get-request', req)),
+                catchError(
                     (error) => {
                         console.log(error);
                         alert(error.message);
                         return EMPTY;
                     }),
-                share()                                                    // (8)
+                share()
             );
     }
 
     getAllBrouwerijen(): Observable<any> {
         return this.http.get(this.urlGetAllBrouwerijen)
             .pipe(
-                tap(req => console.log('get-request', req)),          // (6)
-                catchError(                                                // (7)
+                tap(req => console.log('get-request', req)),
+                catchError(
                     (error) => {
                         console.log(error);
                         alert(error.message);
                         return EMPTY;
                     }),
-                share()                                                    // (8)
+                share()
             );
     }
 }

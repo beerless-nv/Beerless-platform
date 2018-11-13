@@ -18,7 +18,7 @@ export class AddBierBrouwerijItemComponent implements OnInit {
     ngOnInit() {
     }
 
-    addBrouwerij(naam) {
-        this.searchBrouwerij.emit(naam);
+    addBrouwerij(brouwerij) {
+        this.searchBrouwerij.emit(brouwerij);
     }
 }

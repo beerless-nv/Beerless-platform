@@ -19,8 +19,6 @@ export class IndexBierenComponent implements OnInit {
     constructor(private bierenService: BierenService, private router: Router, private route: ActivatedRoute) {    }
 
     ngOnInit() {
-        // this.getBierenByNaam('');
-
         this.route.queryParamMap.subscribe(queryParam => {
             this.bierNaam = queryParam.get('name');
             this.page = queryParam.get('page');

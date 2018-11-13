@@ -17,6 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginModule} from './pagegroups/Visitor/login/login.module';
 import {LoginComponent} from './pagegroups/Visitor/login/login.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -38,7 +39,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
         BierenModule,
         HttpClientModule,
         LoginModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        ReactiveFormsModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

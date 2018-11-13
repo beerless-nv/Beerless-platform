@@ -9,7 +9,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import {NgBootstrapModule} from '../../../sharedModules/ng-bootstrap.module';
 import {NgxBootstrapModule} from '../../../sharedModules/ngx-bootstrap.module';
 import {AddBierComponent} from './add-bieren/add-bier/add-bier.component';
-import { AddBierBrouwerijItemComponent } from '../../Member/bieren/add-bieren/add-bier/add-bier-brouwerij-item/add-bier-brouwerij-item.component';
+import {AddBierBrouwerijItemComponent} from './add-bieren/add-bier/add-bier-brouwerij-item/add-bier-brouwerij-item.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
     imports: [
@@ -17,9 +18,18 @@ import { AddBierBrouwerijItemComponent } from '../../Member/bieren/add-bieren/ad
         RouterModule,
         NgxPaginationModule,
         NgBootstrapModule,
-        NgxBootstrapModule
+        NgxBootstrapModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
-    declarations: [BierItemComponent, BierenSidebarComponent, IndexBierenComponent, AddBierenComponent, AddBierComponent, AddBierBrouwerijItemComponent]
+    declarations: [
+        BierItemComponent,
+        BierenSidebarComponent,
+        IndexBierenComponent,
+        AddBierenComponent,
+        AddBierComponent,
+        AddBierBrouwerijItemComponent
+    ]
 })
 export class BierenModule {
 }

@@ -112,6 +112,26 @@ input.input-dark {
   align-items: center;
 }
 
+.invalid-input {
+  font-size: small;
+  color: red;
+  margin-top: 5px;
+}
+
+.character-counter {
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  //z-index: 999;
+  background-color: $super-light;
+  border-top: 1px solid $muted-light;
+  border-left: 1px solid $muted-light;
+  padding: 5px 10px;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 0.25rem 0 0.25rem 0;
+}
+
 //
 // dividers
 //
@@ -276,4 +296,13 @@ ol {
 
 .mouse-pointer {
   cursor: pointer;
+}
+
+//
+// dropdowns
+//
+
+.dropdown-height-175 {
+  -webkit-appearance: menulist-button;
+  height: 50px;
 }
