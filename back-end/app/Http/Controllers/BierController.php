@@ -63,7 +63,7 @@ class BierController extends BaseController
      * @return void
      */
     public function insert(Request $request){
-        $naam = $request->input('naam');
+        return $request->input('naam');
         if($naam){
             $bier = new Bier;
             $bier->naam = $naam;

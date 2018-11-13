@@ -23,19 +23,23 @@ class GebruikerController extends BaseController
         if($user){
             if($this->checkPassword($user, $password)){
                 return "succesfully logged in";
+                
             } else{
                 return "Incorrect password";
             }
         } else{
             return "User doesn't exist";
         }
+        exit();
     }
 
-    private function checkUserExists($username){
+    public function checkUserExists(Request $request){
+        $username = $request->input('username');
         if(Gebruiker::where('gebruikersnaam', $username)->exists() || Gebruiker::where('email', $username)->exists()){
-            return Gebruiker::where('gebruikersnaam', $username)->first();
+            //return Gebruiker::where('gebruikersnaam', $username)->first();
+            return json_encode($exists = true);
         } else{
-            return false;
+            return response()->json($exists = false);
         }
     }
 

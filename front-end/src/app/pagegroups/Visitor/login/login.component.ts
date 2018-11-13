@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Testability } from '@angular/core';
+import {LoginService} from '../../../services/login.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -7,11 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
+  test;
+  userExists$: Observable<any>;
   isRegistrated = true;
+  user = {
+    name: 'arno',
+    pass: 'arno'
+  }
 
-  constructor() { }
+  constructor(private loginService: LoginService) { }
 
   ngOnInit() {
+  }
+
+  login(form){
+    console.log(this.loginService.checkUser(form.myName));
   }
 
 }

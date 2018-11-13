@@ -36,5 +36,6 @@ $router->group(['prefix' => 'bieren'], function () use ($router){
 
 $router->group(['prefix' => 'gebruikers'], function () use ($router){
     $router->get('all', 'GebruikerController@getAll');
-    $router->get('login', 'GebruikerController@login');
+    $router->post('login', 'GebruikerController@login');
+    $router->post('checkUser', 'GebruikerController@checkUserExists');
 });
