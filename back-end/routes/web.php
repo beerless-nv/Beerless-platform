@@ -42,5 +42,6 @@ $router->group(['prefix' => 'biersoorten'], function () use ($router){
 $router->group(['prefix' => 'gebruikers'], function () use ($router){
     $router->get('all', 'GebruikerController@getAll');
     $router->post('login', 'GebruikerController@login');
-    $router->get('checkUser', 'GebruikerController@checkUserExists');
+    $router->post('checkUser', 'GebruikerController@checkUserExists');
+    $router->post('checkPass', 'GebruikerController@checkUserPassword');
 });

@@ -9,16 +9,31 @@ import {EMPTY, Observable} from 'rxjs';
 })
 export class LoginService {
 
-  readonly urlLogin = environment.backend + 'gebruikers/checkUser';
-  readonly urlTest = environment.backend + 'bieren/insert';
+  readonly urlCheckUser = environment.backend + 'gebruikers/checkUser';
+  readonly urlCheckPass = environment.backend + 'gebruikers/checkPass';
 
   constructor(private http: HttpClient) { }
 
   checkUser(username) {
-    const params = new HttpParams()
-        .set('username', username);
+    const params = new HttpParams().set('username', username);
 
-    return this.http.get(this.urlLogin, {params})
+    return this.http.post(this.urlCheckUser, {username:username});
+        .subscribe(
+            req => {
+                console.log(req);
+            },
+            err => {
+                console.log('Error occured');
+            }
+        );
+  }
+
+  checkPass(username, password){
+    const params = new HttpParams()
+            .set('password', password)
+            .set('username', username);
+
+    return this.http.post(this.urlCheckPass, {params})
         .subscribe(
             req => {
                 console.log(req);
