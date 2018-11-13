@@ -1,6 +1,6 @@
 import {Component, OnInit, Testability} from '@angular/core';
 import {LoginService} from '../../../services/login.service';
-import {Observable, Subscription} from 'rxjs';
+import {Observable, of, Subscription} from 'rxjs';
 import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
@@ -11,7 +11,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 export class LoginComponent implements OnInit {
 
     isRegistrated = true;
-    userExists = "";
+    userExists$: Observable<any>;
     user = {};
 
     formLogin: FormGroup;
@@ -28,13 +28,13 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.user = this.formLogin.value;
-        this.loginService.checkUser(this.user["gebruikersnaam"]).subscribe(val => this.userExists = val);
-        //console.log(this.loginService.checkUser(this.user["gebruikersnaam"]))
-        if(this.loginService.checkUser(this.user["gebruikersnaam"]).toString){
-            console.log("user bestaat");
-        } else{
-            console.log("user bestaat niet");
+        this.loginService.checkUser(this.user['gebruikersnaam']).subscribe(val => this.userExists$ = val);
+        console.log(this.userExists$);
+        if (this.userExists$ !== of(false)) {
+            console.log('user bestaat');
+        } else {
+            console.log('user bestaat niet');
         }
-        
+
     }
 }

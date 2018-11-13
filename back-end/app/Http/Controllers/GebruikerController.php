@@ -21,25 +21,25 @@ class GebruikerController extends BaseController
         $password = $request->input('password');
         $user = $this->checkUserExists($username);
         if($user){
-            if($this->checkPassword($user, $password)){
+            if($this->checkPassword($username, $password)){
                 return "succesfully logged in";
-                
+
             } else{
                 return "Incorrect password";
             }
         } else{
             return "User doesn't exist";
         }
-        exit();
+
+//        exit();
     }
 
     public function checkUserExists(Request $request){
         $username = $request->input('username');
         if(Gebruiker::where('gebruikersnaam', $username)->exists() || Gebruiker::where('email', $username)->exists()){
-            //return Gebruiker::where('gebruikersnaam', $username)->first();
-            return json_encode($exists = true);
+            return Gebruiker::where('gebruikersnaam', $username)->first();
         } else{
-            return response()->json($exists = false);
+            return json_encode(false);
         }
     }
 

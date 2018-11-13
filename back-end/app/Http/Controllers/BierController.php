@@ -67,7 +67,7 @@ class BierController extends BaseController
      */
     public function insert(Request $request)
     {
-        $postdata = $request->all();
+//        $postdata = $request->all();
 
         if ($request->input('naam')) {
             $bier = new Bier;
