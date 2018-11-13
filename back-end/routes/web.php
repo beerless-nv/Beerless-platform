@@ -38,3 +38,9 @@ $router->group(['prefix' => 'biersoorten'], function () use ($router){
     $router->get('all', 'BiersoortController@getAll');
     $router->get('get','BiersoortController@get');
 });
+
+$router->group(['prefix' => 'gebruikers'], function () use ($router){
+    $router->get('all', 'GebruikerController@getAll');
+    $router->post('login', 'GebruikerController@login');
+    $router->get('checkUser', 'GebruikerController@checkUserExists');
+});

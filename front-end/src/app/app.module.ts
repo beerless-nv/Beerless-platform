@@ -15,7 +15,6 @@ import {FooterComponent} from './sharedComponents/footer/footer.component';
 import {BierenModule} from './pagegroups/Member/bieren/bieren.module';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginModule} from './pagegroups/Visitor/login/login.module';
-import {LoginComponent} from './pagegroups/Visitor/login/login.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ReactiveFormsModule} from '@angular/forms';
 
@@ -28,7 +27,6 @@ import {ReactiveFormsModule} from '@angular/forms';
         HeroSubscribeComponent,
         FooterComponent,
         TabsetComponent,
-        LoginComponent,
     ],
     imports: [
         BrowserModule,

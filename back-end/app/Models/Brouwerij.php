@@ -21,7 +21,7 @@ class Brouwerij extends Model {
     }
 
     public function contact(){
-        return $this->hasOne('App\Models\Contact', 'brouwerijID');
+        return $this->hasOne('App\Models\Contact');
     }
 
 }

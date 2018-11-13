@@ -8,13 +8,13 @@
                 <div class=" d-flex flex-row">
                     <div class="col-md-6 col-12 border-md-right pr-md-5 pr-0 pl-0" [ngbCollapse]="!isRegistrated">
                         <h4 class="mb-3">Log in</h4>
-                        <!--<form>-->
+                        <form novalidate [formGroup]="formLogin" (ngSubmit)="login()">
                             <div class="form-group mb-3 input-icon">
-                                <input type="text" class="form-control" placeholder="Gebruikersnaam">
+                                <input type="text" class="form-control" placeholder="Gebruikersnaam" formControlName="gebruikersnaam">
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="form-group mb-3 input-icon">
-                                <input type="text" class="form-control" placeholder="Wachtwoord">
+                                <input type="password" class="form-control" placeholder="Wachtwoord" formControlName="wachtwoord">
                                 <i class="fas fa-unlock-alt"></i>
                             </div>
                             <div class="form-group text-center">
@@ -30,7 +30,7 @@
                             <div class="form-group">
                                 <a routerLink="" class="btn btn-google text-white d-block"><i class="fab fa-google mr-3"></i> Log in met <strong>Google</strong></a>
                             </div>
-                        <!--</form>-->
+                        </form>
                     </div>
                     <div class="col-md-6 col-12 pl-md-5 pl-0 pr-0 d-md-block" [ngbCollapse]="isRegistrated">
                         <h4 class="mb-3">Registreer</h4>
@@ -44,7 +44,7 @@
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="form-group mb-3 input-icon">
-                                <input type="text" class="form-control" placeholder="Wachtwoord">
+                                <input type="password" class="form-control" placeholder="Wachtwoord">
                                 <i class="fas fa-unlock-alt"></i>
                             </div>
                             <div class="mb-3">

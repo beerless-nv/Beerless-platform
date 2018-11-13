@@ -51,7 +51,20 @@ export class BierenService {
             .set('brouwerijID', bier.brouwerij)
             .set('biersoortID', bier.biersoort);
 
-        return this.http.post(this.urlInsertBier, bier)
+        return this.http.post(this.urlInsertBier,
+            {
+                naam: bier.naam,
+                ibu: bier.ibu
+            })
+            .subscribe(
+                req => {
+                    console.log(req);
+                },
+                err => {
+                    console.log('Error occured', err);
+                }
+            );
+        /*return this.http.post(this.urlInsertBier, bier)
             .subscribe(
                 req => {
                     console.log(req);
@@ -59,7 +72,7 @@ export class BierenService {
                 err => {
                     console.log('Error occured');
                 }
-            );
+            );*/
     }
 
     // naam, alcoholpercentage, ibu, ebc, temperatuur, gisting, glas, afbeelding, seizoen, sinds, brouwerijID, biersoortID
