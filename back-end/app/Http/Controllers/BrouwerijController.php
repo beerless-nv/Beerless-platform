@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Brouwerij;
@@ -10,7 +9,7 @@ use App\Models\Brouwerij;
 /**
  * Contains CRUD functions for table 'Brouwerij'.
  */
-class BrouwerijController extends BaseController
+class BrouwerijController extends Controller
 {
     /**
      * Returns a specific JSON object of type 'Brouwerij'.

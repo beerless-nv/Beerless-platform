@@ -4,18 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Laravel\Lumen\Routing\Controller as BaseController;
+//use Laravel\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Bier;
-use League\Flysystem\Filesystem;
-use League\Flysystem\Adapter\Ftp as Adapter;
-use Illuminate\Contracts\Filesystem\Factory;
 
 /**
  * Contains CRUD functions for table 'Bier'.
  */
-class BierController extends BaseController
+class BierController extends Controller
 {
     /**
      * Returns a specific JSON object of type 'Bier'.
@@ -62,34 +59,34 @@ class BierController extends BaseController
         return response()->json(Bier::with('Biersoort')->with('Brouwerij')->get());
     }
 
-    public function uploadImage(Request $request)
-    {
-        $image = $request->file('afbeelding');
-        $imageName = $request->file('afbeeldingNaam');
-
-        if ($image) {
-//            $filesystem = new Filesystem(new Adapter([
-//                'host'     => 'ftp.beerless.be',
-//                'username' => 'beerle1q',
-//                'password' => 'sselreeB1998',
+//    public function uploadImage(Request $request)
+//    {
+//        $image = $request->file('afbeelding');
+//        $imageName = $request->file('afbeeldingNaam');
 //
-//                // Optional FTP Settings...
-//                'port'     => 21,
-//                'root'     => '/assets/images/',
-//                // 'passive'  => true,
-//                // 'ssl'      => true,
-//                // 'timeout'  => 30,
-//            ]));
-//            $filesystem->put($imageName, File::get($image));
-
-//            Storage::disk('local')->put('file.jpg', $image);
-
-            $image->store('avatars');
-            return json_encode(true);
-        } else {
-            return json_encode(false);
-        }
-    }
+//        if ($image) {
+////            $filesystem = new Filesystem(new Adapter([
+////                'host'     => 'ftp.beerless.be',
+////                'username' => 'beerle1q',
+////                'password' => 'sselreeB1998',
+////
+////                // Optional FTP Settings...
+////                'port'     => 21,
+////                'root'     => '/assets/images/',
+////                // 'passive'  => true,
+////                // 'ssl'      => true,
+////                // 'timeout'  => 30,
+////            ]));
+////            $filesystem->put($imageName, File::get($image));
+//
+////            Storage::disk('local')->put('file.jpg', $image);
+//
+//            $image->store('avatars');
+//            return json_encode(true);
+//        } else {
+//            return json_encode(false);
+//        }
+//    }
 
     /**
      * Insert an item into table 'Bier'.

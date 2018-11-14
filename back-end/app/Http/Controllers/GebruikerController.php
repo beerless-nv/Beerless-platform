@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Gebruiker;
@@ -10,7 +9,7 @@ use App\Models\Gebruiker;
 /**
  * Contains CRUD functions for table 'Gebruiker'.
  */
-class GebruikerController extends BaseController
+class GebruikerController extends Controller
 {
     /**
      * Returns a JSON array of all rows in table 'Gebruiker'

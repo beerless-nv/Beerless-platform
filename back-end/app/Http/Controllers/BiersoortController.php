@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Laravel\Lumen\Routing\Controller as BaseController;
 use Illuminate\Http\Request;
 use App\Models\Biersoort;
 
-class BiersoortController extends BaseController
+class BiersoortController extends Controller
 {
     /**
      * Returns a specific JSON object of type 'Biersoort'.
