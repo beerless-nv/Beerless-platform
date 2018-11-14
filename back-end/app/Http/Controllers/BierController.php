@@ -48,7 +48,7 @@ class BierController extends BaseController
     }
 
     /**
-     * Returns a JSON array of all columns in table 'Bier'
+     * Returns a JSON array of all rows in table 'Bier'
      *
      * @return Reponse
      */

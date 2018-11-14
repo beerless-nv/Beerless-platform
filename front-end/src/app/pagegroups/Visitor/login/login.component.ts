@@ -11,7 +11,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 export class LoginComponent implements OnInit {
 
     isRegistrated = true;
-    userExists$: Observable<any>;
+    userExists;
+    passCorrect;
     user = {};
 
     formLogin: FormGroup;
@@ -28,13 +29,20 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.user = this.formLogin.value;
-        this.loginService.checkUser(this.user['gebruikersnaam']).subscribe(val => this.userExists$ = val);
-        console.log(this.userExists$);
-        if (this.userExists$ !== of(false)) {
-            console.log('user bestaat');
-        } else {
-            console.log('user bestaat niet');
-        }
-
+        console.log('wachtwoord: ' + this.user['wachtwoord']);
+        this.loginService.checkUser(this.user['gebruikersnaam']).subscribe((data) => {
+            if(data != false){
+                this.loginService.checkPass(this.user['gebruikersnaam'], this.user['wachtwoord']).subscribe((data2) => {
+                    console.log(data2['wachtwoord'])
+                    if(data2){
+                        console.log('ingelogd');
+                    } else{
+                        console.log('fout wachtwoord');
+                    }
+                })
+            } else{
+                console.log('gebruiker bestaat niet');
+            }
+        });
     }
 }
