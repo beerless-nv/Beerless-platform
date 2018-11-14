@@ -1,9 +1,10 @@
-<?php 
+<?php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Gebruiker extends Model {
+class Gebruiker extends Model
+{
 
     protected $fillable = [];
     protected $dates = [];
@@ -16,5 +17,4 @@ class Gebruiker extends Model {
     ];
 
     // Relationships
-
 }
