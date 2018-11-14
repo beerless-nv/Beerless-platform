@@ -12,6 +12,7 @@ export class BierenService {
     readonly urlGetBierenByNaam = environment.backend + 'bieren/getByNaam';
     readonly urlGetAllBieren = environment.backend + 'bieren/getAll';
     readonly urlInsertBier = environment.backend + 'bieren/insert';
+    readonly urlUploadImageBier = environment.backend + 'bieren/uploadImage';
 
     constructor(private http: HttpClient) {
     }
@@ -42,13 +43,28 @@ export class BierenService {
                 ebc: bier.ebc,
                 temperatuur: bier.temperatuur,
                 gisting: bier.gisting,
-                glas: '',
-                afbeelding: '',
                 seizoen: bier.seizoen,
                 sinds: bier.sinds,
+                omschrijving: bier.omschrijving,
                 brouwerijID: bier.brouwerij,
                 biersoortID: bier.biersoort
             })
+            .subscribe(
+                req => {
+                    console.log(req);
+                },
+                err => {
+                    console.log('Error occured', err);
+                }
+            );
+    }
+
+    uploadImageBier(selectedImage, imageName) {
+        const uploadData = new FormData();
+        uploadData.append('afbeelding', selectedImage);
+        uploadData.append('afbeeldingNaam', imageName);
+
+        this.http.post(this.urlUploadImageBier, uploadData)
             .subscribe(
                 req => {
                     console.log(req);

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {BierenService} from '../../../../services/bieren.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -11,21 +11,25 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class IndexBierenComponent implements OnInit {
 
     bierenList$: Observable<any>;
+    bierenListJSON;
     dateToday = new Date();
     bierNaam = '';
     bierNaamOud = '';
     page;
 
-    constructor(private bierenService: BierenService, private router: Router, private route: ActivatedRoute) {    }
+    constructor(private bierenService: BierenService, private router: Router, private route: ActivatedRoute, private cdRef: ChangeDetectorRef) {    }
 
     ngOnInit() {
         this.route.queryParamMap.subscribe(queryParam => {
             this.bierNaam = queryParam.get('name');
             this.page = queryParam.get('page');
         });
+        this.cdRef.detectChanges();
 
-        if (this.bierNaam !== '') {
-            this.getBierenByNaam(this.bierNaam);
+        if (this.bierNaam !== null) {
+            this.bierenList$ = of(JSON.parse(localStorage.getItem('BierSearchArray')));
+        } else {
+            localStorage.removeItem('BierSearchArray');
         }
     }
 
@@ -36,14 +40,16 @@ export class IndexBierenComponent implements OnInit {
         if (naam !== '') {
             if (this.bierNaam !== this.bierNaamOud) {
                 this.getPage(1);
+                this.bierenList$ = this.bierenService.getBierenByNaam(this.bierNaam);
+                // save to localStorage
+                this.bierenList$.subscribe(val => localStorage.setItem('BierSearchArray', JSON.stringify(val)));
             } else {
                 this.getPage(this.page);
             }
         } else {
-            this.getPage(0);
+            localStorage.removeItem('BierSearchArray');
+            this.bierenList$ = of(JSON.parse(localStorage.getItem('BierSearchArray')));
         }
-
-        this.bierenList$ = this.bierenService.getBierenByNaam(this.bierNaam);
     }
 
     getPage(page) {

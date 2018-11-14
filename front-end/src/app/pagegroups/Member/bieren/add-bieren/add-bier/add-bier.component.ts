@@ -25,9 +25,13 @@ export class AddBierComponent implements OnInit {
     bierNaam$: Observable<any>;
     bierNaam = '';
 
+
+    isCollapsed = true;
     maxLengthTextarea = 800;
 
     form: FormGroup;
+    selectedImage = null;
+    imageName = null;
 
     constructor(
         private brouwerijenService: BrouwerijenService,
@@ -83,16 +87,33 @@ export class AddBierComponent implements OnInit {
     //
 
     addBier() {
+        // imageName aanmaken
+        let brouwerijNaam;
+        let bierNaam;
+
+        this.brouwerijNaam$.subscribe(val => brouwerijNaam = val.naam.replace(/[^a-z0-9_ ]/gi, '').toLowerCase());
+        bierNaam = this.form.value.naam.replace(/[^a-z0-9_ ]/gi, '').toLowerCase();
+
+        this.imageName = brouwerijNaam + '-' + bierNaam + '.jpg';
+        this.imageName = this.imageName.replace(/\s+/g, '-');
+
+        // imageNaam doorgeven
+        this.form.value.afbeelding = this.imageName;
+
         // brouwerijID doorgeven
         if (this.brouwerijNaam$ != null) {
             this.brouwerijNaam$.subscribe(val => this.form.value.brouwerij = val.id);
+            // console.log('werkt');
+        } else {
+            this.brouwerijenService.getBrouwerijenByNaam(this.form.value.brouwerij).subscribe(val => this.form.value.brouwerij = val.id);
+            console.log(this.brouwerijNaam$);
+            // this.brouwerijNaam$.subscribe(val => this.form.value.brouwerij = this.brouwerijNaam$['id']);
+            // this.addBier();
         }
 
-        // this.bierNaam$ = of(this.form.value);
 
-        console.log(this.form.value);
-
-        this.bierenService.insertBier(this.form.value);
+        // this.bierenService.insertBier(this.form.value);
+        this.onUpload(this.imageName);
     }
 
     //
@@ -107,10 +128,22 @@ export class AddBierComponent implements OnInit {
     // Functies brouwerijen
     //
 
+    deleteBrouwerijNaam() {
+        this.brouwerijNaam$ = of('');
+
+        // enable brouwerij input
+        this.form.controls['brouwerij'].enable();
+        this.isCollapsed = true;
+    }
+
     setBrouwerijNaam(brouwerij) {
         this.brouwerijNaam$ = of(brouwerij);
         console.log(brouwerij);
         this.brouwerijNaam$.subscribe(val => this.form.controls['brouwerij'].setValue(val.naam));
+
+        // disable brouwerij input
+        this.form.controls['brouwerij'].disable();
+        this.isCollapsed = false;
     }
 
     getAllBrouwerijen() {
@@ -137,10 +170,23 @@ export class AddBierComponent implements OnInit {
     hideBrouwerijDropdown() {
         setTimeout(() => {
             this.openBrouwerijItems$ = of(false);
-        }, 200);
+        }, 400);
     }
 
     showBrouwerijDropdown() {
         this.openBrouwerijItems$ = of(true);
+    }
+
+    //
+    // File upload
+    //
+    onFileSelected(event) {
+        this.selectedImage = event.target.files[0];
+    }
+
+    onUpload(imageName) {
+        console.log(imageName);
+        console.log(this.selectedImage);
+        this.bierenService.uploadImageBier(this.selectedImage, imageName);
     }
 }

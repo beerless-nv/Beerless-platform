@@ -118,18 +118,32 @@ input.input-dark {
   margin-top: 5px;
 }
 
+.textareaCounter {
+  padding-right: 40px;
+}
+
 .character-counter {
   position: absolute;
   right: 1px;
   bottom: 1px;
-  //z-index: 999;
   background-color: $super-light;
   border-top: 1px solid $muted-light;
   border-left: 1px solid $muted-light;
-  padding: 5px 10px;
+  padding: 5px 0;
   font-size: 10px;
   font-weight: bold;
   border-radius: 0.25rem 0 0.25rem 0;
+  width: 40px;
+  text-align: center;
+}
+
+.delete-input {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  padding: 10px;
 }
 
 //
