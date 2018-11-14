@@ -12,13 +12,12 @@ export class LoginService {
     readonly urlCheckUser = environment.backend + 'gebruikers/checkUser';
     readonly urlCheckPass = environment.backend + 'gebruikers/checkPass';
     readonly urlLogin = environment.backend + 'gebruikers/login';
+    userData$;
 
     constructor(private http: HttpClient) {
     }
 
     checkUser(username): Observable<any> {
-        // const params = new HttpParams().set('username', username);
-
         return this.http.post(this.urlCheckUser, {username: username})
             .pipe(
                 tap(req => console.log('get-request', req)),
@@ -33,18 +32,24 @@ export class LoginService {
     }
 
     checkPass(username, password) {
-        const params = new HttpParams()
-            .set('password', password)
-            .set('username', username);
-
-        return this.http.post(this.urlCheckPass, {params})
-            .subscribe(
-                req => {
-                    console.log(req);
-                },
-                err => {
-                    console.log('Error occured');
-                }
+        return this.http.post(this.urlCheckPass, 
+            {
+                username : username,
+                password : password
+            })
+            .pipe(
+                tap(req => console.log('get-request', req)),
+                catchError(
+                    (error) => {
+                        console.log(error);
+                        alert(error.message);
+                        return EMPTY;
+                    }),
+                share()
             );
+    }
+
+    getUserData(id){
+        
     }
 }

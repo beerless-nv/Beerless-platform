@@ -44,5 +44,6 @@ $router->group(['prefix' => 'gebruikers'], function () use ($router){
     $router->get('all', 'GebruikerController@getAll');
     $router->post('login', 'GebruikerController@login');
     $router->post('checkUser', 'GebruikerController@checkUserExists');
-    $router->post('checkPass', 'GebruikerController@checkUserPassword');
+    $router->post('checkPass', 'GebruikerController@checkPassword');
+    $router->post('getUserData', 'GebruikerController@getUserData');
 });
