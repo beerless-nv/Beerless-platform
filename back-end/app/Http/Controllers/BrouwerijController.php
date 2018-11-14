@@ -19,11 +19,12 @@ class BrouwerijController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function get(Request $request) {
+    public function get(Request $request)
+    {
         $id = $request->input('id');
-        if($id && Brouwerij::where('ID', $id)->exists()){
+        if ($id && Brouwerij::where('ID', $id)->exists()) {
             return response()->json(Brouwerij::where('ID', $id)->first());
-        } else{
+        } else {
             return "false";
         }
     }
@@ -35,9 +36,10 @@ class BrouwerijController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function getByNaam(Request $request){
+    public function getByNaam(Request $request)
+    {
         $naam = $request->input("naam");
-        if($naam){
+        if ($naam) {
             return response()->json(Brouwerij::whereRaw("LOWER(Brouwerij.naam) Like ?", ['%' . strtolower($naam) . '%'])->get());
         }
     }
@@ -48,7 +50,8 @@ class BrouwerijController extends BaseController
      * @uses App\Models\Brouwerij
      * @return Response
      */
-    public function getAll() { 
+    public function getAll()
+    {
         return response()->json(Brouwerij::get());
     }
 
@@ -57,7 +60,8 @@ class BrouwerijController extends BaseController
      *
      * @return Response
      */
-    public function getAllNaamId() {
+    public function getAllNaamId()
+    {
         return response()->json(Brouwerij::select('id', 'naam')->get());
     }
 
@@ -69,9 +73,10 @@ class BrouwerijController extends BaseController
      * @param Request $request
      * @return response
      */
-    public function insert(Request $request){
+    public function insert(Request $request)
+    {
         $naam = $request->input('naam');
-        if($naam){
+        if ($naam) {
             $brouwerij = new Brouwerij;
 
             $brouwerij->naam = $naam;
@@ -85,8 +90,8 @@ class BrouwerijController extends BaseController
             $brouwerij->aantalBieren = $request->input('aantalBieren');
             $brouwerij->contactID = $request->input('contactID');
 
-            $brouwerij->save();          
-        } else{
+            $brouwerij->save();
+        } else {
             return "false";
         }
         return $request;
@@ -99,12 +104,13 @@ class BrouwerijController extends BaseController
      * @param Request $request
      * @return void
      */
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         $id = $request->input('id');
-        if($id && Brouwerij::where('ID', $id)->exists()){
+        if ($id && Brouwerij::where('ID', $id)->exists()) {
             $brouwerij = Brouwerij::find($id);
             $brouwerij->delete();
-        } else{
+        } else {
             return "false";
         }
     }
@@ -117,10 +123,11 @@ class BrouwerijController extends BaseController
      * @param Request $request
      * @return Response
      */
-    public function update(Request $request){
+    public function update(Request $request)
+    {
         $id = $request->input('id');
         $naam = $request->input('naam');
-        if($naam && $id){
+        if ($naam && $id) {
             $brouwerij = Brouwerij::find($id);
 
             $brouwerij->naam = $naam;
@@ -133,8 +140,8 @@ class BrouwerijController extends BaseController
             $brouwerij->logo = $request->input('logo');
             $brouwerij->aantalBieren = $request->input('aantalBieren');
             $brouwerij->contactID = $request->input('contactID');
-            $brouwerij->save();           
-        } else{
+            $brouwerij->save();
+        } else {
             return "false";
         }
     }

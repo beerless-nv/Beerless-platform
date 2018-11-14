@@ -16,15 +16,16 @@ class BiersoortController extends BaseController
      * @uses App\Models\Biersoort
      * @return Response
      */
-    public function get(Request $request) {
+    public function get(Request $request)
+    {
         $id = $request->input('id');
-        if($id){
-            if(Biersoort::where('ID', $id)->exists()){
+        if ($id) {
+            if (Biersoort::where('ID', $id)->exists()) {
                 return Biersoort::where('ID', $id)->first();
-            } else{
+            } else {
                 return "false";
             }
-        } else{
+        } else {
             return "false";
         }
     }
@@ -35,7 +36,8 @@ class BiersoortController extends BaseController
      * @uses App\Models\Biersoort
      * @return Reponse
      */
-    public function getAll() {
+    public function getAll()
+    {
         return response()->json(Biersoort::get());
     }
 }

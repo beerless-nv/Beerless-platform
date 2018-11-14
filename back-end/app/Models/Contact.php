@@ -1,9 +1,10 @@
-<?php 
+<?php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Contact extends Model {
+class Contact extends Model
+{
 
     protected $fillable = [];
     protected $dates = [];
@@ -17,7 +18,8 @@ class Contact extends Model {
     ];
 
     // Relationships
-    public function brouwerij(){
+    public function brouwerij()
+    {
         return $this->hasOne('App\Models\Brouwerij', 'ContactID');
     }
 }

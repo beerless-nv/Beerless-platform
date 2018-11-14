@@ -17,7 +17,8 @@ class GebruikerController extends BaseController
      *
      * @return Response
      */
-    public function getAll(){
+    public function getAll()
+    {
         return response()->json(Gebruiker::get());
     }
 
@@ -37,62 +38,65 @@ class GebruikerController extends BaseController
      *
      * @return void
      */
-    public function signUp(Request $request){
-        $retVal;     
-        try{            
+    public function signUp(Request $request)
+    {
+        $retVal;
+        try {
             $email = $requst->input('email');
             $username = $request->input('username');
-            $password = $reuest->input('password');            
-            if($email && $username && $password){
-                if(!Gebruiker::where('gebruikersnaam', $username)->exists()){
-                    if(!Gebruiker::where('gebruikersnaam', $username)->exists()){}
-                } else{
+            $password = $reuest->input('password');
+            if ($email && $username && $password) {
+                if (!Gebruiker::where('gebruikersnaam', $username)->exists()) {
+                    if (!Gebruiker::where('gebruikersnaam', $username)->exists()) {
+                    }
+                } else {
                     $retVal->success = false;
                     $retVal->msg = 'Username already exists';
                 }
-            } else{
+            } else {
                 $retVal->success = false;
                 $retVal->msg = 'Invalid credentials';
-            }            
-        } catch (Exception $e){
+            }
+        } catch (Exception $e) {
             $retVal->success = 'error';
             $retVal->msg = $e->getMessage();
         } finally{
             return response()->json($retVal);
         }
-    }   
+    }
 
     /**
      * Checks wether a user has submitted valid credentials on login.
      * Takes the username and password as request parameters.
-     * 
+     *
      * @param Request $request
      * @return Response
      */
-    public function signIn(Request $request){   
-        $retVal;     
-        try{            
+    public function signIn(Request $request)
+    {
+        $retVal;
+        try {
             $username = $request->input('username');
             $password = $reuest->input('password');
-            if($username && $password){
-                if(Gebruiker::where('gebruikersnaam', $username)->exists()){
+            if ($username && $password) {
+                if (Gebruiker::where('gebruikersnaam', $username)->exists()) {
                     $user = Gebruiker::where('gebruikersnaam', $username)->first();
-                    if($password == $user->wachtwoord){
+                    if ($password == $user->wachtwoord) {
                         $retVal->success = true;
                         $retVal->user = $user;
-                    } else{
+                    } else {
                         $retVal->success = false;
                         $retVal->msg = 'Incorrect password';
                     }
-                } else{
+                } else {
                     $retVal->success = false;
                     $retVal->msg = 'User does not exist';
                 }
-            } else{
+            } else {
                 $retVal->success = false;
                 $retVal->msg = 'Invalid credentials';
-            }            
-        } catch (Exception $e){
+            }
+        } catch (Exception $e) {
             $retVal->success = 'error';
             $retVal->msg = $e->getMessage();
         } finally{
@@ -122,46 +126,49 @@ class GebruikerController extends BaseController
 
 
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $username = $request->input('username');
         $password = $request->input('password');
         $user = $this->checkUserExists($username);
-        if($user){
-            if($this->checkPassword($username, $password)){
+        if ($user) {
+            if ($this->checkPassword($username, $password)) {
                 return "succesfully logged in";
-
-            } else{
+            } else {
                 return "Incorrect password";
             }
-        } else{
+        } else {
             return "User doesn't exist";
         }
     }
 
-    public function checkUserExists(Request $request){
+    public function checkUserExists(Request $request)
+    {
         $username = $request->input('username');
-        if(Gebruiker::where('gebruikersnaam', $username)->exists() || Gebruiker::where('email', $username)->exists()){
+        if (Gebruiker::where('gebruikersnaam', $username)->exists() || Gebruiker::where('email', $username)->exists()) {
             return Gebruiker::select('id', 'gebruikersnaam')->where('gebruikersnaam', $username)->first();
-        } else{
+        } else {
             return json_encode(false);
         }
     }
 
-    public function checkPassword(Request $request){
+    public function checkPassword(Request $request)
+    {
         $password = $request->input('password');
         $username = $request->input('username');
-        if($password == Gebruiker::select("wachtwoord")->where('gebruikersnaam', $username)){
+        if ($password == Gebruiker::select("wachtwoord")->where('gebruikersnaam', $username)) {
             return response()->json(true);
-        } else{
+        } else {
             return response()->json(false);
         }
     }
 
-    public function getUserData(Request $request){
+    public function getUserData(Request $request)
+    {
         $id = $request->input('id');
-        if($id){
+        if ($id) {
             return response()->json(Gebruiker::select('gebruikersnaam', 'voornaam', 'achternaam', 'profielfoto', 'bio', 'land', 'provincie', 'plaats', 'timestamp')->where('ID', $id)->first());
-        } else{
+        } else {
             return null;
         }
     }

@@ -1,9 +1,10 @@
-<?php 
+<?php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Biersoort extends Model {
+class Biersoort extends Model
+{
 
     protected $fillable = [];
     protected $dates = [];
@@ -16,7 +17,8 @@ class Biersoort extends Model {
     ];
 
     // Relationships
-    public function bieren(){
+    public function bieren()
+    {
         return $this->hasMany('App\Models\Bier');
     }
 }

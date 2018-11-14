@@ -62,7 +62,8 @@ class BierController extends BaseController
         return response()->json(Bier::with('Biersoort')->with('Brouwerij')->get());
     }
 
-    public function uploadImage(Request $request) {
+    public function uploadImage(Request $request)
+    {
         $image = $request->file('afbeelding');
         $imageName = $request->file('afbeeldingNaam');
 
@@ -85,8 +86,7 @@ class BierController extends BaseController
 
             $image->store('avatars');
             return json_encode(true);
-        }
-        else {
+        } else {
             return json_encode(false);
         }
     }
@@ -181,6 +181,4 @@ class BierController extends BaseController
             return "false";
         }
     }
-
-
 }
