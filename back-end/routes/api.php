@@ -10,9 +10,9 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-//Route::get('/', function () {
+// Route::get('/', function () {
 //    return view('welcome');
-//});
+// });
 //
 //Route::prefix('brouwerijen')->group(function() {
 //    Route::get('all', 'BrouwerijController@getAll');
@@ -39,10 +39,10 @@ use Illuminate\Http\Request;
 //    Route::get('get', 'BiersoortController@get');
 //});
 //
-//Route::prefix('gebruikers')->group(function() {
-//    Route::get('all', 'GebruikerController@getAll');
-//    Route::post('login', 'GebruikerController@login');
-//    Route::post('checkUser', 'GebruikerController@checkUserExists');
-//    Route::post('checkPass', 'GebruikerController@checkPassword');
-//    Route::post('getUserData', 'GebruikerController@getUserData');
-//});
+// Route::group([
+//     'prefix' => 'gebruikers',
+//     'middleware' => 'api'
+// ], function($router) {    
+//     Route::post('signUp', 'GebruikerController@signUp');
+//     Route::post('signIn', 'GebruikerController@signIn'); 
+// });

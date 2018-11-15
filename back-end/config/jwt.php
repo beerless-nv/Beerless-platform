@@ -21,7 +21,7 @@ return [
     |
     */
 
-    'secret' => env('JWT_SECRET', 'zqbaNmKUKjkIx6o7bzfv2j10vybnYOBu'),
+    'secret' => env('JWT_SECRET', 'UPFF4jOw1QIitO9Poh5SmUVRfhXTYjzX'),
 
     /*
     |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ return [
     |
     */
 
-    'user' => App\Models\Gebruiker::class,
+    'user' => 'App\User',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,7 +85,7 @@ return [
     |
     */
 
-    'identifier' => 'ID',
+    'identifier' => 'id',
 
     /*
     |--------------------------------------------------------------------------

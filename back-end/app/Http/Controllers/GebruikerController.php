@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Gebruiker;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use JWTAuth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * Contains CRUD functions for table 'Gebruiker'.
@@ -87,30 +87,38 @@ class GebruikerController extends Controller
             'username.required' => 'username_required',
             'password.required' => 'password_required'
         ]);
+
         $retVal['success'] = false;
         $username = $request->input('username');
-        $credentials = $request->only('username', 'password');
-        try{
-            if( ! $token = JWTAuth::attempt([
-                'gebruikersnaam' => $request->input('username'),
-                'wachtwoord' => $request->input('password'),
-            ])){
-                if(Gebruiker::where('gebruikersnaam', $username)->exists()){
-                    $retVal['msg'] = 'password_incorrect';                        
+        $password = $request->input('password');
+        try{    
+
+            // Check user existance        
+            if(Gebruiker::where('gebruikersnaam', $username)->exists()){                
+                $user = Gebruiker::where('gebruikersnaam', $username)->first(); 
+
+                // Check password              
+                if($user->wachtwoord == bcrypt($password)){
+
+                    // Credentials are correct
+                    $retVal['success'] = true;
+                    $retVal['token'] = JWTAuth::fromUser($user);
+                    $retVal['user'] = $user;
+                    return response()->json( $retVal, 200);                     
                 } else{
-                    $retVal['msg'] = 'user_does_not_exist';                    
-                }
-                return response()->json( $retVal, 401);
+                    $retVal['msg'] = 'password_incorrect'; 
+                }                                  
+            } else{
+                $retVal['msg'] = 'user_does_not_exist';                    
             }
+
+            // Return failed login with failure msg
+            return response()->json( $retVal, 401);
+            
         } catch (JWTException $e){
             $retVal['success'] = 'error';
             $retVal['msg'] = 'token_creation_failed';
             return response()->json( $retVal, 500);
-        }
-
-        $retVal['success'] = true;
-        $retVal['token'] = $token;
-        $retVal['user'] = Gebruiker::where('gebruikersnaam', $username)->first();
-        return response()->json( $retVal, 200);
+        }        
     }
 }
