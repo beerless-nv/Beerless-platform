@@ -22,14 +22,20 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.formLogin = new FormGroup({
-            gebruikersnaam: new FormControl('tomboy'),
-            wachtwoord: new FormControl('test')
+            username: new FormControl('tomboy'),
+            password: new FormControl('test')
         });
     }
 
     login() {
         this.user = this.formLogin.value;
-        console.log('wachtwoord: ' + this.user['wachtwoord']);
+        this.loginService.signIn(this.user['username'], this.user['password']).subscribe(function(data) {
+            if(data['success'] == true){
+                console.log('Gebruiker ' + data['user']['gebruikersnaam'] + ' is correct ingelogd');
+            } else{
+                console.log(data['msg']);
+            }
+        });
         
     }
 }

@@ -5,11 +5,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Gebruiker extends Model
 {
-
-    protected $fillable = [];
+    protected $attributes = [
+        'voornaam' => '',
+        'achternaam' => '',
+        'profielfoto' => '',
+        'bio' => '',
+        'land' => '',
+        'provincie' => '',
+        'plaats' => ''
+    ];
+    protected $fillable = [
+        'gebruikersnaam',
+        'email',
+        'wachtwoord',
+        'voornaam',
+        'achternaam',
+        'profielfoto',
+        'bio',
+        'land',
+        'provincie',
+        'plaats'
+    ];
     protected $dates = [];
-    protected $table = "Gebruiker";
-    protected $primaryKey = "ID";
+    protected $hidden = ['wachtwoord'];
+    protected $table ='Gebruiker';
+    protected $primaryKey = 'ID';
     public $timestamps = false;
 
     public static $rules = [
