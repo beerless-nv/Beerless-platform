@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Gebruiker;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * Contains CRUD functions for table 'Gebruiker'.
@@ -33,84 +35,90 @@ class GebruikerController extends Controller
 
     /**
      * Creates a user based on email, username and password.
-     * Takes the email, username and password as request parameter.
      *
      * @return Response
      */
     public function signUp(Request $request){
-        $retVal;     
-        try{            
-            $retVal = array();
-            $email = $requst->input('email');
-            $username = $request->input('username');
-            $password = $reuest->input('password');            
-            if($email && $username && $password){
-                if(!Gebruiker::where('gebruikersnaam', $username)->exists()){
-                    if(!Gebruiker::where('email', $email)->exists()){
-                        $user = new Gebruiker;
-                        $user->gebruikersnaam = $username;
-                        $user->email = $email;
-                        $user->password = $password;
-                        $user->save();
+        // Validate incoming request
+        $this->validate($request, [
+            'username' => 'required|unique:gebruiker,gebruikersnaam',
+            'email' => 'required|email|unique:gebruiker',
+            'password' => 'required'
+        ],
+        [
+            'username.required' => 'username_required',
+            'username.unique' => 'username_not_unique',
+            'email.required' => 'email_required',
+            'email.email' => 'email_not_valid',
+            'email.unique' => 'email_not_unique',
+            'password.required' => 'password_required'
+        ]);
 
-                        $retVal['success'] = true;
-                        $retVal['user'] = $user;
-                    } else{
-                        $retVal['success'] = false;
-                        $retVal['msg'] = 'Email is already in use';
-                    }
-                } else{
-                    $retVal['success'] = false;
-                    $retVal['msg'] = 'Username already exists';
-                }
-            } else{
-                $retVal['success'] = false;
-                $retVal['msg'] = 'Invalid credentials';
-            }            
-        } catch (Exception $e){
-            $retVal['success'] = 'error';
-            $retVal['msg'] = $e->getMessage();
-        } finally{
-            return response()->json($retVal);
-        }
+        // Create new user based on input
+        $user = new Gebruiker([
+            'gebruikersnaam' => $request->input('username'),
+            'email' => $request->input('email'),
+            'wachtwoord' => bcrypt($request->input('password'))
+        ]);
+
+        // Store user in DB
+        $user->save();
+
+        // Return response
+        return response()->json( [
+            'success' => true,
+            'user' => $user
+        ], 201);
     }   
 
     /**
      * Checks wether a user has submitted valid credentials on login.
-     * Takes the username and password as request parameters.
      * 
      * @param Request $request
      * @return Response
      */
     public function signIn(Request $request){   
-        $retVal = array();           
-        try{         
-            $username = $request->input('username');
-            $password = $request->input('password');
+        // Validate incoming request
+        $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required'
+        ],
+        [
+            'username.required' => 'username_required',
+            'password.required' => 'password_required'
+        ]);
 
-            if($username && $password){
-                if(Gebruiker::where('gebruikersnaam', $username)->exists()){
-                    $user = Gebruiker::where('gebruikersnaam', $username)->first();
-                    if($password == $user->wachtwoord){
-                        $retVal['success'] = true;
-                        $retVal['user'] = $user;
-                    } else{
-                        $retVal['success'] = false;
-                        $retVal['msg'] = 'Incorrect password';
-                    }
+        $retVal['success'] = false;
+        $username = $request->input('username');
+        $password = $request->input('password');
+        try{    
+
+            // Check user existance        
+            if(Gebruiker::where('gebruikersnaam', $username)->exists()){                
+                $user = Gebruiker::where('gebruikersnaam', $username)->first(); 
+
+                // Check password              
+                if($user->wachtwoord == bcrypt($password)){
+
+                    // Credentials are correct
+                    $retVal['success'] = true;
+                    $retVal['token'] = JWTAuth::fromUser($user);
+                    $retVal['user'] = $user;
+                    return response()->json( $retVal, 200);                     
                 } else{
-                    $retVal['success'] = false;
-                    $retVal['msg'] = 'User does not exist';
-                }
+                    $retVal['msg'] = 'password_incorrect'; 
+                }                                  
             } else{
-                $retVal['success'] = false;
-                $retVal['msg'] = 'Invalid credentials';
-            }            
-        } catch (Exception $e){
+                $retVal['msg'] = 'user_does_not_exist';                    
+            }
+
+            // Return failed login with failure msg
+            return response()->json( $retVal, 401);
+            
+        } catch (JWTException $e){
             $retVal['success'] = 'error';
-            $retVal['msg'] = $e->getMessage();
-        } finally{
-            return response()->json($retVal);
-        }
+            $retVal['msg'] = 'token_creation_failed';
+            return response()->json( $retVal, 500);
+        }        
     }
 }

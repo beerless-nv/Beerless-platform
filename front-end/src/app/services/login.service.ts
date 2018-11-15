@@ -18,7 +18,7 @@ export class LoginService {
     constructor(private http: HttpClient) {
     }
 
-    checkUser(username, password): Observable<any> {
+    signIn(username, password): Observable<any> {
         return this.http.post(this.urlSignIn, 
             {
                 username : username,
