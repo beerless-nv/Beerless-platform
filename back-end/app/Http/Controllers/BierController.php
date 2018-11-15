@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-//use Laravel\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Bier;
@@ -59,34 +58,15 @@ class BierController extends Controller
         return response()->json(Bier::with('Biersoort')->with('Brouwerij')->get());
     }
 
-//    public function uploadImage(Request $request)
-//    {
-//        $image = $request->file('afbeelding');
-//        $imageName = $request->file('afbeeldingNaam');
-//
-//        if ($image) {
-////            $filesystem = new Filesystem(new Adapter([
-////                'host'     => 'ftp.beerless.be',
-////                'username' => 'beerle1q',
-////                'password' => 'sselreeB1998',
-////
-////                // Optional FTP Settings...
-////                'port'     => 21,
-////                'root'     => '/assets/images/',
-////                // 'passive'  => true,
-////                // 'ssl'      => true,
-////                // 'timeout'  => 30,
-////            ]));
-////            $filesystem->put($imageName, File::get($image));
-//
-////            Storage::disk('local')->put('file.jpg', $image);
-//
-//            $image->store('avatars');
-//            return json_encode(true);
-//        } else {
-//            return json_encode(false);
-//        }
-//    }
+    public function uploadImage(Request $request)
+    {
+        $image = $request->file('afbeelding');
+        $imageName = "/bier/" . $request->input('afbeeldingPad') . $request->input('afbeeldingNaam');
+
+        if ($image) {
+            Storage::disk('ftp')->put($imageName, File::get($image));
+        }
+    }
 
     /**
      * Insert an item into table 'Bier'.
@@ -100,31 +80,31 @@ class BierController extends Controller
     {
         $postdata = $request->all();
 
-//        if ($request->input('naam')) {
-//            $bier = new Bier;
-//
-//            $bier->naam = $request->input('naam');
-//            $bier->alcoholpercentage = $request->input('alcoholpercentage');
-//            $bier->IBU = $request->input('ibu');
-//            $bier->EBC = $request->input('ebc');
-////            $bier->ingredienten = $request->input('ingredienten');
-//            $bier->temperatuur = $request->input('temperatuur');
-//            $bier->gisting = $request->input('gisting');
-////            $bier->glas = $request->input('glas');
-////            $bier->afbeelding = $request->input('afbeelding');
-//            $bier->seizoen = $request->input('seizoen');
-//            $bier->sinds = $request->input('sinds');
-//            $bier->omschrijving = $request->input('omschrijving');
-//            $bier->brouwerijID = $request->input('brouwerijID');
-//            $bier->biersoortID = $request->input('biersoortID');
-//
-//            $bier->save();
-//
-//            return respnse()->json($bier);
-//        } else {
-//            return respnse()->json("geen naam");
-//        }
-        return response()->json($postdata);
+        if ($request->input('naam')) {
+            $bier = new Bier;
+
+            $bier->naam = $request->input('naam');
+            $bier->alcoholpercentage = $request->input('alcoholpercentage');
+            $bier->IBU = $request->input('ibu');
+            $bier->EBC = $request->input('ebc');
+//            $bier->ingredienten = $request->input('ingredienten');
+            $bier->temperatuur = $request->input('temperatuur');
+            $bier->gisting = $request->input('gisting');
+//            $bier->glas = $request->input('glas');
+            $bier->afbeelding = $request->input('afbeelding');
+            $bier->logo = $request->input('logo');
+            $bier->seizoen = $request->input('seizoen');
+            $bier->sinds = $request->input('sinds');
+            $bier->omschrijving = $request->input('omschrijving');
+            $bier->brouwerijID = $request->input('brouwerijID');
+            $bier->biersoortID = $request->input('biersoortID');
+
+            $bier->save();
+
+            return response()->json($bier);
+        } else {
+            return response()->json("geen naam");
+        }
     }
 
     /**

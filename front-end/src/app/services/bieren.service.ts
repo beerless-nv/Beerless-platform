@@ -45,6 +45,8 @@ export class BierenService {
                 gisting: bier.gisting,
                 seizoen: bier.seizoen,
                 sinds: bier.sinds,
+                afbeelding: bier.afbeelding,
+                logo: bier.logo,
                 omschrijving: bier.omschrijving,
                 brouwerijID: bier.brouwerij,
                 biersoortID: bier.biersoort
@@ -59,10 +61,13 @@ export class BierenService {
             );
     }
 
-    uploadImageBier(selectedImage, imageName) {
+    uploadImageBier(selectedImage, imageName, imagePath) {
         const uploadData = new FormData();
         uploadData.append('afbeelding', selectedImage);
         uploadData.append('afbeeldingNaam', imageName);
+        uploadData.append('afbeeldingPad', imagePath);
+
+        console.log(uploadData);
 
         this.http.post(this.urlUploadImageBier, uploadData)
             .subscribe(

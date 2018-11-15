@@ -15,11 +15,6 @@ $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
 
-
-//headers
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: *');
-header('Access-Control-Allow-Headers: *');
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces
@@ -45,11 +40,6 @@ $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
     App\Exceptions\Handler::class
 );
-
-//$app->middleware([
-//    //App\Http\Middleware\ExampleMiddleware::class
-//    App\Http\Middleware\CorsMiddleware::class
-//]);
 
 /*
 |--------------------------------------------------------------------------

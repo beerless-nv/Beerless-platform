@@ -9,6 +9,7 @@ import {EMPTY, Observable} from 'rxjs';
 })
 export class LoginService {
 
+    readonly urlSignIn = environment.backend + 'gebruikers/signIn';
     readonly urlCheckUser = environment.backend + 'gebruikers/checkUser';
     readonly urlCheckPass = environment.backend + 'gebruikers/checkPass';
     readonly urlLogin = environment.backend + 'gebruikers/login';
@@ -17,28 +18,18 @@ export class LoginService {
     constructor(private http: HttpClient) {
     }
 
-    checkUser(username): Observable<any> {
-        return this.http.post(this.urlCheckUser, {username: username})
-            .pipe(
-                tap(req => console.log('get-request', req)),
-                catchError(
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                        return EMPTY;
-                    }),
-                share()
-            );
-    }
-
-    checkPass(username, password) {
-        return this.http.post(this.urlCheckPass, 
+    checkUser(username, password): Observable<any> {
+        return this.http.post(this.urlSignIn, 
             {
                 username : username,
                 password : password
-            })
-            .pipe(
-                tap(req => console.log('get-request', req)),
+            }).pipe(
+                tap(function(req) {                    
+                    if(req['success'] == true){
+                        this.userData = req['user'];
+                        console.log('user', this.userData);
+                    }
+                }),
                 catchError(
                     (error) => {
                         console.log(error);
@@ -46,10 +37,6 @@ export class LoginService {
                         return EMPTY;
                     }),
                 share()
-            );
-    }
-
-    getUserData(id){
-        
+            )
     }
 }

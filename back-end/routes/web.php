@@ -45,7 +45,6 @@ Route::prefix('biersoorten')->group(function() {
 Route::prefix('gebruikers')->group(function() {
     Route::get('all', 'GebruikerController@getAll');
     Route::post('login', 'GebruikerController@login');
-    Route::post('checkUser', 'GebruikerController@checkUserExists');
-    Route::post('checkPass', 'GebruikerController@checkPassword');
-    Route::post('getUserData', 'GebruikerController@getUserData');
+    Route::post('signUp', 'GebruikerController@signUp');
+    Route::post('signIn', 'GebruikerController@signIn');    
 });
