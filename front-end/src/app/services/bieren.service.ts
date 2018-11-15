@@ -10,7 +10,7 @@ import {environment} from '../../environments/environment';
 export class BierenService {
 
     readonly urlGetBierenByNaam = environment.backend + 'bieren/getByNaam';
-    readonly urlGetAllBieren = environment.backend + 'bieren/getAll';
+    readonly urlGetAllBieren = environment.backend + 'bieren/all';
     readonly urlInsertBier = environment.backend + 'bieren/insert';
     readonly urlUploadImageBier = environment.backend + 'bieren/uploadImage';
 
