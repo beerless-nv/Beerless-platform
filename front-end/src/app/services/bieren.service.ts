@@ -11,6 +11,7 @@ export class BierenService {
 
     readonly urlGetBierenByNaam = environment.backend + 'bieren/getByNaam';
     readonly urlGetAllBieren = environment.backend + 'bieren/all';
+    readonly urlGetBierenNewest = environment.backend + 'bieren/getNewest';
     readonly urlInsertBier = environment.backend + 'bieren/insert';
     readonly urlUploadImageBier = environment.backend + 'bieren/uploadImage';
 
@@ -22,6 +23,20 @@ export class BierenService {
             .set('naam', naam);
 
         return this.http.get(this.urlGetBierenByNaam, {params})
+            .pipe(
+                tap(req => console.log('get-request', req)),
+                catchError(
+                    (error) => {
+                        console.log(error);
+                        alert(error.message);
+                        return EMPTY;
+                    }),
+                share()
+            );
+    }
+
+    getBierenNewest(): Observable<any> {
+        return this.http.get(this.urlGetBierenNewest)
             .pipe(
                 tap(req => console.log('get-request', req)),
                 catchError(

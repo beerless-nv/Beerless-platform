@@ -1,9 +1,10 @@
 <div class="d-flex align-items-center mb-2">
     <div class="pr-4">
-        <img src="{{ item.image }}" alt="" class="bieren-sidebar-image">
+        <img src="{{item.logo}}" alt="logo {{item.naam}}" [ngbCollapse]="item.logo!= ' '" class="bieren-sidebar-image">
+        <img src="/src/assets/images/bier_no_image.svg" alt="bier zonder afbeelding" [ngbCollapse]="item.logo == ' '" class="bieren-sidebar-image">
     </div>
     <div class="mr-4 truncate-text">
-        <a routerLink="/bieren" class="link-black-yellow font-weight-bold m-0 small" ngbTooltip="naam bier">{{ item.name }}</a>
-        <p class="my-0 small"><a routerLink="/bieren" class="link-black-yellow">{{item.brewery}}</a></p>
+        <a routerLink="/bieren" class="link-black-yellow font-weight-bold m-0 small" ngbTooltip="naam bier">{{item.naam}}</a>
+        <p class="my-0 small"><a routerLink="/bieren" class="link-black-yellow">{{item.brouwerij.naam}}</a></p>
     </div>
 </div>

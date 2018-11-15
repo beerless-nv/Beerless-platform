@@ -5,6 +5,7 @@ import {HomeComponent} from './pagegroups/Visitor/home/home.component';
 import {LoginComponent} from './pagegroups/Visitor/login/login.component';
 import {IndexBierenComponent} from './pagegroups/Visitor/bieren/index-bieren/index-bieren.component';
 import {AddBierenComponent} from './pagegroups/Member/bieren/add-bieren/add-bieren.component';
+import {DetailBierenComponent} from "./pagegroups/Visitor/bieren/detail-bieren/detail-bieren.component";
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
     // All pages from BIEREN
     {path: 'beers', component: IndexBierenComponent},
     {path: 'beers/add', component: AddBierenComponent},
+    {path: 'beers/detail/:id', component: DetailBierenComponent},
     // Homepage doorverwijzen naar home
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     // Niet gedefinieerde routes doorverwijzen naar error page

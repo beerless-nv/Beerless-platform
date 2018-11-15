@@ -30,6 +30,7 @@ Route::prefix('brouwerijen')->group(function() {
 Route::prefix('bieren')->group(function() {
     Route::get('all', 'BierController@getAll');
     Route::get('getByNaam', 'BierController@getByNaam');
+    Route::get('getNewest', 'BierController@getNewest');
     Route::get('get', 'BierController@get');
     Route::post('uploadImage', 'BierController@uploadImage');
     Route::post('insert', 'BierController@insert');

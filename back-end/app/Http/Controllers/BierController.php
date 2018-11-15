@@ -48,6 +48,11 @@ class BierController extends Controller
         }
     }
 
+    public function getNewest()
+    {
+        return response()->json(Bier::with('Brouwerij')->latest('timestampCreated')->take(5)->get());
+    }
+
     /**
      * Returns a JSON array of all rows in table 'Bier'
      *
@@ -57,6 +62,12 @@ class BierController extends Controller
     {
         return response()->json(Bier::with('Biersoort')->with('Brouwerij')->get());
     }
+
+    /**
+     * Loads image to server
+     *
+     * @param Request $request
+     */
 
     public function uploadImage(Request $request)
     {
