@@ -35,7 +35,7 @@ export class BierenService {
     }
 
     insertBier(bier) {
-        return this.http.post(this.urlInsertBier,
+        this.http.post(this.urlInsertBier,
             {
                 naam: bier.naam,
                 alcoholpercentage: bier.abv,

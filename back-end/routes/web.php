@@ -11,39 +11,41 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', function () {
+    return view('welcome');
 });
 
-$router->group(['prefix' => 'brouwerijen'], function () use ($router) {
-    $router->get('all', 'BrouwerijController@getAll');
-    $router->get('allNaamId', 'BrouwerijController@getAllNaamId');
-    $router->get('getByNaam', 'BrouwerijController@getByNaam');
-    $router->get('get', 'BrouwerijController@get');
-    $router->post('insert', 'BrouwerijController@insert');
-    $router->post('delete', 'BrouwerijController@delete');
-    $router->post('update', 'BrouwerijController@update');
+Route::prefix('brouwerijen')->group(function() {
+    Route::get('all', 'BrouwerijController@getAll');
+    Route::get('allNaamId', 'BrouwerijController@getAllNaamId');
+    Route::get('getByNaam', 'BrouwerijController@getByNaam');
+    Route::get('get', 'BrouwerijController@get');
+    Route::post('insert', 'BrouwerijController@insert');
+    Route::post('delete', 'BrouwerijController@delete');
+    Route::post('update', 'BrouwerijController@update');
 });
 
-$router->group(['prefix' => 'bieren'], function () use ($router) {
-    $router->get('all', 'BierController@getAll');
-    $router->get('getByNaam', 'BierController@getByNaam');
-    $router->get('get', 'BierController@get');
-    $router->post('uploadImage', 'BierController@uploadImage');
-    $router->post('insert', 'BierController@insert');
-    $router->post('delete', 'BierController@delete');
-    $router->post('update', 'BierController@update');
+Route::prefix('bieren')->group(function() {
+    Route::get('all', 'BierController@getAll');
+    Route::get('getByNaam', 'BierController@getByNaam');
+    Route::get('get', 'BierController@get');
+    Route::post('uploadImage', 'BierController@uploadImage');
+    Route::post('insert', 'BierController@insert');
+    Route::post('delete', 'BierController@delete');
+    Route::post('update', 'BierController@update');
 });
 
-$router->group(['prefix' => 'biersoorten'], function () use ($router) {
-    $router->get('all', 'BiersoortController@getAll');
-    $router->get('get', 'BiersoortController@get');
+Route::prefix('biersoorten')->group(function() {
+    Route::get('all', 'BiersoortController@getAll');
+    Route::get('get', 'BiersoortController@get');
 });
 
-$router->group(['prefix' => 'gebruikers'], function () use ($router) {
-    $router->get('all', 'GebruikerController@getAll');
-    $router->post('login', 'GebruikerController@login');
-    $router->post('checkUser', 'GebruikerController@checkUserExists');
-    $router->post('checkPass', 'GebruikerController@checkPassword');
-    $router->post('getUserData', 'GebruikerController@getUserData');
+Route::prefix('gebruikers')->group(function() {
+    Route::get('all', 'GebruikerController@getAll');
+    Route::post('login', 'GebruikerController@login');
+    Route::post('checkUser', 'GebruikerController@checkUserExists');
+    Route::post('checkPass', 'GebruikerController@checkPassword');
+    Route::post('getUserData', 'GebruikerController@getUserData');
 });

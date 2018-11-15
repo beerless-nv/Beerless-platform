@@ -112,8 +112,8 @@ export class AddBierComponent implements OnInit {
         }
 
 
-        // this.bierenService.insertBier(this.form.value);
-        this.onUpload(this.imageName);
+        this.bierenService.insertBier(this.form.value);
+        // this.onUpload(this.imageName);
     }
 
     //

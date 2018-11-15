@@ -19,6 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        //
+        'http://localhost/Beerless-platform/back-end/public/api/gebruikers/login',
+        'api/gebruikers/login'
     ];
 }

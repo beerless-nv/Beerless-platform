@@ -98,32 +98,33 @@ class BierController extends Controller
      */
     public function insert(Request $request)
     {
-//        $postdata = $request->all();
+        $postdata = $request->all();
 
-        if ($request->input('naam')) {
-            $bier = new Bier;
-
-            $bier->naam = $request->input('naam');
-            $bier->alcoholpercentage = $request->input('alcoholpercentage');
-            $bier->IBU = $request->input('ibu');
-            $bier->EBC = $request->input('ebc');
-//            $bier->ingredienten = $request->input('ingredienten');
-            $bier->temperatuur = $request->input('temperatuur');
-            $bier->gisting = $request->input('gisting');
-//            $bier->glas = $request->input('glas');
-//            $bier->afbeelding = $request->input('afbeelding');
-            $bier->seizoen = $request->input('seizoen');
-            $bier->sinds = $request->input('sinds');
-            $bier->omschrijving = $request->input('omschrijving');
-            $bier->brouwerijID = $request->input('brouwerijID');
-            $bier->biersoortID = $request->input('biersoortID');
-
-            $bier->save();
-
-            return $bier;
-        } else {
-            return "geen naam";
-        }
+//        if ($request->input('naam')) {
+//            $bier = new Bier;
+//
+//            $bier->naam = $request->input('naam');
+//            $bier->alcoholpercentage = $request->input('alcoholpercentage');
+//            $bier->IBU = $request->input('ibu');
+//            $bier->EBC = $request->input('ebc');
+////            $bier->ingredienten = $request->input('ingredienten');
+//            $bier->temperatuur = $request->input('temperatuur');
+//            $bier->gisting = $request->input('gisting');
+////            $bier->glas = $request->input('glas');
+////            $bier->afbeelding = $request->input('afbeelding');
+//            $bier->seizoen = $request->input('seizoen');
+//            $bier->sinds = $request->input('sinds');
+//            $bier->omschrijving = $request->input('omschrijving');
+//            $bier->brouwerijID = $request->input('brouwerijID');
+//            $bier->biersoortID = $request->input('biersoortID');
+//
+//            $bier->save();
+//
+//            return respnse()->json($bier);
+//        } else {
+//            return respnse()->json("geen naam");
+//        }
+        return response()->json($postdata);
     }
 
     /**
