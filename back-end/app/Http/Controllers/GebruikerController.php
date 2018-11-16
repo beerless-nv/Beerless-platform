@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use App\Models\Gebruiker;
+
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+
+use App\Models\Gebruiker;
 
 /**
  * Contains CRUD functions for table 'Gebruiker'.
@@ -58,7 +61,7 @@ class GebruikerController extends Controller
         $user = new Gebruiker([
             'gebruikersnaam' => $request->input('username'),
             'email' => $request->input('email'),
-            'wachtwoord' => bcrypt($request->input('password'))
+            'wachtwoord' => Hash::make($request->input('password'))
         ]);
 
         // Store user in DB
@@ -73,6 +76,7 @@ class GebruikerController extends Controller
 
     /**
      * Checks wether a user has submitted valid credentials on login.
+     * Returns a valid token if correct.
      * 
      * @param Request $request
      * @return Response
@@ -98,7 +102,7 @@ class GebruikerController extends Controller
                 $user = Gebruiker::where('gebruikersnaam', $username)->first(); 
 
                 // Check password              
-                if($user->wachtwoord == bcrypt($password)){
+                if(Hash::check($password, $user->wachtwoord)){
 
                     // Credentials are correct
                     $retVal['success'] = true;
@@ -107,6 +111,8 @@ class GebruikerController extends Controller
                     return response()->json( $retVal, 200);                     
                 } else{
                     $retVal['msg'] = 'password_incorrect'; 
+                    $retVal['incoming_hash'] = bcrypt($password);
+                    $retVal['saved_hash'] = $user->wachtwoord;
                 }                                  
             } else{
                 $retVal['msg'] = 'user_does_not_exist';                    
