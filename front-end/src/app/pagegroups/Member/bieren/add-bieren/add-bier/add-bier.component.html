@@ -1,12 +1,12 @@
 <div class="alert alert-danger d-flex align-items-center my-3" role="alert">
     <i class="fas fa-exclamation-circle ml-1 mr-4"></i>
     <div class="w-100">
-        Bekijk eerst de richtlijnen over het toevoegen van een nieuw bier, alvorens een bier toe te voegen.
+        Bekijk eerst de richtlijnen over het toevoegen van een nieuw bier, alvorens een bier toe te voegen. Nadat je een bier hebt toegevoegd zal dit eerst gecontroleerd worden door een moderator.
     </div>
 </div>
 <div>
     <h5 class="mb-3 mt-5">Bier toevoegen</h5>
-    <form novalidate [formGroup]="form" (ngSubmit)="addBier()" autocomplete="off">
+    <form [formGroup]="form" (ngSubmit)="addBier()" autocomplete="off">
         <!-- naam -->
         <div class="form-group">
             <label for="naam">Biernaam</label>
@@ -87,7 +87,6 @@
                 </textarea>
                 <div class="character-counter">{{maxLengthTextarea - omschrijving.value.length}}</div>
             </div>
-
             <div class="invalid-input" *ngIf="form.get('omschrijving').touched && form.get('omschrijving').invalid">
                 <div *ngIf="form.get('omschrijving').hasError('required')">
                     Omschrijving is vereist!
@@ -103,7 +102,7 @@
         <div class="form-group d-flex row">
             <!-- abv -->
             <div class="col-6 mb-sm-0 mb-3">
-                <label for="abv">ABV (%)</label>
+                <label for="abv">ABV <small>(%)</small></label>
                 <input type="number" class="form-control" id="abv" formControlName="abv" placeholder="8.5">
                 <div class="invalid-input" *ngIf="form.get('abv').touched && form.get('abv').invalid">
                     <div *ngIf="form.get('abv').hasError('required')">
@@ -128,11 +127,37 @@
                 </div>
             </div>
         </div>
-        <!-- afbeelding -->
-        <label for="afbeelding">Afbeelding bier</label>
+        <!-- logo -->
         <div class="form-group">
-            <input type="file" class="form-control" id="afbeelding" formControlName="afbeelding"
-                   (change)="onFileSelected($event)">
+            <label for="logo">Logo etiket <small>(.png, .gif, .jpg)</small></label>
+            <input type="file" accept="image/x-png,image/gif,image/jpeg" class="form-control" id="logo"
+                   formControlName="logo"
+                   (change)="onLogoSelected($event)"
+                   #logoInput>
+            <!--<div type="none" class="form-control file-upload truncate-text" (click)="logoInput.click()">-->
+                <!--<span>{{logoInput.value.split("\\").pop()}}</span>-->
+                <!--<a class="btn btn-super-light border d-sm-block d-none">Kies logo</a>-->
+                <!--<a class="btn btn-super-light border d-block d-sm-none">Kies</a>-->
+            <!--</div>-->
+            <div class="invalid-input" *ngIf="form.get('logo').touched && form.get('logo').hasError('required')">
+                Logo is vereist!
+            </div>
+        </div>
+        <!-- afbeelding -->
+        <div class="form-group">
+            <label for="afbeelding">Afbeelding bier <small>(.png, .gif, .jpg)</small></label>
+            <input type="file" accept="image/x-png,image/gif,image/jpeg" class="form-control" id="afbeelding"
+                   formControlName="afbeelding"
+                   (change)="onImageSelected($event)"
+                   #imageInput>
+            <!--<div type="none" class="form-control file-upload" (click)="imageInput.click()">-->
+                <!--<span>{{imageInput.value.split("\\").pop()}}</span>-->
+                <!--<a class="btn btn-super-light border d-sm-block d-none">Kies afbeelding</a>-->
+                <!--<a class="btn btn-super-light border d-block d-sm-none">Kies</a>-->
+            <!--</div>-->
+            <div class="invalid-input" *ngIf="form.get('afbeelding').touched && form.get('afbeelding').hasError('required')">
+                Afbeelding is vereist!
+            </div>
         </div>
         <div class="divider mt-5">
             <div class="divider-text">OPTIONEEL</div>
@@ -141,12 +166,12 @@
             <!-- ebc -->
             <div class="col-6">
                 <label for="ebc">EBC</label>
-                <input type="number" class="form-control" id="ebc" formControlName="ebc" placeholder="70">
+                <input type="number" class="form-control" id="ebc" formControlName="ebc" placeholder="70" min="0" max="100">
             </div>
             <!-- temperatuur -->
             <div class="col-6">
-                <label for="temperatuur">Temp. (°C)</label>
-                <input type="number" class="form-control" id="temperatuur" formControlName="temperatuur" placeholder="9">
+                <label for="temperatuur">Temp. <small>(°C)</small></label>
+                <input type="number" class="form-control" id="temperatuur" formControlName="temperatuur" placeholder="9" min="0" max="30">
             </div>
         </div>
         <!--<div class="form-group">-->
@@ -172,7 +197,7 @@
         <!-- sinds -->
         <div class="form-group">
             <label for="sinds">Gebrouwen sinds</label>
-            <input type="number" class="form-control" id="sinds" formControlName="sinds" placeholder="1998">
+            <input type="number" class="form-control" id="sinds" formControlName="sinds" placeholder="1998" min="0" max="{{dateToday | date:'yyyy'}}">
         </div>
         <!-- submit -->
         <div class="form-group text-center">

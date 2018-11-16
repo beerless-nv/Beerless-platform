@@ -11,8 +11,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class IndexBierenComponent implements OnInit {
 
     bierenList$: Observable<any>;
-    bierenListJSON;
-    dateToday = new Date();
+    newestBierenList$: Observable<any>;
     bierNaam = '';
     bierNaamOud = '';
     page;
@@ -31,6 +30,13 @@ export class IndexBierenComponent implements OnInit {
         } else {
             localStorage.removeItem('BierSearchArray');
         }
+
+        this.getBierenNewest();
+        // if (this.newestBierenList$ == null) {
+        //     this.getBierenNewest();
+        // } else {
+        //     local
+        // }
     }
 
     getBierenByNaam(naam) {
@@ -50,6 +56,10 @@ export class IndexBierenComponent implements OnInit {
             localStorage.removeItem('BierSearchArray');
             this.bierenList$ = of(JSON.parse(localStorage.getItem('BierSearchArray')));
         }
+    }
+
+    getBierenNewest() {
+        this.bierenService.getBierenNewest().subscribe(val => this.newestBierenList$ = val);
     }
 
     getPage(page) {

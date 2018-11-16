@@ -1,6 +1,6 @@
 <div class="bg-super-light">
     <div class="container">
-        <h1 class="pt-5 mb-3">Bieren</h1>
+        <h1 class="mb-3">Bieren</h1>
 
         <div class="col-12 p-0 d-flex flex-md-row flex-column mb-1">
             <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1">
@@ -69,10 +69,10 @@
                         <strong>Nieuwste bieren</strong>
                     </div>
                     <div class="card-body">
-                        <!--<app-bieren-sidebar *ngFor="let bier of bierenList; let i = index"-->
-                        <!--[item]="bier"-->
-                        <!--[index]="i"-->
-                        <!--&gt;</app-bieren-sidebar>-->
+                        <app-bieren-sidebar *ngFor="let bier of newestBierenList$; let i = index"
+                                            [item]="bier"
+                                            [index]="i">
+                        </app-bieren-sidebar>
 
                         <p class="text-center pt-3 mb-0 font-weight-bold"><a routerLink="/bieren">Meer bieren ...</a>
                         </p>

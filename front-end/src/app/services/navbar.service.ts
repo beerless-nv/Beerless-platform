@@ -7,9 +7,4 @@ export class NavbarService {
 
   constructor() { }
 
-  // noScroll() {
-  //   const body = document.getElementsByTagName('body');
-  //
-  //   event.target.classList.add('body-fixed');
-  // }
 }

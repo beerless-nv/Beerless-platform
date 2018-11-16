@@ -55,6 +55,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'ftp' => [
+            'driver'   => 'ftp',
+            'host'     => 'ftp.beerless.be',
+            'username' => 'beerle1q',
+            'password' => 'sselreeB1998',
+
+            // Optional FTP Settings...
+            'port'     => 21,
+            'root'     => '/assets/images/',
+            // 'passive'  => true,
+            // 'ssl'      => true,
+            // 'timeout'  => 30,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

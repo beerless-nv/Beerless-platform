@@ -17,6 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginModule} from './pagegroups/Visitor/login/login.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ReactiveFormsModule} from '@angular/forms';
+import { DetailBierenComponent } from './pagegroups/Visitor/bieren/detail-bieren/detail-bieren.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import {ReactiveFormsModule} from '@angular/forms';
         HeroSubscribeComponent,
         FooterComponent,
         TabsetComponent,
+        DetailBierenComponent,
     ],
     imports: [
         BrowserModule,

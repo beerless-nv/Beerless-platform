@@ -59,34 +59,30 @@ class BeerController extends Controller
         return response()->json(Beer::with('Beertype')->with('Brewery')->get());
     }
 
-//    public function uploadImage(Request $request)
-//    {
-//        $image = $request->file('afbeelding');
-//        $imageName = $request->file('afbeeldingNaam');
-//
-//        if ($image) {
-////            $filesystem = new Filesystem(new Adapter([
-////                'host'     => 'ftp.beerless.be',
-////                'username' => 'beerle1q',
-////                'password' => 'sselreeB1998',
-////
-////                // Optional FTP Settings...
-////                'port'     => 21,
-////                'root'     => '/assets/images/',
-////                // 'passive'  => true,
-////                // 'ssl'      => true,
-////                // 'timeout'  => 30,
-////            ]));
-////            $filesystem->put($imageName, File::get($image));
-//
-////            Storage::disk('local')->put('file.jpg', $image);
-//
-//            $image->store('avatars');
-//            return json_encode(true);
-//        } else {
-//            return json_encode(false);
-//        }
-//    }
+    /**
+     * Undocumented function
+     *
+     * @return Response
+     */
+    public function getNewest()
+    {
+        return response()->json(Bier::with('Brouwerij')->latest('timestampCreated')->take(5)->get());
+    }
+
+    /**
+     * Loads image to server
+     *
+     * @param Request $request
+     */
+    public function uploadImage(Request $request)
+    {
+        $image = $request->file('afbeelding');
+        $imageName = "/bier/" . $request->input('afbeeldingPad') . $request->input('afbeeldingNaam');
+
+        if ($image) {
+            Storage::disk('ftp')->put($imageName, File::get($image));
+        }
+    }
 
     /**
      * Insert an item into table 'Beer'.
