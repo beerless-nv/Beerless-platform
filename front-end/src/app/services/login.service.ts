@@ -9,8 +9,8 @@ import {EMPTY, Observable} from 'rxjs';
 })
 export class LoginService {
 
-    readonly urlSignIn = environment.backend + 'gebruikers/signIn';
-    readonly urlSignUp = environment.backend + 'gebruikers/signUp';
+    readonly urlSignIn = environment.backend + 'user/signIn';
+    readonly urlSignUp = environment.backend + 'user/signUp';
     userData$;
 
     constructor(private http: HttpClient) {

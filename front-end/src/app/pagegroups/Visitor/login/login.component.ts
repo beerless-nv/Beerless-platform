@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         this.user = this.formLogin.value;
         this.loginService.signIn(this.user['username'], this.user['password']).subscribe(function(data) {
             if(data['success'] == true){
-                console.log('Gebruiker ' + data['user']['gebruikersnaam'] + ' is correct ingelogd');
+                console.log('User ' + data['user']['username'] + ' is correctly logge in');
             } else{
                 console.log(data['msg']);
             }

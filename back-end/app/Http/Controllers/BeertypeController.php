@@ -3,24 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Biersoort;
+use App\Models\Beertype;
 
-class BiersoortController extends Controller
+class BeertypeController extends Controller
 {
     /**
-     * Returns a specific JSON object of type 'Biersoort'.
+     * Returns a specific JSON object of type 'Beertype'.
      * Takes the id as a request parameter.
      *
      * @param Request $request
-     * @uses App\Models\Biersoort
+     * @uses App\Models\Beertype
      * @return Response
      */
     public function get(Request $request)
     {
         $id = $request->input('id');
         if ($id) {
-            if (Biersoort::where('ID', $id)->exists()) {
-                return Biersoort::where('ID', $id)->first();
+            if (Beertype::where('ID', $id)->exists()) {
+                return Beertype::where('ID', $id)->first();
             } else {
                 return "false";
             }
@@ -30,13 +30,13 @@ class BiersoortController extends Controller
     }
 
     /**
-     * returns a JSON array of all columns in table 'Bier'
+     * returns a JSON array of all columns in table 'Beertype'
      *
-     * @uses App\Models\Biersoort
+     * @uses App\Models\Beertype
      * @return Reponse
      */
     public function getAll()
     {
-        return response()->json(Biersoort::get());
+        return response()->json(Beertype::get());
     }
 }

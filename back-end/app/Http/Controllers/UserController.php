@@ -9,25 +9,25 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-use App\Models\Gebruiker;
+use App\Models\User;
 
 /**
- * Contains CRUD functions for table 'Gebruiker'.
+ * Contains CRUD functions for table 'User'.
  */
-class GebruikerController extends Controller
+class UserController extends Controller
 {
     /**
-     * Returns a JSON array of all rows in table 'Gebruiker'
+     * Returns a JSON array of all rows in table 'User'
      *
      * @return Response
      */
     public function getAll()
     {
-        return response()->json(Gebruiker::get());
+        return response()->json(User::get());
     }
 
     /**
-     * Returns a specific JSON object of type 'Gebruiker'.
+     * Returns a specific JSON object of type 'User'.
      * Takes the id as a request parameter.
      *
      * @return void
@@ -44,8 +44,8 @@ class GebruikerController extends Controller
     public function signUp(Request $request){
         // Validate incoming request
         $this->validate($request, [
-            'username' => 'required|unique:gebruiker,gebruikersnaam',
-            'email' => 'required|email|unique:gebruiker',
+            'username' => 'required|unique:user,username',
+            'email' => 'required|email|unique:user',
             'password' => 'required'
         ],
         [
@@ -58,10 +58,10 @@ class GebruikerController extends Controller
         ]);
 
         // Create new user based on input
-        $user = new Gebruiker([
-            'gebruikersnaam' => $request->input('username'),
+        $user = new User([
+            'username' => $request->input('username'),
             'email' => $request->input('email'),
-            'wachtwoord' => Hash::make($request->input('password'))
+            'password' => Hash::make($request->input('password'))
         ]);
 
         // Store user in DB
@@ -98,11 +98,11 @@ class GebruikerController extends Controller
         try{    
 
             // Check user existance        
-            if(Gebruiker::where('gebruikersnaam', $username)->exists()){                
-                $user = Gebruiker::where('gebruikersnaam', $username)->first(); 
+            if(User::where('username', $username)->exists()){                
+                $user = User::where('username', $username)->first(); 
 
                 // Check password              
-                if(Hash::check($password, $user->wachtwoord)){
+                if(Hash::check($password, $user->password)){
 
                     // Credentials are correct
                     $retVal['success'] = true;
@@ -112,7 +112,7 @@ class GebruikerController extends Controller
                 } else{
                     $retVal['msg'] = 'password_incorrect'; 
                     $retVal['incoming_hash'] = bcrypt($password);
-                    $retVal['saved_hash'] = $user->wachtwoord;
+                    $retVal['saved_hash'] = $user->password;
                 }                                  
             } else{
                 $retVal['msg'] = 'user_does_not_exist';                    

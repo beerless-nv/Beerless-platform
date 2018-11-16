@@ -5,8 +5,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model
 {
+    // Default values
+    protected $attributes = [
+        'website' => '',
+        'twitter' => '',
+        'facebook' => '',
+        'instagram' => '',
+    ];
 
-    protected $fillable = [];
+    // Which values are allowed to be assigned through mass assignment
+    protected $fillable = [
+        'website',
+        'twitter',
+        'facebook',
+        'instagram',
+    ];
     protected $dates = [];
     protected $table = "Contact";
     protected $primaryKey = "ID";
@@ -18,8 +31,8 @@ class Contact extends Model
     ];
 
     // Relationships
-    public function brouwerij()
+    public function brewery()
     {
-        return $this->hasOne('App\Models\Brouwerij', 'ContactID');
+        return $this->hasOne('App\Models\Brewery', 'ContactID');
     }
 }
