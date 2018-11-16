@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.formLogin = new FormGroup({
-            username: new FormControl('tomboy'),
-            password: new FormControl('test')
+            username: new FormControl('test1'),
+            password: new FormControl('test1')
         });
     }
 
@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
         this.user = this.formLogin.value;
         this.loginService.signIn(this.user['username'], this.user['password']).subscribe(function(data) {
             if(data['success'] == true){
-                console.log('Gebruiker ' + data['user']['gebruikersnaam'] + ' is correct ingelogd');
+                console.log('User ' + data['user']['username'] + ' is correctly logge in');
             } else{
                 console.log(data['msg']);
             }

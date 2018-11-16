@@ -15,7 +15,7 @@ return [
 
     'defaults' => [
         'guard' => 'web',
-        'passwords' => 'gebruikers',
+        'passwords' => 'users',
     ],
 
     /*
@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'token',
-            'provider' => 'gebruikers',
+            'provider' => 'users',
         ],
 
         'api' => [
             'driver' => 'token',
-            'provider' => 'gebruikers',
+            'provider' => 'users',
         ],
     ],
 
@@ -65,9 +65,9 @@ return [
     */
 
     'providers' => [
-        'gebruikers' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Gebruiker::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [
