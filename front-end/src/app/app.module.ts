@@ -12,12 +12,12 @@ import {HomeComponent} from './pagegroups/Visitor/home/home.component';
 import {HeroSubscribeComponent} from './pagegroups/Visitor/home/hero/hero-subscribe/hero-subscribe.component';
 import {HomeModule} from './pagegroups/Visitor/home/home.module';
 import {FooterComponent} from './sharedComponents/footer/footer.component';
-import {BierenModule} from './pagegroups/Member/bieren/bieren.module';
+import {BeersModule} from './pagegroups/Member/beers/beers.module';
 import {HttpClientModule} from '@angular/common/http';
 import {LoginModule} from './pagegroups/Visitor/login/login.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ReactiveFormsModule} from '@angular/forms';
-import { DetailBierenComponent } from './pagegroups/Visitor/bieren/detail-bieren/detail-bieren.component';
+import { DetailBeersComponent } from './pagegroups/Visitor/beers/detail-beers/detail-beers.component';
 
 @NgModule({
     declarations: [
@@ -28,7 +28,7 @@ import { DetailBierenComponent } from './pagegroups/Visitor/bieren/detail-bieren
         HeroSubscribeComponent,
         FooterComponent,
         TabsetComponent,
-        DetailBierenComponent,
+        DetailBeersComponent,
     ],
     imports: [
         BrowserModule,
@@ -36,7 +36,7 @@ import { DetailBierenComponent } from './pagegroups/Visitor/bieren/detail-bieren
         NgBootstrapModule,
         NgxBootstrapModule,
         HomeModule,
-        BierenModule,
+        BeersModule,
         HttpClientModule,
         LoginModule,
         NgxPaginationModule,

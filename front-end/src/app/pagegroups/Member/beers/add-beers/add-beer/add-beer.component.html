@@ -1,0 +1,208 @@
+<div class="alert alert-danger d-flex align-items-center my-3" role="alert">
+    <i class="fas fa-exclamation-circle ml-1 mr-4"></i>
+    <div class="w-100">
+        Bekijk eerst de richtlijnen over het toevoegen van een nieuw bier, alvorens een bier toe te voegen. Nadat je een bier hebt toegevoegd zal dit eerst gecontroleerd worden door een moderator.
+    </div>
+</div>
+<div>
+    <h5 class="mb-3 mt-5">Bier toevoegen</h5>
+    <form [formGroup]="form" (ngSubmit)="addBeer()" autocomplete="off">
+        <!-- name -->
+        <div class="form-group">
+            <label for="name">Biernaam</label>
+            <input type="text" class="form-control" id="name" formControlName="name" placeholder="Gouden Carolus Classic" value="data.name">
+            <div class="invalid-input" *ngIf="form.get('name').touched && form.get('name').invalid">
+                <div *ngIf="form.get('name').hasError('required')">
+                    Biernaam is vereist!
+                </div>
+            </div>
+        </div>
+        <!-- brewery -->
+        <div class="form-group position-relative">
+            <label for="brewery">Brouwerij</label>
+            <div class="position-relative">
+                <input type="text" class="form-control" id="brewery" formControlName="brewery" placeholder="Brouwerij Het Anker"
+                       #brewery
+                       (keyup)="getBreweriesByName(brewery.value)"
+                       value="data.brewery"
+                       (blur)="hideBreweryDropdown()">
+                <i class="fas fa-times-circle text-danger delete-input" [ngbCollapse]="isCollapsed" (click)="deleteBreweryName(); brewery.value = ''" tooltip="Verwijder brouwerij"></i>
+            </div>
+            <div class="invalid-input" *ngIf="form.get('brewery').touched && form.get('brewery').invalid">
+                <div *ngIf="form.get('brewery').hasError('required')">
+                    Brouwerij is vereist!
+                </div>
+            </div>
+            <div class="invalid-input" *ngIf="form.get('brewery').touched && !(breweryName$ | async)">
+                Selecteer een brouwerij uit de lijst of maak een nieuwe aan.
+            </div>
+            <div [ngbCollapse]="!(openBreweryItems$ | async)" class="position-absolute bg-super-light border rounded mt-2 w-100 dropdown-brewery-search shadow">
+                <app-add-beer-brewery-item *ngFor="let brewery of (breweriesByNameList$ | async); let i = index"
+                                             [item]="brewery"
+                                             [index]="i"
+                                             (searchBrewery)="setBreweryName($event)"
+                                             (mouseup)="hideBreweryDropdown()"
+                ></app-add-beer-brewery-item>
+                <div class="col py-3 pb-4 text-center" (mouseup)="showBreweryDropdown()">
+                    <div><strong>Brouwerij bestaat nog niet?</strong></div>
+                    <a routerLink="" class="btn btn-primary px-5 mt-3 text-white" (mouseup)="hideBreweryDropdown()">Voeg brouwerij toe</a>
+                </div>
+            </div>
+        </div>
+        <!-- beertype -->
+        <div class="form-group">
+            <label for="beertype">Biersoort</label>
+            <select class="form-control dropdown-height-175" id="beertype" formControlName="beertype">
+                <option value="0" hidden selected>Kies biersoort</option>
+                <option *ngFor="let beertype of beertypesList" value="{{beertype.ID}}">{{beertype.name}}</option>
+            </select>
+            <div class="invalid-input" *ngIf="form.get('beertype').touched && form.get('beertype').invalid">
+                <div *ngIf="form.get('beertype').hasError('min')">
+                    Biersoort is vereist!
+                </div>
+            </div>
+        </div>
+        <!-- fermentation -->
+        <div class="form-group">
+            <label for="fermentation">Soort gisting</label>
+            <select class="form-control" id="fermentation" formControlName="fermentation" >
+                <option value="0" hidden selected>Kies type gisting</option>
+                <option value="Bovengisting">Bovengisting</option>
+                <option value="Ondergisting">Ondergisting</option>
+                <option value="Spontane gisting">Spontane gisting</option>
+            </select>
+            <div class="invalid-input" *ngIf="form.get('fermentation').touched && form.get('fermentation').invalid">
+                <div *ngIf="form.get('fermentation').hasError('min')">
+                    Gisting is vereist!
+                </div>
+            </div>
+        </div>
+        <!-- description -->
+        <div class="form-group">
+            <label for="description">Omschrijving</label>
+            <div class="position-relative">
+                <textarea type="text" class="form-control textareaCounter" id="description" formControlName="description" rows="4"
+                          placeholder="Gouden Carolus Classic vindt zijn oorsprong in de rijke Mechelse traditie..."
+                          #description>
+                </textarea>
+                <div class="character-counter">{{maxLengthTextarea - description.value.length}}</div>
+            </div>
+            <div class="invalid-input" *ngIf="form.get('description').touched && form.get('description').invalid">
+                <div *ngIf="form.get('description').hasError('required')">
+                    Omschrijving is vereist!
+                </div>
+                <div *ngIf="form.get('description').hasError('minlength')">
+                    Omschrijving is <strong>korter</strong> dan 50 karakters!
+                </div>
+                <div *ngIf="form.get('description').hasError('maxlength')">
+                    Omschrijving is <strong>langer</strong> dan {{ maxLengthTextarea }} karakters!
+                </div>
+            </div>
+        </div>
+        <div class="form-group d-flex row">
+            <!-- abv -->
+            <div class="col-6 mb-sm-0 mb-3">
+                <label for="abv">ABV <small>(%)</small></label>
+                <input type="number" class="form-control" id="abv" formControlName="abv" placeholder="8.5">
+                <div class="invalid-input" *ngIf="form.get('abv').touched && form.get('abv').invalid">
+                    <div *ngIf="form.get('abv').hasError('required')">
+                        ABV is vereist!
+                    </div>
+                    <div *ngIf="form.get('abv').hasError('pattern')">
+                        ABV heeft foute karakters!
+                    </div>
+                </div>
+            </div>
+            <!-- ibu -->
+            <div class="col-6">
+                <label for="ibu">IBU/EBU</label>
+                <input type="number" class="form-control" id="ibu" formControlName="ibu" placeholder="16">
+                <div class="invalid-input" *ngIf="form.get('ibu').touched && form.get('ibu').invalid">
+                    <div *ngIf="form.get('ibu').hasError('required')">
+                        IBU/EBU is vereist!
+                    </div>
+                    <div *ngIf="form.get('ibu').hasError('pattern')">
+                        IBU/EBU heeft foute karakters!
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- logo -->
+        <div class="form-group">
+            <label for="logo">Logo etiket <small>(.png, .gif, .jpg)</small></label>
+            <input type="file" accept="image/x-png,image/gif,image/jpeg" class="form-control" id="logo"
+                   formControlName="logo"
+                   (change)="onLogoSelected($event)"
+                   #logoInput>
+            <!--<div type="none" class="form-control file-upload truncate-text" (click)="logoInput.click()">-->
+                <!--<span>{{logoInput.value.split("\\").pop()}}</span>-->
+                <!--<a class="btn btn-super-light border d-sm-block d-none">Kies logo</a>-->
+                <!--<a class="btn btn-super-light border d-block d-sm-none">Kies</a>-->
+            <!--</div>-->
+            <div class="invalid-input" *ngIf="form.get('logo').touched && form.get('logo').hasError('required')">
+                Logo is vereist!
+            </div>
+        </div>
+        <!-- picture -->
+        <div class="form-group">
+            <label for="picture">Afbeelding bier <small>(.png, .gif, .jpg)</small></label>
+            <input type="file" accept="image/x-png,image/gif,image/jpeg" class="form-control" id="picture"
+                   formControlName="picture"
+                   (change)="onImageSelected($event)"
+                   #imageInput>
+            <!--<div type="none" class="form-control file-upload" (click)="imageInput.click()">-->
+                <!--<span>{{imageInput.value.split("\\").pop()}}</span>-->
+                <!--<a class="btn btn-super-light border d-sm-block d-none">Kies afbeelding</a>-->
+                <!--<a class="btn btn-super-light border d-block d-sm-none">Kies</a>-->
+            <!--</div>-->
+            <div class="invalid-input" *ngIf="form.get('picture').touched && form.get('picture').hasError('required')">
+                Afbeelding is vereist!
+            </div>
+        </div>
+        <div class="divider mt-5">
+            <div class="divider-text">OPTIONEEL</div>
+        </div>
+        <div class="form-group row mt-5">
+            <!-- ebc -->
+            <div class="col-6">
+                <label for="ebc">EBC</label>
+                <input type="number" class="form-control" id="ebc" formControlName="ebc" placeholder="70" min="0" max="100">
+            </div>
+            <!-- temperature -->
+            <div class="col-6">
+                <label for="temperature">Temp. <small>(°C)</small></label>
+                <input type="number" class="form-control" id="temperature" formControlName="temperature" placeholder="9" min="0" max="30">
+            </div>
+        </div>
+        <!--<div class="form-group">-->
+        <!--<label for="glas">Soort glas</label>-->
+        <!--<select name="glas" class="form-control" id="glas" required>-->
+        <!--<option value="0" hidden selected>Kies type glas</option>-->
+        <!--<option value="tulp">Tulp</option>-->
+        <!--<option value="vaasje">Vaasje</option>-->
+        <!--</select>-->
+        <!--</div>-->
+
+        <!-- season -->
+        <div class="form-group">
+            <label for="season">Seizoensgebonden</label>
+            <select class="form-control" id="season" formControlName="season" required>
+                <option value="0" hidden selected>Kies seizoen</option>
+                <option value="Winter">Winter</option>
+                <option value="Lente">Lente</option>
+                <option value="Zomer">Zomer</option>
+                <option value="Herfst">Herfst</option>
+            </select>
+        </div>
+        <!-- since -->
+        <div class="form-group">
+            <label for="since">Gebrouwen sinds</label>
+            <input type="number" class="form-control" id="since" formControlName="since" placeholder="1998" min="0" max="{{dateToday | date:'yyyy'}}">
+        </div>
+        <!-- submit -->
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary text-white px-5" [disabled]="form.invalid">Beer toevoegen</button>
+        </div>
+    </form>
+</div>
+

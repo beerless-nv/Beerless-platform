@@ -12307,7 +12307,7 @@ want men zou kunnen luisteren.
 
 Toen zegde hij hem stille in 't oor:
 
---Gij weet dat onze meester, de proost, van alle wijnen en bieren,
+--Gij weet dat onze meester, de proost, van alle wijnen en beers,
 alle vleezen en pluimdieren houdt als de kat van de melk. Zijne
 eetwaren sluit hij op in eene schapraai en zijne dranken in eenen
 kelder, waarvan de sleutels gedurig in zijne tassche steken. En hij

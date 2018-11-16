@@ -1,0 +1,85 @@
+<div class="bg-super-light">
+    <div class="container">
+        <h1 class="mb-3">Bieren</h1>
+
+        <div class="col-12 p-0 d-flex flex-md-row flex-column mb-1">
+            <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1">
+                <!--<form class="">-->
+                <div class="form-group mb-1 input-icon">
+                    <input type="text" class="form-control" placeholder="Zoek een beer" value="{{beerNaam}}"
+                           #beer
+                           (blur)="getBeersByNaam(beer.value)"
+                           (keyup.enter)="beer.blur()">
+                    <i class="fas fa-search"></i>
+                </div>
+                <!--</form>-->
+            </div>
+            <div class="mb-1 col-md-4 col-12 p-0 pl-md-3 pl-0 mb-md-0 mb-4 order-md-1 order-0">
+                <a routerLink="/beers/add" [queryParams]="{name: beer.value}" class="btn btn-yellow d-flex text-white">
+                    <i class="fas fa-plus my-auto mr-3"></i>
+                    <span class="d-lg-block d-none">Nieuw bier toevoegen</span>
+                    <span class="d-lg-none d-block">Bier toevoegen</span>
+                </a>
+            </div>
+
+        </div>
+        <small class="text-grey font-italic mb-5" [ngbCollapse]="!(beersList$ | async)?.length">
+            <strong>
+                {{ (beersList$ | async)?.length }} <span [ngbCollapse]="(beersList$ | async)?.length==1">resultaten</span>
+                <span [ngbCollapse]="(beersList$ | async)?.length!=1">resultaat</span>
+            </strong> voor <strong>"{{beer.value}}"</strong>
+        </small>
+
+        <div class="col-12 d-flex flex-md-row flex-column p-0">
+            <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 py-5 d-flex flex-column">
+                <div class="card mb-2" [ngbCollapse]="(beersList$ | async)?.length">
+                    <div class="card-body p-4 text-center">
+                        <strong [ngbCollapse]="(beersList$ | async)?.length || beer.value">
+                            Zoek een bier met de zoekbalk bovenaan.
+                        </strong>
+                        <div [ngbCollapse]="(beersList$ | async)?.length || !beer.value">
+                            <p>We hebben geen bieren gevonden die overeenkomen met uw zoekterm "<strong>{{beer.value}}</strong>".</p>
+                            <p class="m-0">Zorg ervoor dat de naam van het bier juist is gespeld of voeg het bier toe.</p>
+                        </div>
+                    </div>
+                </div>
+                <app-beer-item
+                        *ngFor="let beer of (beersList$ | async) | paginate: {itemsPerPage: 10, currentPage: page}; let i = index"
+                        [item]="beer"
+                        [index]="i"
+                ></app-beer-item>
+                <div class="card mb-2" [ngbCollapse]="!(beersList$ | async)?.length">
+                    <div class="card-body p-4 text-center">
+                        <strong>Het bier dat je zoekt niet gevonden? Voeg het toe.</strong>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <pagination-controls (pageChange)="getPage($event)"
+                                         [autoHide]="!(beersList$ | async)?.length"
+                                         class="pagination-style"
+                                         [ngbCollapse]="!(beersList$ | async)">
+                    </pagination-controls>
+                </div>
+            </div>
+            <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 py-5">
+
+
+                <div class="card beers-sidebar border-yellow-top">
+                    <div class="card-header">
+                        <strong>Nieuwste bieren</strong>
+                    </div>
+                    <div class="card-body">
+                        <app-beers-sidebar *ngFor="let beer of newestBeersList$; let i = index"
+                                            [item]="beer"
+                                            [index]="i">
+                        </app-beers-sidebar>
+
+                        <p class="text-center pt-3 mb-0 font-weight-bold"><a routerLink="/beers">Meer bieren ...</a>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
