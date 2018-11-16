@@ -1,5 +1,6 @@
 import {Component, OnInit, Testability} from '@angular/core';
 import {LoginService} from '../../../services/login.service';
+import {ErrorService} from '../../../services/error.service';
 import {Observable, of, Subscription} from 'rxjs';
 import {FormControl, FormGroup} from '@angular/forms';
 
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
 
     formLogin: FormGroup;
 
-    constructor(private loginService: LoginService) {
+    constructor(private loginService: LoginService, private errorService: ErrorService) {
     }
 
     ngOnInit() {
@@ -29,12 +30,8 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.user = this.formLogin.value;
-        this.loginService.signIn(this.user['username'], this.user['password']).subscribe(function(data) {
-            if(data['success'] == true){
-                console.log('User ' + data['user']['username'] + ' is correctly logge in');
-            } else{
-                console.log(data['msg']);
-            }
+        this.loginService.signIn(this.user['username'], this.user['password']).subscribe( data => {
+            console.log(data);
         });
         
     }

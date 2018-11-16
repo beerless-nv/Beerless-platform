@@ -2,7 +2,8 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {catchError, share, tap} from 'rxjs/operators';
-import {EMPTY, Observable} from 'rxjs';
+import {EMPTY, Observable, BehaviorSubject} from 'rxjs';
+import {User} from '../interfaces/user';
 
 @Injectable({
     providedIn: 'root'
@@ -11,11 +12,12 @@ export class LoginService {
 
     readonly urlSignIn = environment.backend + 'user/signIn';
     readonly urlSignUp = environment.backend + 'user/signUp';
-    userData$;
+    userData$: BehaviorSubject<User> = new BehaviorSubject(null);
 
     constructor(private http: HttpClient) {
     }
 
+    // Authenticate user through API
     signIn(username, password): Observable<any> {
         return this.http.post(this.urlSignIn, 
             {
@@ -24,8 +26,7 @@ export class LoginService {
             }).pipe(
                 tap(function(req) {                    
                     if(req['success'] == true){
-                        this.userData = req['user'];
-                        console.log('user', this.userData);
+                        console.log('success!');
                     }
                 }),
                 catchError(
@@ -37,6 +38,7 @@ export class LoginService {
             )
     }
 
+    // Create user through API
     signUp(username, email, password): Observable<any> {
         return this.http.post(this.urlSignUp,
             {
@@ -54,5 +56,15 @@ export class LoginService {
                 }),
                 share()
             )
+    }
+
+    // Locally log the user out
+    logout(){
+
+    }
+
+    // Locally log the user int
+    private setUserData(){
+
     }
 }
