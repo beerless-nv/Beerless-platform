@@ -2,6 +2,7 @@ import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {BeersService} from '../../../../services/beers.service';
 import {Observable, of} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-index-beers',

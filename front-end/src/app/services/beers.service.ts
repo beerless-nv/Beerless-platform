@@ -64,7 +64,7 @@ export class BeersService {
                 logo: beer.logo,
                 description: beer.description,
                 breweryID: beer.brewery,
-                beersoortID: beer.beertype
+                beertypeID: beer.beertype
             })
             .subscribe(
                 req => {
@@ -78,9 +78,9 @@ export class BeersService {
 
     uploadImageBeer(selectedImage, imageName, imagePath) {
         const uploadData = new FormData();
-        uploadData.append('afbeelding', selectedImage);
-        uploadData.append('afbeeldingName', imageName);
-        uploadData.append('afbeeldingPad', imagePath);
+        uploadData.append('image', selectedImage);
+        uploadData.append('imageName', imageName);
+        uploadData.append('imagePath', imagePath);
 
         console.log(uploadData);
 

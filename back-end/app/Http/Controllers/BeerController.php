@@ -66,7 +66,7 @@ class BeerController extends Controller
      */
     public function getNewest()
     {
-        return response()->json(Bier::with('Brouwerij')->latest('timestampCreated')->take(5)->get());
+        return response()->json(Beer::with('Brewery')->latest('timestampCreated')->take(5)->get());
     }
 
     /**
@@ -76,8 +76,8 @@ class BeerController extends Controller
      */
     public function uploadImage(Request $request)
     {
-        $image = $request->file('afbeelding');
-        $imageName = "/bier/" . $request->input('afbeeldingPad') . $request->input('afbeeldingNaam');
+        $image = $request->file('image');
+        $imageName = "/beer/" . $request->input('imagePath') . $request->input('imageName');
 
         if ($image) {
             Storage::disk('ftp')->put($imageName, File::get($image));
@@ -96,28 +96,29 @@ class BeerController extends Controller
     {
         $postdata = $request->all();
 
-       if ($request->input('naam')) {
+       if ($request->input('name')) {
            $beer = new Beer([
             'name' => $request->input('name'),
-            'ABV' => $request->input('ABV'),
-            'IBU' => $request->input('IBU'),
-            'EBC' =>  $request->input('EBC'),
+            'ABV' => $request->input('abv'),
+            'IBU' => $request->input('ibu'),
+            'EBC' =>  $request->input('ebc'),
             'temperature' => $request->input('temperature'),
             'fermentation' => $request->input('fermentation'),
             'glass' => $request->input('glass'),
             'picture' => $request->input('picture'),
+            'logo' => $request->input('logo'),
             'description' => $request->input('description'),
-            'season' => $request->input('picture'),
+            'season' => $request->input('season'),
             'since' => $request->input('since'),
-            'since' => $request->input('breweryID'),
-            'biertypeID' => $request->input('beertypeID'),
+            'breweryID' => $request->input('breweryID'),
+            'beertypeID' => $request->input('beertypeID'),
            ]);
 
            $beer->save();
 
-           return respnse()->json($beer);
+           return response()->json($beer);
        } else {
-           return respnse()->json("name_required");
+           return response()->json("name_required");
        }
         return response()->json($postdata);
     }
@@ -133,8 +134,8 @@ class BeerController extends Controller
     {
         $id = $request->input('id');
         if ($id && Beer::where('ID', $id)->exists()) {
-            $bier = Beer::find($id);
-            $bier->delete();
+            $beer = Beer::find($id);
+            $beer->delete();
         } else {
             return "false";
         }
@@ -153,7 +154,7 @@ class BeerController extends Controller
         $id = $request->input('id');
         $name = $request->input('name');
         if ($name && $id && Beer::where('ID', $id)->exists()) {
-            $beer = Bier::find($id);
+            $beer = Beer::find($id);
 
             $beer = array([
                 'name' => $request->input('name'),
@@ -167,11 +168,11 @@ class BeerController extends Controller
                 'description' => $request->input('description'),
                 'season' => $request->input('picture'),
                 'since' => $request->input('since'),
-                'since' => $request->input('breweryID'),
-                'biertypeID' => $request->input('beertypeID'),
+                'breweryID' => $request->input('breweryID'),
+                'beertypeID' => $request->input('beertypeID'),
                ]);
 
-            $bier->save();
+            $beer->save();
         } else {
             return "false";
         }

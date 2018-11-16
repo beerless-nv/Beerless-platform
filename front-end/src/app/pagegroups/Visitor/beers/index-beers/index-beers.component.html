@@ -6,9 +6,9 @@
             <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1">
                 <!--<form class="">-->
                 <div class="form-group mb-1 input-icon">
-                    <input type="text" class="form-control" placeholder="Zoek een beer" value="{{beerNaam}}"
+                    <input type="text" class="form-control" placeholder="Zoek een beer" value="{{beerName}}"
                            #beer
-                           (blur)="getBeersByNaam(beer.value)"
+                           (blur)="getBeersByName(beer.value)"
                            (keyup.enter)="beer.blur()">
                     <i class="fas fa-search"></i>
                 </div>

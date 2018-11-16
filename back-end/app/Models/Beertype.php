@@ -14,8 +14,8 @@ class Beertype extends Model
         'description',
     ];
     protected $dates = [];
-    protected $table ='Beertype';
-    protected $primaryKey = 'ID';
+    protected $table = "Beertype";
+    protected $primaryKey = "ID";
     public $timestamps = false;
     // const CREATED_AT = 'timestampCreated';
     // const UPDATED_AT = 'timestampUpdate';

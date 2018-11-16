@@ -2,8 +2,8 @@
 <div class="card mb-2 card-hover">
     <div class="card-body p-4 d-flex align-items-center">
         <div class="pr-4">
-            <img src="{{item.logo}}" alt="logo {{item.name}}" [ngbCollapse]="item.logo!= ' '" class="bier-item-image">
-            <img src="/src/assets/images/bier_no_image.svg" alt="bier zonder afbeelding" [ngbCollapse]="item.logo == ' '" class="bier-item-image">
+            <img src="{{environment.beerLogoURL + item.logo}}" alt="logo {{item.name}}" [ngbCollapse]="!item.logo" class="bier-item-image">
+            <img src="/src/assets/images/bier_no_image.svg" alt="bier zonder afbeelding" [ngbCollapse]="item.logo" class="bier-item-image">
         </div>
         <div class="mr-4">
             <a routerLink="/beers/detail/{{item.ID}}" class="link-black-yellow font-weight-bold m-0">{{item.name}}</a>
