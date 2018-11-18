@@ -3,22 +3,24 @@ import {BeersService} from '../../../../services/beers.service';
 import {Observable, of} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {environment} from '../../../../../environments/environment';
+import {delay, finalize, share} from "rxjs/operators";
 
 @Component({
-  selector: 'app-index-beers',
-  templateUrl: './index-beers.component.html',
-  styleUrls: []
+    selector: 'app-index-beers',
+    templateUrl: './index-beers.component.html',
+    styleUrls: []
 })
 export class IndexBeersComponent implements OnInit {
-
+    loading = false;
     beersList$: Observable<any>;
     newestBeersList$: Observable<any>;
-    beerName = '';
+    beerName;
     beerNameOld = '';
     newestBeerLoaded;
     page;
 
-    constructor(private beersService: BeersService, private router: Router, private route: ActivatedRoute, private cdRef: ChangeDetectorRef) {    }
+    constructor(private beersService: BeersService, private router: Router, private route: ActivatedRoute, private cdRef: ChangeDetectorRef) {
+    }
 
     ngOnInit() {
         this.route.queryParamMap.subscribe(queryParam => {
@@ -37,15 +39,29 @@ export class IndexBeersComponent implements OnInit {
     }
 
     getBeersByName(naam) {
+        this.loading = true;
         this.beerNameOld = this.beerName;
         this.beerName = naam;
 
         if (naam !== '') {
             if (this.beerName !== this.beerNameOld) {
                 this.getPage(1);
-                this.beersList$ = this.beersService.getBeersByName(this.beerName);
-                // save to localStorage
-                this.beersList$.subscribe(val => localStorage.setItem('BeerSearchArray', JSON.stringify(val)));
+                this.beersList$ = this.beersService.getBeersByName(this.beerName)
+                    .pipe(
+                        finalize(() => {
+                            // save to localStorage
+                            this.beersList$.subscribe(val => localStorage.setItem('BeerSearchArray', JSON.stringify(val)));
+                                // finalize(() => {
+                                //     this.loading = false;
+                                // }));
+
+                            this.delay(2000).then(() => {
+                                this.loading = false;
+                            });
+                        }),
+                        share()
+                    );
+
             } else {
                 this.getPage(this.page);
             }
@@ -60,11 +76,8 @@ export class IndexBeersComponent implements OnInit {
             this.beersService.getBeersNewest().subscribe(val => localStorage.setItem('NewestBeersArray', JSON.stringify(val)));
             this.newestBeersList$ = JSON.parse(localStorage.getItem('NewestBeersArray'));
             this.newestBeerLoaded = true;
-            console.log('leeg');
-            console.log(this.newestBeerLoaded);
         } else {
             this.newestBeersList$ = JSON.parse(localStorage.getItem('NewestBeersArray'));
-            console.log('vol');
         }
     }
 
@@ -79,5 +92,9 @@ export class IndexBeersComponent implements OnInit {
         } else {
             this.router.navigate(['/beers'], {queryParams: {name: this.beerName, page: this.page}});
         }
+    }
+
+    async delay(ms: number) {
+        await new Promise(resolve => setTimeout(()=>resolve(), ms)).then();
     }
 }

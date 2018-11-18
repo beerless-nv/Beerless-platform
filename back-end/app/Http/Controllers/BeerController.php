@@ -25,7 +25,7 @@ class BeerController extends Controller
     {
         $id = $request->input('id');
         if ($id && Beer::where('ID', $id)->exists()) {
-            return Beer::where('ID', $id)->first();
+            return Beer::with('Brewery')->with('Beertype')->where('ID', $id)->first();
         } else {
             return "false";
         }

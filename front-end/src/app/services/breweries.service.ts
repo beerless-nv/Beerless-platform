@@ -35,7 +35,7 @@ export class BreweriesService {
     getAllBreweries(): Observable<any> {
         return this.http.get(this.urlGetAllBreweries)
             .pipe(
-                tap(req => console.log('get-request', req)),
+                tap(),
                 catchError(
                     (error) => {
                         console.log(error);

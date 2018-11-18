@@ -3,7 +3,7 @@
   width: 75px;
 }
 
-app-bier-item {
+app-beer-item {
   .card {
     i {
       opacity: 0;
@@ -22,7 +22,14 @@ app-bier-item {
   }
 }
 
-
 .bieren-sidebar-image {
   height: 50px;
+}
+
+.card-group-beer-profile {
+  //max-width: 400px;
+}
+
+.image-beer-profile {
+  max-height: 300px;
 }

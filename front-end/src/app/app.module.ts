@@ -18,6 +18,8 @@ import {LoginModule} from './pagegroups/Visitor/login/login.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ReactiveFormsModule} from '@angular/forms';
 import { DetailBeersComponent } from './pagegroups/Visitor/beers/detail-beers/detail-beers.component';
+import { BeerprofileComponent } from './pagegroups/Visitor/beers/detail-beers/beerprofile/beerprofile.component';
+import { BeerbreweryprofileComponent } from './pagegroups/Visitor/beers/detail-beers/beerbreweryprofile/beerbreweryprofile.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +31,8 @@ import { DetailBeersComponent } from './pagegroups/Visitor/beers/detail-beers/de
         FooterComponent,
         TabsetComponent,
         DetailBeersComponent,
+        BeerprofileComponent,
+        BeerbreweryprofileComponent,
     ],
     imports: [
         BrowserModule,

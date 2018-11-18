@@ -10,6 +10,7 @@ import {environment} from '../../environments/environment';
 export class BeersService {
 
     readonly urlGetBeersByName = environment.backend + 'beer/getByName';
+    readonly urlGetBeerById = environment.backend + 'beer/get';
     readonly urlGetAllBeers = environment.backend + 'beer/all';
     readonly urlGetBeersNewest = environment.backend + 'beer/getNewest';
     readonly urlInsertBeer = environment.backend + 'beer/insert';
@@ -24,7 +25,26 @@ export class BeersService {
 
         return this.http.get(this.urlGetBeersByName, {params})
             .pipe(
-                tap(req => console.log('get-request', req)),
+                tap(),
+                catchError(
+                    (error) => {
+                        console.log(error);
+                        alert(error.message);
+                        return EMPTY;
+                    }),
+                share()
+            );
+    }
+
+    getBeerById(id): Observable<any> {
+        const params = new HttpParams()
+            .set('id', id);
+
+        console.log(id);
+
+        return this.http.get(this.urlGetBeerById, {params})
+            .pipe(
+                tap(),
                 catchError(
                     (error) => {
                         console.log(error);
@@ -38,7 +58,7 @@ export class BeersService {
     getBeersNewest(): Observable<any> {
         return this.http.get(this.urlGetBeersNewest)
             .pipe(
-                tap(req => console.log('get-request', req)),
+                tap(),
                 catchError(
                     (error) => {
                         console.log(error);
@@ -67,9 +87,6 @@ export class BeersService {
                 beertypeID: beer.beertype
             })
             .subscribe(
-                req => {
-                    console.log(req);
-                },
                 err => {
                     console.log('Error occured', err);
                 }
@@ -86,9 +103,6 @@ export class BeersService {
 
         this.http.post(this.urlUploadImageBeer, uploadData)
             .subscribe(
-                req => {
-                    console.log(req);
-                },
                 err => {
                     console.log('Error occured', err);
                 }

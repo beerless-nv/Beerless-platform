@@ -39,9 +39,7 @@ export class AddBeerComponent implements OnInit {
         private beertypesService: BeertypesService,
         private route: ActivatedRoute,
         private router: Router,
-    ) {
-
-    }
+    ) {  }
 
     ngOnInit() {
         this.getAllBeertypes();
@@ -112,7 +110,7 @@ export class AddBeerComponent implements OnInit {
 
 
         // imageName doorgeven
-        this.form.value.image = imageName;
+        this.form.value.picture = imageName;
         this.form.value.logo = logoName;
 
         // breweryID doorgeven
