@@ -17,7 +17,7 @@ export class AddBeerComponent implements OnInit {
     breweriesByNameList: string[] = [];
     breweriesByNameList$: Observable<any>;
 
-    beertypesList: string[] = [];
+    beertypesList;
 
     dateToday = new Date();
     openBreweryItems$: Observable<any>;
@@ -135,7 +135,7 @@ export class AddBeerComponent implements OnInit {
     //
 
     getAllBeertypes() {
-        this.beertypesService.getAllBeertypes().subscribe(val => this.beertypesList = val);
+        this.beertypesService.getAllBeertypes().then(data => this.beertypesList = data);
     }
 
     //

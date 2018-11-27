@@ -9,22 +9,16 @@ import {catchError, share, tap} from 'rxjs/operators';
 })
 export class BeertypesService {
 
-    readonly urlGetAllBeertypes = environment.backend + 'beertype/all';
+    readonly urlGetAllBeertypes = environment.backend + 'beertypes/';
 
     constructor(private http: HttpClient) {
     }
 
-    getAllBeertypes(): Observable<any> {
+    getAllBeertypes() {
         return this.http.get(this.urlGetAllBeertypes)
-            .pipe(
-                tap(),
-                catchError(
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                        return EMPTY;
-                    }),
-                share()
-            );
+            .toPromise()
+            .then( data => {
+                return data;
+            });
     }
 }

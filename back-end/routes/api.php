@@ -40,10 +40,10 @@ Route::prefix('beers')->group(function() {
 Route::prefix('beertypes')->group(function() {
     Route::get('/', 'BeertypeController@getAll');
     Route::post('/', 'BeertypeController@insert');
-    Route::get('/{beerTypeId}', 'BeertypeController@get');
+    Route::get('/{beertypeId}', 'BeertypeController@get');
     Route::get('/search', 'BeertypeController@search');
-    Route::delete('/{beerTypeId}', 'BeertypeController@delete');
-    Route::patch('/{beerTypeId}', 'BeertypeController@patch');
+    Route::delete('/{beertypeId}', 'BeertypeController@delete');
+    Route::patch('/{beertypeId}', 'BeertypeController@patch');
 });
 
 Route::prefix('users')->group(function() {

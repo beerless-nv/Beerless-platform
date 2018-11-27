@@ -11,10 +11,10 @@
                            (keyup.enter)="beer.blur()">
                     <i class="fas fa-search"></i>
                 </div>
-                <small class="text-grey font-italic mb-5 position-absolute" [ngbCollapse]="!(beersList$ | async)?.length">
+                <small class="text-grey font-italic mb-5 position-absolute" [ngbCollapse]="!beersList?.length">
                     <strong>
-                        {{ (beersList$ | async)?.length }} <span [ngbCollapse]="(beersList$ | async)?.length==1">resultaten</span>
-                        <span [ngbCollapse]="(beersList$ | async)?.length!=1">resultaat</span>
+                        {{ beersList?.length }} <span [ngbCollapse]="beersList?.length==1">resultaten</span>
+                        <span [ngbCollapse]="beersList?.length!=1">resultaat</span>
                     </strong> voor <strong>"{{beerName}}"</strong>
                 </small>
             </div>
@@ -31,21 +31,21 @@
         <div class="col-12 d-flex flex-md-row flex-column p-0">
             <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 py-5 d-flex flex-column">
                 <app-beer-item
-                        *ngFor="let beer of (beersList$ | async) | paginate: {itemsPerPage: 10, currentPage: page}; let i = index"
+                        *ngFor="let beer of beersList | paginate: {itemsPerPage: 10, currentPage: page}; let i = index"
                         [item]="beer"
                         [index]="i"
                 ></app-beer-item>
-                <div class="card mb-2" [ngbCollapse]="!(beersList$ | async)?.length">
+                <div class="card mb-2" [ngbCollapse]="!beersList?.length">
                     <div class="card-body p-4 text-center">
                         <strong>Het bier dat je zoekt niet gevonden? Voeg het toe.</strong>
                     </div>
                 </div>
-                <div class="card mb-2" [ngbCollapse]="(beersList$ | async)?.length">
+                <div class="card mb-2" [ngbCollapse]="beersList?.length">
                     <div class="card-body p-4 text-center">
-                        <strong [ngbCollapse]="(beersList$ | async)?.length || beer.value">
+                        <strong [ngbCollapse]="beersList?.length || beer.value">
                             Zoek een bier met de zoekbalk bovenaan.
                         </strong>
-                        <div [ngbCollapse]="(beersList$ | async)?.length || !beer.value">
+                        <div [ngbCollapse]="beersList?.length || !beer.value">
                             <p>We hebben geen bieren gevonden die overeenkomen met uw zoekterm "<strong>{{beerName}}</strong>".</p>
                             <p class="m-0">Zorg ervoor dat de naam van het bier juist is gespeld of voeg het bier toe.</p>
                         </div>
@@ -53,9 +53,9 @@
                 </div>
                 <div class="text-center mt-3">
                     <pagination-controls (pageChange)="getPage($event)"
-                                         [autoHide]="!(beersList$ | async)?.length"
+                                         [autoHide]="!beersList?.length"
                                          class="pagination-style"
-                                         [ngbCollapse]="!(beersList$ | async)">
+                                         [ngbCollapse]="!beersList">
                     </pagination-controls>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                         <strong>Nieuwste bieren</strong>
                     </div>
                     <div class="card-body">
-                        <app-beers-sidebar *ngFor="let beer of newestBeersList$; let i = index"
+                        <app-beers-sidebar *ngFor="let beer of newestBeersList; let i = index"
                                             [item]="beer"
                                             [index]="i">
                         </app-beers-sidebar>
