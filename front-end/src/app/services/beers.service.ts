@@ -9,12 +9,12 @@ import {environment} from '../../environments/environment';
 })
 export class BeersService {
 
-    readonly urlGetBeersByName = environment.backend + 'beer/getByName';
-    readonly urlGetBeerById = environment.backend + 'beer/get';
-    readonly urlGetAllBeers = environment.backend + 'beer/all';
-    readonly urlGetBeersNewest = environment.backend + 'beer/getNewest';
-    readonly urlInsertBeer = environment.backend + 'beer/insert';
-    readonly urlUploadImageBeer = environment.backend + 'beer/uploadImage';
+    readonly urlGetBeersByName = environment.backend + 'beers/getByName';
+    readonly urlGetBeerById = environment.backend + 'beers/get';
+    readonly urlGetAllBeers = environment.backend + 'beers/all';
+    readonly urlGetBeersNewest = environment.backend + 'beers/getNewest';
+    readonly urlInsertBeer = environment.backend + 'beers/insert';
+    readonly urlUploadImageBeer = environment.backend + 'beers/uploadImage';
 
     constructor(private http: HttpClient) {
     }

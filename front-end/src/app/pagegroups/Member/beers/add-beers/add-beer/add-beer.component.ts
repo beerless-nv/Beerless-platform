@@ -116,12 +116,9 @@ export class AddBeerComponent implements OnInit {
         // breweryID doorgeven
         if (this.breweryName$ != null) {
             this.breweryName$.subscribe(val => this.form.value.brewery = val.id);
-            // console.log('werkt');
         } else {
             this.breweriesService.getBreweriesByName(this.form.value.brewery).subscribe(val => this.form.value.brewery = val.id);
             console.log(this.breweryName$);
-            // this.breweryName$.subscribe(val => this.form.value.brewery = this.breweryName$['id']);
-            // this.addBeer();
         }
 
 
