@@ -57,6 +57,8 @@ class Handler extends ExceptionHandler
             return Response::json(['success' => false, 'error' => 'Error fetching token'], $exception->getStatusCode());
         } if ($exception instanceof ModelNotFoundException) {
             return Response::json(['success' => false, 'error' => 'Rescource not available'], 404);
+        } if($exception instanceof \InvalidArgumentException) {
+            return Response::json(['success' => false, 'error' => $exception->getMessage()], 400);
         }
         return parent::render($request, $exception);
     }
