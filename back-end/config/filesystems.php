@@ -63,7 +63,7 @@ return [
 
             // Optional FTP Settings...
             'port'     => 21,
-            'root'     => '/assets/images/',
+            'root'     => 'assets.beerless.be/assets/images/',
             // 'passive'  => true,
             // 'ssl'      => true,
             // 'timeout'  => 30,

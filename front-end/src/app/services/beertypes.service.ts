@@ -17,7 +17,7 @@ export class BeertypesService {
     getAllBeertypes(): Observable<any> {
         return this.http.get(this.urlGetAllBeertypes)
             .pipe(
-                tap(req => console.log('get-request', req)),
+                tap(),
                 catchError(
                     (error) => {
                         console.log(error);

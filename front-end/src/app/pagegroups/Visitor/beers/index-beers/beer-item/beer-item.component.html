@@ -7,7 +7,7 @@
         </div>
         <div class="mr-4">
             <a routerLink="/beers/detail/{{item.ID}}" class="link-black-yellow font-weight-bold m-0">{{item.name}}</a>
-            <p class="my-0 small" [ngbCollapse]="!item.brewery.name"><a routerLink="/bieren" class="link-black-yellow">{{item.brewery.name}}</a></p>
+            <p class="my-0 small" [ngbCollapse]="!item.brewery.name"><a routerLink="/breweries/detail/{{item.brewery.ID}}" class="link-black-yellow">{{item.brewery.name}}</a></p>
             <p class="text-grey m-0 small" [ngbCollapse]="!item.beertype.name">{{item.beertype.name}}</p>
         </div>
         <a routerLink="/bieren" class="ml-auto"><i class="fas fa-arrow-circle-right"></i></a>

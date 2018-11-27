@@ -39,9 +39,7 @@ export class AddBeerComponent implements OnInit {
         private beertypesService: BeertypesService,
         private route: ActivatedRoute,
         private router: Router,
-    ) {
-
-    }
+    ) {  }
 
     ngOnInit() {
         this.getAllBeertypes();
@@ -112,18 +110,15 @@ export class AddBeerComponent implements OnInit {
 
 
         // imageName doorgeven
-        this.form.value.image = imageName;
+        this.form.value.picture = imageName;
         this.form.value.logo = logoName;
 
         // breweryID doorgeven
         if (this.breweryName$ != null) {
             this.breweryName$.subscribe(val => this.form.value.brewery = val.id);
-            // console.log('werkt');
         } else {
             this.breweriesService.getBreweriesByName(this.form.value.brewery).subscribe(val => this.form.value.brewery = val.id);
             console.log(this.breweryName$);
-            // this.breweryName$.subscribe(val => this.form.value.brewery = this.breweryName$['id']);
-            // this.addBeer();
         }
 
 

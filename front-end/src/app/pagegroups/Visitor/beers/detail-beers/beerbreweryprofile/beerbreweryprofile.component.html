@@ -1,0 +1,23 @@
+<div class="card mt-5">
+    <div class="card-body">
+        <div class="col-12 px-0">
+            <p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0">Brouwerijprofiel</p>
+            <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center justify-content-start pl-0 float-left mr-4" *ngIf="item?.logo">
+                    <img src="{{environment.breweryLogoURL + item?.logo}}" alt="Logo brouwerij {{item?.name}}"
+                         class="bier-item-image">
+                </div>
+                <div class="">
+                    <a routerLink="/breweries/detail/{{item?.ID}}" class="link-black-yellow">
+                        <h4 class="font-weight-bold d-sm-block d-none">{{item?.name}}</h4>
+                        <h6 class="font-weight-bold d-sm-none d-block">{{item?.name}}</h6>
+                    </a>
+                    <div class="text-grey">
+                        <div>{{item?.streetAndNumber}},</div>
+                        <div>{{item?.place || item?.province}}, {{item?.country}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

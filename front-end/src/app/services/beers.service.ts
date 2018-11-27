@@ -9,22 +9,32 @@ import {environment} from '../../environments/environment';
 })
 export class BeersService {
 
-    readonly urlGetBeersByName = environment.backend + 'beer/getByName';
-    readonly urlGetAllBeers = environment.backend + 'beer/all';
-    readonly urlGetBeersNewest = environment.backend + 'beer/getNewest';
-    readonly urlInsertBeer = environment.backend + 'beer/insert';
-    readonly urlUploadImageBeer = environment.backend + 'beer/uploadImage';
+    readonly urlGetBeerById = environment.backend + 'beers/';
+    readonly urlGetAllBeers = environment.backend + 'beers/';
+    readonly urlInsertBeer = environment.backend + 'beers/';
+    readonly urlGetBeersByName = environment.backend + 'beers/getByName';
+    readonly urlGetBeersNewest = environment.backend + 'beers/getNewest';
+    readonly urlUploadImageBeer = environment.backend + 'beers/uploadImage';
 
     constructor(private http: HttpClient) {
     }
 
-    getBeersByName(name): Observable<any> {
+    getBeersByName(name) {
         const params = new HttpParams()
             .set('name', name);
 
         return this.http.get(this.urlGetBeersByName, {params})
+            .toPromise()
+            .then(data => {
+                console.log(data);
+                return data;
+            });
+    }
+
+    getBeerById(id): Observable<any> {
+        return this.http.get(this.urlGetBeerById + id)
             .pipe(
-                tap(req => console.log('get-request', req)),
+                tap(),
                 catchError(
                     (error) => {
                         console.log(error);
@@ -38,7 +48,7 @@ export class BeersService {
     getBeersNewest(): Observable<any> {
         return this.http.get(this.urlGetBeersNewest)
             .pipe(
-                tap(req => console.log('get-request', req)),
+                tap(),
                 catchError(
                     (error) => {
                         console.log(error);
@@ -67,9 +77,6 @@ export class BeersService {
                 beertypeID: beer.beertype
             })
             .subscribe(
-                req => {
-                    console.log(req);
-                },
                 err => {
                     console.log('Error occured', err);
                 }
@@ -86,9 +93,6 @@ export class BeersService {
 
         this.http.post(this.urlUploadImageBeer, uploadData)
             .subscribe(
-                req => {
-                    console.log(req);
-                },
                 err => {
                     console.log('Error occured', err);
                 }
