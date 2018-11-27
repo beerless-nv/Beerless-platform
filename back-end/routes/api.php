@@ -27,32 +27,22 @@ Route::prefix('beers')->group(function() {
     Route::get('/getByName', 'BeerController@getByName');
     Route::get('/getNewest', 'BeerController@getNewest');
     Route::post('/uploadImage', 'BeerController@uploadImage');
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 472bec6ba4de60fd6a18546cef6349ad06a75c74
     Route::get('/', 'BeerController@getAll');    
     Route::post('/', 'BeerController@insert');   
     Route::get('/{beerId}', 'BeerController@get');
     Route::get('/search', 'BeerController@search');
     Route::delete('/{beerId}', 'BeerController@delete');
     Route::patch('/{beerId}', 'BeerController@patch');
-
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 472bec6ba4de60fd6a18546cef6349ad06a75c74
 });
 
-Route::prefix('beerTypes')->group(function() {
+Route::prefix('beertypes')->group(function() {
     Route::get('/', 'BeertypeController@getAll');
     Route::post('/', 'BeertypeController@insert');
-    Route::get('/{beerTypeId}', 'BeertypeController@get');
+    Route::get('/{beertypeId}', 'BeertypeController@get');
     Route::get('/search', 'BeertypeController@search');
-    Route::delete('/{beerTypeId}', 'BeertypeController@delete');
-    Route::patch('/{beerTypeId}', 'BeertypeController@patch');
+    Route::delete('/{beertypeId}', 'BeertypeController@delete');
+    Route::patch('/{beertypeId}', 'BeertypeController@patch');
 });
 
 Route::prefix('users')->group(function() {

@@ -9,8 +9,8 @@ import {environment} from '../../environments/environment';
 })
 export class BreweriesService {
 
-    readonly urlGetBreweriesByName = environment.backend + 'brewery/getByName';
-    readonly urlGetAllBreweries = environment.backend + 'brewery/allNameId';
+    readonly urlGetBreweriesByName = environment.backend + 'breweries/getByName';
+    readonly urlGetAllBreweries = environment.backend + 'breweries/allNameId';
 
     constructor(private http: HttpClient) {
     }

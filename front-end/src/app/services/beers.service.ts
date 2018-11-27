@@ -45,18 +45,12 @@ export class BeersService {
             );
     }
 
-    getBeersNewest(): Observable<any> {
+    getBeersNewest() {
         return this.http.get(this.urlGetBeersNewest)
-            .pipe(
-                tap(),
-                catchError(
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                        return EMPTY;
-                    }),
-                share()
-            );
+            .toPromise()
+            .then(data => {
+                return data;
+            });
     }
 
     insertBeer(beer) {
