@@ -41,6 +41,7 @@ class BreweryController extends Controller
     public function insert(Request $request)
     {
         $brewery;
+        var_dump($request->input('inputArray')); exit;
         if(isset($request->input('inputArray')['name'])){
             $brewery = BreweryDataService::insert($request->input('inputArray'));
         } else{
@@ -92,7 +93,7 @@ class BreweryController extends Controller
      */
     public function delete(Request $request, int $breweryId)
     {
-        Brewery::delete($breweryId);
+        BreweryDataService::delete($breweryId);
         return response()->json([
             'success' => true
         ], 204);
