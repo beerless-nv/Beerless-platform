@@ -52,6 +52,7 @@ class BeerController extends Controller
         // $postdata = $request->all();
 
         $beer;
+        var_dump($request->input('inputArray'));
         if(isset($request->input('inputArray')['name'])){
             $beer = BeerDataService::insert($request->input('inputArray'));
         } else{
@@ -110,7 +111,7 @@ class BeerController extends Controller
      */
     public function delete(Request $request, int $beerId)
     {
-        Beer::delete($beerId);
+        BeerDataService::delete($beerId);
         return response()->json([
             'success' => true
         ], 204);
