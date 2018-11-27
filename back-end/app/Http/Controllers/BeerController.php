@@ -25,19 +25,10 @@ class BeerController extends Controller
      */
     public function getAll(Request $request)
     {
-<<<<<<< HEAD
         return response()->json([
             'success' => true,
             'beers' => BeerDataService::getAll()
         ], 200);
-=======
-        $id = $request->input('id');
-        if ($id && Beer::where('ID', $id)->exists()) {
-            return Beer::with('Brewery')->with('Beertype')->where('ID', $id)->first();
-        } else {
-            return "false";
-        }
->>>>>>> 472bec6ba4de60fd6a18546cef6349ad06a75c74
     }
 
     /**
