@@ -17,34 +17,47 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::prefix('brewery')->group(function() {
-    Route::get('all', 'BreweryController@getAll');
-    Route::get('allNameId', 'BreweryController@getAllNameId');
-    Route::get('getByName', 'BreweryController@getByName');
-    Route::get('get', 'BreweryController@get');
-    Route::post('insert', 'BreweryController@insert');
-    Route::post('delete', 'BreweryController@delete');
-    Route::post('update', 'BreweryController@update');
-});
+// Route::prefix('breweries')->group(function() {
+//     Route::get('/', 'BreweryController@getAll');    
+//     Route::post('/', 'BreweryController@insert');   
+//     Route::get('/{breweryId}', 'BreweryController@get');
+//     Route::delete('/{breweryId}', 'BreweryController@delete');
+//     Route::patch('/{breweryId}', 'BreweryController@patch');
+//     Route::put('/{breweryId}', 'BreweryController@put');
 
-Route::prefix('beer')->group(function() {
-    Route::get('all', 'BeerController@getAll');
-    Route::get('getByName', 'BeerController@getByName');
-    Route::get('getNewest', 'BeerController@getNewest');
-    Route::get('get', 'BeerController@get');
-    Route::post('uploadImage', 'BeerController@uploadImage');
-    Route::post('insert', 'BeerController@insert');
-    Route::post('delete', 'BeerController@delete');
-    Route::post('update', 'BeerController@update');
-});
+//     Route::get('allNameId', 'BreweryController@getAllNameId');
+//     Route::get('getByName', 'BreweryController@getByName');
+// });
 
-Route::prefix('beertype')->group(function() {
-    Route::get('all', 'BeertypeController@getAll');
-    Route::get('get', 'BeertypeController@get');
-});
+// Route::prefix('beers')->group(function() {
+//     Route::get('/', 'BeerController@getAll');    
+//     Route::post('/', 'BeerController@insert');   
+//     Route::get('/{beerId}', 'BeerController@get');
+//     Route::delete('/{beerId}', 'BeerController@delete');
+//     Route::patch('/{beerId}', 'BeerController@patch');
+//     Route::put('/{beerId}', 'BeerController@put');
 
-Route::prefix('user')->group(function() {
-    Route::get('all', 'UserController@getAll');
-    Route::post('signUp', 'UserController@signUp');
-    Route::post('signIn', 'UserController@signIn');    
-});
+//     Route::get('/getByName', 'BeerController@getByName');
+//     Route::get('/getNewest', 'BeerController@getNewest');
+//     Route::post('/uploadImage', 'BeerController@uploadImage');
+// });
+
+// Route::prefix('beerbeerTypes')->group(function() {
+//     Route::get('/', 'BeertypeController@getAll');
+//     Route::post('/', 'BeertypeController@insert');
+//     Route::get('/{beerTypeId}', 'BeertypeController@get');
+//     Route::delete('/{beerTypeId}', 'BeertypeController@delete');
+//     Route::patch('/{beerTypeId}', 'BeertypeController@patch');
+//     Route::put('/{userbeerTypeIdId}', 'BeertypeController@put');
+// });
+
+// Route::prefix('users')->group(function() {
+//     Route::get('/', 'UserController@getAll');    
+//     Route::post('/', 'UserController@insert');   
+//     Route::get('/{userId}', 'userController@get');
+//     Route::delete('/{userId}', 'UserController@delete');
+//     Route::patch('/{userId}', 'UserController@patch');
+//     Route::put('/{userId}', 'UserController@put');
+
+//     Route::post('/auth', 'UserController@signIn'); 
+// });

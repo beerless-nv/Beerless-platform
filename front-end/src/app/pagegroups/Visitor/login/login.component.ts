@@ -3,6 +3,7 @@ import {LoginService} from '../../../services/login.service';
 import {ErrorService} from '../../../services/error.service';
 import {Observable, of, Subscription} from 'rxjs';
 import {FormControl, FormGroup} from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -17,8 +18,9 @@ export class LoginComponent implements OnInit {
     user = {};
 
     formLogin: FormGroup;
+    formRegister: FormGroup;
 
-    constructor(private loginService: LoginService, private errorService: ErrorService) {
+    constructor(public loginService: LoginService, private errorService: ErrorService, private router: Router) {
     }
 
     ngOnInit() {
@@ -26,12 +28,17 @@ export class LoginComponent implements OnInit {
             username: new FormControl('test1'),
             password: new FormControl('test1')
         });
+        this.formRegister = new FormGroup({
+            username: new FormControl(''),
+            email: new FormControl(''),
+            password: new FormControl('')
+        })
     }
 
     login() {
         this.user = this.formLogin.value;
-        this.loginService.signIn(this.user['username'], this.user['password']).subscribe( data => {
-            console.log(data);
+        this.loginService.signIn(this.user['username'], this.user['password']).subscribe( function(data) {
+            
         });
         
     }

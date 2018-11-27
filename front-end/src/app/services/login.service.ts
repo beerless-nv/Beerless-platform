@@ -26,12 +26,16 @@ export class LoginService {
             }).pipe(
                 tap(function(req) {                    
                     if(req['success'] == true){
-                        console.log('success!');
+                                             
+                        console.log(req); 
+                        this.setUserData(req['user'], req['token']);  
                     }
                 }),
                 catchError(
                     (error) => {
-                        console.log(error);
+                        if(error['error'] && error['error']['errors']){
+                            console.log(error['error']['errors']);
+                        }                        
                         return EMPTY;
                     }),
                 share()
@@ -59,12 +63,26 @@ export class LoginService {
     }
 
     // Locally log the user out
-    logout(){
-
+    logout(){        
+        this.userData$.next(null);
     }
 
     // Locally log the user int
-    private setUserData(){
-
+    private setUserData(user, token: string){        
+        console.log(user);
+        if (user !== null) {
+            this.userData$.next({
+                id: user.id,
+                username: user.username,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                profilepicture: user.profilepicture || 'https://avatars.dicebear.com/v2/identicon/' + user.username + '.svg',
+                userType: user.userType,
+                token: token,
+            });
+        } else {
+            this.userData$.next(null);
+        }
     }
 }

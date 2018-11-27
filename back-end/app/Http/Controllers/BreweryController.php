@@ -5,28 +5,121 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Brewery;
+use App\DataServices\BreweryDataService;
 
 /**
  * Contains CRUD functions for table 'Brewery'.
  */
 class BreweryController extends Controller
 {
+     /**
+      * Returns a JSON array of all columns in table 'Brewery'.
+      * 
+      * GET /breweries
+      *
+      * @param Request $request
+      * @return Response
+      */
+    public function getAll(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'breweries' => BreweryDataService::getAll()
+        ], 200);
+    }
+
     /**
-     * Returns a specific JSON object of type 'Brewery'.
-     * Takes the id as a request parameter.
+     * Insert an item into table 'Brewery'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'name'.
+     * 
+     * POST /breweries
      *
      * @param Request $request
      * @return Response
      */
-    public function get(Request $request)
+    public function insert(Request $request)
     {
-        $id = $request->input('id');
-        if ($id && Brewery::where('ID', $id)->exists()) {
-            return response()->json(Brewery::where('ID', $id)->first());
-        } else {
-            return "false";
+        $brewery;
+        if(isset($request->input('inputArray')['name'])){
+            $brewery = BreweryDataService::insert($request->input('inputArray'));
+        } else{
+            return response()->json([
+                'success' => false,
+                'msg' => 'name_required'
+            ], 400);
         }
+        
+        return response()->json([
+            'success' => true,
+            'brewery' => $brewery
+        ], 201);
     }
+
+
+     /**
+      * Returns a specific JSON object of type 'Brewery'.
+      * Takes the id as a request parameter.
+      * 
+      * GET /breweries/breweryId
+      *
+      * @param Request $request
+      * @param integer $breweryId
+      * @return Response
+      */
+    public function get(Request $request, int $breweryId)
+    {
+        return response()->json([
+            'success' => true,
+            'brewery' => BreweryDataService::get($breweryId)
+        ],200);
+    }
+    
+
+    public function search(Request $request){
+        
+    }
+
+    /**
+     * Deletes an item in table 'Brewery'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /breweries/breweryId
+     *
+     * @param Request $request
+     * @param integer $breweryId
+     * @return Response
+     */
+    public function delete(Request $request, int $breweryId)
+    {
+        Brewery::delete($breweryId);
+        return response()->json([
+            'success' => true
+        ], 204);
+    }
+
+
+    /**
+     * Updates an entry in the table 'Brewery'.
+     * 
+     * PATCH /breweries/breweryId
+     *
+     * @param Request $request
+     * @param integer $breweryId
+     * @return Response
+     */
+    public function patch(Request $request, int $breweryId){
+        $updateArray = array();
+        foreach ($request->input('updateArray') as $item) {
+            $updateArray[$item['propName']] = $item['value'];
+        }
+        $brewery = BreweryDataService::update($breweryId, $updateArray);
+        return response()->json([
+            'success' => true,
+            'brewery' => $brewery
+        ], 200);
+    }
+
 
     /**
      * Returns a specific JSON object or a JSON array of type 'Brewery'.
@@ -41,18 +134,7 @@ class BreweryController extends Controller
         if ($name) {
             return response()->json(Brewery::whereRaw("LOWER(Brwery.name) Like ?", ['%' . strtolower($name) . '%'])->get());
         }
-    }
-
-    /**
-     * Returns a JSON array of all columns in table 'Brewery'.
-     *
-     * @uses App\Models\Brewery
-     * @return Response
-     */
-    public function getAll()
-    {
-        return response()->json(Brewery::get());
-    }
+    }    
 
     /**
      * Returns a JSON array of all records from table 'Brewery' with columns 'id' and 'name'.
@@ -62,86 +144,5 @@ class BreweryController extends Controller
     public function getAllNameId()
     {
         return response()->json(Brewery::select('id', 'name')->get());
-    }
-
-    /**
-     * Insert an item into table 'Brewery'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'name'.
-     *
-     * @param Request $request
-     * @return response
-     */
-    public function insert(Request $request)
-    {
-        $name = $request->input('name');
-        if ($name) {
-            $brewery = new Brewery([
-                'description' => $request->input('description'),
-                'country' => $request->input('country'),
-                'place' => $request->input('place'),
-                'postcode' => $request->input('postcode'),
-                'streetAndNumber' => $request->input('streetAndNumber'),
-                'logo' => $request->input('logo'),
-                'province' => $request->input('province'),
-                'beerAmount' => $request->input('beerAmount'),
-                'contactID' => $request->input('contactID')
-            ]);
-
-
-            $brewery->save();
-        } else {
-            return "false";
-        }
-        return $request;
-    }
-
-    /**
-     * Deletes an item in table 'Brewery'.
-     * Takes the id as a request parameter.
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function delete(Request $request)
-    {
-        $id = $request->input('id');
-        if ($id && Brewery::where('ID', $id)->exists()) {
-            $brouwerij = Brewery::find($id);
-            $brouwerij->delete();
-        } else {
-            return "false";
-        }
-    }
-
-    /**
-     * Updates an item in table 'Brewery'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'id' and 'name'.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function update(Request $request)
-    {
-        $id = $request->input('id');
-        $naam = $request->input('name');
-        if ($naam && $id) {
-            $brewery = Brewery::find($id);
-
-            $brewery->name = $name;
-            $brewery->description = $request->input('description');
-            $brewery->country = $request->input('country');
-            $brewery->province = $request->input('province');
-            $brewery->place = $request->input('place');
-            $brewery->postcode = $request->input('postcode');
-            $brewery->streetAndNumber = $request->input('streetAndNumber');
-            $brewery->logo = $request->input('logo');
-            $brewery->beerAmount = $request->input('beerAmount');
-            $brewery->contactID = $request->input('contactID');
-            $brewery->save();
-        } else {
-            return "false";
-        }
     }
 }

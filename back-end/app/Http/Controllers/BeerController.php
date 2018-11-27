@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 //use Laravel\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\Models\Beer;
 
@@ -94,6 +95,12 @@ class BeerController extends Controller
      */
     public function insert(Request $request)
     {
+        return  JWTAuth::getToken();
+        if( ! $user = JWTAuth::toUser(JWTAuth::getToken())){
+            return response()->json([
+                'msg' => 'authentication failed'
+            ], 404);
+        }
         $postdata = $request->all();
 
        if ($request->input('name')) {

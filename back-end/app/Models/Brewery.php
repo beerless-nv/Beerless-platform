@@ -7,14 +7,14 @@ class Brewery extends Model
 {
     // Default values
     protected $attributes = [
-        'description' => '',
-        'country' => '',
-        'place' => '',
-        'postcode' => '',
-        'streetAndNumber' => '',
-        'logo' => '',
-        'province' => '',
-        'beerAmount' => '',
+        'description' => null,
+        'country' => null,
+        'place' => null,
+        'postcode' => null,
+        'streetAndNumber' => null,
+        'logo' => null,
+        'province' => null,
+        'beerAmount' => 0,
     ];
 
     // Which values are allowed to be assigned through mass assignment
