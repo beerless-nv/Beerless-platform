@@ -111,8 +111,6 @@ class UserController extends Controller
                     return response()->json( $retVal, 200);                     
                 } else{
                     $retVal['msg'] = 'password_incorrect'; 
-                    $retVal['incoming_hash'] = bcrypt($password);
-                    $retVal['saved_hash'] = $user->password;
                 }                                  
             } else{
                 $retVal['msg'] = 'user_does_not_exist';                    

@@ -2,8 +2,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
     protected $attributes = [
         'firstname' => '',
@@ -12,7 +13,7 @@ class User extends Model
         'bio' => '',
         'country' => '',
         'province' => '',
-        'place' => ''
+        'place' => '',
     ];
     protected $fillable = [
         'username',
@@ -32,6 +33,8 @@ class User extends Model
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdate';
+
+    
 
     public static $rules = [
         // Validation rules
