@@ -12,18 +12,22 @@ use Illuminate\Http\Request;
 */
 
 Route::prefix('breweries')->group(function() {
+    Route::get('/allNameId', 'BreweryController@getAllNameId');
+    Route::get('/getByName', 'BreweryController@getByName');
+
     Route::get('/', 'BreweryController@getAll');    
     Route::post('/', 'BreweryController@insert');   
     Route::get('/{breweryId}', 'BreweryController@get');
     Route::get('/search', 'BreweryController@search');
     Route::delete('/{breweryId}', 'BreweryController@delete');
     Route::patch('/{breweryId}', 'BreweryController@patch');
-
-    Route::get('/allNameId', 'BreweryController@getAllNameId');
-    Route::get('getByName', 'BreweryController@getByName');
 });
 
 Route::prefix('beers')->group(function() {
+    Route::get('/getByName', 'BeerController@getByName');
+    Route::get('/getNewest', 'BeerController@getNewest');
+    Route::post('/uploadImage', 'BeerController@uploadImage');
+
     Route::get('/', 'BeerController@getAll');    
     Route::post('/', 'BeerController@insert');   
     Route::get('/{beerId}', 'BeerController@get');
@@ -31,12 +35,10 @@ Route::prefix('beers')->group(function() {
     Route::delete('/{beerId}', 'BeerController@delete');
     Route::patch('/{beerId}', 'BeerController@patch');
 
-    Route::get('/getByName', 'BeerController@getByName');
-    Route::get('/getNewest', 'BeerController@getNewest');
-    Route::post('/uploadImage', 'BeerController@uploadImage');
+
 });
 
-Route::prefix('beerbeerTypes')->group(function() {
+Route::prefix('beerTypes')->group(function() {
     Route::get('/', 'BeertypeController@getAll');
     Route::post('/', 'BeertypeController@insert');
     Route::get('/{beerTypeId}', 'BeertypeController@get');

@@ -9,40 +9,30 @@ import {environment} from '../../environments/environment';
 })
 export class BeersService {
 
+    readonly urlGetBeerById = environment.backend + 'beers/';
+    readonly urlGetAllBeers = environment.backend + 'beers/';
+    readonly urlInsertBeer = environment.backend + 'beers/';
     readonly urlGetBeersByName = environment.backend + 'beers/getByName';
-    readonly urlGetBeerById = environment.backend + 'beers/get';
-    readonly urlGetAllBeers = environment.backend + 'beers/all';
     readonly urlGetBeersNewest = environment.backend + 'beers/getNewest';
-    readonly urlInsertBeer = environment.backend + 'beers/insert';
     readonly urlUploadImageBeer = environment.backend + 'beers/uploadImage';
 
     constructor(private http: HttpClient) {
     }
 
-    getBeersByName(name): Observable<any> {
+    getBeersByName(name) {
         const params = new HttpParams()
             .set('name', name);
 
         return this.http.get(this.urlGetBeersByName, {params})
-            .pipe(
-                tap(),
-                catchError(
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                        return EMPTY;
-                    }),
-                share()
-            );
+            .toPromise()
+            .then(data => {
+                console.log(data);
+                return data;
+            });
     }
 
     getBeerById(id): Observable<any> {
-        const params = new HttpParams()
-            .set('id', id);
-
-        console.log(id);
-
-        return this.http.get(this.urlGetBeerById, {params})
+        return this.http.get(this.urlGetBeerById + id)
             .pipe(
                 tap(),
                 catchError(

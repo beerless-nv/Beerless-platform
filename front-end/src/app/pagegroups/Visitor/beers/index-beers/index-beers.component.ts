@@ -46,8 +46,9 @@ export class IndexBeersComponent implements OnInit {
         if (naam !== '') {
             if (this.beerName !== this.beerNameOld) {
                 this.getPage(1);
-                this.beersList$ = this.beersService.getBeersByName(this.beerName)
-                    .pipe(
+                this.beersService.getBeersByName(this.beerName)
+                    .then(data => this.beersList$ = of(data))
+                    .then(
                         finalize(() => {
                             // save to localStorage
                             this.beersList$.subscribe(val => localStorage.setItem('BeerSearchArray', JSON.stringify(val)));
