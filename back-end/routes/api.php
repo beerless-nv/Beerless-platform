@@ -24,6 +24,10 @@ Route::prefix('breweries')->group(function() {
 });
 
 Route::prefix('beers')->group(function() {
+    Route::get('/getByName', 'BeerController@getByName');
+    Route::get('/getNewest', 'BeerController@getNewest');
+    Route::post('/uploadImage', 'BeerController@uploadImage');
+    
     Route::get('/', 'BeerController@getAll');    
     Route::post('/', 'BeerController@insert');   
     Route::get('/{beerId}', 'BeerController@get');
@@ -31,9 +35,7 @@ Route::prefix('beers')->group(function() {
     Route::delete('/{beerId}', 'BeerController@delete');
     Route::patch('/{beerId}', 'BeerController@patch');
 
-    Route::get('/getByName', 'BeerController@getByName');
-    Route::get('/getNewest', 'BeerController@getNewest');
-    Route::post('/uploadImage', 'BeerController@uploadImage');
+    
 });
 
 Route::prefix('beerbeerTypes')->group(function() {

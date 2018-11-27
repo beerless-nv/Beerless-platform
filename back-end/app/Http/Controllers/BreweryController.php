@@ -132,7 +132,7 @@ class BreweryController extends Controller
     {
         $name = $request->input("name");
         if ($name) {
-            return response()->json(Brewery::whereRaw("LOWER(Brwery.name) Like ?", ['%' . strtolower($name) . '%'])->get());
+            return response()->json(Brewery::whereRaw("LOWER(Brewery.name) Like ?", ['%' . strtolower($name) . '%'])->get());
         }
     }    
 

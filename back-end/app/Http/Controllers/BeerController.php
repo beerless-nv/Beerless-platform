@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-//use Laravel\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\Models\Beer;
+use App\DataServices\BeerDataService;
 
 /**
  * Contains CRUD functions for table 'Beer'.
@@ -16,49 +16,130 @@ use App\Models\Beer;
 class BeerController extends Controller
 {
     /**
+     * Returns a JSON array of all rows in table 'Beer'.
+     * 
+     * GET /beers
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function getAll(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'beers' => BeerDataService::getAll()
+        ], 200);
+    }
+
+    /**
+     * Insert an item into table 'Beer'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'name'.
+     * 
+     * POST /beers
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function insert(Request $request)
+    {
+        // return  JWTAuth::getToken();
+        // if( ! $user = JWTAuth::toUser(JWTAuth::getToken())){
+        //     return response()->json([
+        //         'msg' => 'authentication failed'
+        //     ], 404);
+        // }
+        // $postdata = $request->all();
+
+        $beer;
+        if(isset($request->input('inputArray')['name'])){
+            $beer = BeerDataService::insert($request->input('inputArray'));
+        } else{
+            return response()->json([
+                'success' => false,
+                'msg' => 'name_required'
+            ], 400);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'beer' => $beer
+        ], 201);
+    }
+
+
+    /**
      * Returns a specific JSON object of type 'Beer'.
      * Takes the id as a request parameter.
-     *
+     * 
+     * GET /beers/beerId
+     * 
      * @param Request $request
-     * @return Response
-     */
-    public function get(Request $request)
-    {
-        $id = $request->input('id');
-        if ($id && Beer::where('ID', $id)->exists()) {
-            return Beer::where('ID', $id)->first();
-        } else {
-            return "false";
-        }
-    }
-
-    /**
-     * Returns a specific JSON object or a JSON array of type 'Beer'.
-     * Takes the name as a request parameter.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function getByName(Request $request)
-    {
-        $name = $request->input("name");
-        if ($name) {
-            return response()->json(Beer::whereRaw("LOWER(Beer.name) Like ?", ['%' . strtolower($name) . '%'])
-                ->with('Brewery')
-                ->with('Beertype')
-                ->get());
-        }
-    }
-
-    /**
-     * Returns a JSON array of all rows in table 'Beer'
-     *
+     * @param integer $beerId
      * @return Reponse
      */
-    public function getAll()
+    public function get(Request $request, int $beerId)
     {
-        return response()->json(Beer::with('Beertype')->with('Brewery')->get());
+        return response()->json([
+            'success' => true,
+            'brewery' => BeerDataService::get($beerId)
+        ],200);
     }
+
+    /**
+     * Undocumented function
+     * 
+     * GET /beers/search
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function search(Request $request){
+
+    }
+
+    /**
+     * Deletes an item in table 'Beer'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /beers/beerId
+     *
+     * @param Request $request
+     * @param integer $beerId
+     * @return void
+     */
+    public function delete(Request $request, int $beerId)
+    {
+        Beer::delete($beerId);
+        return response()->json([
+            'success' => true
+        ], 204);
+    }
+
+    /**
+     * Updates an item in table 'Beer'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'id' and 'name'.
+     * 
+     * PATCH /beers/$beerId
+     *
+     * @param Request $request
+     * @param integer $beerId
+     * @return void
+     */
+    public function patch(Request $request, int $beerId)
+    {
+        $updateArray = array();
+        foreach ($request->input('updateArray') as $item) {
+            $updateArray[$item['propName']] = $item['value'];
+        }
+        $beer = BeerDataService::update($beerId, $updateArray);
+        return response()->json([
+            'success' => true,
+            'beer' => $beer
+        ], 200);
+    }
+
 
     /**
      * Undocumented function
@@ -86,102 +167,20 @@ class BeerController extends Controller
     }
 
     /**
-     * Insert an item into table 'Beer'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'name'.
+     * Returns a specific JSON object or a JSON array of type 'Beer'.
+     * Takes the name as a request parameter.
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
-    public function insert(Request $request)
+    public function getByName(Request $request)
     {
-        return  JWTAuth::getToken();
-        if( ! $user = JWTAuth::toUser(JWTAuth::getToken())){
-            return response()->json([
-                'msg' => 'authentication failed'
-            ], 404);
-        }
-        $postdata = $request->all();
-
-       if ($request->input('name')) {
-           $beer = new Beer([
-            'name' => $request->input('name'),
-            'ABV' => $request->input('abv'),
-            'IBU' => $request->input('ibu'),
-            'EBC' =>  $request->input('ebc'),
-            'temperature' => $request->input('temperature'),
-            'fermentation' => $request->input('fermentation'),
-            'glass' => $request->input('glass'),
-            'picture' => $request->input('picture'),
-            'logo' => $request->input('logo'),
-            'description' => $request->input('description'),
-            'season' => $request->input('season'),
-            'since' => $request->input('since'),
-            'breweryID' => $request->input('breweryID'),
-            'beertypeID' => $request->input('beertypeID'),
-           ]);
-
-           $beer->save();
-
-           return response()->json($beer);
-       } else {
-           return response()->json("name_required");
-       }
-        return response()->json($postdata);
-    }
-
-    /**
-     * Deletes an item in table 'Beer'.
-     * Takes the id as a request parameter.
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function delete(Request $request)
-    {
-        $id = $request->input('id');
-        if ($id && Beer::where('ID', $id)->exists()) {
-            $beer = Beer::find($id);
-            $beer->delete();
-        } else {
-            return "false";
-        }
-    }
-
-    /**
-     * Updates an item in table 'Beer'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'id' and 'name'.
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function update(Request $request)
-    {
-        $id = $request->input('id');
-        $name = $request->input('name');
-        if ($name && $id && Beer::where('ID', $id)->exists()) {
-            $beer = Beer::find($id);
-
-            $beer = array([
-                'name' => $request->input('name'),
-                'ABV' => $request->input('ABV'),
-                'IBU' => $request->input('IBU'),
-                'EBC' =>  $request->input('EBC'),
-                'temperature' => $request->input('temperature'),
-                'fermentation' => $request->input('fermentation'),
-                'glass' => $request->input('glass'),
-                'picture' => $request->input('picture'),
-                'description' => $request->input('description'),
-                'season' => $request->input('picture'),
-                'since' => $request->input('since'),
-                'breweryID' => $request->input('breweryID'),
-                'beertypeID' => $request->input('beertypeID'),
-               ]);
-
-            $beer->save();
-        } else {
-            return "false";
+        $name = $request->input("name");
+        if ($name) {
+            return response()->json(Beer::whereRaw("LOWER(Beer.name) Like ?", ['%' . strtolower($name) . '%'])
+                ->with('Brewery')
+                ->with('Beertype')
+                ->get());
         }
     }
 }
