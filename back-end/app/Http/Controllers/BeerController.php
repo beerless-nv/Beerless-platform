@@ -83,7 +83,7 @@ class BeerController extends Controller
     {
         return response()->json([
             'success' => true,
-            'brewery' => BeerDataService::get($beerId)
+            'beer' => BeerDataService::get($beerId)
         ],200);
     }
 

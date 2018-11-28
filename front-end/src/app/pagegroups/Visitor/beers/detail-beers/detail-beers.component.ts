@@ -14,8 +14,7 @@ export class DetailBeersComponent implements OnInit {
     loading = false;
     environment = environment;
     beerId;
-    beer$: Observable<any>;
-    urlBeerImage;
+    beer;
 
     constructor(private beersService: BeersService, private route: ActivatedRoute) {
     }
@@ -29,14 +28,8 @@ export class DetailBeersComponent implements OnInit {
     }
 
     getBeerById() {
-        this.loading = true;
-        this.beer$ = this.beersService.getBeerById(this.beerId)
-            .pipe(
-                finalize(() => {
-                    this.loading = false;
-                }),
-                share()
-            );
-        // this.beersService.getBeerById(this.beerId).subscribe(val => this.beer$ = val);
+        this.beersService.getBeerById(this.beerId)
+            .then(data => this.beer = data['beer'])
+            .then(() => this.loading = true);
     }
 }

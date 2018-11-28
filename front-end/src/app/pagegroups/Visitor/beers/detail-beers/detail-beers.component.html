@@ -1,9 +1,9 @@
-<div [hidden]="loading">
+<div [hidden]="!loading">
     <div class="container">
         <div class="col-12 d-flex flex-md-row flex-column p-0">
             <div class="col-md-9 col-12 pl-md-0 px-0">
-                <app-beerprofile [item]="(beer$ | async)"></app-beerprofile>
-                <app-beerbreweryprofile [item]="(beer$ | async)?.brewery"></app-beerbreweryprofile>
+                <app-beerprofile [item]="beer"></app-beerprofile>
+                <app-beerbreweryprofile [item]="beer?.brewery"></app-beerbreweryprofile>
             </div>
             <div class="col-md-3 col-12 pr-md-0 px-0">
 

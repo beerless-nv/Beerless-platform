@@ -39,7 +39,7 @@ class BeerDataService
      * @return Beer
      */
     public static function get(int $beerId){
-        return Beer::findOrFail($beerId);
+        return Beer::with('brewery')->with('beertype')->findOrFail($beerId);
     }
 
     /**

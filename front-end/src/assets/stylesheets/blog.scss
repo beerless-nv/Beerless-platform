@@ -1,0 +1,49 @@
+.blog-sidebar {
+  top: 125px;
+  position: sticky;
+}
+
+.article-title-container {
+  position: absolute;
+  bottom: 0;
+  padding: ($spacer * 3);
+  color: #fff;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5) 25%);
+
+
+  .article-title {
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  .article-category {
+    color: $dark;
+    background-color: $primary;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: ($spacer * 0.25);
+    letter-spacing: 1px;
+  }
+}
+
+.article-intro {
+  font-style: italic;
+  font-weight: bold;
+  word-spacing: 5px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.article-inline-title {
+  margin: 25px 0 15px 0;
+}
+
+.article-footer {
+  border-top: 1px solid #000;
+  padding-top: ($spacer * 3);
+  margin-top: ($spacer * 3);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: $grey;
+}

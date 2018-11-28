@@ -1,0 +1,122 @@
+<div class="container pb-5">
+    <h1 class="mb-3">Blog</h1>
+    <div class="col-12 px-0 d-flex flex-wrap">
+        <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0">
+            <div class="card-columns">
+                <div class="card">
+                    <img class="card-img-top" src="/src/assets/images/artikel_1.jpeg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title that wraps to a new line</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-grey"><img src="/src/assets/images/profielfoto_tom_nuyts.jpg" alt="profielfoto Tom Nuyts" style="width: 30px" class="rounded-circle mr-3">Tom Nuyts</small>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top" src="/src/assets/images/artikel_2.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-grey"><img src="/src/assets/images/profielfoto_tijmen_elseviers.jpg" alt="profielfoto Tijmen Elseviers" style="width: 30px" class="rounded-circle mr-3">Tijmen Elseviers</small>
+                    </div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-grey"><img src="/src/assets/images/profielfoto_tom_nuyts.jpg" alt="profielfoto Tom Nuyts" style="width: 30px" class="rounded-circle mr-3">Tom Nuyts</small>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-grey"><img src="/src/assets/images/profielfoto_arno_stoop.jpg" alt="profielfoto Arno Stoop" style="width: 30px" class="rounded-circle mr-3">Arno Stoop</small>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top" src="/src/assets/images/artikel_3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-grey"><img src="/src/assets/images/profielfoto_tijmen_elseviers.jpg" alt="profielfoto Tijmen Elseviers" style="width: 30px" class="rounded-circle mr-3">Tijmen Elseviers</small>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <div class="card-footer">
+                        <small class="text-grey"><img src="/src/assets/images/profielfoto_arno_stoop.jpg" alt="profielfoto Arno Stoop" style="width: 30px" class="rounded-circle mr-3">Arno Stoop</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 position-relative mt-md-0 mt-5">
+            <div class="blog-sidebar">
+                <!--Search field-->
+                <div class="form-group mb-1 input-icon">
+                    <input type="text" class="form-control" placeholder="Zoek een blogpost"
+                           #blog
+                           (blur)="getBlogsByName(blog.value)"
+                           (keyup.enter)="blog.blur()">
+                    <i class="fas fa-search"></i>
+                </div>
+                <!--Tags-->
+                <div class="mt-4 pt-2 mb-4">
+                    <p class="">Tags</p>
+                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Gouden Carolus</span>
+                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Goose Island</span>
+                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Bier</span>
+                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Brouwerij</span>
+                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Biersoort</span>
+                </div>
+                <!--Categories-->
+                <div class="mb-5">
+                    <p>Categoriën</p>
+                    <div class="small">
+                        <div class="border-bottom text-grey mb-2 pb-2">
+                            <a routerLink="" class="link-muted-yellow">Biernieuws</a>
+                            <span class="badge badge-pill badge-light text-grey float-right">156</span>
+                        </div>
+                        <div class="border-bottom text-grey mb-2 pb-2">
+                            <a routerLink="" class="link-muted-yellow">Foodpairing</a>
+                            <span class="badge badge-pill badge-light text-grey float-right">23</span>
+                        </div>
+                        <div class="border-bottom text-grey mb-2 pb-2">
+                            <a routerLink="" class="link-muted-yellow">Brouwen</a>
+                            <span class="badge badge-pill badge-light text-grey float-right">18</span>
+                        </div>
+                        <div class="border-bottom text-grey mb-2 pb-2">
+                            <a routerLink="" class="link-muted-yellow">Brouwerijen</a>
+                            <span class="badge badge-pill badge-light text-grey float-right">43</span>
+                        </div>
+                        <div class="border-bottom text-grey mb-2 pb-2">
+                            <a routerLink="" class="link-muted-yellow">Evenementen</a>
+                            <span class="badge badge-pill badge-light text-grey float-right">48</span>
+                        </div>
+                        <div class="border-bottom text-grey mb-2 pb-2">
+                            <a routerLink="" class="link-muted-yellow">Onderzoek</a>
+                            <span class="badge badge-pill badge-light text-grey float-right">9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

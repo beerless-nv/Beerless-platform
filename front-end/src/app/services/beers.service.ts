@@ -26,23 +26,16 @@ export class BeersService {
         return this.http.get(this.urlGetBeersByName, {params})
             .toPromise()
             .then(data => {
-                console.log(data);
                 return data;
             });
     }
 
-    getBeerById(id): Observable<any> {
+    getBeerById(id) {
         return this.http.get(this.urlGetBeerById + id)
-            .pipe(
-                tap(),
-                catchError(
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                        return EMPTY;
-                    }),
-                share()
-            );
+            .toPromise()
+            .then(data => {
+                return data;
+            });
     }
 
     getBeersNewest() {

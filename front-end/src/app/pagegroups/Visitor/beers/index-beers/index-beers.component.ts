@@ -24,6 +24,11 @@ export class IndexBeersComponent implements OnInit {
             this.beerName = queryParam.get('name');
             this.beerNameOld = queryParam.get('name');
             this.page = queryParam.get('page');
+
+            // Check if queryparameter name exists
+            if (queryParam.get('name') == null) {
+                this.getBeersByName(this.beerName);
+            }
         });
         this.cdRef.detectChanges();
 
@@ -35,17 +40,14 @@ export class IndexBeersComponent implements OnInit {
         this.beerName = naam;
 
         if (this.beerName) {
-            console.log(this.beerName + ' ::: ' + this.beerNameOld);
             if (this.beerName !== this.beerNameOld) {
                 this.getPage(1);
                 this.beersService.getBeersByName(this.beerName)
                     .then(data => {
                         this.beersList = data;
-                        console.log('naam verschillend');
                         localStorage.setItem('BeerSearchResults', JSON.stringify(this.beersList));
                     })
                     .then(() => {
-                        console.log('oude naam', this.beerNameOld);
                         this.beerNameOld = naam;
                     });
             } else {
