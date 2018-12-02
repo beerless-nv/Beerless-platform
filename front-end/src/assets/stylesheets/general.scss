@@ -219,6 +219,11 @@ input.input-dark {
   text-decoration: none !important;
 }
 
+.link-white-yellow {
+  color: #fff;
+  text-decoration: none !important;
+}
+
 //
 // Truncating text
 //
@@ -342,4 +347,13 @@ ol {
 .dropdown-height-175 {
   -webkit-appearance: menulist-button;
   height: 50px;
+}
+
+//
+// sidebars
+//
+
+.sticky-sidebar {
+  top: ($navbar-height + ($spacer-px * 2));
+  position: sticky;
 }

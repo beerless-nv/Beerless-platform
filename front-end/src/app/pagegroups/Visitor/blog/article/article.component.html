@@ -1,16 +1,25 @@
 <div class="container pb-5">
-    <div class="col-12 px-0">
-        <div class="col-8 pl-0">
-            <div class="card">
-                <div class="position-relative">
-                    <img class="card-img-top" src="/src/assets/images/artikel_1.jpeg" alt="Card image cap">
-                    <div class="article-title-container">
-                        <small class="article-category">Biernieuws</small>
-                        <h2 class="article-title my-2">Dit zijn de Beste Bockbieren van Nederland!</h2>
-                        <small><i class="far fa-clock mr-1"></i> 26 oktober 2018 om 16:00</small>
-                    </div>
-                </div>
-                <div class="p-5">
+    <div class="col-12 px-0 d-flex flex-wrap">
+        <div class="article-image position-relative"
+             style="background-image: url('/src/assets/images/artikel_1.jpeg');">
+            <div class="article-share-container">
+                <small>
+                    Delen <a href="" class="link-white-yellow ml-1"><i class="fab fa-twitter"></i></a>
+                    <a href="" class="link-white-yellow ml-1"><i class="fab fa-facebook-f"></i></a>
+                </small>
+            </div>
+            <div class="article-title-container">
+                <small class="article-category">Biernieuws</small>
+                <h2 class="article-title my-2 d-lg-block d-none">Dit zijn de Beste Bockbieren van Nederland!</h2>
+                <h4 class="article-title my-2 d-lg-none d-md-block d-none">Dit zijn de Beste Bockbieren van
+                    Nederland!</h4>
+                <h5 class="article-title my-2 d-md-none d-block">Dit zijn de Beste Bockbieren van Nederland!</h5>
+                <small><i class="far fa-clock mr-1"></i> 26 oktober 2018 om 16:00</small>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8 col-md-7 col-12 pl-0 pr-md-3 pr-0">
+            <div class="card article-content">
+                <div class="p-md-5 p-3">
                     <p class="article-intro">
                         Wat een feest bij vandeStreek bier in Utrecht. Daar werden vrijdag de prijzen uitgereikt voor
                         het Beste Bockbier van Nederland 2018. Er werd gejureerd in drie verschillende categorieën:
@@ -104,13 +113,104 @@
                             <small><i class="fas fa-clock mr-1"></i> 26 oktober 2018 om 16:00</small>
                             <small><i class="fas fa-tag mr-1 mt-2"></i> Biernieuws</small>
                         </div>
-                        <strong class="font-weight-bold">
-                            Delen <a href="" class="link-muted-yellow ml-1"><i class="fab fa-twitter"></i></a> <a href="" class="link-muted-yellow ml-1"><i class="fab fa-facebook-f"></i></a>
+                        <strong class="font-weight-bold small">
+                            Delen <a href="" class="link-muted-yellow ml-1"><i class="fab fa-twitter"></i></a> <a
+                                href="" class="link-muted-yellow ml-1"><i class="fab fa-facebook-f"></i></a>
                         </strong>
+                    </div>
+                    <div class="footer-next-articles text-dark">
+                        <h5 class="font-weight-bold mb-3">Bekijk ook</h5>
+                        <a routerLink="" class="link-black-yellow">
+                            <div class="media mt-3 d-flex align-items-center">
+                                <div class="footer-next-articles-img"
+                                     style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
+                                <div class="media-body ml-3">
+                                    <span class="article-category">Biernieuws</span>
+                                    <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
+                                    <small><i class="far fa-clock mr-1"></i> 26 oktober 2018</small>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="" class="link-black-yellow">
+                            <div class="media mt-3 d-flex align-items-center">
+                                <div class="footer-next-articles-img"
+                                     style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
+                                <div class="media-body ml-3">
+                                    <span class="article-category">Biernieuws</span>
+                                    <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
+                                    <small><i class="far fa-clock mr-1"></i> 26 oktober 2018</small>
+                                </div>
+                            </div>
+                        </a>
+                        <a routerLink="" class="link-black-yellow">
+                            <div class="media mt-3 d-flex align-items-center">
+                                <div class="footer-next-articles-img"
+                                     style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
+                                <div class="media-body ml-3">
+                                    <span class="article-category">Biernieuws</span>
+                                    <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
+                                    <small><i class="far fa-clock mr-1"></i> 26 oktober 2018</small>
+                                </div>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-
+        <div class="col-xl-3 col-lg-4 col-md-5 col-12 pr-0 pl-md-3 pl-0">
+            <div class="featured">
+                <a routerLink="">
+                    <div class="featured-image" style="background-image: url('src/assets/images/home_hero.jpg');">
+                        <div class="featured-content">
+                            <div>
+                                <img src="src/assets/images/logo_beerless_wit.svg" alt="logo Beerless" class="mb-3" style="width: 50%">
+                            </div>
+                            <div>Intalleer de Beerless-app!</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="sticky-sidebar">
+                <div class="popular-articles">
+                    <h5 class="font-weight-bold mb-3">Populair</h5>
+                    <a routerLink="" class="link-black-yellow">
+                        <div class="media mt-3 d-flex align-items-center">
+                            <div class="footer-next-articles-img"
+                                 style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
+                            <div class="media-body ml-3">
+                                <span class="article-category">Biernieuws</span>
+                                <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
+                                <small class="article-timestamp"><i class="far fa-clock mr-1"></i> 26 september 2018
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                    <a routerLink="" class="link-black-yellow">
+                        <div class="media mt-3 d-flex align-items-center">
+                            <div class="footer-next-articles-img"
+                                 style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
+                            <div class="media-body ml-3">
+                                <span class="article-category">Biernieuws</span>
+                                <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
+                                <small class="article-timestamp"><i class="far fa-clock mr-1"></i> 26 oktober 2018
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                    <a routerLink="" class="link-black-yellow">
+                        <div class="media mt-3 d-flex align-items-center">
+                            <div class="footer-next-articles-img"
+                                 style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
+                            <div class="media-body ml-3">
+                                <span class="article-category">Biernieuws</span>
+                                <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
+                                <small class="article-timestamp"><i class="far fa-clock mr-1"></i> 26 oktober 2018
+                                </small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

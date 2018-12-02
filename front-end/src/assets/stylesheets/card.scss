@@ -1,8 +1,22 @@
 .card-hover {
   transition: ease-in-out 0.25s;
+  cursor: pointer;
 
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 40px;
+  }
+}
+
+.card-hover-blog {
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    .card-title {
+      transition: ease-in-out 0.25s !important;
+      color: $primary;
+    }
   }
 }
 
