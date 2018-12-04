@@ -28,10 +28,11 @@ Route::prefix('beers')->group(function() {
     Route::get('/getNewest', 'BeerController@getNewest');
     Route::post('/uploadImage', 'BeerController@uploadImage');
 
+    Route::get('/search', 'BeerController@search');
     Route::get('/', 'BeerController@getAll');    
     Route::post('/', 'BeerController@insert');   
     Route::get('/{beerId}', 'BeerController@get');
-    Route::get('/search', 'BeerController@search');
+    
     Route::delete('/{beerId}', 'BeerController@delete');
     Route::patch('/{beerId}', 'BeerController@patch');
 });
@@ -46,12 +47,14 @@ Route::prefix('beertypes')->group(function() {
 });
 
 Route::prefix('users')->group(function() {
-    Route::get('/', 'UserController@getAll');    
-    Route::post('/', 'UserController@insert');   
+    Route::post('/signUp', 'UserController@signUp');  
+    Route::post('/signIn', 'UserController@signIn'); 
+    Route::get('/search', 'UserController@search');
+    // Route::post('/test', 'UserController@test');
+
+    Route::get('/', 'UserController@getAll');   
     Route::get('/{userId}', 'userController@get');
     Route::get('/search', 'userController@search');
     Route::delete('/{userId}', 'UserController@delete');
-    Route::patch('/{userId}', 'UserController@patch');
-
-    Route::post('/auth', 'UserController@signIn'); 
+    Route::patch('/{userId}', 'UserController@patch');     
 });

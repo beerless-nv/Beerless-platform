@@ -17,6 +17,7 @@ class ComposerStaticInit63289f1017fd16425a03c8de78ba653f
         '538ca81a9a966a6716601ecf48f4eaef' => __DIR__ . '/..' . '/opis/closure/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        'a76c8db1b306d21dfb424c0ce882814c' => __DIR__ . '/../..' . '/app/queryhelper.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -317,6 +318,10 @@ class ComposerStaticInit63289f1017fd16425a03c8de78ba653f
 
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\DataServices\\BeerDataService' => __DIR__ . '/../..' . '/app/DataServices/BeerDataService.php',
+        'App\\DataServices\\BeertypeDataService' => __DIR__ . '/../..' . '/app/DataServices/BeertypeDataService.php',
+        'App\\DataServices\\BreweryDataService' => __DIR__ . '/../..' . '/app/DataServices/BreweryDataService.php',
+        'App\\DataServices\\UserDataService' => __DIR__ . '/../..' . '/app/DataServices/UserDataService.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
@@ -2605,6 +2610,7 @@ class ComposerStaticInit63289f1017fd16425a03c8de78ba653f
         'Psr\\Log\\NullLogger' => __DIR__ . '/..' . '/psr/log/Psr/Log/NullLogger.php',
         'Psr\\Log\\Test\\DummyTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
         'Psr\\Log\\Test\\LoggerInterfaceTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
+        'Psr\\Log\\Test\\TestLogger' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/TestLogger.php',
         'Psr\\SimpleCache\\CacheException' => __DIR__ . '/..' . '/psr/simple-cache/src/CacheException.php',
         'Psr\\SimpleCache\\CacheInterface' => __DIR__ . '/..' . '/psr/simple-cache/src/CacheInterface.php',
         'Psr\\SimpleCache\\InvalidArgumentException' => __DIR__ . '/..' . '/psr/simple-cache/src/InvalidArgumentException.php',

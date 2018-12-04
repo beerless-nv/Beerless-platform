@@ -25,7 +25,8 @@ class BeertypeController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Insert an item into table 'Beertype'.
+     * Requires the field 'name'.
      * 
      * POST /beertypes
      *
@@ -71,6 +72,14 @@ class BeertypeController extends Controller
         
     }
 
+    /**
+     * Deletes an item in table 'Beertype'.
+     * Takes the id as a request parameter.
+     *
+     * @param Request $request
+     * @param integer $beertypeId
+     * @return Response
+     */
     public function delete(Request $request, int $beertypeId){
         BeertypeDataService::delete($beertypeId);
         return response()->json([
@@ -78,6 +87,15 @@ class BeertypeController extends Controller
         ], 204);
     }
 
+    /**
+     * Updates an entry in the table 'Beertype'.
+     * 
+     * PATCH /beertypes/beertypeId
+     *
+     * @param Request $request
+     * @param integer $beertypeId
+     * @return void
+     */
     public function patch(Request $request, int $beertypeId){
         $updateArray = array();
         foreach ($request->input('updateArray') as $item) {
@@ -86,7 +104,7 @@ class BeertypeController extends Controller
         $beertype = BeertypeDataService::update($beertypeId, $updateArray);
         return response()->json([
             'success' => true,
-            'beertype' => $brewery
+            'beertype' => $beertype
         ], 200);
     }
 }

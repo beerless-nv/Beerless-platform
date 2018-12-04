@@ -30,7 +30,6 @@ class BreweryController extends Controller
 
     /**
      * Insert an item into table 'Brewery'.
-     * Takes the item fields as request parameters.
      * Requires the field 'name'.
      * 
      * POST /breweries
@@ -41,7 +40,6 @@ class BreweryController extends Controller
     public function insert(Request $request)
     {
         $brewery;
-        var_dump($request->input('inputArray')); exit;
         if(isset($request->input('inputArray')['name'])){
             $brewery = BreweryDataService::insert($request->input('inputArray'));
         } else{

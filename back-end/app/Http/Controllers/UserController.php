@@ -8,8 +8,10 @@ use Illuminate\Http\Request;
 
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 
 use App\Models\User;
+use App\DataServices\UserDataService;
 
 /**
  * Contains CRUD functions for table 'User'.
@@ -23,17 +25,30 @@ class UserController extends Controller
      */
     public function getAll()
     {
-        return response()->json(User::get());
+        return response()->json([
+            'success' => true,
+            'users' => UserDataService::getAll()
+        ], 200);
     }
 
-    /**
-     * Returns a specific JSON object of type 'User'.
-     * Takes the id as a request parameter.
-     *
-     * @return void
-     */
-    public function getUserData(){
+     /**
+      * Returns a specific JSON object of type 'User'.
+      * Takes the id as a request parameter.
+      *
+      * @param Request $request
+      * @param integer $userId
+      * @return Response
+      */
+    public function get(Request $request, int $userId){
+        return response()->json([
+            'success' => true,
+            'user' => UserDataService::get($userId)
+        ],200);
+    }
 
+
+    public function search(Request $request){
+        // return UserDataService::search();
     }
 
     /**
@@ -44,9 +59,9 @@ class UserController extends Controller
     public function signUp(Request $request){
         // Validate incoming request
         $this->validate($request, [
-            'username' => 'required|unique:user,username',
-            'email' => 'required|email|unique:user',
-            'password' => 'required'
+            'inputArray.username' => 'required|unique:user,username',
+            'inputArray.email' => 'required|email|unique:user,email',
+            'inputArray.password' => 'required'
         ],
         [
             'username.required' => 'username_required',
@@ -56,16 +71,9 @@ class UserController extends Controller
             'email.unique' => 'email_not_unique',
             'password.required' => 'password_required'
         ]);
-
-        // Create new user based on input
-        $user = new User([
-            'username' => $request->input('username'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password'))
-        ]);
-
-        // Store user in DB
-        $user->save();
+        $inputArray = $request->input('inputArray');        
+        $inputArray['password'] = Hash::make($inputArray['password']);
+        $user = UserDataService::insert($inputArray);
 
         // Return response
         return response()->json( [
@@ -82,6 +90,7 @@ class UserController extends Controller
      * @return Response
      */
     public function signIn(Request $request){   
+        
         // Validate incoming request
         $this->validate($request, [
             'username' => 'required',
@@ -96,8 +105,7 @@ class UserController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
         try{    
-
-            // Check user existance        
+            // Check user existance
             if(User::where('username', $username)->exists()){                
                 $user = User::where('username', $username)->first(); 
 
@@ -106,8 +114,9 @@ class UserController extends Controller
 
                     // Credentials are correct
                     $retVal['success'] = true;
-                    $retVal['token'] = JWTAuth::fromUser($user);
+                    $retVal['token'] = JWTAuth::fromUser($user);                    
                     $retVal['user'] = $user;
+
                     return response()->json( $retVal, 200);                     
                 } else{
                     $retVal['msg'] = 'password_incorrect'; 
@@ -121,8 +130,18 @@ class UserController extends Controller
             
         } catch (JWTException $e){
             $retVal['success'] = 'error';
-            $retVal['msg'] = 'token_creation_failed';
+            $retVal['msg'] = $e->getMessage();
             return response()->json( $retVal, 500);
         }        
     }
+
+    // public function test(Request $request)
+    // {
+    //     if (! $user = JWTAuth::parseToken()->authenticate()) {
+	// 		return response()->json(['user_not_found'], 404);
+    //     }
+    //     else{
+    //         return response()->json($user, 200);
+    //     }
+    // }
 }
