@@ -11,14 +11,24 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::prefix('articletags')->group(function() {
+    Route::post('/search', 'ArticleTagController@search');
+    Route::get('/', 'ArticleTagController@getAll');    
+    Route::post('/', 'ArticleTagController@insert');   
+    Route::get('/{articletagId}', 'ArticleTagController@get');
+    
+    Route::delete('/{articletagId}', 'ArticleTagController@delete');
+    Route::patch('/{articletagId}', 'ArticleTagController@patch');
+});
+
 Route::prefix('tags')->group(function() {
     Route::post('/search', 'TagController@search');
     Route::get('/', 'TagController@getAll');    
     Route::post('/', 'TagController@insert');   
     Route::get('/{tagId}', 'TagController@get');
     
-    Route::delete('/{tagId}', 'BeerController@delete');
-    Route::patch('/{tagId}', 'BeerController@patch');
+    Route::delete('/{tagId}', 'TagController@delete');
+    Route::patch('/{tagId}', 'TagController@patch');
 });
 
 Route::prefix('articles')->group(function() {
@@ -27,8 +37,8 @@ Route::prefix('articles')->group(function() {
     Route::post('/', 'ArticleController@insert');   
     Route::get('/{articleId}', 'ArticleController@get');
     
-    Route::delete('/{articleId}', 'BeerController@delete');
-    Route::patch('/{articleId}', 'BeerController@patch');
+    Route::delete('/{articleId}', 'ArticleController@delete');
+    Route::patch('/{articleId}', 'ArticleController@patch');
 });
 
 Route::prefix('breweries')->group(function() {
