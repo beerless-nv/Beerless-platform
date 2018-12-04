@@ -22,9 +22,16 @@ class BreweryController extends Controller
       */
     public function getAll(Request $request)
     {
+
+        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
+
+        $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
+        if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
+        else {$sortOrder = null;}
+
         return response()->json([
             'success' => true,
-            'breweries' => BreweryDataService::getAll()
+            'breweries' => BreweryDataService::getAll($joinTables, $sortOrder)
         ], 200);
     }
 
@@ -68,15 +75,26 @@ class BreweryController extends Controller
       */
     public function get(Request $request, int $breweryId)
     {
+        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
+
         return response()->json([
             'success' => true,
-            'brewery' => BreweryDataService::get($breweryId)
+            'brewery' => BreweryDataService::get($breweryId, $joinTables)
         ],200);
     }
     
 
     public function search(Request $request){
-        
+        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
+
+        $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
+        if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
+        else {$sortOrder = null;}
+
+        return response()->json([
+            "success" => true,
+            'beers' => BreweryDataService::search($request->input('searchParams'), $joinTables, $sortOrder)
+        ]);
     }
 
     /**

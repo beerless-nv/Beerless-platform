@@ -10,36 +10,25 @@ import {User} from '../interfaces/user';
 })
 export class LoginService {
 
-    readonly urlSignIn = environment.backend + 'user/signIn';
-    readonly urlSignUp = environment.backend + 'user/signUp';
+    readonly urlSignIn = environment.backend + 'users/signIn';
+    readonly urlSignUp = environment.backend + 'users/signUp';
     userData$: BehaviorSubject<User> = new BehaviorSubject(null);
 
     constructor(private http: HttpClient) {
     }
 
     // Authenticate user through API
-    signIn(username, password): Observable<any> {
+    signIn(username, password) {
         return this.http.post(this.urlSignIn, 
             {
                 username : username,
                 password : password
-            }).pipe(
-                tap(function(req) {                    
-                    if(req['success'] == true){
-                                             
-                        console.log(req); 
-                        this.setUserData(req['user'], req['token']);  
-                    }
-                }),
-                catchError(
-                    (error) => {
-                        if(error['error'] && error['error']['errors']){
-                            console.log(error['error']['errors']);
-                        }                        
-                        return EMPTY;
-                    }),
-                share()
-            )
+            }).toPromise().then(data => {
+                console.log(data);
+                this.setUserData(data['user'], data['token']);
+            }).then( () => {
+                console.log(this.userData$); 
+            })
     }
 
     // Create user through API
@@ -67,9 +56,12 @@ export class LoginService {
         this.userData$.next(null);
     }
 
+    getUserData(){
+        return this.userData$;
+    }
+
     // Locally log the user int
-    private setUserData(user, token: string){        
-        console.log(user);
+    private setUserData(user, token: string){
         if (user !== null) {
             this.userData$.next({
                 id: user.id,

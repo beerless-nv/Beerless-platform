@@ -14,11 +14,12 @@ use Illuminate\Http\Request;
 Route::prefix('breweries')->group(function() {
     Route::get('/allNameId', 'BreweryController@getAllNameId');
     Route::get('/getByName', 'BreweryController@getByName');
+    Route::get('/search', 'BreweryController@search');
 
     Route::get('/', 'BreweryController@getAll');    
     Route::post('/', 'BreweryController@insert');   
     Route::get('/{breweryId}', 'BreweryController@get');
-    Route::get('/search', 'BreweryController@search');
+    
     Route::delete('/{breweryId}', 'BreweryController@delete');
     Route::patch('/{breweryId}', 'BreweryController@patch');
 });
@@ -38,10 +39,12 @@ Route::prefix('beers')->group(function() {
 });
 
 Route::prefix('beertypes')->group(function() {
+    Route::get('/search', 'BeertypeController@search');
+
     Route::get('/', 'BeertypeController@getAll');
     Route::post('/', 'BeertypeController@insert');
     Route::get('/{beertypeId}', 'BeertypeController@get');
-    Route::get('/search', 'BeertypeController@search');
+    
     Route::delete('/{beertypeId}', 'BeertypeController@delete');
     Route::patch('/{beertypeId}', 'BeertypeController@patch');
 });

@@ -37,9 +37,7 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.user = this.formLogin.value;
-        this.loginService.signIn(this.user['username'], this.user['password']).subscribe( function(data) {
-            
-        });
-        
+        this.loginService.signIn(this.user['username'], this.user['password']);
+        this.router.navigate(['/']);
     }
 }

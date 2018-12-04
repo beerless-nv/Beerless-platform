@@ -47,7 +47,7 @@ class BeerDataService
     {
         $query = Beer::query();
         \joinTables($query, 'beer', $joinTables);
-        return Beer::with('brewery')->findOrFail($beerId);
+        return $query->findOrFail($beerId);
     }
 
     /**
@@ -57,8 +57,7 @@ class BeerDataService
      * @return Beer[]
      */
     public static function search(array $searchParams, $joinTables, $sortOrder)
-    {
-        
+    {        
         $query = Beer::query();
         \joinTables($query, 'beer', $joinTables);
         \sortQuery($query, $sortOrder);

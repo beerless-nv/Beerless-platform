@@ -31,7 +31,8 @@
           <div class="nav-divider"></div>
         </div>
         <div class="navbar-nav ml-4 mr-3">
-          <a class="nav-item nav-link" routerLink="/login" routerLinkActive="active" *ngIf="!user" ><i class="fas fa-user-circle"></i></a>
+          <a *ngIf="!user" class="nav-item nav-link" routerLink="/login" routerLinkActive="active" ><i class="fas fa-user-circle"></i></a>
+          <a *ngIf="user" class="nav-item nav-link" routerLink="/login" routerLinkActive="active" ><i class="fas fa-user-circle"></i></a>
           <a class="nav-item nav-link" routerLink="/help" routerLinkActive="active"><i class="fas fa-question"></i></a>
         </div>
       </div>

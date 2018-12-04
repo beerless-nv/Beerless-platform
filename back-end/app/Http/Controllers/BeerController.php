@@ -50,7 +50,6 @@ class BeerController extends Controller
     public function insert(Request $request)
     {
         $beer;
-        var_dump($request->input('inputArray'));
         if(isset($request->input('inputArray')['name'])){
             $beer = BeerDataService::insert($request->input('inputArray'));
         } else{
