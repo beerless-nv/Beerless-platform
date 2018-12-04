@@ -11,6 +11,16 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::prefix('tags')->group(function() {
+    Route::post('/search', 'TagController@search');
+    Route::get('/', 'TagController@getAll');    
+    Route::post('/', 'TagController@insert');   
+    Route::get('/{tagId}', 'TagController@get');
+    
+    Route::delete('/{tagId}', 'BeerController@delete');
+    Route::patch('/{tagId}', 'BeerController@patch');
+});
+
 Route::prefix('articles')->group(function() {
     Route::post('/search', 'ArticleController@search');
     Route::get('/', 'ArticleController@getAll');    
@@ -35,8 +45,6 @@ Route::prefix('breweries')->group(function() {
 });
 
 Route::prefix('beers')->group(function() {
-//    Route::get('/getByName', 'BeerController@getByName');
-//    Route::get('/getNewest', 'BeerController@getNewest');
     Route::post('/uploadImage', 'BeerController@uploadImage');
 
     Route::post('/search', 'BeerController@search');

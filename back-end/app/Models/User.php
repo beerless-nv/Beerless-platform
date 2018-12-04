@@ -9,7 +9,7 @@ class User extends Authenticatable
     protected $attributes = [
         'firstname' => '',
         'lastname' => '',
-        'profilepicture' => '',
+        'picture' => '',
         'bio' => '',
         'country' => '',
         'province' => '',

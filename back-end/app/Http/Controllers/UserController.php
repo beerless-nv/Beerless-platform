@@ -74,7 +74,7 @@ class UserController extends Controller
         $inputArray = $request->input('inputArray');        
         $inputArray['password'] = Hash::make($inputArray['password']);
         $user = UserDataService::insert($inputArray);
-
+        
         // Return response
         return response()->json( [
             'success' => true,
