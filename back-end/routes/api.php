@@ -25,11 +25,11 @@ Route::prefix('breweries')->group(function() {
 });
 
 Route::prefix('beers')->group(function() {
-    Route::get('/getByName', 'BeerController@getByName');
-    Route::get('/getNewest', 'BeerController@getNewest');
+//    Route::get('/getByName', 'BeerController@getByName');
+//    Route::get('/getNewest', 'BeerController@getNewest');
     Route::post('/uploadImage', 'BeerController@uploadImage');
 
-    Route::get('/search', 'BeerController@search');
+    Route::post('/search', 'BeerController@search');
     Route::get('/', 'BeerController@getAll');    
     Route::post('/', 'BeerController@insert');   
     Route::get('/{beerId}', 'BeerController@get');
