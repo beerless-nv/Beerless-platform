@@ -46,6 +46,6 @@ class Brewery extends Model
 
     public function contact()
     {
-        return $this->hasOne('App\Models\Contact');
+        return $this->hasOne('App\Models\Contact', 'breweryID');
     }
 }

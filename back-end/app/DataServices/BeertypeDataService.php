@@ -13,8 +13,11 @@ class BeertypeDataService
      *
      * @return Beertype[]
      */
-    public static function getAll(){
-        return Beertype::all();
+    public static function getAll($joinTables, $sortOrder){
+        $query = Beertype::query();
+        \joinTables($query, 'beertype', $joinTables);
+        \sortQuery($query, $sortOrder);
+        return $query->get();
     }
 
     /**
@@ -38,18 +41,30 @@ class BeertypeDataService
      * @param integer $beertypeId
      * @return Beertype
      */
-    public static function get(int $beertypeId){
-        return Beertype::findOrFail($beertypeId);
+    public static function get(int $beertypeId, $joinTables){
+        $query = Beertype::query();
+        \joinTables($query, 'beertype', $joinTables);
+        return $query->findOrFail($beerId);
     }
 
     /**
      * Undocumented function
      *
      * @param array $searchParams
-     * @return Beertype||Beertype[]||null
+     * @return Beertype[]
      */
-    public static function search(array $searchParams){
-
+    public static function search(array $searchParams, $joinTables, $sortOrder){
+        $query = Beertype::query();
+        \joinTables($query, 'beertype', $joinTables);
+        \sortQuery($query, $sortOrder);
+        foreach ($searchParams as $value){
+            if($value['propName'] == 'name'){
+                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($value['value']) . '%']);
+            } else{
+                $query->where($value['propName'], $value['operator'], $value['value']);
+            }
+        }
+        return $query->get();
     }
 
     /**
