@@ -16,6 +16,7 @@ export class BeerprofileComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log(this.item);
     }
 
 }
