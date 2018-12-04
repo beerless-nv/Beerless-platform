@@ -23,7 +23,8 @@ class Contact extends Model
     protected $dates = [];
     protected $table = "Contact";
     protected $primaryKey = "ID";
-    public $timestamps = false;
+    const CREATED_AT = 'timestampCreated';
+    const UPDATED_AT = 'timestampUpdated';
 
 
     public static $rules = [

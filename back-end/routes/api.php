@@ -11,6 +11,16 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::prefix('articles')->group(function() {
+    Route::post('/search', 'ArticleController@search');
+    Route::get('/', 'ArticleController@getAll');    
+    Route::post('/', 'ArticleController@insert');   
+    Route::get('/{articleId}', 'ArticleController@get');
+    
+    Route::delete('/{articleId}', 'BeerController@delete');
+    Route::patch('/{articleId}', 'BeerController@patch');
+});
+
 Route::prefix('breweries')->group(function() {
     Route::get('/allNameId', 'BreweryController@getAllNameId');
     Route::get('/getByName', 'BreweryController@getByName');
@@ -29,7 +39,7 @@ Route::prefix('beers')->group(function() {
     Route::get('/getNewest', 'BeerController@getNewest');
     Route::post('/uploadImage', 'BeerController@uploadImage');
 
-    Route::get('/search', 'BeerController@search');
+    Route::post('/search', 'BeerController@search');
     Route::get('/', 'BeerController@getAll');    
     Route::post('/', 'BeerController@insert');   
     Route::get('/{beerId}', 'BeerController@get');
@@ -53,7 +63,6 @@ Route::prefix('users')->group(function() {
     Route::post('/signUp', 'UserController@signUp');  
     Route::post('/signIn', 'UserController@signIn'); 
     Route::get('/search', 'UserController@search');
-    // Route::post('/test', 'UserController@test');
 
     Route::get('/', 'UserController@getAll');   
     Route::get('/{userId}', 'userController@get');

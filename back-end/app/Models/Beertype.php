@@ -5,7 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Beertype extends Model
 {
-
     protected $attributes = [
         'description' => '',
     ];
@@ -17,8 +16,8 @@ class Beertype extends Model
     protected $table = "Beertype";
     protected $primaryKey = "ID";
     public $timestamps = false;
-    // const CREATED_AT = 'timestampCreated';
-    // const UPDATED_AT = 'timestampUpdate';
+    const CREATED_AT = 'timestampCreated';
+    const UPDATED_AT = 'timestampUpdated';
 
     public static $rules = [
         // Validation rules

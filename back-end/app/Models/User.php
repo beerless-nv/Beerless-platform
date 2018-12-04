@@ -21,7 +21,7 @@ class User extends Authenticatable
         'password',
         'firstname',
         'lastname',
-        'profilepicture',
+        'picture',
         'bio',
         'country',
         'province',
@@ -32,7 +32,7 @@ class User extends Authenticatable
     protected $table ='User';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
-    const UPDATED_AT = 'timestampUpdate';
+    const UPDATED_AT = 'timestampUpdated';
 
     
 
