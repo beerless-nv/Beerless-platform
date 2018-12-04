@@ -42,9 +42,10 @@ export class IndexBeersComponent implements OnInit {
         if (this.beerName) {
             if (this.beerName !== this.beerNameOld) {
                 this.getPage(1);
-                this.beersService.getBeersByName(this.beerName)
+                this.beersService.getBeersByName('name', this.beerName)
                     .then(data => {
-                        this.beersList = data;
+                        this.beersList = data['beers'];
+                        console.log(this.beersList);
                         localStorage.setItem('BeerSearchResults', JSON.stringify(this.beersList));
                     })
                     .then(() => {

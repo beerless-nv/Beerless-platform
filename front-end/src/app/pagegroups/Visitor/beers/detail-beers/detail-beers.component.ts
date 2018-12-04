@@ -30,6 +30,7 @@ export class DetailBeersComponent implements OnInit {
     getBeerById() {
         this.beersService.getBeerById(this.beerId)
             .then(data => this.beer = data['beer'])
-            .then(() => this.loading = true);
+            .then(() => this.loading = true)
+            .then(() => console.log(this.beer));
     }
 }

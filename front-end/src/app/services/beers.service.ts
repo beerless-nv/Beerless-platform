@@ -12,18 +12,23 @@ export class BeersService {
     readonly urlGetBeerById = environment.backend + 'beers/';
     readonly urlGetAllBeers = environment.backend + 'beers/';
     readonly urlInsertBeer = environment.backend + 'beers/';
-    readonly urlGetBeersByName = environment.backend + 'beers/getByName';
-    readonly urlGetBeersNewest = environment.backend + 'beers/getNewest';
+    readonly urlGetBeersByName = environment.backend + 'beers/search';
+    readonly urlGetBeersNewest = environment.backend + 'beers/';
     readonly urlUploadImageBeer = environment.backend + 'beers/uploadImage';
 
     constructor(private http: HttpClient) {
     }
 
-    getBeersByName(name) {
+    getBeersByName(name, value) {
         const params = new HttpParams()
-            .set('name', name);
+            .set('joinTables', 'beertype,brewery');
 
-        return this.http.get(this.urlGetBeersByName, {params})
+        return this.http.post(this.urlGetBeersByName, {
+            searchParams : [{
+                propName: name,
+                value: value
+            }]
+        }, {params})
             .toPromise()
             .then(data => {
                 return data;
@@ -31,7 +36,10 @@ export class BeersService {
     }
 
     getBeerById(id) {
-        return this.http.get(this.urlGetBeerById + id)
+        const params = new HttpParams()
+            .set('joinTables', 'beertype,brewery');
+
+        return this.http.get(this.urlGetBeerById + id, {params})
             .toPromise()
             .then(data => {
                 return data;
@@ -39,9 +47,14 @@ export class BeersService {
     }
 
     getBeersNewest() {
-        return this.http.get(this.urlGetBeersNewest)
+        const params = new HttpParams()
+            .set('joinTables', 'brewery')
+            .set('orderBy', 'timestampCreated.desc');
+
+        return this.http.get(this.urlGetBeersNewest, {params})
             .toPromise()
             .then(data => {
+                console.log(data);
                 return data;
             });
     }

@@ -35,8 +35,8 @@ Route::prefix('breweries')->group(function() {
 });
 
 Route::prefix('beers')->group(function() {
-    Route::get('/getByName', 'BeerController@getByName');
-    Route::get('/getNewest', 'BeerController@getNewest');
+//    Route::get('/getByName', 'BeerController@getByName');
+//    Route::get('/getNewest', 'BeerController@getNewest');
     Route::post('/uploadImage', 'BeerController@uploadImage');
 
     Route::post('/search', 'BeerController@search');
