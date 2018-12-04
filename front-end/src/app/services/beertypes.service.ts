@@ -18,6 +18,7 @@ export class BeertypesService {
         return this.http.get(this.urlGetAllBeertypes)
             .toPromise()
             .then( data => {
+                console.log(data);
                 return data;
             });
     }

@@ -17,9 +17,10 @@ import {HttpClientModule} from '@angular/common/http';
 import {LoginModule} from './pagegroups/Visitor/login/login.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ReactiveFormsModule} from '@angular/forms';
-import { DetailBeersComponent } from './pagegroups/Visitor/beers/detail-beers/detail-beers.component';
-import { BeerprofileComponent } from './pagegroups/Visitor/beers/detail-beers/beerprofile/beerprofile.component';
-import { BeerbreweryprofileComponent } from './pagegroups/Visitor/beers/detail-beers/beerbreweryprofile/beerbreweryprofile.component';
+import {DetailBeersComponent} from './pagegroups/Visitor/beers/detail-beers/detail-beers.component';
+import {BeerprofileComponent} from './pagegroups/Visitor/beers/detail-beers/beerprofile/beerprofile.component';
+import {BeerbreweryprofileComponent} from './pagegroups/Visitor/beers/detail-beers/beerbreweryprofile/beerbreweryprofile.component';
+import {BlogModule} from './pagegroups/Visitor/blog/blog.module';
 
 @NgModule({
     declarations: [
@@ -45,6 +46,7 @@ import { BeerbreweryprofileComponent } from './pagegroups/Visitor/beers/detail-b
         LoginModule,
         NgxPaginationModule,
         ReactiveFormsModule,
+        BlogModule
     ],
     providers: [],
     bootstrap: [AppComponent]

@@ -49,7 +49,7 @@ class BeerController extends Controller
      */
     public function insert(Request $request)
     {
-        $beer;
+        $beer = '';
         if(isset($request->input('inputArray')['name'])){
             $beer = BeerDataService::insert($request->input('inputArray'));
         } else{

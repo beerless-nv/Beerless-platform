@@ -5,7 +5,7 @@
         <div class="col-12 p-0 d-flex flex-md-row flex-column mb-2">
             <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1 position-relative">
                 <div class="form-group mb-1 input-icon">
-                    <input type="text" class="form-control" placeholder="Zoek een beer" value="{{beerName}}"
+                    <input type="text" class="form-control" placeholder="Zoek een bier" value="{{beerName}}"
                            #beer
                            (blur)="getBeersByName(beer.value)"
                            (keyup.enter)="beer.blur()">
@@ -37,7 +37,7 @@
                 ></app-beer-item>
                 <div class="card mb-2" [ngbCollapse]="!beersList?.length">
                     <div class="card-body p-4 text-center">
-                        <strong>Het bier dat je zoekt niet gevonden? Voeg het toe.</strong>
+                        <strong>Het bier dat je zoekt niet gevonden? <a routerLink="/beers/add" [queryParams]="{name: beer.value}">Voeg het toe</a>.</strong>
                     </div>
                 </div>
                 <div class="card mb-2" [ngbCollapse]="beersList?.length">
@@ -75,7 +75,6 @@
                         </p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
