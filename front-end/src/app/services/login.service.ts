@@ -13,6 +13,8 @@ export class LoginService {
     readonly urlSignIn = environment.backend + 'users/signIn';
     readonly urlSignUp = environment.backend + 'users/signUp';
     userData$: BehaviorSubject<User> = new BehaviorSubject(null);
+    messageLogin$: BehaviorSubject<string> = new BehaviorSubject(null);
+    messageRegister$: BehaviorSubject<string> = new BehaviorSubject(null);
 
     constructor(private http: HttpClient) {
         if (localStorage.getItem('user')) {
@@ -29,11 +31,23 @@ export class LoginService {
             .toPromise()
             .then(data => {
                 localStorage.removeItem('user');
-                console.log(data);
                 this.setUserData(data['user'], data['token']);
             })
-            .then(() => {
-                console.log(this.userData$);
+            .catch( error => {
+                switch (error.error.msg) {
+                    case 'username_required':
+                        this.messageLogin$.next('Vul een gebruikersnaam in!');
+                        break;
+                    case 'password_required':
+                        this.messageLogin$.next('Vul een wachtwoord in!');
+                        break;
+                    case 'user_does_not_exist':
+                        this.messageLogin$.next('Deze gebruikersnaam bestaat niet!');
+                        break;
+                    case 'password_incorrect':
+                        this.messageLogin$.next('Wachtwoord is fout!');
+                        break;
+                }
             });
     }
 
@@ -46,12 +60,37 @@ export class LoginService {
             .then(data => {
                 console.log(data);
                 return data;
+            })
+            .catch( error => {
+                console.log(error);
+                switch (error.error.msg) {
+                    case 'username_required':
+                        this.messageRegister$.next('Vul een gebruikersnaam in!');
+                        break;
+                    case 'username_not_unique':
+                        this.messageRegister$.next('Deze gebruikersnaam bestaat al!');
+                        break;
+                    case 'email_required':
+                        this.messageRegister$.next('Vul een e-mailadres in!');
+                        break;
+                    case 'email_not_valid':
+                        this.messageRegister$.next('Vul een geldig e-mailadres in!');
+                        break;
+                    case 'email_not_unique':
+                        this.messageRegister$.next('Dit e-mailadres is al in gebruik!');
+                        break;
+                    case 'password_required':
+                        this.messageRegister$.next('Vul een wachtwoord in!');
+                        break;
+                }
             });
     }
 
     // Locally log the user out
     logout() {
         this.userData$.next(null);
+        this.messageLogin$.next(null);
+        this.messageRegister$.next(null);
         localStorage.removeItem('user');
     }
 

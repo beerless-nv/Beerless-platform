@@ -17,6 +17,7 @@
                                 <input type="password" class="form-control" placeholder="Wachtwoord" formControlName="password">
                                 <i class="fas fa-unlock-alt"></i>
                             </div>
+                            <p class="text-danger text-center">{{messageLogin}}</p>
                             <div class="form-group text-center">
                                 <button class="btn btn-primary text-white px-5" type="submit">Log in</button>
                             </div>
@@ -40,7 +41,7 @@
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="form-group mb-3 input-icon">
-                                <input type="text" class="form-control" placeholder="Email-adres" formControlName="email">
+                                <input type="text" class="form-control" placeholder="E-mailadres" formControlName="email">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="form-group mb-3 input-icon">
@@ -53,6 +54,7 @@
                                     Door op <strong>Registreer</strong> te klikken, accepteer je onze <a href="https://www.beerless.be/assets/Voorwaarden/Privacy_Beleid_Beerless.pdf">voorwaarden</a>.
                                 </small>
                             </div>
+                            <p class="text-danger text-center">{{messageRegister}}</p>
                             <div class="form-group text-center">
                                 <button class="btn btn-primary text-white px-5" type="submit">Registreer</button>
                             </div>
