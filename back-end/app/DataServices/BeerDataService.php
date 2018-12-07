@@ -13,9 +13,11 @@ class BeerDataService
      *
      * @return Beer[]
      */
-    public static function getAll($joinTables, $sortOrder)
+    public static function getAll($joinTables, $sortOrder, $limit, $offset)
     {
         $query = Beer::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
         \joinTables($query, 'beer', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get();
@@ -56,9 +58,11 @@ class BeerDataService
      * @param array $searchParams
      * @return Beer[]
      */
-    public static function search(array $searchParams, $joinTables, $sortOrder)
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset)
     {        
         $query = Beer::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
         \joinTables($query, 'beer', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $value){

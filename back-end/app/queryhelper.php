@@ -18,3 +18,15 @@ function sortQuery($query, $sortOrder){
         }
     }
 }
+
+function limitQuery($query, $limit){
+    if($limit != null){
+        $query->take($limit);
+    }
+}
+
+function offsetQuery($query, $offset){
+    if($offset != null){
+        $query->skip($offset);
+    }
+}
