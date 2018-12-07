@@ -32,12 +32,16 @@ export class LoginComponent implements OnInit {
             username: new FormControl(''),
             email: new FormControl(''),
             password: new FormControl('')
-        })
+        });
     }
 
     login() {
         this.user = this.formLogin.value;
         this.loginService.signIn(this.user['username'], this.user['password']);
         this.router.navigate(['/']);
+    }
+
+    register() {
+        this.loginService.signUp(this.formRegister.value);
     }
 }

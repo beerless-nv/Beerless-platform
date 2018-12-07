@@ -29,7 +29,7 @@ class Beer extends Model
     protected $table ='Beer';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
-    const UPDATED_AT = 'timestampUpdate';
+    const UPDATED_AT = 'timestampUpdated';
 
     // Relationships
     public function brewery()

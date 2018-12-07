@@ -9,7 +9,7 @@ import {catchError, share, tap} from 'rxjs/operators';
 })
 export class BeertypesService {
 
-    readonly urlGetAllBeertypes = environment.backend + 'beertypes/';
+    readonly urlGetAllBeertypes = environment.backend + 'beertypes';
 
     constructor(private http: HttpClient) {
     }
@@ -18,7 +18,6 @@ export class BeertypesService {
         return this.http.get(this.urlGetAllBeertypes)
             .toPromise()
             .then( data => {
-                console.log(data);
                 return data;
             });
     }

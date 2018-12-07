@@ -15,53 +15,52 @@ export class LoginService {
     userData$: BehaviorSubject<User> = new BehaviorSubject(null);
 
     constructor(private http: HttpClient) {
+        if (localStorage.getItem('user')) {
+            this.userData$.next(JSON.parse(localStorage.getItem('user')));
+        }
     }
 
     // Authenticate user through API
     signIn(username, password) {
-        return this.http.post(this.urlSignIn, 
-            {
-                username : username,
-                password : password
-            }).toPromise().then(data => {
+        return this.http.post(this.urlSignIn, {
+            username: username,
+            password: password
+        })
+            .toPromise()
+            .then(data => {
+                localStorage.removeItem('user');
                 console.log(data);
                 this.setUserData(data['user'], data['token']);
-            }).then( () => {
-                console.log(this.userData$); 
             })
+            .then(() => {
+                console.log(this.userData$);
+            });
     }
 
     // Create user through API
-    signUp(username, email, password): Observable<any> {
-        return this.http.post(this.urlSignUp,
-            {
-                username : username,
-                email : email,
-                password : password
-            }).pipe(
-                tap(function(req){
-
-                }),
-                catchError(
-                    (error) => {
-                        console.log('error' + error);
-                        return EMPTY;
-                }),
-                share()
-            )
+    signUp(user) {
+        return this.http.post(this.urlSignUp, {
+            inputArray: user
+        })
+            .toPromise()
+            .then(data => {
+                console.log(data);
+                return data;
+            });
     }
 
     // Locally log the user out
-    logout(){        
+    logout() {
         this.userData$.next(null);
+        localStorage.removeItem('user');
     }
 
-    getUserData(){
+    getUserData() {
         return this.userData$;
     }
 
     // Locally log the user int
-    private setUserData(user, token: string){
+    private setUserData(user, token: string) {
         if (user !== null) {
             this.userData$.next({
                 id: user.id,
@@ -69,10 +68,13 @@ export class LoginService {
                 firstname: user.firstname,
                 lastname: user.lastname,
                 email: user.email,
-                profilepicture: user.profilepicture || 'https://avatars.dicebear.com/v2/identicon/' + user.username + '.svg',
+                picture: user.picture || 'https://avatars.dicebear.com/v2/identicon/' + user.email + '.svg',
                 userType: user.userType,
                 token: token,
             });
+            this.userData$.subscribe(data => localStorage.setItem('user', JSON.stringify(data)));
+
+            console.log(user);
         } else {
             this.userData$.next(null);
         }

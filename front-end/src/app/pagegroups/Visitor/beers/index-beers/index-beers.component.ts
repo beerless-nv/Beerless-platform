@@ -45,7 +45,6 @@ export class IndexBeersComponent implements OnInit {
                 this.beersService.getBeersByName('name', this.beerName)
                     .then(data => {
                         this.beersList = data['beers'];
-                        console.log(this.beersList);
                         localStorage.setItem('BeerSearchResults', JSON.stringify(this.beersList));
                     })
                     .then(() => {
@@ -63,7 +62,7 @@ export class IndexBeersComponent implements OnInit {
 
     getBeersNewest() {
         if (this.newestBeersList !== null) {
-            this.beersService.getBeersNewest().then(data => localStorage.setItem('NewestBeersArray', JSON.stringify(data)));
+            this.beersService.getBeersNewest().then(data => localStorage.setItem('NewestBeersArray', JSON.stringify(data['beers'])));
             this.newestBeersList = JSON.parse(localStorage.getItem('NewestBeersArray'));
         } else {
             this.newestBeersList = JSON.parse(localStorage.getItem('NewestBeersArray'));

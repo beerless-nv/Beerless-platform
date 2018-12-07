@@ -22,17 +22,28 @@
         <i class="fas fa-times text-dark" [ngbCollapse]="isCollapsed"></i>
     </button>
     <div class="collapse navbar-collapse my-0" id="navbarNavAltMarkup">
-      <div class="ml-auto row">
-        <div class="navbar-nav mr-4 position-relative">
+      <div class="ml-auto row h-100">
+        <div class="navbar-nav position-relative d-flex align-items-center">
           <a class="nav-item nav-link nav-link-padding" routerLink="/home" routerLinkActive="active">Home</a>
           <a class="nav-item nav-link nav-link-padding" routerLink="/beers" routerLinkActive="active">Bieren</a>
           <a class="nav-item nav-link nav-link-padding" routerLink="/brouwerijen" routerLinkActive="active">Brouwerijen</a>
           <a class="nav-item nav-link nav-link-padding" routerLink="/blog" routerLinkActive="active">Blog</a>
           <div class="nav-divider"></div>
         </div>
-        <div class="navbar-nav ml-4 mr-3">
-          <a *ngIf="!user" class="nav-item nav-link" routerLink="/login" routerLinkActive="active" ><i class="fas fa-user-circle"></i></a>
-          <a *ngIf="user" class="nav-item nav-link" routerLink="/login" routerLinkActive="active" ><i class="fas fa-user-circle"></i></a>
+        <div class="navbar-nav ml-2rem mr-2 d-flex align-items-center">
+          <a *ngIf="!user" class="nav-item nav-link" routerLink="/login" routerLinkActive="active"><i class="fas fa-user-circle"></i></a>
+          <a *ngIf="user" class="nav-item nav-link mouse-pointer" routerLinkActive="active">
+              <img src="{{user.picture}}" alt="" class="navbar-profile-picture">
+              <span class="ml-2" [hidden]="!user.firstname || !user.lastname">{{user.firstname}} {{user.lastname}}</span>
+              <span class="ml-2" [hidden]="user.firstname && user.lastname">{{user.username}}</span>
+
+              <div class="nav-submenu">
+                  <a class="nav-item nav-link nav-link-padding" routerLink="/users" routerLinkActive="active">Profiel</a>
+                  <a class="nav-item nav-link nav-link-padding" routerLink="/wishlist" routerLinkActive="active">Wishlist</a>
+                  <a class="nav-item nav-link nav-link-padding" routerLink="/settings" routerLinkActive="active">Instellingen</a>
+                  <a class="nav-item nav-link nav-link-padding" (click)="logout()" routerLinkActive="active">Uitloggen</a>
+              </div>
+          </a>
           <a class="nav-item nav-link" routerLink="/help" routerLinkActive="active"><i class="fas fa-question"></i></a>
         </div>
       </div>

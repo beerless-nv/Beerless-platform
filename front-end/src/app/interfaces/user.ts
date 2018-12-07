@@ -4,7 +4,7 @@ export class User {
     firstname: string;
     lastname: string;
     email: string;
-    profilepicture: string;
+    picture: string;
     userType: number;
     token: string;
 }

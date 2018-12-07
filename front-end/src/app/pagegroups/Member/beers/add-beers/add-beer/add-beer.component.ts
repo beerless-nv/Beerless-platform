@@ -53,15 +53,15 @@ export class AddBeerComponent implements OnInit {
         // form
         this.form = new FormGroup({
             name: new FormControl(this.beerName, Validators.required),
-            brewery: new FormControl('', Validators.required),
-            beertype: new FormControl(0, [Validators.required, Validators.min(1)]),
+            breweryID: new FormControl('', Validators.required),
+            beertypeID: new FormControl(0, [Validators.required, Validators.min(1)]),
             fermentation: new FormControl(0, [Validators.required, Validators.min(1)]),
             description: new FormControl('', [Validators.required, Validators.minLength(50), Validators.maxLength(this.maxLengthTextarea)]),
-            abv: new FormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*(\\.\\d+)?$')]),
-            ibu: new FormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]),
+            ABV: new FormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*(\\.\\d+)?$')]),
+            IBU: new FormControl('', [Validators.required, Validators.pattern('^[1-9]\\d*$')]),
             logo: new FormControl('', Validators.required),
             picture: new FormControl('', Validators.required),
-            ebc: new FormControl(''),
+            EBC: new FormControl(''),
             temperature: new FormControl(''),
             season: new FormControl(0),
             since: new FormControl('')
@@ -115,9 +115,9 @@ export class AddBeerComponent implements OnInit {
 
         // breweryID doorgeven
         if (this.breweryName$ != null) {
-            this.breweryName$.subscribe(val => this.form.value.brewery = val.id);
+            this.breweryName$.subscribe(val => this.form.value.breweryID = val.id);
         } else {
-            this.breweriesService.getBreweriesByName(this.form.value.brewery).subscribe(val => this.form.value.brewery = val.id);
+            this.breweriesService.getBreweriesByName(this.form.value.breweryID).subscribe(val => this.form.value.breweryID = val.id);
             console.log(this.breweryName$);
         }
 
@@ -135,7 +135,7 @@ export class AddBeerComponent implements OnInit {
     //
 
     getAllBeertypes() {
-        this.beertypesService.getAllBeertypes().then(data => this.beertypesList = data);
+        this.beertypesService.getAllBeertypes().then(data => this.beertypesList = data['beertypes']);
     }
 
     //
@@ -146,17 +146,17 @@ export class AddBeerComponent implements OnInit {
         this.breweryName$ = of('');
 
         // enable brewery input
-        this.form.controls['brewery'].enable();
+        this.form.controls['breweryID'].enable();
         this.isCollapsed = true;
     }
 
     setBreweryName(brewery) {
         this.breweryName$ = of(brewery);
         console.log(brewery);
-        this.breweryName$.subscribe(val => this.form.controls['brewery'].setValue(val.name));
+        this.breweryName$.subscribe(val => this.form.controls['breweryID'].setValue(val.name));
 
         // disable brewery input
-        this.form.controls['brewery'].disable();
+        this.form.controls['breweryID'].disable();
         this.isCollapsed = false;
     }
 
