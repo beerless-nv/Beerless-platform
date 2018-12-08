@@ -7,6 +7,9 @@ This APi features a number of resources:
 * breweries
 * users
 * beertypes
+* articles
+* tags
+* articletags
 
 ## basic requests
 A list of all rows of a resource can be gotten by a simple get request:
@@ -28,7 +31,7 @@ An insert can be done on the base resource as well, via a post request:
 POST /beers
 
 requires: {
-    "inputArray": {
+    "ipnutObject": {
         "name":"fooName",
         ...
     }
@@ -109,4 +112,28 @@ This also achieved through a query parameter. It's not possible to sort on multi
 
 ```
 GET /beers?orderBy=IBU.desc
+```
+
+### Limit and offset
+To limit a result, just use it as qeury parameter in the URL, this should always be a number greater than 0.
+```
+GET /beers?limit=5
+```
+The same goes for offset, although this one can only be used in combination with limit:
+```
+GET /beers?offset=5
+```
+These query paramerts can only be used on the following resources:
+* beers
+* beertypes
+* breweries
+* users
+* articles
+* tags
+
+## Additional info
+Make sure you send the following headers along with the request:
+```
+Content-Type : application/json
+X-Request-With : XMLHttpRequest
 ```

@@ -24,9 +24,36 @@ class BeertypeController extends Controller
         if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
         else {$sortOrder = null;}
 
+        $limit = null;
+        if($request->query('limit') != null){
+            $limit = intval($request->query('limit'));
+            if(!is_int($limit) || $limit < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'limit_not_valid'
+                ]);
+            }
+        }        
+        
+        $offset = null;
+        if($request->query('offset') != null){
+            $offset = intval($request->query('offset'));
+            if(!is_int($offset) || $offset < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'offset_not_valid'
+                ]);
+            } if($limit == null){
+                return response()->json([
+                    'success' => false,
+                    'msg' => 'limit_not_set'
+                ]);
+            }
+        }
+
         return response()->json([
             'success' => true,
-            'beertypes' => BeertypeDataService::getAll($joinTables, $sortOrder)
+            'beertypes' => BeertypeDataService::getAll($joinTables, $sortOrder, $limit, $offset)
         ], 200);
     }
 
@@ -83,9 +110,36 @@ class BeertypeController extends Controller
         if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
         else {$sortOrder = null;}
 
+        $limit = null;
+        if($request->query('limit') != null){
+            $limit = intval($request->query('limit'));
+            if(!is_int($limit) || $limit < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'limit_not_valid'
+                ]);
+            }
+        }        
+        
+        $offset = null;
+        if($request->query('offset') != null){
+            $offset = intval($request->query('offset'));
+            if(!is_int($offset) || $offset < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'offset_not_valid'
+                ]);
+            } if($limit == null){
+                return response()->json([
+                    'success' => false,
+                    'msg' => 'limit_not_set'
+                ]);
+            }
+        }
+
         return response()->json([
             "success" => true,
-            'beers' => BeerTypeDataService::search($request->input('searchParams'), $joinTables, $sortOrder)
+            'beers' => BeerTypeDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $lmit, $offset)
         ]);
     }
 

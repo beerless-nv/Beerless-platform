@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Validator;
 
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -21,13 +22,41 @@ class UserController extends Controller
     /**
      * Returns a JSON array of all rows in table 'User'
      *
+     * @param Request request
      * @return Response
      */
-    public function getAll()
+    public function getAll(Request $request)
     {
+        $limit = null;
+        if($request->query('limit') != null){
+            $limit = intval($request->query('limit'));
+            if(!is_int($limit) || $limit < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'limit_not_valid'
+                ]);
+            }
+        }        
+        
+        $offset = null;
+        if($request->query('offset') != null){
+            $offset = intval($request->query('offset'));
+            if(!is_int($offset) || $offset < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'offset_not_valid'
+                ]);
+            } if($limit == null){
+                return response()->json([
+                    'success' => false,
+                    'msg' => 'limit_not_set'
+                ]);
+            }
+        }
+
         return response()->json([
             'success' => true,
-            'users' => UserDataService::getAll()
+            'users' => UserDataService::getAll($limit, $offset)
         ], 200);
     }
 
@@ -58,19 +87,27 @@ class UserController extends Controller
      */
     public function signUp(Request $request){
         // Validate incoming request
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'inputObject.username' => 'required|unique:user,username',
             'inputObject.email' => 'required|email|unique:user,email',
             'inputObject.password' => 'required'
         ],
         [
-            'username.required' => 'username_required',
-            'username.unique' => 'username_not_unique',
-            'email.required' => 'email_required',
-            'email.email' => 'email_not_valid',
-            'email.unique' => 'email_not_unique',
-            'password.required' => 'password_required'
+            'inputObject.username.required' => 'username_required',
+            'inputObject.username.unique' => 'username_not_unique',
+            'inputObject.email.required' => 'email_required',
+            'inputObject.email.email' => 'email_not_valid',
+            'inputObject.email.unique' => 'email_not_unique',
+            'inputObject.password.required' => 'password_required'
         ]);
+        
+        if($validator->fails()){
+            return response()->json([
+                'success' => false,
+                'msg' => $validator->messages()->all()
+            ], 400);
+        }
+
         $inputObject = $request->input('inputObject');        
         $inputObject['password'] = Hash::make($inputObject['password']);
         
@@ -93,7 +130,7 @@ class UserController extends Controller
     public function signIn(Request $request){   
         
         // Validate incoming request
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'username' => 'required',
             'password' => 'required'
         ],
@@ -103,6 +140,12 @@ class UserController extends Controller
         ]);
 
         $retVal['success'] = false;
+        if($validator->fails()){
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        }
+
+        
         $username = $request->input('username');
         $password = $request->input('password');
         try{    
@@ -120,10 +163,10 @@ class UserController extends Controller
 
                     return response()->json( $retVal, 200);                     
                 } else{
-                    $retVal['msg'] = 'password_incorrect'; 
+                    $retVal['msg'] = array('password_incorrect'); 
                 }                                  
             } else{
-                $retVal['msg'] = 'user_does_not_exist';                    
+                $retVal['msg'] = array('user_does_not_exist');                    
             }
 
             // Return failed login with failure msg
@@ -131,7 +174,7 @@ class UserController extends Controller
             
         } catch (JWTException $e){
             $retVal['success'] = 'error';
-            $retVal['msg'] = $e->getMessage();
+            $retVal['msg'] = array($e->getMessage());
             return response()->json( $retVal, 500);
         }        
     }
