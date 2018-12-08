@@ -8,18 +8,32 @@
                 <div class=" d-flex flex-row">
                     <div class="col-md-6 col-12 border-md-right pr-md-5 pr-0 pl-0" [ngbCollapse]="!isRegistrated">
                         <h4 class="mb-3">Log in</h4>
-                        <form novalidate [formGroup]="formLogin" (ngSubmit)="login()">
-                            <div class="form-group mb-3 input-icon">
-                                <input type="text" class="form-control" placeholder="Gebruikersnaam" formControlName="username">
-                                <i class="fas fa-user"></i>
+                        <form novalidate [formGroup]="formLogin" (ngSubmit)="login()" autocomplete="off">
+                            <div class="form-group mb-3">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Gebruikersnaam" formControlName="username">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="invalid-input" *ngIf="formLogin.get('username').touched && formLogin.get('username').invalid">
+                                    <div *ngIf="formLogin.get('username').hasError('required')">
+                                        Vul een gebruikersnaam in!
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group mb-3 input-icon">
-                                <input type="password" class="form-control" placeholder="Wachtwoord" formControlName="password">
-                                <i class="fas fa-unlock-alt"></i>
+                                <div class="input-icon">
+                                    <input type="password" class="form-control" placeholder="Wachtwoord" formControlName="password">
+                                    <i class="fas fa-unlock-alt"></i>
+                                </div>
+                                <div class="invalid-input" *ngIf="formLogin.get('password').touched && formLogin.get('password').invalid">
+                                    <div *ngIf="formLogin.get('password').hasError('required')">
+                                        Vul een wachtwoord in!
+                                    </div>
+                                </div>
                             </div>
-                            <p class="text-danger text-center">{{messageLogin}}</p>
+                            <p class="invalid-input text-center" *ngFor="let msg of messageLogin">{{msg}}</p>
                             <div class="form-group text-center">
-                                <button class="btn btn-primary text-white px-5" type="submit">Log in</button>
+                                <button class="btn btn-primary text-white px-5" type="submit" [disabled]="formLogin.invalid">Log in</button>
                             </div>
                             <p class="text-center d-md-none">Heeft u nog geen account? <strong><a routerLink="/login" (click)="isRegistrated = !isRegistrated">Registreren</a></strong></p>
                             <div class="divider my-5">
@@ -35,18 +49,54 @@
                     </div>
                     <div class="col-md-6 col-12 pl-md-5 pl-0 pr-0 d-md-block" [ngbCollapse]="isRegistrated">
                         <h4 class="mb-3">Registreer</h4>
-                        <form novalidate [formGroup]="formRegister" (ngSubmit)="register()">
-                            <div class="form-group mb-3 input-icon">
-                                <input type="text" class="form-control" placeholder="Gebruikersnaam" formControlName="username">
-                                <i class="fas fa-user"></i>
+                        <form novalidate [formGroup]="formRegister" (ngSubmit)="register()" autocomplete="off">
+                            <div class="form-group mb-3">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="Gebruikersnaam" formControlName="username">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="invalid-input" *ngIf="formRegister.get('username').touched && formRegister.get('username').invalid">
+                                    <div *ngIf="formRegister.get('username').hasError('required')">
+                                        Vul een gebruikersnaam in!
+                                    </div>
+                                    <div *ngIf="formRegister.get('username').hasError('minlength')">
+                                        Gebruikersnaam moet minimaal 3 karakters bevatten!
+                                    </div>
+                                    <div *ngIf="formRegister.get('username').hasError('maxlength')">
+                                        Gebruikersnaam mag maximaal 25 karakters bevatten!
+                                    </div>
+                                    <div *ngIf="formRegister.get('username').hasError('pattern')">
+                                        Gebruikersnaam mag enkel letters, cijfers en een koppelteken bevatten!
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group mb-3 input-icon">
-                                <input type="text" class="form-control" placeholder="E-mailadres" formControlName="email">
-                                <i class="fas fa-envelope"></i>
+                            <div class="form-group mb-3">
+                                <div class="input-icon">
+                                    <input type="text" class="form-control" placeholder="E-mailadres" formControlName="email">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="invalid-input" *ngIf="formRegister.get('email').touched && formRegister.get('email').invalid">
+                                    <div *ngIf="formRegister.get('email').hasError('required')">
+                                        Vul een e-mailadres in!
+                                    </div>
+                                    <div *ngIf="formRegister.get('email').hasError('email')">
+                                        Vul een geldig e-mailadres in!
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group mb-3 input-icon">
-                                <input type="password" class="form-control" placeholder="Wachtwoord" formControlName="password">
-                                <i class="fas fa-unlock-alt"></i>
+                            <div class="form-group mb-3">
+                                <div class="input-icon">
+                                    <input type="password" class="form-control" placeholder="Wachtwoord" formControlName="password">
+                                    <i class="fas fa-unlock-alt"></i>
+                                </div>
+                                <div class="invalid-input" *ngIf="formRegister.get('password').touched && formRegister.get('password').invalid">
+                                    <div *ngIf="formRegister.get('password').hasError('required')">
+                                        Vul een gebruikersnaam in!
+                                    </div>
+                                    <div *ngIf="formRegister.get('password').hasError('minlength')">
+                                        Wachtwoord moet minimaal 6 karakters bevatten!
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
                                 <small>
@@ -54,9 +104,9 @@
                                     Door op <strong>Registreer</strong> te klikken, accepteer je onze <a href="https://www.beerless.be/assets/Voorwaarden/Privacy_Beleid_Beerless.pdf">voorwaarden</a>.
                                 </small>
                             </div>
-                            <p class="text-danger text-center">{{messageRegister}}</p>
+                            <p class="invalid-input text-center" *ngFor="let msg of messageRegister">{{msg}}</p>
                             <div class="form-group text-center">
-                                <button class="btn btn-primary text-white px-5" type="submit">Registreer</button>
+                                <button class="btn btn-primary text-white px-5" type="submit" [disabled]="formRegister.invalid">Registreer</button>
                             </div>
                             <p class="text-center d-md-none">Heeft u al een account? <strong><a routerLink="/login" (click)="isRegistrated = !isRegistrated">Inloggen</a></strong></p>
                         </form>

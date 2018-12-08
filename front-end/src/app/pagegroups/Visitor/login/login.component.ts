@@ -2,7 +2,7 @@ import {Component, OnInit, Testability} from '@angular/core';
 import {LoginService} from '../../../services/login.service';
 import {ErrorService} from '../../../services/error.service';
 import {Observable, of, Subscription} from 'rxjs';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -25,13 +25,14 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this.formLogin = new FormGroup({
-            username: new FormControl('to'),
-            password: new FormControl('test')
+            username: new FormControl('', Validators.required),
+            password: new FormControl('', Validators.required)
         });
+
         this.formRegister = new FormGroup({
-            username: new FormControl(''),
-            email: new FormControl(''),
-            password: new FormControl('')
+            username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25), Validators.pattern('^[a-zA-ZÀ-ÿ0-9-]*$')]),
+            email: new FormControl('', [Validators.required, Validators.email]),
+            password: new FormControl('', [Validators.required, Validators.minLength(6)])
         });
 
         this.loginService.messageLogin$.subscribe(data => this.messageLogin = data);

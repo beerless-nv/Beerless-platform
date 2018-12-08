@@ -13,8 +13,10 @@ export class LoginService {
     readonly urlSignIn = environment.backend + 'users/signIn';
     readonly urlSignUp = environment.backend + 'users/signUp';
     userData$: BehaviorSubject<User> = new BehaviorSubject(null);
-    messageLogin$: BehaviorSubject<string> = new BehaviorSubject(null);
-    messageRegister$: BehaviorSubject<string> = new BehaviorSubject(null);
+    messageLogin$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
+    messageRegister$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
+    errorMessageObject
+    errorMessageArray = [];
 
     constructor(private http: HttpClient) {
         if (localStorage.getItem('user')) {
@@ -34,20 +36,25 @@ export class LoginService {
                 this.setUserData(data['user'], data['token']);
             })
             .catch( error => {
-                switch (error.error.msg) {
-                    case 'username_required':
-                        this.messageLogin$.next('Vul een gebruikersnaam in!');
-                        break;
-                    case 'password_required':
-                        this.messageLogin$.next('Vul een wachtwoord in!');
-                        break;
-                    case 'user_does_not_exist':
-                        this.messageLogin$.next('Deze gebruikersnaam bestaat niet!');
-                        break;
-                    case 'password_incorrect':
-                        this.messageLogin$.next('Wachtwoord is fout!');
-                        break;
+                this.errorMessageArray = error.error['msg'];
+                for (let i = 0; i < this.errorMessageArray.length; i++) {
+                    switch (this.errorMessageArray[i]) {
+                        case 'username_required':
+                            this.errorMessageArray[i] = 'Vul een gebruikersnaam in!';
+                            break;
+                        case 'password_required':
+                            this.errorMessageArray[i] = 'Vul een wachtwoord in!';
+                            break;
+                        case 'user_does_not_exist':
+                            this.errorMessageArray[i] = 'Deze gebruikersnaam bestaat niet!';
+                            break;
+                        case 'password_incorrect':
+                            this.errorMessageArray[i] = 'Wachtwoord is fout!';
+                            break;
+                    }
                 }
+                this.messageLogin$.next(this.errorMessageArray);
+
             });
     }
 
@@ -65,27 +72,30 @@ export class LoginService {
                 return data;
             })
             .catch( error => {
-                console.log(error.error.msg);
-                switch (error.error.msg) {
-                    case 'username_required':
-                        this.messageRegister$.next('Vul een gebruikersnaam in!');
-                        break;
-                    case 'username_not_unique':
-                        this.messageRegister$.next('Deze gebruikersnaam bestaat al!');
-                        break;
-                    case 'email_required':
-                        this.messageRegister$.next('Vul een e-mailadres in!');
-                        break;
-                    case 'email_not_valid':
-                        this.messageRegister$.next('Vul een geldig e-mailadres in!');
-                        break;
-                    case 'email_not_unique':
-                        this.messageRegister$.next('Dit e-mailadres is al in gebruik!');
-                        break;
-                    case 'password_required':
-                        this.messageRegister$.next('Vul een wachtwoord in!');
-                        break;
+                this.errorMessageArray = error.error['msg'];
+                for (let i = 0; i < this.errorMessageArray.length; i++) {
+                    switch (this.errorMessageArray[i]) {
+                        case 'username_required':
+                            this.errorMessageArray[i] = 'Vul een gebruikersnaam in!';
+                            break;
+                        case 'username_not_unique':
+                            this.errorMessageArray[i] = 'Deze gebruikersnaam bestaat al!';
+                            break;
+                        case 'email_required':
+                            this.errorMessageArray[i] = 'Vul een e-mailadres in!';
+                            break;
+                        case 'email_not_valid':
+                            this.errorMessageArray[i] = 'Vul een geldig e-mailadres in!';
+                            break;
+                        case 'email_not_unique':
+                            this.errorMessageArray[i] = 'Dit e-mailadres is al in gebruik!';
+                            break;
+                        case 'password_required':
+                            this.errorMessageArray[i] = 'Vul een wachtwoord in!';
+                            break;
+                    }
                 }
+                this.messageRegister$.next(this.errorMessageArray);
             });
     }
 
