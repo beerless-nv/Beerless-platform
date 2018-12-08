@@ -21,13 +21,41 @@ class UserController extends Controller
     /**
      * Returns a JSON array of all rows in table 'User'
      *
+     * @param Request request
      * @return Response
      */
-    public function getAll()
+    public function getAll(Request $request)
     {
+        $limit = null;
+        if($request->query('limit') != null){
+            $limit = intval($request->query('limit'));
+            if(!is_int($limit) || $limit < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'limit_not_valid'
+                ]);
+            }
+        }        
+        
+        $offset = null;
+        if($request->query('offset') != null){
+            $offset = intval($request->query('offset'));
+            if(!is_int($offset) || $offset < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'offset_not_valid'
+                ]);
+            } if($limit == null){
+                return response()->json([
+                    'success' => false,
+                    'msg' => 'limit_not_set'
+                ]);
+            }
+        }
+
         return response()->json([
             'success' => true,
-            'users' => UserDataService::getAll()
+            'users' => UserDataService::getAll($limit, $offset)
         ], 200);
     }
 

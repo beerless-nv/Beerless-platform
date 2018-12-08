@@ -13,8 +13,10 @@ class TagDataService
      *
      * @return Tag[]
      */
-    public static function getAll($joinTables, $sortOrder){
+    public static function getAll($joinTables, $sortOrder, $limit, $offset){
         $query = Tag::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
         \joinTables($query, 'tag', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get();
@@ -53,8 +55,10 @@ class TagDataService
      * @param array $searchParams
      * @return Tag[]
      */
-    public static function search(array $searchParams, $joinTables, $sortOrder){
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset){
         $query = Tag::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
         \joinTables($query, 'tag', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $value){

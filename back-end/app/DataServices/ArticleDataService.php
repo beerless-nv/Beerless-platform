@@ -13,8 +13,10 @@ class ArticleDataService
      *
      * @return Article[]
      */
-    public static function getAll($joinTables, $sortOrder){
+    public static function getAll($joinTables, $sortOrder, $limit, $offset){
         $query = Article::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
         \joinTables($query, 'article', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get();
@@ -53,8 +55,10 @@ class ArticleDataService
      * @param array $searchParams
      * @return Article[]
      */
-    public static function search(array $searchParams, $joinTables, $sortOrder){
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset){
         $query = Article::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
         \joinTables($query, 'beertype', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $value){

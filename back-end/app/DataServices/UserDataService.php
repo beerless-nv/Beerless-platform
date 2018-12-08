@@ -13,9 +13,12 @@ class UserDataService
      *
      * @return User[]
      */
-    public static function getAll()
+    public static function getAll($limit, $offset)
     {
-        return User::all();
+        $query = User::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
+        return $query->get();
     }
 
     /**

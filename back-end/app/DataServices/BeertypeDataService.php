@@ -13,8 +13,10 @@ class BeertypeDataService
      *
      * @return Beertype[]
      */
-    public static function getAll($joinTables, $sortOrder){
+    public static function getAll($joinTables, $sortOrder, $limit, $offset){
         $query = Beertype::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
         \joinTables($query, 'beertype', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get();
@@ -53,8 +55,10 @@ class BeertypeDataService
      * @param array $searchParams
      * @return Beertype[]
      */
-    public static function search(array $searchParams, $joinTables, $sortOrder){
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset){
         $query = Beertype::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
         \joinTables($query, 'beertype', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $value){
