@@ -21,7 +21,7 @@
         <div class="form-group">
             <label for="brewery">Brouwerij</label>
             <div class="position-relative">
-                <input type="text" class="form-control" id="brewery" formControlName="brewery" placeholder="Brouwerij Het Anker"
+                <input type="text" class="form-control" id="brewery" formControlName="breweryID" placeholder="Brouwerij Het Anker"
                        #brewery
                        (keyup)="getBreweriesByName(brewery.value)"
                        value="data.brewery"
@@ -40,24 +40,24 @@
                     </div>
                 </div>
             </div>
-            <div class="invalid-input" *ngIf="form.get('brewery').touched && form.get('brewery').invalid">
-                <div *ngIf="form.get('brewery').hasError('required')">
+            <div class="invalid-input" *ngIf="form.get('breweryID').touched && form.get('breweryID').invalid">
+                <div *ngIf="form.get('breweryID').hasError('required')">
                     Brouwerij is vereist!
                 </div>
             </div>
-            <div class="invalid-input" *ngIf="form.get('brewery').touched && !(breweryName$ | async)">
+            <div class="invalid-input" *ngIf="form.get('breweryID').touched && !(breweryName$ | async)">
                 Selecteer een brouwerij uit de lijst of maak een nieuwe aan.
             </div>
         </div>
         <!-- beertype -->
         <div class="form-group">
             <label for="beertype">Biersoort</label>
-            <select class="form-control dropdown-height-175" id="beertype" formControlName="beertype">
+            <select class="form-control dropdown-height-175" id="beertype" formControlName="beertypeID">
                 <option value="0" hidden selected>Kies biersoort</option>
                 <option *ngFor="let beertype of beertypesList" value="{{beertype.ID}}">{{beertype.name}}</option>
             </select>
-            <div class="invalid-input" *ngIf="form.get('beertype').touched && form.get('beertype').invalid">
-                <div *ngIf="form.get('beertype').hasError('min')">
+            <div class="invalid-input" *ngIf="form.get('beertypeID').touched && form.get('beertypeID').invalid">
+                <div *ngIf="form.get('beertypeID').hasError('min')">
                     Biersoort is vereist!
                 </div>
             </div>
@@ -103,12 +103,12 @@
             <!-- abv -->
             <div class="col-6 mb-sm-0 mb-3">
                 <label for="abv">ABV <small>(%)</small></label>
-                <input type="number" class="form-control" id="abv" formControlName="abv" placeholder="8.5">
-                <div class="invalid-input" *ngIf="form.get('abv').touched && form.get('abv').invalid">
-                    <div *ngIf="form.get('abv').hasError('required')">
+                <input type="number" class="form-control" id="abv" formControlName="ABV" placeholder="8.5">
+                <div class="invalid-input" *ngIf="form.get('ABV').touched && form.get('ABV').invalid">
+                    <div *ngIf="form.get('ABV').hasError('required')">
                         ABV is vereist!
                     </div>
-                    <div *ngIf="form.get('abv').hasError('pattern')">
+                    <div *ngIf="form.get('ABV').hasError('pattern')">
                         ABV heeft foute karakters!
                     </div>
                 </div>
@@ -116,12 +116,12 @@
             <!-- ibu -->
             <div class="col-6">
                 <label for="ibu">IBU/EBU</label>
-                <input type="number" class="form-control" id="ibu" formControlName="ibu" placeholder="16">
-                <div class="invalid-input" *ngIf="form.get('ibu').touched && form.get('ibu').invalid">
-                    <div *ngIf="form.get('ibu').hasError('required')">
+                <input type="number" class="form-control" id="ibu" formControlName="IBU" placeholder="16">
+                <div class="invalid-input" *ngIf="form.get('IBU').touched && form.get('IBU').invalid">
+                    <div *ngIf="form.get('IBU').hasError('required')">
                         IBU/EBU is vereist!
                     </div>
-                    <div *ngIf="form.get('ibu').hasError('pattern')">
+                    <div *ngIf="form.get('IBU').hasError('pattern')">
                         IBU/EBU heeft foute karakters!
                     </div>
                 </div>
@@ -134,11 +134,6 @@
                    formControlName="logo"
                    (change)="onLogoSelected($event)"
                    #logoInput>
-            <!--<div type="none" class="form-control file-upload truncate-text" (click)="logoInput.click()">-->
-                <!--<span>{{logoInput.value.split("\\").pop()}}</span>-->
-                <!--<a class="btn btn-super-light border d-sm-block d-none">Kies logo</a>-->
-                <!--<a class="btn btn-super-light border d-block d-sm-none">Kies</a>-->
-            <!--</div>-->
             <div class="invalid-input" *ngIf="form.get('logo').touched && form.get('logo').hasError('required')">
                 Logo is vereist!
             </div>
@@ -150,11 +145,6 @@
                    formControlName="picture"
                    (change)="onImageSelected($event)"
                    #imageInput>
-            <!--<div type="none" class="form-control file-upload" (click)="imageInput.click()">-->
-                <!--<span>{{imageInput.value.split("\\").pop()}}</span>-->
-                <!--<a class="btn btn-super-light border d-sm-block d-none">Kies afbeelding</a>-->
-                <!--<a class="btn btn-super-light border d-block d-sm-none">Kies</a>-->
-            <!--</div>-->
             <div class="invalid-input" *ngIf="form.get('picture').touched && form.get('picture').hasError('required')">
                 Afbeelding is vereist!
             </div>
@@ -166,7 +156,7 @@
             <!-- ebc -->
             <div class="col-6">
                 <label for="ebc">EBC</label>
-                <input type="number" class="form-control" id="ebc" formControlName="ebc" placeholder="70" min="0" max="100">
+                <input type="number" class="form-control" id="ebc" formControlName="EBC" placeholder="70" min="0" max="100">
             </div>
             <!-- temperature -->
             <div class="col-6">
@@ -174,15 +164,6 @@
                 <input type="number" class="form-control" id="temperature" formControlName="temperature" placeholder="9" min="0" max="30">
             </div>
         </div>
-        <!--<div class="form-group">-->
-        <!--<label for="glas">Soort glas</label>-->
-        <!--<select name="glas" class="form-control" id="glas" required>-->
-        <!--<option value="0" hidden selected>Kies type glas</option>-->
-        <!--<option value="tulp">Tulp</option>-->
-        <!--<option value="vaasje">Vaasje</option>-->
-        <!--</select>-->
-        <!--</div>-->
-
         <!-- season -->
         <div class="form-group">
             <label for="season">Seizoensgebonden</label>

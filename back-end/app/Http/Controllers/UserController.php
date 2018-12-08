@@ -112,7 +112,7 @@ class UserController extends Controller
         $inputObject['password'] = Hash::make($inputObject['password']);
         
         $user = UserDataService::insert($inputObject);
-        
+
         // Return response
         return response()->json( [
             'success' => true,

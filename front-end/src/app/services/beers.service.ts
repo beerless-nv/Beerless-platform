@@ -11,9 +11,9 @@ export class BeersService {
 
     readonly urlGetBeerById = environment.backend + 'beers/';
     readonly urlGetAllBeers = environment.backend + 'beers/';
-    readonly urlInsertBeer = environment.backend + 'beers/';
+    readonly urlInsertBeer = environment.backend + 'beers';
     readonly urlGetBeersByName = environment.backend + 'beers/search';
-    readonly urlGetBeersNewest = environment.backend + 'beers/';
+    readonly urlGetBeersNewest = environment.backend + 'beers';
     readonly urlUploadImageBeer = environment.backend + 'beers/uploadImage';
 
     constructor(private http: HttpClient) {
@@ -54,7 +54,6 @@ export class BeersService {
         return this.http.get(this.urlGetBeersNewest, {params})
             .toPromise()
             .then(data => {
-                console.log(data);
                 return data;
             });
     }
@@ -62,25 +61,9 @@ export class BeersService {
     insertBeer(beer) {
         this.http.post(this.urlInsertBeer,
             {
-                name: beer.name,
-                abv: beer.abv,
-                ibu: beer.ibu,
-                ebc: beer.ebc,
-                temperature: beer.temperature,
-                fermentation: beer.fermentation,
-                season: beer.season,
-                since: beer.sinds,
-                picture: beer.picture,
-                logo: beer.logo,
-                description: beer.description,
-                breweryID: beer.brewery,
-                beertypeID: beer.beertype
+                inputObject: beer
             })
-            .subscribe(
-                err => {
-                    console.log('Error occured', err);
-                }
-            );
+            .subscribe();
     }
 
     uploadImageBeer(selectedImage, imageName, imagePath) {
@@ -92,10 +75,6 @@ export class BeersService {
         console.log(uploadData);
 
         this.http.post(this.urlUploadImageBeer, uploadData)
-            .subscribe(
-                err => {
-                    console.log('Error occured', err);
-                }
-            );
+            .subscribe();
     }
 }

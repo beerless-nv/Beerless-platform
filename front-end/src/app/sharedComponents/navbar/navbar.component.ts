@@ -15,10 +15,13 @@ export class NavbarComponent implements OnInit {
     constructor(public loginService: LoginService) {
         this.loginService.userData$.subscribe( data => {
             this.user = data;
-            console.log('navbar');
         });
     }
 
     ngOnInit() {
+    }
+
+    logout() {
+        this.loginService.logout();
     }
 }

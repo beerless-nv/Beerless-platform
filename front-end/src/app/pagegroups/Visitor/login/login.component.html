@@ -17,6 +17,7 @@
                                 <input type="password" class="form-control" placeholder="Wachtwoord" formControlName="password">
                                 <i class="fas fa-unlock-alt"></i>
                             </div>
+                            <p class="text-danger text-center">{{messageLogin}}</p>
                             <div class="form-group text-center">
                                 <button class="btn btn-primary text-white px-5" type="submit">Log in</button>
                             </div>
@@ -34,17 +35,17 @@
                     </div>
                     <div class="col-md-6 col-12 pl-md-5 pl-0 pr-0 d-md-block" [ngbCollapse]="isRegistrated">
                         <h4 class="mb-3">Registreer</h4>
-                        <!--<form>-->
+                        <form novalidate [formGroup]="formRegister" (ngSubmit)="register()">
                             <div class="form-group mb-3 input-icon">
-                                <input type="text" class="form-control" placeholder="Gebruikersnaam">
+                                <input type="text" class="form-control" placeholder="Gebruikersnaam" formControlName="username">
                                 <i class="fas fa-user"></i>
                             </div>
                             <div class="form-group mb-3 input-icon">
-                                <input type="text" class="form-control" placeholder="Email-adres">
+                                <input type="text" class="form-control" placeholder="E-mailadres" formControlName="email">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="form-group mb-3 input-icon">
-                                <input type="password" class="form-control" placeholder="Wachtwoord">
+                                <input type="password" class="form-control" placeholder="Wachtwoord" formControlName="password">
                                 <i class="fas fa-unlock-alt"></i>
                             </div>
                             <div class="mb-3">
@@ -53,11 +54,12 @@
                                     Door op <strong>Registreer</strong> te klikken, accepteer je onze <a href="https://www.beerless.be/assets/Voorwaarden/Privacy_Beleid_Beerless.pdf">voorwaarden</a>.
                                 </small>
                             </div>
+                            <p class="text-danger text-center">{{messageRegister}}</p>
                             <div class="form-group text-center">
                                 <button class="btn btn-primary text-white px-5" type="submit">Registreer</button>
                             </div>
                             <p class="text-center d-md-none">Heeft u al een account? <strong><a routerLink="/login" (click)="isRegistrated = !isRegistrated">Inloggen</a></strong></p>
-                        <!--</form>-->
+                        </form>
                     </div>
                 </div>
             </div>
