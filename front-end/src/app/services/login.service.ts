@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, share, tap} from 'rxjs/operators';
 import {EMPTY, Observable, BehaviorSubject} from 'rxjs';
 import {User} from '../interfaces/user';
@@ -53,16 +53,19 @@ export class LoginService {
 
     // Create user through API
     signUp(user) {
+        const headers = new HttpHeaders();
+        headers.append('X-Requested-With', 'XMLHttpRequest');
+
         return this.http.post(this.urlSignUp, {
-            inputArray: user
-        })
+            inputObject: user
+        }, {headers: headers})
             .toPromise()
             .then(data => {
                 console.log(data);
                 return data;
             })
             .catch( error => {
-                console.log(error);
+                console.log(error.error.msg);
                 switch (error.error.msg) {
                     case 'username_required':
                         this.messageRegister$.next('Vul een gebruikersnaam in!');
