@@ -59,9 +59,9 @@ class UserController extends Controller
     public function signUp(Request $request){
         // Validate incoming request
         $this->validate($request, [
-            'inputArray.username' => 'required|unique:user,username',
-            'inputArray.email' => 'required|email|unique:user,email',
-            'inputArray.password' => 'required'
+            'inputObject.username' => 'required|unique:user,username',
+            'inputObject.email' => 'required|email|unique:user,email',
+            'inputObject.password' => 'required'
         ],
         [
             'username.required' => 'username_required',
@@ -71,9 +71,10 @@ class UserController extends Controller
             'email.unique' => 'email_not_unique',
             'password.required' => 'password_required'
         ]);
-        $inputArray = $request->input('inputArray');        
-        $inputArray['password'] = Hash::make($inputArray['password']);
-        $user = UserDataService::insert($inputArray);
+        $inputObject = $request->input('inputObject');        
+        $inputObject['password'] = Hash::make($inputObject['password']);
+        
+        $user = UserDataService::insert($inputObject);
         
         // Return response
         return response()->json( [

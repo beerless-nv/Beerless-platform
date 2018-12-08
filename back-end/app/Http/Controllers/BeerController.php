@@ -77,8 +77,8 @@ class BeerController extends Controller
     public function insert(Request $request)
     {
         $beer = '';
-        if(isset($request->input('inputArray')['name'])){
-            $beer = BeerDataService::insert($request->input('inputArray'));
+        if(isset($request->input('inputObject')['name'])){
+            $beer = BeerDataService::insert($request->input('inputObject'));
         } else{
             return response()->json([
                 'success' => false,

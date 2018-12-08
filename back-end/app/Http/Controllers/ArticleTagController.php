@@ -49,8 +49,8 @@ class ArticleTagController extends Controller
     public function insert(Request $request)
     {
         $articletag = '';
-        if(isset($request->input('inputArray')['articleID']) && isset($request->input('inputArray')['tagID'])){
-            $articletag = ArticleTagDataService::insert($request->input('inputArray'));
+        if(isset($request->input('inputObject')['articleID']) && isset($request->input('inputObject')['tagID'])){
+            $articletag = ArticleTagDataService::insert($request->input('inputObject'));
         } else{
             return response()->json([
                 'success' => false,

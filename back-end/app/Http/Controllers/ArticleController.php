@@ -47,8 +47,8 @@ class ArticleController extends Controller
     public function insert(Request $request)
     {
         $article = '';
-        if(isset($request->input('inputArray')['title'])){
-            $article = ArticleDataService::insert($request->input('inputArray'));
+        if(isset($request->input('inputObject')['title'])){
+            $article = ArticleDataService::insert($request->input('inputObject'));
         } else{
             return response()->json([
                 'success' => false,

@@ -41,8 +41,8 @@ class BeertypeController extends Controller
      */
     public function insert(Request $request){
         $beertype;
-        if(isset($request->input('inputArray')['name'])){
-            $beertype = BeertypeDataService::insert($request->input('inputArray'));
+        if(isset($request->input('inputObject')['name'])){
+            $beertype = BeertypeDataService::insert($request->input('inputObject'));
         } else{
             return response()->json([
                 'success' => false,

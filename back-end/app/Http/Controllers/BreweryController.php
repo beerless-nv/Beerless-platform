@@ -47,8 +47,8 @@ class BreweryController extends Controller
     public function insert(Request $request)
     {
         $brewery;
-        if(isset($request->input('inputArray')['name'])){
-            $brewery = BreweryDataService::insert($request->input('inputArray'));
+        if(isset($request->input('inputObject')['name'])){
+            $brewery = BreweryDataService::insert($request->input('inputObject'));
         } else{
             return response()->json([
                 'success' => false,

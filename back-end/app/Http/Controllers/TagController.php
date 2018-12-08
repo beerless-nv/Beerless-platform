@@ -47,8 +47,8 @@ class TagController extends Controller
     public function insert(Request $request)
     {
         $tag = '';
-        if(isset($request->input('inputArray')['name'])){
-            $tag = TagDataService::insert($request->input('inputArray'));
+        if(isset($request->input('inputObject')['name'])){
+            $tag = TagDataService::insert($request->input('inputObject'));
         } else{
             return response()->json([
                 'success' => false,
