@@ -61,7 +61,7 @@ export class BeersService {
     insertBeer(beer) {
         this.http.post(this.urlInsertBeer,
             {
-                inputArray: beer
+                inputObject: beer
             })
             .subscribe();
     }

@@ -5,8 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Beer extends Model
 {
-    protected $attributes = [
-        
+    protected $attributes = [        
         'logo' => ''
     ];
     protected $fillable = [

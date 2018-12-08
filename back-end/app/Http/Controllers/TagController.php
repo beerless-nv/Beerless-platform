@@ -2,19 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
-use App\Models\Beertype;
-use App\DataServices\BeertypeDataService;
+use App\DataServices\TagDataService;
 
-class BeertypeController extends Controller
+/**
+ * Contains CRUD functions for table 'Tag'.
+ */
+class TagController extends Controller
 {
     /**
-     * returns a JSON array of all columns in table 'Beertype'
-     *
-     * GET /beertypes
+     * Returns a JSON array of all rows in table 'Tag'.
      * 
-     * @uses App\Models\Beertype
-     * @return Reponse
+     * GET /tags
+     *
+     * @param Request $request
+     * @return Response
      */
     public function getAll(Request $request)
     {
@@ -23,26 +27,28 @@ class BeertypeController extends Controller
         $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
         if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
         else {$sortOrder = null;}
-
+        
         return response()->json([
             'success' => true,
-            'beertypes' => BeertypeDataService::getAll($joinTables, $sortOrder)
+            'tags' => TagDataService::getAll($joinTables, $sortOrder)
         ], 200);
     }
 
     /**
-     * Insert an item into table 'Beertype'.
-     * Requires the field 'name'.
+     * Insert an item into table 'Tag'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'title'.
      * 
-     * POST /beertypes
+     * POST /tags
      *
-     * @param Reqeust $request
+     * @param Request $request
      * @return Response
      */
-    public function insert(Request $request){
-        $beertype;
+    public function insert(Request $request)
+    {
+        $tag = '';
         if(isset($request->input('inputObject')['name'])){
-            $beertype = BeertypeDataService::insert($request->input('inputObject'));
+            $tag = TagDataService::insert($request->input('inputObject'));
         } else{
             return response()->json([
                 'success' => false,
@@ -52,31 +58,41 @@ class BeertypeController extends Controller
         
         return response()->json([
             'success' => true,
-            'beertype' => $beertype
+            'tag' => $tag
         ], 201);
     }
 
+
     /**
-     * Returns a specific JSON object of type 'Beertype'.
+     * Returns a specific JSON object of type 'Tag'.
      * Takes the id as a request parameter.
      * 
-     * GET /beertypes/beertypeId
-     *
-     * @param Request $request
-     * @uses App\Models\Beertype
-     * @return Response
+     * GET /tags/tagId
+     * 
+     * @param Request
+     * @param integer $tagId
+     * @return Reponse
      */
-    public function get(Request $request, int $beertypeId)
+    public function get(Request $request, int $tagId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
-
+        
         return response()->json([
             'success' => true,
-            'beertype' => BeertypeDataService::get($beertypeId, $joinTables)
+            'tag' => TagDataService::get($tagId, $joinTables)
         ],200);
     }
 
-    public function search(Request $request){
+    /**
+     * Undocumented function
+     * 
+     * GET /tags/search
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function search(Request $request)
+    {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
         $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
@@ -85,43 +101,49 @@ class BeertypeController extends Controller
 
         return response()->json([
             "success" => true,
-            'beers' => BeerTypeDataService::search($request->input('searchParams'), $joinTables, $sortOrder)
+            'tags' => TagDataService::search($request->input('searchParams'), $joinTables, $sortOrder)
         ]);
     }
 
     /**
-     * Deletes an item in table 'Beertype'.
+     * Deletes an item in table 'Tag'.
      * Takes the id as a request parameter.
+     * 
+     * DELETE /tags/tagId
      *
      * @param Request $request
-     * @param integer $beertypeId
-     * @return Response
+     * @param integer $tagId
+     * @return void
      */
-    public function delete(Request $request, int $beertypeId){
-        BeertypeDataService::delete($beertypeId);
+    public function delete(Request $request, int $tagId)
+    {
+        TagDataService::delete($tagId);
         return response()->json([
             'success' => true
         ], 204);
     }
 
     /**
-     * Updates an entry in the table 'Beertype'.
+     * Updates an item in table 'Tag'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'name'.
      * 
-     * PATCH /beertypes/beertypeId
+     * PATCH /tags/$tagId
      *
      * @param Request $request
-     * @param integer $beertypeId
+     * @param integer $tagId
      * @return void
      */
-    public function patch(Request $request, int $beertypeId){
+    public function patch(Request $request, int $tagId)
+    {
         $updateArray = array();
         foreach ($request->input('updateArray') as $item) {
             $updateArray[$item['propName']] = $item['value'];
         }
-        $beertype = BeertypeDataService::update($beertypeId, $updateArray);
+        $tag = TagDataService::update($tagId, $updateArray);
         return response()->json([
             'success' => true,
-            'beertype' => $beertype
+            'tag' => $tag
         ], 200);
     }
 }

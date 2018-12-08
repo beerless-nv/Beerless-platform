@@ -32,7 +32,8 @@ class Brewery extends Model
     protected $dates = [];
     protected $table = "Brewery";
     protected $primaryKey = "ID";
-    public $timestamps = false;
+    const CREATED_AT = 'timestampCreated';
+    const UPDATED_AT = 'timestampUpdated';
 
     public static $rules = [
         // Validation rules

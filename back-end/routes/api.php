@@ -11,6 +11,36 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::prefix('articletags')->group(function() {
+    Route::post('/search', 'ArticleTagController@search');
+    Route::get('/', 'ArticleTagController@getAll');    
+    Route::post('/', 'ArticleTagController@insert');   
+    Route::get('/{articletagId}', 'ArticleTagController@get');
+    
+    Route::delete('/{articletagId}', 'ArticleTagController@delete');
+    Route::patch('/{articletagId}', 'ArticleTagController@patch');
+});
+
+Route::prefix('tags')->group(function() {
+    Route::post('/search', 'TagController@search');
+    Route::get('/', 'TagController@getAll');    
+    Route::post('/', 'TagController@insert');   
+    Route::get('/{tagId}', 'TagController@get');
+    
+    Route::delete('/{tagId}', 'TagController@delete');
+    Route::patch('/{tagId}', 'TagController@patch');
+});
+
+Route::prefix('articles')->group(function() {
+    Route::post('/search', 'ArticleController@search');
+    Route::get('/', 'ArticleController@getAll');    
+    Route::post('/', 'ArticleController@insert');   
+    Route::get('/{articleId}', 'ArticleController@get');
+    
+    Route::delete('/{articleId}', 'ArticleController@delete');
+    Route::patch('/{articleId}', 'ArticleController@patch');
+});
+
 Route::prefix('breweries')->group(function() {
     Route::get('/allNameId', 'BreweryController@getAllNameId');
     Route::get('/getByName', 'BreweryController@getByName');
@@ -25,8 +55,6 @@ Route::prefix('breweries')->group(function() {
 });
 
 Route::prefix('beers')->group(function() {
-//    Route::get('/getByName', 'BeerController@getByName');
-//    Route::get('/getNewest', 'BeerController@getNewest');
     Route::post('/uploadImage', 'BeerController@uploadImage');
 
     Route::post('/search', 'BeerController@search');
@@ -53,7 +81,6 @@ Route::prefix('users')->group(function() {
     Route::post('/signUp', 'UserController@signUp');  
     Route::post('/signIn', 'UserController@signIn'); 
     Route::get('/search', 'UserController@search');
-    // Route::post('/test', 'UserController@test');
 
     Route::get('/', 'UserController@getAll');   
     Route::get('/{userId}', 'userController@get');

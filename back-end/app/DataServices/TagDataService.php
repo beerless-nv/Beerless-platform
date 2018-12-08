@@ -2,20 +2,20 @@
 
 namespace App\DataServices;
 
-use App\Models\Beertype;
+use App\Models\Tag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
-class BeertypeDataService
+class TagDataService
 {
     /**
      * Undocumented function
      *
-     * @return Beertype[]
+     * @return Tag[]
      */
     public static function getAll($joinTables, $sortOrder){
-        $query = Beertype::query();
-        \joinTables($query, 'beertype', $joinTables);
+        $query = Tag::query();
+        \joinTables($query, 'tag', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get();
     }
@@ -24,38 +24,38 @@ class BeertypeDataService
      * Undocumented function
      *
      * @param array $inputArray
-     * @return Beertype
+     * @return Tag
      */
     public static function insert(array $inputArray){       
-        $beer = new Beertype();
+        $tag = new Tag();
         foreach ($inputArray as $key => $value){
-            $beer[$key] = $value;
+            $tag[$key] = $value;
         }
-        $beer->save();
-        return $beer;
+        $tag->save();
+        return $tag;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $beertypeId
-     * @return Beertype
+     * @param integer $tagId
+     * @return Tag
      */
-    public static function get(int $beertypeId, $joinTables){
-        $query = Beertype::query();
-        \joinTables($query, 'beertype', $joinTables);
-        return $query->findOrFail($beertypeId);
+    public static function get(int $tagId, $joinTables){
+        $query = Tag::query();
+        \joinTables($query, 'tag', $tagId);
+        return $query->findOrFail($tagId);
     }
 
     /**
      * Undocumented function
      *
      * @param array $searchParams
-     * @return Beertype[]
+     * @return Tag[]
      */
     public static function search(array $searchParams, $joinTables, $sortOrder){
-        $query = Beertype::query();
-        \joinTables($query, 'beertype', $joinTables);
+        $query = Tag::query();
+        \joinTables($query, 'tag', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $value){
             if($value['propName'] == 'name'){
@@ -70,12 +70,12 @@ class BeertypeDataService
     /**
      * Undocumented function
      *
-     * @param integer $beertypeId
+     * @param integer $tagId
      * @return void
      */
-    public static function delete(int $beertypeId){
-        if(Beertype::where('id', $beertypeId)->exists()){
-            Beertype::destroy($beertypeId);
+    public static function delete(int $tagId){
+        if(Tag::where('id', $tagId)->exists()){
+            Tag::destroy($tagId);
         } else{
             throw new ModelNotFoundException();
         }
@@ -85,12 +85,12 @@ class BeertypeDataService
     /**
      * Undocumented function
      *
-     * @param integer $beertypeId
+     * @param integer $tagId
      * @param array $updateArray
-     * @return Beertype
+     * @return Tag
      */
-    public static function update(int $beertypeId ,array $updateArray){
-        $beer = Beertype::findOrFail($beertypeId);
+    public static function update(int $tagId ,array $updateArray){
+        $beer = Tag::findOrFail($tagId);
         foreach ($updateArray as $key => $value){
             $beer[$key] = $value;
         }
