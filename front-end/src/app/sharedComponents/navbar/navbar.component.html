@@ -34,8 +34,8 @@
           <a *ngIf="!user" class="nav-item nav-link" routerLink="/login" routerLinkActive="active"><i class="fas fa-user-circle"></i></a>
           <a *ngIf="user" class="nav-item nav-link mouse-pointer" routerLinkActive="active">
               <img src="{{user.picture}}" alt="" class="navbar-profile-picture">
-              <span class="ml-2" [hidden]="!user.firstname || !user.lastname">{{user.firstname}} {{user.lastname}}</span>
-              <span class="ml-2" [hidden]="user.firstname && user.lastname">{{user.username}}</span>
+              <span class="ml-2 small font-weight-bold" [hidden]="!user.firstname || !user.lastname">{{user.firstname}} {{user.lastname}}</span>
+              <span class="ml-2 small font-weight-bold" [hidden]="user.firstname && user.lastname">{{user.username}}</span>
 
               <div class="nav-submenu">
                   <a class="nav-item nav-link nav-link-padding" routerLink="/users" routerLinkActive="active">Profiel</a>
