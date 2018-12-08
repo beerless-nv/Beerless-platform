@@ -1,4 +1,4 @@
 .git
 .idea
 /node-modules
-/src/environments
+./src/environments/environment.ts
