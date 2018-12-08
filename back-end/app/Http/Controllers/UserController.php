@@ -92,12 +92,12 @@ class UserController extends Controller
             'inputObject.password' => 'required'
         ],
         [
-            'username.required' => 'username_required',
-            'username.unique' => 'username_not_unique',
-            'email.required' => 'email_required',
-            'email.email' => 'email_not_valid',
-            'email.unique' => 'email_not_unique',
-            'password.required' => 'password_required'
+            'inputObject.username.required' => 'username_required',
+            'inputObject.username.unique' => 'username_not_unique',
+            'inputObject.email.required' => 'email_required',
+            'inputObject.email.email' => 'email_not_valid',
+            'inputObject.email.unique' => 'email_not_unique',
+            'inputObject.password.required' => 'password_required'
         ]);
         $inputObject = $request->input('inputObject');        
         $inputObject['password'] = Hash::make($inputObject['password']);
