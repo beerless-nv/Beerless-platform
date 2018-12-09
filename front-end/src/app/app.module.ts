@@ -46,9 +46,10 @@ import {BlogModule} from './pagegroups/Visitor/blog/blog.module';
         LoginModule,
         NgxPaginationModule,
         ReactiveFormsModule,
-        BlogModule
+        BlogModule,
     ],
-    providers: [],
+    providers: [
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

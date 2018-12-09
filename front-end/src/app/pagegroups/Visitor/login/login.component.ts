@@ -3,7 +3,8 @@ import {LoginService} from '../../../services/login.service';
 import {ErrorService} from '../../../services/error.service';
 import {Observable, of, Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
+import {AuthService, FacebookLoginProvider, GoogleLoginProvider, LinkedinLoginProvider} from 'angular-6-social-login';
 
 @Component({
     selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     formLogin: FormGroup;
     formRegister: FormGroup;
 
-    constructor(public loginService: LoginService, private errorService: ErrorService, private router: Router) {
+    constructor(public loginService: LoginService, private errorService: ErrorService, private router: Router, private socialAuthService: AuthService) {
     }
 
     ngOnInit() {
@@ -30,9 +31,21 @@ export class LoginComponent implements OnInit {
         });
 
         this.formRegister = new FormGroup({
-            username: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(25), Validators.pattern('^[a-zA-ZÀ-ÿ0-9-]*$')]),
-            email: new FormControl('', [Validators.required, Validators.email]),
-            password: new FormControl('', [Validators.required, Validators.minLength(6)])
+            username: new FormControl('', [
+                Validators.required,
+                Validators.minLength(3),
+                Validators.maxLength(25),
+                Validators.pattern('^([a-zA-ZÀ-ÿ0-9-])*$')
+            ]),
+            email: new FormControl('', [
+                Validators.required,
+                Validators.email
+            ]),
+            password: new FormControl('', [
+                Validators.required,
+                Validators.minLength(8),
+                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
+            ])
         });
 
         this.loginService.messageLogin$.subscribe(data => this.messageLogin = data);
@@ -51,5 +64,23 @@ export class LoginComponent implements OnInit {
 
     register() {
         this.loginService.signUp(this.formRegister.value);
+    }
+
+    socialLogin(socialPlatform: string) {
+        let socialPlatformProvider;
+        if (socialPlatform === 'facebook') {
+            socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
+        } else if (socialPlatform === 'google') {
+            socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+        } else if (socialPlatform === 'linkedin') {
+            socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
+        }
+
+        this.socialAuthService.signIn(socialPlatformProvider).then(
+            (userData) => {
+                console.log(socialPlatform + ' sign in data : ', userData);
+                this.loginService.setUserSocialData(userData);
+            }
+        );
     }
 }

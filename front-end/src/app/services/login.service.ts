@@ -12,10 +12,13 @@ export class LoginService {
 
     readonly urlSignIn = environment.backend + 'users/signIn';
     readonly urlSignUp = environment.backend + 'users/signUp';
+    readonly urlUser = environment.backend + 'users';
+    readonly urlUserSocial = environment.backend + 'usersocials';
+
     userData$: BehaviorSubject<User> = new BehaviorSubject(null);
+
     messageLogin$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
     messageRegister$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
-    errorMessageObject
     errorMessageArray = [];
 
     constructor(private http: HttpClient) {
@@ -35,7 +38,7 @@ export class LoginService {
                 localStorage.removeItem('user');
                 this.setUserData(data['user'], data['token']);
             })
-            .catch( error => {
+            .catch(error => {
                 this.errorMessageArray = error.error['msg'];
                 for (let i = 0; i < this.errorMessageArray.length; i++) {
                     switch (this.errorMessageArray[i]) {
@@ -71,7 +74,7 @@ export class LoginService {
                 console.log(data);
                 return data;
             })
-            .catch( error => {
+            .catch(error => {
                 this.errorMessageArray = error.error['msg'];
                 for (let i = 0; i < this.errorMessageArray.length; i++) {
                     switch (this.errorMessageArray[i]) {
@@ -111,7 +114,7 @@ export class LoginService {
         return this.userData$;
     }
 
-    // Locally log the user int
+    // Locally log the user in
     private setUserData(user, token: string) {
         if (user !== null) {
             this.userData$.next({
@@ -130,5 +133,75 @@ export class LoginService {
         } else {
             this.userData$.next(null);
         }
+    }
+
+    setUserSocialData(user) {
+        if (user !== null) {
+            this.userData$.next({
+                id: user.id,
+                username: '',
+                firstname: user.name.substr(0, user.name.indexOf(' ')),
+                lastname: user.name.substr(user.name.indexOf(' ') + 1),
+                email: user.email,
+                picture: user.image || 'https://avatars.dicebear.com/v2/identicon/' + user.email + '.svg',
+                userType: 0,
+                token: user.token,
+            });
+            this.userData$.subscribe(data => localStorage.setItem('user', JSON.stringify(data)));
+
+            this.getUserSocial('socialID', user.id)
+                .then(data => {
+                    const usersocials = data['usersocials'];
+                    console.log(usersocials.length);
+                    if (usersocials.length === 0) {
+                        this.insertUser({
+                            firstname: user.name.substr(0, user.name.indexOf(' ')),
+                            lastname: user.name.substr(user.name.indexOf(' ') + 1),
+                            email: user.email
+                        })
+                            .then(newUserObject => {
+                                const newUser = newUserObject['user'];
+                                console.log(
+                                    newUserObject
+                                );
+                                this.insertUserSocial({
+                                    userID: newUser.ID,
+                                    socialID: user.id,
+                                    socialPlatform: user.provider,
+                                    picture: user.image
+                                });
+                            });
+                    } else {
+                        console.log('al geregistreerd');
+                    }
+                });
+        } else {
+            this.userData$.next(null);
+        }
+    }
+
+    getUserSocial(propName, value) {
+        return this.http.post(this.urlUserSocial + '/search', {
+            searchParams: [{
+                propName: propName,
+                value: value,
+                operator: 'like'
+            }]
+        })
+            .toPromise();
+    }
+
+    insertUser(user) {
+        return this.http.post(this.urlUser, {
+            inputObject: user
+        })
+            .toPromise();
+    }
+
+    insertUserSocial(usersocial) {
+        return this.http.post(this.urlUserSocial, {
+            inputObject: usersocial
+        })
+            .toPromise();
     }
 }
