@@ -120,7 +120,7 @@ export class LoginService {
                 firstname: user.firstname,
                 lastname: user.lastname,
                 email: user.email,
-                picture: user.picture || 'https://avatars.dicebear.com/v2/identicon/' + user.email + '.svg',
+                picture: user.picture || 'https://avatars.dicebear.com/v2/identicon/' + user.firstname + user.lastname + '.svg',
                 userType: user.userType,
                 token: token,
             });

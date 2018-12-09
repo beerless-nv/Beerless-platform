@@ -3,68 +3,13 @@
     <div class="col-12 px-0 d-flex flex-wrap">
         <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0">
             <div class="card-columns">
-                <div class="card card-hover card-hover-blog" routerLink="/blog/article/1">
-                    <img class="card-img-top" src="/src/assets/images/artikel_1.jpeg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title that wraps to a new line</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-grey"><img src="/src/assets/images/profielfoto_tom_nuyts.jpg" alt="profielfoto Tom Nuyts" style="width: 30px" class="rounded-circle mr-3">Tom Nuyts</small>
-                    </div>
-                </div>
-                <div class="card">
-                    <img class="card-img-top" src="/src/assets/images/artikel_2.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-grey"><img src="/src/assets/images/profielfoto_tijmen_elseviers.jpg" alt="profielfoto Tijmen Elseviers" style="width: 30px" class="rounded-circle mr-3">Tijmen Elseviers</small>
-                    </div>
-                </div>
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-grey"><img src="/src/assets/images/profielfoto_tom_nuyts.jpg" alt="profielfoto Tom Nuyts" style="width: 30px" class="rounded-circle mr-3">Tom Nuyts</small>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-grey"><img src="/src/assets/images/profielfoto_arno_stoop.jpg" alt="profielfoto Arno Stoop" style="width: 30px" class="rounded-circle mr-3">Arno Stoop</small>
-                    </div>
-                </div>
-                <div class="card">
-                    <img class="card-img-top" src="/src/assets/images/artikel_3.jpg" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-grey"><img src="/src/assets/images/profielfoto_tijmen_elseviers.jpg" alt="profielfoto Tijmen Elseviers" style="width: 30px" class="rounded-circle mr-3">Tijmen Elseviers</small>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                    <div class="card-footer">
-                        <small class="text-grey"><img src="/src/assets/images/profielfoto_arno_stoop.jpg" alt="profielfoto Arno Stoop" style="width: 30px" class="rounded-circle mr-3">Arno Stoop</small>
-                    </div>
-                </div>
+                <app-article-item
+                    *ngFor="let article of articlesList; let i = index"
+                    [article]="article"
+                    [user]="article.user"
+                >
+
+                </app-article-item>
             </div>
         </div>
         <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 position-relative mt-md-0 mt-5">
@@ -80,11 +25,7 @@
                 <!--Tags-->
                 <div class="mt-4 pt-2 mb-4">
                     <p class="">Tags</p>
-                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Gouden Carolus</span>
-                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Goose Island</span>
-                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Bier</span>
-                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Brouwerij</span>
-                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-weight-normal">Biersoort</span>
+                    <span class="badge badge-pill badge-primary text-white py-2 px-3 mr-2 mb-2 font-waight-normal" *ngFor="let tag of tagsList" >{{ tag['name'] }}</span>
                 </div>
                 <!--Categories-->
                 <div class="mb-5">
