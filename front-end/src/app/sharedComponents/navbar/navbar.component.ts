@@ -13,12 +13,12 @@ export class NavbarComponent implements OnInit {
     user: User;
 
     constructor(public loginService: LoginService) {
-        this.loginService.userData$.subscribe( data => {
-            this.user = data;
-        });
     }
 
     ngOnInit() {
+        this.loginService.userData$.subscribe( data => {
+            this.user = data;
+        });
     }
 
     logout() {

@@ -7,4 +7,5 @@ export class User {
     picture: string;
     userType: number;
     token: string;
+    socials: Array<any>;
 }

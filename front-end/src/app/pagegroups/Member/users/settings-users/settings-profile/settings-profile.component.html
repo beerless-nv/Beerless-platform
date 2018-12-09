@@ -1,0 +1,73 @@
+<div>
+    <h6 class="intermediate-title">Profiel</h6>
+    <form action="">
+        <div class="form-group">
+            <label for="username">Gebruikersnaam</label>
+            <input type="text" class="form-control" id="username" formControlName="username" placeholder="Gebruikersnaam">
+        </div>
+        <div class="form-group">
+            <label for="email">E-mailadres</label>
+            <input type="text" class="form-control" id="email" formControlName="email" placeholder="E-mailadres">
+        </div>
+        <div class="form-group">
+            <label for="firstName">Voornaam</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Voornaam">
+        </div>
+        <div class="form-group">
+            <label for="lastName">Achternaam</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Achternaam" #lastName>
+            {{lastName.value}}
+        </div>
+        <div class="form-group">
+            <label for="bio">Over mezelf</label>
+            <div class="position-relative">
+                <textarea type="text" class="form-control textareaCounter" id="bio" formControlName="bio" rows="4"
+                          placeholder="Over mezelf..."
+                          value="okey"
+                          #bio></textarea>
+                <div class="character-counter">{{maxLengthTextarea - bio.value.length}}</div>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary text-white px-5">Profielgegevens opslaan</button>
+        </div>
+    </form>
+
+    <h6 class="intermediate-title mt-5">Adres</h6>
+    <form action="">
+        <div class="form-group">
+            <label for="place">Plaats</label>
+            <input type="text" class="form-control" id="place" formControlName="place" placeholder="Plaats">
+        </div>
+        <div class="form-group">
+            <label for="province">Provincie</label>
+            <input type="text" class="form-control" id="province" formControlName="province" placeholder="Provincie">
+        </div>
+        <div class="form-group">
+            <label for="country">Land</label>
+            <input type="text" class="form-control" id="country" formControlName="country" placeholder="Land">
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary text-white px-5">Adresgegevens opslaan</button>
+        </div>
+    </form>
+
+    <h6 class="intermediate-title mt-5">Wachtwoord veranderen</h6>
+    <form action="">
+        <div class="form-group">
+            <label for="currentPassword">Huidig wachtwoord</label>
+            <input type="text" class="form-control" id="currentPassword" formControlName="currentPassword" placeholder="Huidig wachtwoord">
+        </div>
+        <div class="form-group">
+            <label for="newPassword">Nieuw wachtwoord</label>
+            <input type="text" class="form-control" id="newPassword" formControlName="newPassword" placeholder="Nieuw wachtwoord">
+        </div>
+        <div class="form-group">
+            <label for="repeatPassword">Herhaal</label>
+            <input type="text" class="form-control" id="repeatPassword" formControlName="repeatPassword" placeholder="Herhaal">
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary text-white px-5">Wachtwoord veranderen</button>
+        </div>
+    </form>
+</div>

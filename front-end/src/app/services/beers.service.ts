@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {EMPTY, Observable} from 'rxjs';
-import {catchError, share, tap} from 'rxjs/operators';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
+import {LocalStorageService} from './local-storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +15,7 @@ export class BeersService {
     readonly urlGetBeersNewest = environment.backend + 'beers';
     readonly urlUploadImageBeer = environment.backend + 'beers/uploadImage';
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private localStorageService: LocalStorageService) {
     }
 
     getBeersByName(name, value) {
@@ -24,14 +23,15 @@ export class BeersService {
             .set('joinTables', 'beertype,brewery');
 
         return this.http.post(this.urlGetBeersByName, {
-            searchParams : [{
-                propName: name,
-                value: value
-            }]
-        }, {params})
+                searchParams : [{
+                    propName: name,
+                    value: value
+                }]
+            }, {params})
             .toPromise()
             .then(data => {
-                return data;
+                this.localStorageService.clearBeerSearchResults();
+                this.localStorageService.setBeerSearchResults(data['beers']);
             });
     }
 
@@ -54,7 +54,8 @@ export class BeersService {
         return this.http.get(this.urlGetBeersNewest, {params})
             .toPromise()
             .then(data => {
-                return data;
+                this.localStorageService.clearNewestBeers();
+                this.localStorageService.setNewestBeers(data['beers']);
             });
     }
 

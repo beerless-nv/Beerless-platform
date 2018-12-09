@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     protected $attributes = [
+        'username' => '',
+        'password' => '',
         'firstname' => '',
         'lastname' => '',
         'picture' => '',
@@ -41,4 +43,8 @@ class User extends Authenticatable
     ];
 
     // Relationships
+    public function usersocial()
+    {
+        return $this->hasMany('App\Models\UserSocial', 'userID', 'ID');
+    }
 }

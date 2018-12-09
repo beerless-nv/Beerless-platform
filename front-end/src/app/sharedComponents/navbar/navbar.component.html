@@ -34,13 +34,13 @@
           <a *ngIf="!user" class="nav-item nav-link" routerLink="/login" routerLinkActive="active"><i class="fas fa-user-circle"></i></a>
           <a *ngIf="user" class="nav-item nav-link mouse-pointer" routerLinkActive="active">
               <img src="{{user.picture}}" alt="" class="navbar-profile-picture">
-              <span class="ml-2 small font-weight-bold" [hidden]="!user.firstname || !user.lastname">{{user.firstname}} {{user.lastname}}</span>
+              <span class="ml-2 small font-weight-bold text-grey-dark" [hidden]="!user.firstname || !user.lastname">{{user.firstname}} {{user.lastname}}</span>
               <span class="ml-2 small font-weight-bold" [hidden]="user.firstname && user.lastname">{{user.username}}</span>
 
               <div class="nav-submenu">
-                  <a class="nav-item nav-link nav-link-padding" routerLink="/users" routerLinkActive="active">Profiel</a>
-                  <a class="nav-item nav-link nav-link-padding" routerLink="/wishlist" routerLinkActive="active">Wishlist</a>
-                  <a class="nav-item nav-link nav-link-padding" routerLink="/settings" routerLinkActive="active">Instellingen</a>
+                  <a class="nav-item nav-link nav-link-padding" routerLink="/user/profile/{{user.id}}" routerLinkActive="active">Profiel</a>
+                  <a class="nav-item nav-link nav-link-padding" routerLink="/user/wishlist/{{user.id}}" routerLinkActive="active">Wishlist</a>
+                  <a class="nav-item nav-link nav-link-padding" routerLink="/user/settings" routerLinkActive="active">Instellingen</a>
                   <a class="nav-item nav-link nav-link-padding" (click)="logout()" routerLinkActive="active">Uitloggen</a>
               </div>
           </a>

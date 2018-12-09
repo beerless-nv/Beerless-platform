@@ -44,7 +44,7 @@ Route::prefix('articles')->group(function() {
 Route::prefix('breweries')->group(function() {
     Route::get('/allNameId', 'BreweryController@getAllNameId');
     Route::get('/getByName', 'BreweryController@getByName');
-    Route::get('/search', 'BreweryController@search');
+    Route::post('/search', 'BreweryController@search');
 
     Route::get('/', 'BreweryController@getAll');    
     Route::post('/', 'BreweryController@insert');   
@@ -67,7 +67,7 @@ Route::prefix('beers')->group(function() {
 });
 
 Route::prefix('beertypes')->group(function() {
-    Route::get('/search', 'BeertypeController@search');
+    Route::post('/search', 'BeertypeController@search');
 
     Route::get('/', 'BeertypeController@getAll');
     Route::post('/', 'BeertypeController@insert');
@@ -80,11 +80,18 @@ Route::prefix('beertypes')->group(function() {
 Route::prefix('users')->group(function() {
     Route::post('/signUp', 'UserController@signUp');  
     Route::post('/signIn', 'UserController@signIn'); 
-    Route::get('/search', 'UserController@search');
+    Route::post('/search', 'UserController@search');
 
     Route::get('/', 'UserController@getAll');   
-    Route::get('/{userId}', 'userController@get');
-    Route::get('/search', 'userController@search');
+    Route::get('/{userId}', 'UserController@get');
+    Route::post('/', 'UserController@insert');
     Route::delete('/{userId}', 'UserController@delete');
     Route::patch('/{userId}', 'UserController@patch');     
+});
+
+Route::prefix('usersocials')->group(function() {
+    Route::post('/search', 'UserSocialController@search');
+
+    Route::get('/{userId}', 'UserSocialController@get');
+    Route::post('/', 'UserSocialController@insert');
 });
