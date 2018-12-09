@@ -151,8 +151,6 @@ export class LoginService {
                 console.log(data['user']);
                 this.userData$.subscribe(userData => localStorage.setItem('user', JSON.stringify(userData)));
             });
-
-
         } else {
             this.userData$.next(null);
         }

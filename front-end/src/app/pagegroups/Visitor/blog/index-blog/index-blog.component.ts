@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import { TagService } from 'src/app/services/tag.service';
+import { ArticleService } from 'src/app/services/article.service';
 
 @Component({
     selector: 'app-index-blog',
@@ -7,13 +9,32 @@ import {Component, OnInit} from '@angular/core';
 })
 export class IndexBlogComponent implements OnInit {
 
-    constructor() {
+    tagsList;
+    articlesList;
+
+    constructor(private tagService: TagService, private articleService: ArticleService) {
     }
 
-    ngOnInit() {
+    ngOnInit() {        
+        this.getAllTags();
+        this.getAllArticles();        
     }
 
     getBlogsByName(name) {
         console.log(name);
+    }
+
+    getAllArticles(){
+        this.articleService.getAllArticles()
+            .then(data => {
+                this.articlesList = data['articles'];
+            })
+    }
+
+    getAllTags(){
+        this.tagService.getAllTags()
+            .then(data => {
+                this.tagsList = data['tags'];
+            })
     }
 }
