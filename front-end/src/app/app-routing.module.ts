@@ -25,7 +25,8 @@ const routes: Routes = [
     },
     // ALL pages from blog
     {
-        path: 'blog', children: [
+        path: 'blog',
+        children: [
             {path: '', component: IndexBlogComponent},
             {path: 'article/:id', component: ArticleComponent},
         ]

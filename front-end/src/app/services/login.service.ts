@@ -138,13 +138,13 @@ export class LoginService {
                 }
 
                 this.userData$.next({
-                    id: user.ID,
+                    ID: user.ID,
                     username: user.username,
-                    firstname: user.firstName,
-                    lastname: user.lastName,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
                     email: user.email,
                     picture: user.picture || socialpicture || 'https://avatars.dicebear.com/v2/identicon/' + user.email + '.svg',
-                    userType: user.userType,
+                    usertype: user.userType,
                     token: token,
                     socials: usersocial,
                 });

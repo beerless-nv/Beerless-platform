@@ -1,11 +1,11 @@
 export class User {
-    id: number;
+    ID: number;
     username: string;
-    firstname: string;
-    lastname: string;
+    firstName: string;
+    lastName: string;
     email: string;
     picture: string;
-    userType: number;
+    usertype: number;
     token: string;
     socials: Array<any>;
 }

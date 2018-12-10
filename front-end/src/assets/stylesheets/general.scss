@@ -363,7 +363,6 @@ ol {
 //
 
 .page-header {
-  padding: ($spacer * 2) 0;
   margin-bottom: ($spacer * 3);
   background-color: #f3f3f3;
   color: $grey;
@@ -371,9 +370,12 @@ ol {
   letter-spacing: 1px;
   font-weight: 600;
   border-radius: 0 0 0.25rem 0.25rem;
+  height: $navbar-height;
   @include media-breakpoint-down(sm) {
     font-size: 1rem;
   }
+  display: flex;
+  align-items: center;
 
   .page-header-breadcrumbs {
     font-size: 0.8rem;
