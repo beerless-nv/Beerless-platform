@@ -31,9 +31,9 @@ export class SettingsProfileComponent implements OnInit {
 
         // forms
         this.formProfile = new FormGroup({
-            username: new FormControl(this.user.username, [Validators.maxLength(255), Validators.minLength(3)]),
+            username: new FormControl(this.user.username, [Validators.required, Validators.maxLength(255), Validators.minLength(3)]),
             email: new FormControl(this.user.email, [Validators.required, Validators.email]),
-            picture: new FormControl('', []),
+            picture: new FormControl(''),
             firstName: new FormControl(this.user.firstName, [Validators.maxLength(255)]),
             lastName: new FormControl(this.user.lastName, [Validators.maxLength(255)]),
             bio: new FormControl(this.user.bio, [Validators.maxLength(500)]),

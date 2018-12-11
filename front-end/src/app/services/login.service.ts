@@ -109,6 +109,7 @@ export class LoginService {
         this.messageLogin$.next(null);
         this.messageRegister$.next(null);
         localStorage.removeItem('user');
+        this.router.navigate(['']);
     }
 
     getUserData() {
@@ -133,7 +134,6 @@ export class LoginService {
 
                 let socialpicture;
                 if (user.usersocial.length > 0) {
-                    console.log('leeg');
                     socialpicture = usersocial[0].picture;
                 }
 
@@ -143,7 +143,7 @@ export class LoginService {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
-                    picture: user.picture || socialpicture || 'https://avatars.dicebear.com/v2/identicon/' + user.email + '.svg',
+                    picture: user.picture || socialpicture,
                     usertype: user.userType,
                     token: token,
                     socials: usersocial,
@@ -174,7 +174,7 @@ export class LoginService {
                                     userID: newUser.ID,
                                     socialID: user.id,
                                     socialPlatform: user.provider,
-                                    picture: user.image
+                                    picture: 'https://graph.facebook.com/' + user.id + '/picture?height=500'
                                 })
                                     .then(() => {
                                         console.log('setUserData');

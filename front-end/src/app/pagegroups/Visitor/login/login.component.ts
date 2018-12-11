@@ -45,7 +45,8 @@ export class LoginComponent implements OnInit {
                 Validators.required,
                 Validators.minLength(8),
                 Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
-            ])
+            ]),
+            picture: new FormControl('https://avatars.dicebear.com/v2/identicon/' + Math.random().toString(36).substr(0, 13) + '.svg'),
         });
 
         this.loginService.messageLogin$.subscribe(data => this.messageLogin = data);

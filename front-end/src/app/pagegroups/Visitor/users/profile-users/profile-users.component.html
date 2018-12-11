@@ -1,5 +1,170 @@
-<div class="page-header">
-  <div class="container">
-    <span class="page-header-title">Tom Nuyts</span>
-  </div>
+<!--<div class="page-header">-->
+<!--<div class="container">-->
+<!--<span class="page-header-title">Tom Nuyts</span>-->
+<!--</div>-->
+<!--</div>-->
+<div class="user-profile">
+    <div class="user-profile-cover-picture-container">
+        <div class="user-profile-cover-picture" [style.background-image]="'url(' + (backgroundPictureSrc) + ')'">
+            <div class="user-profile-cover-picture-gradient">
+                <div class="container d-flex justify-content-end align-items-end">
+                    <div class="col-9 mb-3">
+                        <h2 class="user-profile-name">{{user?.firstName}} {{user?.lastName}} <span
+                                class="badge badge-primary function-tag">18603</span></h2>
+                        <p class="text-white mb-3">{{user?.place}}, {{user?.province}}, {{user?.country}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container position-relative d-flex flex-wrap">
+        <div class="col-3 pl-0 top-margin-user-profile">
+            <div class="user-profile-picture-container">
+                <div class="card shadow-lg">
+                    <div class="card-img-top"
+                         [style.background-image]="'url(' + (user?.picture || user?.usersocial[0].picture) + ')'"></div>
+                    <div class="card-body">
+                        <div class="mt-1 mb-4 stats">
+                            <p class="title">Stats</p>
+                            <div class="d-flex flex-wrap justify-content-between">
+                                <div class="stat">
+                                    <i class="fas fa-beer"></i>
+                                    <div class="stat-number">
+                                        15
+                                    </div>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-warehouse"></i>
+                                    <div class="stat-number">
+                                        15
+                                    </div>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-file-alt"></i>
+                                    <div class="stat-number">
+                                        15
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<div>-->
+
+                            <!--<div class="d-flex align-items-center">-->
+                            <!--<i class="fas fa-beer mr-2"></i><h5 class="font-weight-bold d-inline mb-0">15</h5>-->
+                            <!--</div>-->
+                            <!--<p class="stats-subtext">Bieren</p>-->
+                            <!--</div>-->
+                            <!--<div>-->
+                            <!--<div class="d-flex align-items-center">-->
+                            <!--<i class="fas fa-warehouse mr-2"></i><h5 class="font-weight-bold d-inline mb-0">3</h5>-->
+                            <!--</div>-->
+                            <!--<p class="stats-subtext">Brouwerijen</p>-->
+                            <!--</div>-->
+                            <!--<div>-->
+                            <!--<div class="d-flex align-items-center">-->
+                            <!--<i class="fas fa-file-alt mr-2"></i><h5 class="font-weight-bold d-inline mb-0">4</h5>-->
+                            <!--</div>-->
+                            <!--<p class="stats-subtext">Blogs</p>-->
+                            <!--</div>-->
+                        </div>
+                        <div>
+                            <p class="title">Over {{user?.firstName}}</p>
+                            <p class="small">
+                                {{user?.bio | slice: 0:limit}}
+                                <span [hidden]="moreShown">...</span>
+                                <a [hidden]="moreShown" href
+                                   (click)="limit=user?.bio.length; moreShown = true; $event.preventDefault()"
+                                   class="ml-2 font-weight-bold"> Toon meer</a>
+                                <a [hidden]="!moreShown" href (click)="limit=210; moreShown = false"
+                                   class="ml-2 font-weight-bold"> Toon minder</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-9">
+            This sidebar is as tall as its content (the links), and is always shown.
+
+            Scroll this window to see the "fixed" effect.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+            This sidebar is as tall as its content (the links), and is always shown.
+
+            Scroll this window to see the "fixed" effect.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+            This sidebar is as tall as its content (the links), and is always shown.
+
+            Scroll this window to see the "fixed" effect.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.This
+            sidebar is as tall as its content (the links), and is always shown.
+
+            Scroll this window to see the "fixed" effect.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+            This sidebar is as tall as its content (the links), and is always shown.
+
+            Scroll this window to see the "fixed" effect.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+            This sidebar is as tall as its content (the links), and is always shown.
+
+            Scroll this window to see the "fixed" effect.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+            This sidebar is as tall as its content (the links), and is always shown.
+
+            Scroll this window to see the "fixed" effect.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+
+            Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset
+            concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum.
+            Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
+
+        </div>
+    </div>
 </div>
+
+<pre>
+    {{user | json}}
+</pre>
