@@ -24,6 +24,7 @@ import {BlogModule} from './pagegroups/Visitor/blog/blog.module';
 import {UsersModule} from './pagegroups/Member/users/users.module';
 import { WishlistUsersComponent } from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
 import { ProfileUsersComponent } from './pagegroups/Visitor/users/profile-users/profile-users.component';
+import { NavbarMobileComponent } from './sharedComponents/navbar-mobile/navbar-mobile.component';
 
 @NgModule({
     declarations: [
@@ -39,6 +40,7 @@ import { ProfileUsersComponent } from './pagegroups/Visitor/users/profile-users/
         BeerbreweryprofileComponent,
         WishlistUsersComponent,
         ProfileUsersComponent,
+        NavbarMobileComponent,
     ],
     imports: [
         BrowserModule,

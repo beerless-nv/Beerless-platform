@@ -36,6 +36,11 @@ a.btn {
   padding: 0.75rem 0.75rem;
 }
 
+.btn-small {
+  //height: 35px;
+  padding: 0.4rem !important;
+}
+
 //input {
 //  border-color: $muted-light !important;
 //  color: $dark !important;
@@ -401,4 +406,10 @@ ol {
   padding-bottom: ($spacer * 0.5);
   margin-bottom: ($spacer * 1.5);
   border-bottom: 1px solid $muted-light;
+}
+
+.grey-title {
+  color: $grey;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
 }

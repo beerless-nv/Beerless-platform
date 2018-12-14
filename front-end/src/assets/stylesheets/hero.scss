@@ -5,12 +5,18 @@
   background-size: cover;
 
   height: 70vh;
+  @include media-breakpoint-down(md) {
+    height: 80vh;
+  }
   width: 100%;
 
 }
 
 .sub-hero {
   height: calc(30vh - 80.6px);
+  @include media-breakpoint-down(md) {
+    height: 20vh;
+  }
 }
 
 #heroSubscribeCard {

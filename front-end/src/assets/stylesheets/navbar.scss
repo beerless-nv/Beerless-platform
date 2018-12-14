@@ -1,6 +1,6 @@
 .navbar {
   height: $navbar-height;
-  padding: 0 1rem;
+  //padding: 0 1rem;
   border-bottom: $muted-light 1px solid;
 }
 
@@ -15,6 +15,8 @@
 
 .navbar-brand {
   line-height: $navbar-height;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
 }
 
 .navbar-light .navbar-nav .nav-link {
@@ -31,9 +33,66 @@
 .navbar-light .navbar-nav .nav-link.active {
   color: $yellow;
   font-weight: bold;
-  //pointer-events: none;
-  //cursor: default;
 }
+
+//.navbar-mobile {
+//  z-index: 9990;
+//  .show {
+//    background-color: #fff;
+//    flex-basis: auto;
+//    flex-grow: initial;
+//    height: auto;
+//    overflow-y: auto;
+//
+//    .mobile-sidebar {
+//      width: 250px;
+//      height: calc(100vh - 80px) !important;
+//      //box-shadow: rgba(0, 0, 0, 0.15) 10px 10px 20px;
+//    }
+//
+//    .navbar-nav {
+//      padding: 0.5rem ($spacer * 1);
+//      margin: 0 !important;
+//      display: flex;
+//      align-items: start !important;
+//
+//      a {
+//        display: flex;
+//        flex-direction: column;
+//        width: 100%;
+//        align-items: start;
+//      }
+//
+//      .nav-item {
+//        padding: 0.5rem !important;
+//      }
+//    }
+//
+//    .nav-divider {
+//      display: none;
+//    }
+//
+//    .nav-submenu {
+//      display: block;
+//      opacity: 1;
+//      border: none;
+//      box-shadow: none;
+//      position: relative;
+//      left: auto;
+//      bottom: auto;
+//      transform: none;
+//    }
+//
+//    #navbar-nav-links{
+//      order: 1;
+//    }
+//
+//    #navbar-nav-profile {
+//      order: 0;
+//    }
+//  }
+//}
+
 
 .nav-link {
   height: 100%;
@@ -75,15 +134,11 @@
   border: 1px solid $muted-light;
   box-shadow: rgba(0, 0, 0, 0.10) 0px 5px 10px;
   padding: 1rem 0.5rem;
-  //max-height: 0;
   opacity: 0;
   display: none;
   z-index: 1000;
   font-weight: normal;
   transition: opacity 5s ease-in-out;
-  //transition-delay: opacity 0.5s;
-
-
 
   &:hover {
     color: $primary;
@@ -105,6 +160,7 @@ nav {
 }
 
 .nav-divider {
+  display: block;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -139,6 +195,11 @@ nav {
 
 .ml-2rem {
   margin-left: 2rem;
+}
+.mr-lg-2rem {
+  @include media-breakpoint-up(lg) {
+    margin-right: 2rem;
+  }
 }
 
 .mr-1rem {

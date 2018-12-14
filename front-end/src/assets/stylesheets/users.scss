@@ -36,6 +36,10 @@
 
 .user-profile {
   .user-profile-cover-picture-container {
+    z-index: 10;
+    position: sticky;
+    top: -140px;
+
     .user-profile-cover-picture {
       height: 300px;
       background-repeat: no-repeat;
@@ -51,9 +55,14 @@
       .container {
         height: 100%;
 
+        .show-scroll {
+          opacity: 0;
+          display: none;
+          transition: opacity 0.15s ease-out;
+        }
+
         .user-profile-name {
           color: #fff;
-          //font-weight: 400;
           display: flex;
           align-items: start;
           text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
@@ -73,72 +82,127 @@
     }
   }
 
-  .top-margin-user-profile {
-    top: -150px;
+  .user-profile-cover-picture-container-scroll {
+    .user-profile-cover-picture {
+        .hide-scroll {
+          opacity: 0;
+          //transition: opacity 0.15s ease-in;
+        }
+
+        .show-scroll {
+          display: block !important;
+          opacity: 1 !important;
+          transition: opacity 5s ease-in 5s;
+          //background-color: red;
+        }
+
+      .container-name-scroll {
+        //display: flex;
+        //justify-content: space-between;
+        //align-items: center;
+        margin-bottom: ($spacer * 0.25);
+      }
+        .user-profile-name {
+          //margin-right: ($spacer *);
+        }
+    }
   }
 
-  .user-profile-picture-container {
+  .top-margin-user-profile {
+    margin-top: -195px;
     position: relative;
+    z-index: 15;
 
     .card {
       border: none;
       position: sticky;
-      top: ($navbar-height + ($spacer-px * 2));
-    }
+      top: ($navbar-height + ($spacer-px * 1.7)); // 112px
 
-    .card-img-top {
-      padding-top: 100%;
-      background-position: center center;
-      background-size: cover;
-      background-repeat: no-repeat;
-    }
+      .card-img-top {
+        padding-top: 100%;
+        transition: padding-top 0.5s ease 0.1s;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
 
-    .stats-subtext {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      font-weight: 600;
-      color: $primary;
-    }
+      .stats-subtext {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: $primary;
+      }
 
-    .stats {
-      margin-right: 8px;
+      .stats {
+        margin-right: 8px;
 
-      .stat {
-        background-color: $yellow;
-        color: #fff;
-        border-radius: 0.25rem;
-        height: 45px;
-        width: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        //padding-right: 8px;
-
-        .stat-number {
-          background-color: #fff;
-          color: $grey-dark;
-          font-weight: bold;
-          border-radius: 50%;
-          height: 30px;
-          width: 30px;
-          position: absolute;
-          right: 0;
-          bottom: 0;
-          transform: translate(50%, 50%);
+        .stat {
+          //background-color: $yellow;
+          border: 1px solid $primary;
+          color: $primary;
+          border-radius: 0.25rem;
+          height: 45px;
+          width: 45px;
           display: flex;
           justify-content: center;
           align-items: center;
+          position: relative;
+
+          .stat-number-circle {
+            background-color: #fff;
+            color: $grey-dark;
+            font-weight: bold;
+            border-radius: 50%;
+            height: 30px;
+            width: 30px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            transform: translate(50%, 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .stat-number {
+              font-size: 0.8rem;
+              position: absolute;
+              left: 11px;
+            }
+          }
         }
+      }
+
+      .bio {
+        .bio-text {
+          max-height: 150px;
+          overflow-y: auto;
+        }
+      }
+    }
+
+    .user-sidebar-sticky {
+      .card-img-top {
+        padding-top: 50% !important;
+        transition: padding-top 0.5s ease 0.1s;
       }
     }
 
     .card-body {
       .title {
         text-transform: uppercase;
-        //padding-bottom: ($spacer * 0.5);
         font-weight: bold;
       }
     }
+  }
+
+  .activity-image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    border: 1px solid $muted-light;
+  }
+
+  .top-margin-user-profile-reset {
+    top: 0 !important;
   }
 }

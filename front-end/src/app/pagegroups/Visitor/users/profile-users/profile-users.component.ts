@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {UserService} from '../../../../services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -13,8 +13,12 @@ export class ProfileUsersComponent implements OnInit {
     user;
     backgroundPictureSrc = './src/assets/images/beer-background.jpg';
 
-    limit = 150;
+    limit = 120;
     moreShown = false;
+
+    sidebarSticky = false;
+    sidebarTopMargin = false;
+    coverTopMargin = false;
 
     constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
     }
@@ -30,5 +34,14 @@ export class ProfileUsersComponent implements OnInit {
 
     getUserById(userId) {
         this.userService.getUserById(userId).then(data => this.user = data);
+    }
+
+    @HostListener('window:scroll', [])
+    onWindowScroll() {
+        this.sidebarSticky = window.pageYOffset > 80;
+
+        this.sidebarTopMargin = window.pageYOffset > 300;
+
+        this.coverTopMargin = window.pageYOffset > 180;
     }
 }
