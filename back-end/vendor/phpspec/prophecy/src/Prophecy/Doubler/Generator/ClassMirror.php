@@ -19,7 +19,7 @@ use ReflectionParameter;
 
 /**
  * Class mirror.
- * Core doubler class. Mirrors specific class and/or interfaces into class node tree.
+ * Core doubler class. Mirrors specific class and/or _interfaces into class node tree.
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */

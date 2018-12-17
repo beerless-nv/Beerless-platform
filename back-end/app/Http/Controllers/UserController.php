@@ -165,7 +165,8 @@ class UserController extends Controller
 
                     // Credentials are correct
                     $retVal['success'] = true;
-                    $retVal['token'] = JWTAuth::fromUser($user);
+                    $customClaims = ['role' => $user['usertype']];
+                    $retVal['token'] = JWTAuth::fromUser($user, $customClaims);
                     $retVal['user'] = $user;
 
                     return response()->json($retVal, 200);

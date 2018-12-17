@@ -16,7 +16,7 @@ class ContainerCommandLoader implements CommandLoaderInterface
     private $commandMap;
 
     /**
-     * @param ContainerInterface $container  A container from which to load command services
+     * @param ContainerInterface $container  A container from which to load command _services
      * @param array              $commandMap An array with command names as keys and service ids as values
      */
     public function __construct(ContainerInterface $container, array $commandMap)

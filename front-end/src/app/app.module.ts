@@ -22,9 +22,9 @@ import {BeerprofileComponent} from './pagegroups/Visitor/beers/detail-beers/beer
 import {BeerbreweryprofileComponent} from './pagegroups/Visitor/beers/detail-beers/beerbreweryprofile/beerbreweryprofile.component';
 import {BlogModule} from './pagegroups/Visitor/blog/blog.module';
 import {UsersModule} from './pagegroups/Member/users/users.module';
-import { WishlistUsersComponent } from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
-import { ProfileUsersComponent } from './pagegroups/Visitor/users/profile-users/profile-users.component';
-import { NavbarMobileComponent } from './sharedComponents/navbar-mobile/navbar-mobile.component';
+import {WishlistUsersComponent} from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
+import {ProfileUsersComponent} from './pagegroups/Visitor/users/profile-users/profile-users.component';
+import {NavbarMobileComponent} from './sharedComponents/navbar-mobile/navbar-mobile.component';
 
 @NgModule({
     declarations: [
@@ -54,10 +54,9 @@ import { NavbarMobileComponent } from './sharedComponents/navbar-mobile/navbar-m
         NgxPaginationModule,
         ReactiveFormsModule,
         BlogModule,
-        UsersModule
+        UsersModule,
     ],
-    providers: [
-    ],
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {

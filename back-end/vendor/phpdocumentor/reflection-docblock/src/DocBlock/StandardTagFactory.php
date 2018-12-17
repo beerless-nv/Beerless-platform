@@ -77,7 +77,7 @@ final class StandardTagFactory implements TagFactory
 
     /**
      * @var mixed[] an array representing a simple Service Locator where we can store parameters and
-     *     services that can be inserted into the Factory Methods of Tag Handlers.
+     *     _services that can be inserted into the Factory Methods of Tag Handlers.
      */
     private $serviceLocator = [];
 

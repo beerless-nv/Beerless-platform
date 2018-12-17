@@ -1,8 +1,8 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {BeersService} from '../../../../services/beers.service';
+import {BeersService} from '../../../../_services/beers.service';
 import {Observable, of} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {LocalStorageService} from '../../../../services/local-storage.service';
+import {LocalStorageService} from '../../../../_services/local-storage.service';
 
 @Component({
     selector: 'app-index-beers',

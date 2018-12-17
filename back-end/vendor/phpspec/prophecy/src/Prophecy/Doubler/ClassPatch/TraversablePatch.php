@@ -16,7 +16,7 @@ use Prophecy\Doubler\Generator\Node\MethodNode;
 
 /**
  * Traversable interface patch.
- * Forces classes that implement interfaces, that extend Traversable to also implement Iterator.
+ * Forces classes that implement _interfaces, that extend Traversable to also implement Iterator.
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */

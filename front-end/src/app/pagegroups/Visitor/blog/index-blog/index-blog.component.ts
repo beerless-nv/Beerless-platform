@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { TagService } from 'src/app/services/tag.service';
-import { ArticleService } from 'src/app/services/article.service';
+import { TagService } from 'src/app/_services/tag.service';
+import { ArticleService } from 'src/app/_services/article.service';
 
 @Component({
     selector: 'app-index-blog',

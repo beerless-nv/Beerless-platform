@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Exception\RuntimeException;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Adds tagged translation.extractor services to translation extractor.
+ * Adds tagged translation.extractor _services to translation extractor.
  */
 class TranslationExtractorPass implements CompilerPassInterface
 {

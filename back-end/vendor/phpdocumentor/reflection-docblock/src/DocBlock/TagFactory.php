@@ -47,7 +47,7 @@ interface TagFactory
      * When calling a tag's "create" method we always check the signature for dependencies to inject. If a parameter
      * has a typehint then the ServiceLocator is queried to see if a Service is registered for that typehint.
      *
-     * Because interfaces are regularly used as type-hints this method provides an alias parameter; if the FQCN of the
+     * Because _interfaces are regularly used as type-hints this method provides an alias parameter; if the FQCN of the
      * interface is passed as alias then every time that interface is requested the provided service will be returned.
      *
      * @param object $service

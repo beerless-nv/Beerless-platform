@@ -1,5 +1,5 @@
 import {Component, HostListener, Inject, OnInit} from '@angular/core';
-import {UserService} from '../../../../services/user.service';
+import {UserService} from '../../../../_services/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
@@ -42,6 +42,10 @@ export class ProfileUsersComponent implements OnInit {
 
         this.sidebarTopMargin = window.pageYOffset > 300;
 
-        this.coverTopMargin = window.pageYOffset > 180;
+        if (window.innerWidth > 992) {
+            this.coverTopMargin = window.pageYOffset > 180;
+        } else {
+            this.coverTopMargin = window.pageYOffset > 30;
+        }
     }
 }

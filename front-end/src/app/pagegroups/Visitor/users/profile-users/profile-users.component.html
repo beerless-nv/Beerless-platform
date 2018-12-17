@@ -3,39 +3,77 @@
 <!--<span class="page-header-title">Tom Nuyts</span>-->
 <!--</div>-->
 <!--</div>-->
-<div class="user-profile">
+<div class="user-profile pb-5">
     <div class="user-profile-cover-picture-container"
          [class.user-profile-cover-picture-container-scroll]="coverTopMargin">
         <div class="user-profile-cover-picture" [style.background-image]="'url(' + (backgroundPictureSrc) + ')'">
             <div class="user-profile-cover-picture-gradient">
                 <div class="container d-flex justify-content-end align-items-end">
-                    <div class="col-9 mb-3">
-                        <div class="hide-scroll d-flex justify-content-between flex-row align-items-end">
-                            <div>
-                                <h2 class="user-profile-name">{{user?.firstName}} {{user?.lastName}} <span
-                                        class="badge badge-primary function-tag">18603</span></h2>
-                                <p class="text-white mb-3">{{user?.place}}, {{user?.province}}, {{user?.country}}</p>
+                    <div class="col-xl-9 col-lg-8 mb-3 px-0 d-flex flex-wrap">
+                        <div class="px-0 order-1 col-lg-12 col-0">
+                            <div class="hide-scroll d-flex justify-content-between flex-row align-items-lg-end align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <div class="mr-3">
+                                        <div class="d-lg-none d-block mb-3">
+                                            <div [style.background-image]="'url(' + (user?.picture || user?.usersocial[0].picture) + ')'"
+                                                 class="user-profile-image"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h2 class="user-profile-name mb-lg-2 mb-1 d-lg-block d-none">{{user?.firstName}}
+                                            {{user?.lastName}}
+                                            <span class="badge badge-primary function-tag">18603</span>
+                                        </h2>
+                                        <h4 class="user-profile-name mb-lg-2 mb-1 d-lg-none d-sm-block d-none">{{user?.firstName}}
+                                            {{user?.lastName}}
+                                            <span class="badge badge-primary function-tag">18603</span>
+                                        </h4>
+                                        <h5 class="user-profile-name mb-lg-2 mb-1 d-sm-none d-block">{{user?.firstName}}
+                                            {{user?.lastName}}
+                                            <span class="badge badge-primary function-tag">18603</span>
+                                        </h5>
+                                        <p class="text-white mb-3 d-sm-block d-none">{{user?.place}}, {{user?.province}},
+                                            {{user?.country}}</p>
+                                    </div>
+                                </div>
+                                <div class="mb-3 d-sm-block d-none">
+                                    <a routerLink="" class="btn btn-outline-light btn-small">
+                                        <small class="p-0">
+                                            <i class="fas fa-user-plus mr-md-2 mr-1 ml-1"></i> <span class="d-md-inline d-none">Vriend toevoegen</span>
+                                        </small>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="mb-3">
-                                <a routerLink="" class="btn btn-outline-light btn-small">
-                                    <small class="p-0">
-                                        <i class="fas fa-user-plus mr-1"></i> Vriend toevoegen
-                                    </small>
-                                </a>
+                            <div class="show-scroll text-white">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="container-name-scroll d-flex align-items-center mb-lg-1 mb-0">
+                                        <div class="mr-3">
+                                            <div class="d-lg-none d-block">
+                                                <div [style.background-image]="'url(' + (user?.picture || user?.usersocial[0].picture) + ')'"
+                                                     class="user-profile-image"></div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h5 class="user-profile-name mb-0">{{user?.firstName}} {{user?.lastName}}
+                                                <span class="badge badge-primary function-tag">18603</span>
+                                            </h5>
+                                            <p class="text-white mb-0 small d-sm-block d-none">
+                                                {{user?.place}}, {{user?.province}}, {{user?.country}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <a routerLink="" class="btn btn-outline-light btn-small d-sm-block d-none">
+                                        <small>
+                                            <i class="fas fa-user-plus mr-md-2 mr-1 ml-1"></i> <span class="d-md-inline d-none">Vriend toevoegen</span>
+                                        </small>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="show-scroll text-white">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="container-name-scroll">
-                                    <h5 class="user-profile-name mb-0">{{user?.firstName}} {{user?.lastName}} <span
-                                            class="badge badge-primary function-tag">18603</span></h5>
-                                    <p class="text-white mb-0 small">{{user?.place}}, {{user?.province}}, {{user?.country}}</p>
-                                </div>
-                                <a routerLink="" class="btn btn-outline-light btn-small">
-                                    <small>
-                                        <i class="fas fa-user-plus mr-1"></i> Vriend toevoegen
-                                    </small>
-                                </a>
+                        <div class="d-lg-none d-block order-0">
+
+                            <div>
+                                <p></p>
                             </div>
                         </div>
                     </div>
@@ -43,12 +81,22 @@
             </div>
         </div>
     </div>
-    <div class="container position-relative d-flex flex-wrap">
-        <div class="col-3 pl-0 top-margin-user-profile" [class.top-margin-user-profile-reset]="sidebarTopMargin">
+    <div class="container position-relative d-flex flex-wrap"
+         [class.user-profile-content-scroll]="coverTopMargin">
+        <div class="col-xl-3 col-lg-4 pl-lg-0 pr-lg-3 px-0 top-margin-user-profile"
+             [class.top-margin-user-profile-reset]="sidebarTopMargin">
             <div class="card shadow-lg" [class.user-sidebar-sticky]="sidebarSticky">
-                <div class="card-img-top"
+                <div class="card-img-top d-lg-block d-none"
                      [style.background-image]="'url(' + (user?.picture || user?.usersocial[0].picture) + ')'"></div>
                 <div class="card-body">
+                    <div class="text-grey small d-sm-none d-block">
+                        <p class="font-weight-bold mb-0">
+                            {{user?.firstName}} {{user?.lastName}}
+                        </p>
+                        <p>
+                            {{user?.place}}, {{user?.province}}, {{user?.country}}
+                        </p>
+                    </div>
                     <div class="mt-1 mb-4 stats">
                         <p class="title">Stats</p>
                         <div class="d-flex flex-wrap justify-content-between">
@@ -84,13 +132,20 @@
                                class="ml-2 font-weight-bold"> Toon minder</a>
                         </p>
                     </div>
+                    <div class="d-sm-none d-block text-center mt-3">
+                        <a routerLink="" class="btn btn-outline-primary btn-small">
+                            <small class="p-0">
+                                <i class="fas fa-user-plus mr-md-2 mr-1 ml-1"></i> Vriend toevoegen
+                            </small>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-9 mt-3 pt-3">
+        <div class="col-xl-9 col-lg-8 mt-3 pt-3 pl-lg-3 px-0">
             <div class="card p-3 py-5 text-center" [hidden]="true">Deze gebruiker heeft nog geen activiteit!</div>
             <div class="card p-3 favourite-beer mb-3">
-                <p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0">Favoriete bier <i
+                <p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0">Favoriet bier <i
                         class="fas fa-heart ml-1"></i></p>
                 <div class="d-flex flex-row align-items-center justify-content-between">
                     <div class="">
@@ -123,9 +178,11 @@
                                         </span>
                                     </div>
                                     <div class="my-2">
-                                        <a routerLink="" class="font-weight-bold">{{user?.firstName}} {{user?.lastName}}</a> heeft
+                                        <a routerLink="" class="font-weight-bold">{{user?.firstName}}
+                                            {{user?.lastName}}</a> heeft
                                         een
-                                        <a routerLink="" class="font-weight-bold">Gouden Carolus Classic</a> toegevoegd van
+                                        <a routerLink="" class="font-weight-bold">Gouden Carolus Classic</a> toegevoegd
+                                        van
                                         <a routerLink="" class="font-weight-bold">Brouwerij Het Anker</a>.
                                     </div>
                                     <div>
@@ -152,7 +209,8 @@
                                         </span>
                                     </div>
                                     <div class="my-2">
-                                        <a routerLink="" class="font-weight-bold">{{user?.firstName}} {{user?.lastName}}</a> heeft
+                                        <a routerLink="" class="font-weight-bold">{{user?.firstName}}
+                                            {{user?.lastName}}</a> heeft
                                         <a routerLink="" class="font-weight-bold">Brouwerij Het Anker</a> toegevoegd.
                                     </div>
                                     <div>
@@ -179,8 +237,10 @@
                                         </span>
                                     </div>
                                     <div class="my-2">
-                                        <a routerLink="" class="font-weight-bold">{{user?.firstName}} {{user?.lastName}}</a> heeft
-                                        <a routerLink="" class="font-weight-bold">Dit zijn de beste bockbieren van Nederland!</a> toegevoegd aan de blog.
+                                        <a routerLink="" class="font-weight-bold">{{user?.firstName}}
+                                            {{user?.lastName}}</a> heeft
+                                        <a routerLink="" class="font-weight-bold">Dit zijn de beste bockbieren van
+                                            Nederland!</a> toegevoegd aan de blog.
                                     </div>
                                     <div>
                                         <small class="text-grey">29 november 2018</small>
@@ -194,7 +254,8 @@
                             <div class="divider mb-3"></div>
                         </div>
                         <div class="text-center">
-                            <a routerLink="/user/profile/{{user?.ID}}" class="my-3 text-primary font-weight-bold">Laad meer...</a>
+                            <a routerLink="/user/profile/{{user?.ID}}" class="my-3 text-primary font-weight-bold">Laad
+                                meer...</a>
                         </div>
                     </div>
                 </div>

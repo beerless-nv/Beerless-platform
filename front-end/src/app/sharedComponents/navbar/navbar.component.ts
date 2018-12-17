@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import { LoginService } from 'src/app/services/login.service';
-import { User } from 'src/app/interfaces/user';
+import { LoginService } from 'src/app/_services/login.service';
+import { User } from 'src/app/_interfaces/user';
 
 @Component({
     selector: 'app-navbar',

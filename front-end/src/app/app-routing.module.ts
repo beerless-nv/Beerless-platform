@@ -11,6 +11,7 @@ import {ArticleComponent} from './pagegroups/Visitor/blog/article/article.compon
 import {SettingsUsersComponent} from './pagegroups/Member/users/settings-users/settings-users.component';
 import {ProfileUsersComponent} from './pagegroups/Visitor/users/profile-users/profile-users.component';
 import {WishlistUsersComponent} from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
+import {AuthGuardService} from './_services/authorization/auth-guard.service';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -19,7 +20,7 @@ const routes: Routes = [
     {
         path: 'beers', children: [
             {path: '', component: IndexBeersComponent},
-            {path: 'add', component: AddBeersComponent},
+            {path: 'add', component: AddBeersComponent, canActivate: [AuthGuardService]},
             {path: 'detail/:id', component: DetailBeersComponent},
         ]
     },

@@ -383,7 +383,7 @@ class PHP_Token_Stream implements ArrayAccess, Countable, SeekableIterator
                     $tmp = [
                       'methods'   => [],
                       'parent'    => $token->getParent(),
-                      'interfaces'=> $token->getInterfaces(),
+                      '_interfaces'=> $token->getInterfaces(),
                       'keywords'  => $token->getKeywords(),
                       'docblock'  => $token->getDocblock(),
                       'startLine' => $token->getLine(),

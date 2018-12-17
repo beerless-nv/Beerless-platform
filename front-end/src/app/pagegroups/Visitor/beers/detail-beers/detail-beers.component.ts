@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BeersService} from '../../../../services/beers.service';
+import {BeersService} from '../../../../_services/beers.service';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';
 import {environment} from '../../../../../environments/environment';

@@ -1,3 +1,49 @@
+// mobile
+
+@include media-breakpoint-down(md) {
+  .user-profile-cover-picture-container {
+    top: -70px !important;
+
+    .user-profile-cover-picture {
+      height: 150px !important;
+    }
+  }
+
+  .user-profile-image {
+    height: 90px;
+    width: 90px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    border-radius: 50%;
+  }
+
+  .top-margin-user-profile {
+    z-index: 1 !important;
+    margin-top: ($spacer * 2) !important;
+
+    .card {
+      border: 1px solid $muted-light !important;
+      box-shadow: none !important;
+      position: relative !important;
+      top: 0 !important;
+
+      .bio-text {
+        max-height: initial !important;
+      }
+    }
+  }
+
+  .user-profile-cover-picture-container-scroll {
+    .user-profile-image {
+      height: 50px;
+      width: 50px;
+    }
+  }
+}
+
+// desktop
+
 .profile-picture-upload {
   height: (10.2rem - ($spacer * 1));
   width: (10.2rem - ($spacer * 1));
@@ -84,17 +130,17 @@
 
   .user-profile-cover-picture-container-scroll {
     .user-profile-cover-picture {
-        .hide-scroll {
-          opacity: 0;
-          //transition: opacity 0.15s ease-in;
-        }
+      .hide-scroll {
+        opacity: 0;
+        //transition: opacity 0.15s ease-in;
+      }
 
-        .show-scroll {
-          display: block !important;
-          opacity: 1 !important;
-          transition: opacity 5s ease-in 5s;
-          //background-color: red;
-        }
+      .show-scroll {
+        display: block !important;
+        opacity: 1 !important;
+        transition: opacity 5s ease-in 5s;
+        //background-color: red;
+      }
 
       .container-name-scroll {
         //display: flex;
@@ -102,9 +148,9 @@
         //align-items: center;
         margin-bottom: ($spacer * 0.25);
       }
-        .user-profile-name {
-          //margin-right: ($spacer *);
-        }
+      .user-profile-name {
+        //margin-right: ($spacer *);
+      }
     }
   }
 
@@ -116,7 +162,7 @@
     .card {
       border: none;
       position: sticky;
-      top: ($navbar-height + ($spacer-px * 1.7)); // 112px
+      top: ($navbar-height + ($spacer-px * 1.7));
 
       .card-img-top {
         padding-top: 100%;

@@ -1,6 +1,6 @@
 import {Component, OnInit, Testability} from '@angular/core';
-import {LoginService} from '../../../services/login.service';
-import {ErrorService} from '../../../services/error.service';
+import {LoginService} from '../../../_services/login.service';
+import {ErrorService} from '../../../_services/error.service';
 import {Observable, of, Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';

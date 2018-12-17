@@ -3,7 +3,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, share, tap} from 'rxjs/operators';
 import {EMPTY, Observable, BehaviorSubject} from 'rxjs';
-import {User} from '../interfaces/user';
+import {User} from '../_interfaces/user';
 import {Router} from '@angular/router';
 
 @Injectable({
@@ -40,6 +40,7 @@ export class LoginService {
                 this.setUserData(data['user'].ID, data['token']);
             })
             .catch(error => {
+                console.log(error);
                 this.errorMessageArray = error.error['msg'];
                 for (let i = 0; i < this.errorMessageArray.length; i++) {
                     switch (this.errorMessageArray[i]) {

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {forEach} from "@angular/router/src/utils/collection";
+import {LoginService} from '../../_services/login.service';
 
 @Component({
     selector: 'app-navbar-mobile',
@@ -9,13 +9,15 @@ import {forEach} from "@angular/router/src/utils/collection";
 export class NavbarMobileComponent implements OnInit {
 
     submenu;
+    user;
 
-    constructor() {
+    constructor(private loginService: LoginService) {
     }
 
     ngOnInit() {
-
-        // console.log(this.submenuArray['user']);
+        this.loginService.userData$.subscribe( data => {
+            this.user = data;
+        });
     }
 
     openSubmenu(submenu) {
@@ -28,5 +30,9 @@ export class NavbarMobileComponent implements OnInit {
 
     hideAllSubmenu() {
         this.submenu = null;
+    }
+
+    logout() {
+        this.loginService.logout();
     }
 }

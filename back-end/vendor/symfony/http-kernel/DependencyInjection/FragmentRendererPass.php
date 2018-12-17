@@ -19,7 +19,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Fragment\FragmentRendererInterface;
 
 /**
- * Adds services tagged kernel.fragment_renderer as HTTP content rendering strategies.
+ * Adds _services tagged kernel.fragment_renderer as HTTP content rendering strategies.
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */

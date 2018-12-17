@@ -13,6 +13,12 @@
             <a routerLink="/user/settings" class="nav-mobile-submenu-item">
                 Instellingen
             </a>
+            <a class="nav-mobile-submenu-item" (click)="logout()" [hidden]="!user">
+                Uitloggen
+            </a>
+            <a routerLink="/login" class="nav-mobile-submenu-item" [hidden]="user">
+                Inloggen
+            </a>
         </div>
     </div>
     <div>

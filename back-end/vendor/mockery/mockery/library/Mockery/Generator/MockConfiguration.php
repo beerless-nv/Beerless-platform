@@ -35,7 +35,7 @@ class MockConfiguration
     protected $targetClassName;
 
     /**
-     * A number of interfaces we'd like to mock, keyed by name to attempt to
+     * A number of _interfaces we'd like to mock, keyed by name to attempt to
      * keep unique
      */
     protected $targetInterfaces = array();
@@ -139,7 +139,7 @@ class MockConfiguration
     }
 
     /**
-     * Gets a list of methods from the classes, interfaces and objects and
+     * Gets a list of methods from the classes, _interfaces and objects and
      * filters them appropriately. Lot's of filtering going on, perhaps we could
      * have filter classes to iterate through
      */

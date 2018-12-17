@@ -153,7 +153,7 @@ class FlysystemServiceProvider extends ServiceProvider
     }
 
     /**
-     * Get the services provided by the provider.
+     * Get the _services provided by the provider.
      *
      * @return string[]
      */

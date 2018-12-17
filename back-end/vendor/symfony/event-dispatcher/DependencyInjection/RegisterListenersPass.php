@@ -20,7 +20,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * Compiler pass to register tagged services for an event dispatcher.
+ * Compiler pass to register tagged _services for an event dispatcher.
  */
 class RegisterListenersPass implements CompilerPassInterface
 {

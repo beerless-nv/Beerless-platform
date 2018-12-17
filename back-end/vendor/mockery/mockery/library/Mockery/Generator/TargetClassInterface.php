@@ -47,7 +47,7 @@ interface TargetClassInterface
     public function getMethods();
 
     /**
-     * Returns the targetClass's interfaces.
+     * Returns the targetClass's _interfaces.
      *
      * @return array
      */
