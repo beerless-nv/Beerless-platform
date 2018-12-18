@@ -116,7 +116,7 @@
 
 @keyframes submenuShow {
   0% {bottom: -40px;}
-  100% {bottom: 0;}
+  100% {bottom: -15px;}
 }
 
 @keyframes opacity {
@@ -127,7 +127,7 @@
 .nav-submenu {
   position: absolute;
   left: 0rem;
-  bottom: 0;
+  bottom: -15px;
   transform: translateY(100%);
   background-color: #fff;
   color: $dark;
@@ -148,6 +148,33 @@
     padding: 0.5rem 1rem !important;
   }
 }
+
+.nav-submenu-left {
+  right: 0;
+  left: auto;
+}
+
+.arrow-container {
+  width: 100%;
+  height: 15px;
+  position: absolute;
+  top: -5px;
+  left: 0;
+  transform: translateY(calc(-50% - 1px));
+  padding: 15px 0;
+  //background-color: rgba(0, 0, 0, 0.5);
+
+  .arrow-up {
+    margin: 0 15px;
+    transform: rotate(45deg);
+    background-color: #fff;
+    width: 10px;
+    height: 10px;
+    border-left: 1px solid $muted-light;
+    border-top: 1px solid $muted-light;
+  }
+}
+
 
 .navbar-collapse {
   height: 100%;

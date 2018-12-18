@@ -43,9 +43,12 @@
                     <img src="{{user.picture}}" alt="" class="navbar-profile-picture">
                     <span class="ml-2 small font-weight-bold text-grey-dark"
                           [hidden]="!user.firstName || !user.lastName">{{user.firstName}} {{user.lastName}}</span>
-                    <span class="ml-2 small font-weight-bold" [hidden]="user.firstName && user.lastName">{{user.username}}</span>
+                    <span class="ml-2 small my-0 font-weight-bold" [hidden]="user.firstName && user.lastName">{{user.username}}</span>
 
-                    <div class="nav-submenu">
+                    <div class="nav-submenu nav-submenu-left">
+                        <div class="arrow-container">
+                            <div class="arrow-up float-right"></div>
+                        </div>
                         <a class="nav-item nav-link nav-link-padding" routerLink="/user/profile/{{user.ID}}"
                            routerLinkActive="active">Profiel</a>
                         <a class="nav-item nav-link nav-link-padding" routerLink="/user/wishlist/{{user.ID}}"
@@ -55,8 +58,6 @@
                         <a class="nav-item nav-link nav-link-padding" (click)="logout()" routerLinkActive="active">Uitloggen</a>
                     </div>
                 </a>
-                <a class="nav-item nav-link" routerLink="/help" routerLinkActive="active"><i
-                        class="fas fa-question"></i></a>
             </div>
         </div>
     </div>
