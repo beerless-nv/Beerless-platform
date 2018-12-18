@@ -11,6 +11,46 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::prefix('relationships')->group(function() {
+    Route::post('/search', 'RelationshipController@search');
+    Route::get('/', 'RelationshipController@getAll');    
+    Route::post('/', 'RelationshipController@insert');   
+    Route::get('/{relationshipId}', 'RelationshipController@get');
+    
+    Route::delete('/{relationshipId}', 'RelationshipController@delete');
+    Route::patch('/{relationshipId}', 'RelationshipController@patch');
+});
+
+Route::prefix('statuses')->group(function() {
+    Route::post('/search', 'StatusController@search');
+    Route::get('/', 'StatusController@getAll');    
+    Route::post('/', 'StatusController@insert');   
+    Route::get('/{statusId}', 'StatusController@get');
+    
+    Route::delete('/{statusId}', 'StatusController@delete');
+    Route::patch('/{statusId}', 'StatusController@patch');
+});
+
+Route::prefix('activitytypes')->group(function() {
+    Route::post('/search', 'ActivityTypeController@search');
+    Route::get('/', 'ActivityTypeController@getAll');    
+    Route::post('/', 'ActivityTypeController@insert');   
+    Route::get('/{activitytypeId}', 'ActivityTypeController@get');
+    
+    Route::delete('/{activitytypeId}', 'ActivityTypeController@delete');
+    Route::patch('/{activitytypeId}', 'ActivityTypeController@patch');
+});
+
+Route::prefix('activities')->group(function() {
+    Route::post('/search', 'ActivityController@search');
+    Route::get('/', 'ActivityController@getAll');    
+    Route::post('/', 'ActivityController@insert');   
+    Route::get('/{activityId}', 'ActivityController@get');
+    
+    Route::delete('/{activityId}', 'ActivityController@delete');
+    Route::patch('/{activityId}', 'ActivityController@patch');
+});
+
 Route::prefix('articletags')->group(function() {
     Route::post('/search', 'ArticleTagController@search');
     Route::get('/', 'ArticleTagController@getAll');    

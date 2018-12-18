@@ -14,11 +14,13 @@ class UserDataService
      *
      * @return User[]
      */
-    public static function getAll($limit, $offset)
+    public static function getAll($joinTables, $sortOrder, $limit, $offset)
     {
         $query = User::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
+        \joinTables($query, 'user', $joinTables);
+        \sortQuery($query, $sortOrder);
         return $query->get();
     }
 

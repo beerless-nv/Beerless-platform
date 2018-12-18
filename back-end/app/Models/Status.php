@@ -3,36 +3,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Article extends Model
+class Status extends Model
 {
-    protected $attributes = [
-        'slug' => '',
-        'picture' => '',
-        'intro' =>'',
-        'content' => ''
-    ];
+    protected $attributes = [ ];
     protected $fillable = [
-        'title',
-        'slug',
-        'content',
-        'picture',
-        'intro',
-        'userID',
+        'name'
     ];
     protected $dates = [];
-    protected $table ='Article';
+    protected $table ='Status';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';
 
     // Relationships
-    public function user()
+    public function relationship()
     {
-        return $this->belongsTo('App\Models\User', 'userID', 'ID');
-    }
-
-    public function articletag()
-    {
-        return $this->hasMany('App\Models\ArticleTag', 'articleID', 'ID');
+        return $this->hasMany('App\Models\Relationship', 'statusID', 'ID');
     }
 }

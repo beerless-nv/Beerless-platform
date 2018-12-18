@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
-use App\DataServices\RelationshipDataService;
+use App\DataServices\ActivityTypeDataService;
 
 /**
- * Contains CRUD functions for table 'Relationship'.
+ * Contains CRUD functions for table 'ActivityType'.
  */
-class RelationshipController extends Controller
+class ActivityTypeController extends Controller
 {
     /**
-     * Returns a JSON array of all rows in table 'Relationship'.
+     * Returns a JSON array of all rows in table 'ActivityType'.
      * 
-     * GET /relationships
+     * GET /activitytypes
      *
      * @param Request $request
      * @return Response
@@ -57,25 +57,25 @@ class RelationshipController extends Controller
         
         return response()->json([
             'success' => true,
-            'relationships' => RelationshipDataService::getAll($joinTables, $sortOrder, $limit, $offset)
+            'activitytypes' => ActivityTypeDataService::getAll($joinTables, $sortOrder, $limit, $offset)
         ], 200);
     }
 
     /**
-     * Insert an item into table 'Relationship'.
+     * Insert an item into table 'ActivityType'.
      * Takes the item fields as request parameters.
      * Requires the field 'title'.
      * 
-     * POST /relationships
+     * POST /activitytypes
      *
      * @param Request $request
      * @return Response
      */
     public function insert(Request $request)
     {
-        $relationship = '';
+        $activitytype = '';
         if(isset($request->input('inputObject')['title'])){
-            $relationship = RelationshipDataService::insert($request->input('inputObject'));
+            $activitytype = ActivityTypeDataService::insert($request->input('inputObject'));
         } else{
             return response()->json([
                 'success' => false,
@@ -85,35 +85,35 @@ class RelationshipController extends Controller
         
         return response()->json([
             'success' => true,
-            'relationship' => $relationship
+            'activitytype' => $activitytype
         ], 201);
     }
 
 
     /**
-     * Returns a specific JSON object of type 'Relationship'.
+     * Returns a specific JSON object of type 'ActivityType'.
      * Takes the id as a request parameter.
      * 
-     * GET /relationships/relationshipId
+     * GET /activitytypes/activitytypeId
      * 
      * @param Request $request
-     * @param integer $relationshipId
+     * @param integer $activitytypeId
      * @return Reponse
      */
-    public function get(Request $request, int $relationshipId)
+    public function get(Request $request, int $activitytypeId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
         
         return response()->json([
             'success' => true,
-            'relationship' => RelationshipDataService::get($artrelationshipIdicleId, $joinTables)
+            'activitytype' => ActivityTypeDataService::get($activitytypeId, $joinTables)
         ],200);
     }
 
     /**
      * Undocumented function
      * 
-     * GET /relationships/search
+     * GET /activitytypes/search
      *
      * @param Request $request
      * @return Response
@@ -155,49 +155,49 @@ class RelationshipController extends Controller
 
         return response()->json([
             "success" => true,
-            'relationships' => RelationshipDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+            'activitytypes' => ActivityTypeDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
         ]);
     }
 
     /**
-     * Deletes an item in table 'Relationship'.
+     * Deletes an item in table 'ActivityType'.
      * Takes the id as a request parameter.
      * 
-     * DELETE /relationships/relationshipId
+     * DELETE /activitytypes/activitytypeId
      *
      * @param Request $request
-     * @param integer $relationshipId
+     * @param integer $activitytypeId
      * @return void
      */
-    public function delete(Request $request, int $relationshipId)
+    public function delete(Request $request, int $activitytypeId)
     {
-        RelationshipDataService::delete($relationshipId);
+        ActivityTypeDataService::delete($activitytypeId);
         return response()->json([
             'success' => true
         ], 204);
     }
 
     /**
-     * Updates an item in table 'Relationship'.
+     * Updates an item in table 'ActivityType'.
      * Takes the item fields as request parameters.
      * Requires the field 'name'.
      * 
-     * PATCH /relationships/$relationshipId
+     * PATCH /activitytypes/$activitytypeId
      *
      * @param Request $request
-     * @param integer $relationshipId
+     * @param integer $activitytypeId
      * @return void
      */
-    public function patch(Request $request, int $relationshipId)
+    public function patch(Request $request, int $activitytypeId)
     {
         $updateArray = array();
         foreach ($request->input('updateArray') as $item) {
             $updateArray[$item['propName']] = $item['value'];
         }
-        $relationship = RelationshipDataService::update($relationshipId, $updateArray);
+        $activitytype = ActivityTypeDataService::update($activitytypeId, $updateArray);
         return response()->json([
             'success' => true,
-            'relationship' => $relationship
+            'activitytype' => $activitytype
         ], 200);
     }
 }
