@@ -12,7 +12,8 @@ class Relationship extends Model
         'status',
         'user_1_ID',
         'user_2_ID',
-        'actionUserID'
+        'actionUserID',
+        'statusID'
     ];
     protected $dates = [];
     protected $table ='Relationship';
@@ -31,8 +32,13 @@ class Relationship extends Model
         return $this->belongsTo('App\Models\User', 'user_2_ID', 'ID');
     }
 
-    public function actionUser()
+    public function actionuser()
     {
         return $this->belongsTo('App\Models\User', 'actionUserID', 'ID');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Status', 'statusID', 'ID');
     }
 }

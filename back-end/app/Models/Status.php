@@ -35,9 +35,4 @@ class Article extends Model
     {
         return $this->hasMany('App\Models\ArticleTag', 'articleID', 'ID');
     }
-
-    public function activity()
-    {
-        return $this->hasMany('App\Models\Activity', 'articleID', 'ID');
-    }
 }
