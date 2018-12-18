@@ -45,7 +45,7 @@ class TagDataService
      */
     public static function get(int $tagId, $joinTables){
         $query = Tag::query();
-        \joinTables($query, 'tag', $tagId);
+        \joinTables($query, 'tag', $joinTables);
         return $query->findOrFail($tagId);
     }
 

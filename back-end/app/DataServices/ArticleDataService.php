@@ -63,8 +63,10 @@ class ArticleDataService
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $value){
             if($value['propName'] == 'title'){
-                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($value['value']) . '%']);
-            } else{
+                $query->whereRaw('LOWER(title) like ?', ['%' . strtolower($value['value']) . '%']);
+            } if($value['propName'] == 'slug') {
+                $query->whereRaw('LOWER(slug) like ?', ['%' . strtolower($value['value']) . '%']);
+            }else{
                 $query->where($value['propName'], $value['operator'], $value['value']);
             }
         }
