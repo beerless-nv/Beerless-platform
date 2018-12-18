@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ArticleService } from 'src/app/services/article.service';
-import { ArticletagService } from 'src/app/services/articletag.service';
-import { TagService } from 'src/app/services/tag.service';
-import { BlogService } from 'src/app/services/blog.service';
+import { ArticleService } from 'src/app/_services/article.service';
+import { ArticletagService } from 'src/app/_services/articletag.service';
+import { TagService } from 'src/app/_services/tag.service';
+import { BlogService } from 'src/app/_services/blog.service';
 
 @Component({
   selector: 'app-article',

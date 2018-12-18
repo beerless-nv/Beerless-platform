@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ArticletagService } from 'src/app/services/articletag.service';
-import { TagService } from 'src/app/services/tag.service';
-import { ArticleService } from 'src/app/services/article.service';
-import { BlogService } from 'src/app/services/blog.service';
+import { ArticletagService } from 'src/app/_services/articletag.service';
+import { TagService } from 'src/app/_services/tag.service';
+import { ArticleService } from 'src/app/_services/article.service';
+import { BlogService } from 'src/app/_services/blog.service';
 
 @Component({
   selector: 'app-suggested-article-item',
