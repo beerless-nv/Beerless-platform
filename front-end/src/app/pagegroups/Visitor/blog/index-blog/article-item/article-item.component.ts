@@ -13,7 +13,7 @@ export class ArticleItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.picture = this.user.picture || 'https://avatars.dicebear.com/v2/identicon/' + this.user.firstname + this.user.lastname + '.svg'
+    // this.picture = this.user.picture || 'https://avatars.dicebear.com/v2/identicon/' + this.user.firstname + this.user.lastname + '.svg';
   }
 
 }

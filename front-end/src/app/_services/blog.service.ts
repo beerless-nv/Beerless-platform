@@ -19,24 +19,24 @@ export class BlogService {
     constructor(private http: HttpClient, private articleService: ArticleService, private articletagService: ArticletagService, private tagService: TagService) {
     }
 
-    setActiveBlog(article: Article){
+    setActiveBlog(article: Article) {
         this.activeBlog$.next(article);
-        
-        //Set first tag
+
+        // Set first tag
         this.articletagService.getWhereArticleID(article.ID).then(data => {
 
-            if(data['articletags'][0]){
-                this.tagService.getTagById(data['articletags'][0].ID).then(tagdata => {
-                    this.setActiveFirstTag(tagdata['tag'])
-                })
-            } else{
+            if (data[0]) {
+                this.tagService.getTagById(data[0].ID).then(tagdata => {
+                    this.setActiveFirstTag(tagdata['tag']);
+                });
+            } else {
                 this.activeFirstTag$.next(null);
             }
-            
-        })
+
+        });
     }
 
-    setActiveFirstTag(tag: Tag){
+    setActiveFirstTag(tag: Tag) {
         this.activeFirstTag$.next(tag);
     }
 }

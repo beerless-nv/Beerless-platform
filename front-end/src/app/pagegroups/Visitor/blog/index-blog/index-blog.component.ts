@@ -15,26 +15,26 @@ export class IndexBlogComponent implements OnInit {
     constructor(private tagService: TagService, private articleService: ArticleService) {
     }
 
-    ngOnInit() {        
+    ngOnInit() {
         this.getAllTags();
-        this.getAllArticles();        
+        this.getAllArticles();
     }
 
     getBlogsByName(name) {
         console.log(name);
     }
 
-    getAllArticles(){
+    getAllArticles() {
         this.articleService.getAllArticles()
             .then(data => {
                 this.articlesList = data['articles'];
-            })
+            });
     }
 
-    getAllTags(){
+    getAllTags() {
         this.tagService.getAllTags()
             .then(data => {
                 this.tagsList = data['tags'];
-            })
+            });
     }
 }

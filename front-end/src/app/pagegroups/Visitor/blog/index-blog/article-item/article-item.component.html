@@ -1,10 +1,10 @@
-<div class="card card-hover card-hover-blog" routerLink="/blog/article/{{article.slug}}">
+<div class="card card-hover card-hover-blog" routerLink="/blog/article/{{article?.slug}}">
   <img class="card-img-top" src="/src/assets/images/artikel_1.jpeg" alt="Card image cap">
   <div class="card-body">
       <h5 class="card-title">{{article?.title}}</h5>
       <p class="card-text">{{article?.intro}}</p>
   </div>
   <div class="card-footer">
-      <small class="text-grey"><img src="{{picture}}" alt="profielfoto {{user.firstName}} {{user.lastName}}" style="width: 30px" class="rounded-circle mr-3">{{user?.firstName}} {{user?.lastName}}</small>
+      <small class="text-grey"><img src="{{user?.picture}}" alt="profielfoto {{user?.firstName}} {{user?.lastName}}" style="width: 30px" class="rounded-circle mr-3">{{user?.firstName}} {{user?.lastName}}</small>
   </div>
 </div>

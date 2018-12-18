@@ -1,4 +1,4 @@
-<div class="container pb-5">
+<div class="container py-5">
     <div class="col-12 px-0 d-flex flex-wrap">
         <div class="article-image position-relative"
              style="background-image: url('/src/assets/images/artikel_1.jpeg');">
@@ -13,7 +13,7 @@
                 <h2 class="article-title my-2 d-lg-block d-none">{{article?.title}}</h2>
                 <h4 class="article-title my-2 d-lg-none d-md-block d-none">{{article?.title}}</h4>
                 <h5 class="article-title my-2 d-md-none d-block">{{article?.title}}</h5>
-                <small><i class="far fa-clock mr-1"></i>{{article?.timestampCreated}}</small>
+                <small><i class="far fa-clock mr-1"></i>{{article?.timestampCreated | date: 'mediumDate' }} {{article?.timestampCreated | date: 'HHumm'}}</small>
             </div>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7 col-12 pl-0 pr-md-3 pr-0">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="article-footer">
                         <div class="d-flex flex-column">
-                            <small><i class="fas fa-clock mr-1"></i> {{article?.timestampCreated}}</small>
+                            <small><i class="fas fa-clock mr-1"></i>{{article?.timestampCreated | date: 'mediumDate' }} {{article?.timestampCreated | date: 'HHumm'}}</small>
                             <small *ngIf="firsttag"><i class="fas fa-tag mr-1 mt-2"></i> {{firsttag?.name}}</small>
                         </div>
                         <strong class="font-weight-bold small">
