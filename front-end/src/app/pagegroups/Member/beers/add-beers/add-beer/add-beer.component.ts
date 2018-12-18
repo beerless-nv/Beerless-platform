@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {BreweriesService} from '../../../../../services/breweries.service';
+import {BreweriesService} from '../../../../../_services/breweries.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
-import {BeersService} from '../../../../../services/beers.service';
-import {BeertypesService} from '../../../../../services/beertypes.service';
+import {BeersService} from '../../../../../_services/beers.service';
+import {BeertypesService} from '../../../../../_services/beertypes.service';
 
 @Component({
     selector: 'app-add-beer',

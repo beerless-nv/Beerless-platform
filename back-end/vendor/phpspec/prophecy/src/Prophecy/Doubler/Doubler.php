@@ -80,7 +80,7 @@ class Doubler
     }
 
     /**
-     * Creates double from specific class or/and list of interfaces.
+     * Creates double from specific class or/and list of _interfaces.
      *
      * @param ReflectionClass   $class
      * @param ReflectionClass[] $interfaces Array of ReflectionClass instances

@@ -595,7 +595,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at an arbitrary level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  mixed   $level   The log level
      * @param  string $message The log message
@@ -612,7 +612,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the DEBUG level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -626,7 +626,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the INFO level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -640,7 +640,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the NOTICE level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -654,7 +654,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the WARNING level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -668,7 +668,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the WARNING level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -682,7 +682,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the ERROR level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -696,7 +696,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the ERROR level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -710,7 +710,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the CRITICAL level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -724,7 +724,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the CRITICAL level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -738,7 +738,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the ALERT level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -752,7 +752,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the EMERGENCY level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context
@@ -766,7 +766,7 @@ class Logger implements LoggerInterface, ResettableInterface
     /**
      * Adds a log record at the EMERGENCY level.
      *
-     * This method allows for compatibility with common interfaces.
+     * This method allows for compatibility with common _interfaces.
      *
      * @param  string $message The log message
      * @param  array  $context The log context

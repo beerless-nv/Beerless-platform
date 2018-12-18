@@ -1,0 +1,191 @@
+<div>
+    <h6 class="intermediate-title">Profiel</h6>
+    <form [formGroup]="formProfile" (ngSubmit)="addBeer()" autocomplete="off" novalidate>
+        <div class="d-flex flex-wrap">
+            <div class="col-lg-10 col-md-9 col-12 px-0 pr-md-3 pr-lg-4 pr-xl-0 order-1 order-md-0">
+                <div class="form-group">
+                    <label for="username">Gebruikersnaam</label>
+                    <input type="text" class="form-control" id="username" formControlName="username"
+                           placeholder="Gebruikersnaam" value="data.username">
+                    <div class="invalid-input" *ngIf="formProfile.get('username').touched && formProfile.get('username').invalid">
+                        <div *ngIf="formProfile.get('username').hasError('required')">
+                            Vul een gebruikersnaam in!
+                        </div>
+                        <div *ngIf="formProfile.get('username').hasError('minlength')">
+                            Gebruikersnaam moet minimaal 3 karakters bevatten!
+                        </div>
+                        <div *ngIf="formProfile.get('username').hasError('maxlength')">
+                            Gebruikersnaam mag maximaal 255 karakters bevatten!
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email">E-mailadres</label>
+                    <input type="email" class="form-control" id="email" formControlName="email"
+                           placeholder="E-mailadres" value="data.email">
+                    <div class="invalid-input" *ngIf="formProfile.get('email').touched && formProfile.get('email').invalid">
+                        <div *ngIf="formProfile.get('email').hasError('required')">
+                            Vul een e-mailadres in!
+                        </div>
+                        <div *ngIf="formProfile.get('email').hasError('maxlength')">
+                            E-mailadres mag maximaal 255 karakters bevatten!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-12 pl-0 pr-md-0 order-0 order-md-1">
+                <div class="mb-3 float-md-right float-left">
+                    <label for="picture">Profielfoto</label>
+                    <input type="file" [hidden]="true" #profilePictureUpload id="picture"
+                           formControlName="picture" (change)="showProfilePicture($event)"/>
+                    <div class="card profile-picture-upload"
+                         [style.background-image]="'url(' + (pictureSrc || user.picture) + ')'">
+                        <div class="profile-picture-upload-button-container" (click)="profilePictureUpload.click()">
+                            <i class="fas fa-pen fa-3x profile-picture-upload-button"></i>
+                        </div>
+                    </div>
+                    <div class="invalid-input" *ngIf="!pictureSrc && !user.picture">
+                        Kies een profielfoto!
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="firstName">Voornaam</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName"
+                   placeholder="Voornaam" value="data.firstName">
+            <div class="invalid-input" *ngIf="formProfile.get('firstName').touched && formProfile.get('firstName').invalid">
+                <div *ngIf="formProfile.get('firstName').hasError('maxlength')">
+                    Voornaam mag maximaal 255 karakters bevatten!
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lastName">Achternaam</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName"
+                   placeholder="Achternaam" value="data.lastName">
+            <div class="invalid-input" *ngIf="formProfile.get('lastName').touched && formProfile.get('lastName').invalid">
+                <div *ngIf="formProfile.get('lastName').hasError('maxlength')">
+                    Achternaam mag maximaal 255 karakters bevatten!
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="bio">Over mezelf</label>
+            <div class="position-relative">
+                <textarea type="text" class="form-control textareaCounter" id="bio" formControlName="bio"
+                          rows="4"
+                          placeholder="Over mezelf..."
+                          value="data.bio"
+                          #bio></textarea>
+                <div class="character-counter">{{(maxLengthTextarea - bio.value.length)}}</div>
+            </div>
+            <div class="invalid-input" *ngIf="formProfile.get('bio').touched && formProfile.get('bio').invalid">
+                <div *ngIf="formProfile.get('bio').hasError('maxlength')">
+                    Je bio mag maximaal 500 karakters bevatten!
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary text-white px-sm-5" [disabled]="formProfile.invalid || (formProfile.value.username == '' && formProfile.value.email == '' && formProfile.value.firstName == '' && formProfile.value.lastName == '' && formProfile.value.bio == '')">
+                Profielgegevens opslaan
+            </button>
+        </div>
+    </form>
+
+    <h6 class="intermediate-title mt-5">Adres</h6>
+    <form [formGroup]="formAddress" (ngSubmit)="addBeer()" autocomplete="off" novalidate>
+        <div class="form-group">
+            <label for="place">Plaats</label>
+            <input type="text" class="form-control" id="place" formControlName="place" placeholder="Plaats">
+            <div class="invalid-input" *ngIf="formAddress.get('place').touched && formAddress.get('place').invalid">
+                <div *ngIf="formAddress.get('place').hasError('maxlength')">
+                    Adres mag maximaal 255 karakters bevatten!
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="province">Provincie</label>
+            <input type="text" class="form-control" id="province" formControlName="province" placeholder="Provincie">
+            <div class="invalid-input" *ngIf="formAddress.get('province').touched && formAddress.get('province').invalid">
+                <div *ngIf="formAddress.get('province').hasError('maxlength')">
+                    Provincie mag maximaal 255 karakters bevatten!
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="country">Land</label>
+            <input type="text" class="form-control" id="country" formControlName="country" placeholder="Land">
+            <div class="invalid-input" *ngIf="formAddress.get('country').touched && formAddress.get('country').invalid">
+                <div *ngIf="formAddress.get('country').hasError('maxlength')">
+                    Land mag maximaal 255 karakters bevatten!
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary text-white px-sm-5" [disabled]="formAddress.invalid || (formAddress.value.place == '' && formAddress.value.province == '' && formAddress.value.country == '')">Adresgegevens
+                opslaan
+            </button>
+        </div>
+    </form>
+
+    <h6 class="intermediate-title mt-5">Wachtwoord veranderen</h6>
+    <form [formGroup]="formPassword" (ngSubmit)="changePassword()" autocomplete="off" novalidate>
+        <div class="form-group">
+            <label for="currentPassword">Huidig wachtwoord</label>
+            <input type="password" class="form-control" id="currentPassword" formControlName="currentPassword"
+                   placeholder="Huidig wachtwoord">
+            <div class="invalid-input" *ngIf="formPassword.get('currentPassword').touched && formPassword.get('currentPassword').invalid">
+                <div *ngIf="formPassword.get('currentPassword').hasError('required')">
+                    Vul een wachtwoord in!
+                </div>
+                <div *ngIf="formPassword.get('currentPassword').hasError('minlength')">
+                    Wachtwoord moet minimaal 8 karakters bevatten!
+                </div>
+                <div *ngIf="formPassword.get('currentPassword').hasError('pattern')">
+                    Wachtwoord moet minstends 1 letter, 1 hoofdletter, 1 cijfer en 1 speciaal karakter bevatten!
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="newPassword">Nieuw wachtwoord</label>
+            <input type="password" class="form-control" id="newPassword" formControlName="newPassword"
+                   placeholder="Nieuw wachtwoord" #newPassword>
+            <div class="invalid-input" *ngIf="formPassword.get('newPassword').touched && formPassword.get('newPassword').invalid">
+                <div *ngIf="formPassword.get('newPassword').hasError('required')">
+                    Vul je nieuwe wachtwoord in!
+                </div>
+                <div *ngIf="formPassword.get('newPassword').hasError('minlength')">
+                    Wachtwoord moet minimaal 8 karakters bevatten!
+                </div>
+                <div *ngIf="formPassword.get('newPassword').hasError('pattern')">
+                    Wachtwoord moet minstends 1 letter, 1 hoofdletter, 1 cijfer en 1 speciaal karakter bevatten!
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="repeatPassword">Herhaal wachtwoord</label>
+            <input type="password" class="form-control" id="repeatPassword" formControlName="repeatPassword"
+                   placeholder="Herhaal wachtwoord" #repeatPassword>
+            <div class="invalid-input" *ngIf="(formPassword.get('repeatPassword').touched && formPassword.get('repeatPassword').invalid) || passwordMatch == false">
+                <div *ngIf="formPassword.get('repeatPassword').hasError('required')">
+                    Vul je wachtwoord nog een keer in ter validatie!
+                </div>
+                <div *ngIf="formPassword.get('repeatPassword').hasError('minlength')">
+                    Wachtwoord moet minimaal 8 karakters bevatten!
+                </div>
+                <div *ngIf="formPassword.get('repeatPassword').hasError('pattern')">
+                    Wachtwoord moet minimaal 1 letter, 1 hoofdletter, 1 cijfer en 1 speciaal karakter bevatten!
+                </div>
+                <div *ngIf="passwordMatch == false">
+                    De wachtwoorden komen niet overeen, probeer nog eens!
+                </div>
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary text-white px-sm-5" [disabled]="formPassword.invalid">Wachtwoord
+                veranderen
+            </button>
+        </div>
+    </form>
+</div>

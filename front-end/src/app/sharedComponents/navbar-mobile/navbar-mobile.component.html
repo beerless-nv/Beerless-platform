@@ -1,0 +1,34 @@
+<div class="nav-mobile">
+    <div>
+        <a class="nav-mobile-item" (click)="openSubmenu('user')">
+            <i class="fas fa-user"></i>
+        </a>
+        <div class="nav-mobile-submenu" [hidden]="submenu != 'user'" (click)="hideAllSubmenu()">
+            <a routerLink="/user/profile/14" class="nav-mobile-submenu-item">
+                Profiel
+            </a>
+            <a routerLink="/user/wishlist/14" class="nav-mobile-submenu-item">
+                Wishlist
+            </a>
+            <a routerLink="/user/settings" class="nav-mobile-submenu-item">
+                Instellingen
+            </a>
+            <a class="nav-mobile-submenu-item" (click)="logout()" [hidden]="!user">
+                Uitloggen
+            </a>
+            <a routerLink="/login" class="nav-mobile-submenu-item" [hidden]="user">
+                Inloggen
+            </a>
+        </div>
+    </div>
+    <div>
+        <a routerLink="/beers" class="nav-mobile-item" (click)="hideAllSubmenu()">
+            <i class="fas fa-search"></i>
+        </a>
+    </div>
+    <div>
+        <a routerLink="/blog" class="nav-mobile-item" (click)="hideAllSubmenu()">
+            <i class="fas fa-newspaper"></i>
+        </a>
+    </div>
+</div>

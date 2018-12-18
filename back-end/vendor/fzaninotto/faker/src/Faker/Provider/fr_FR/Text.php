@@ -6122,7 +6122,7 @@ président.
 Il se hâtait:
 
 «Engrais flamand, -- culture du lin, -- drainage, -- baux à longs
-termes, -- services de domestiques.»
+termes, -- _services de domestiques.»
 
 Rodolphe ne parlait plus. Ils se regardaient. Un désir suprême
 faisait frissonner leurs lèvres sèches; et mollement, sans effort,
@@ -10712,7 +10712,7 @@ avec sa pelle le sable des allées.
 Tout à coup, ils virent entrer par la barrière M. Lheureux, le
 marchand d'étoffes.
 
-Il venait offrir ses services, eu égard à la fatale circonstance.
+Il venait offrir ses _services, eu égard à la fatale circonstance.
 Emma répondit qu'elle croyait pouvoir s'en passer. Le marchand ne
 se tint pas pour battu.
 
@@ -10996,7 +10996,7 @@ Aussi, elle acheta pour sa chambre une paire de rideaux jaunes à
 larges raies, dont M. Lheureux lui avait vanté le bon marché; elle
 rêva un tapis, et Lheureux, affirmant «que ce n'était pas la mer à
 boire», s'engagea poliment à lui en fournir un. Elle ne pouvait
-plus se passer de ses services. Vingt fois dans la journée elle
+plus se passer de ses _services. Vingt fois dans la journée elle
 l'envoyait chercher, et aussitôt il plantait là ses affaires, sans
 se permettre un murmure. On ne comprenait point davantage pourquoi
 la mère Rolet déjeunait chez elle tous les jours, et même lui
@@ -15048,7 +15048,7 @@ seule).
 serait que de me signaler aux incendies!
 
 Alors Homais inclina vers le Pouvoir. Il rendit secrètement à
-M. le préfet de grands services dans les élections. Il se vendit
+M. le préfet de grands _services dans les élections. Il se vendit
 enfin, il se prostitua. Il adressa même au souverain une pétition
 où il le suppliait de lui faire justice; il l'appelait notre bon
 roi et le comparait à Henri IV.

@@ -3,7 +3,8 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, share, tap} from 'rxjs/operators';
 import {EMPTY, Observable, BehaviorSubject} from 'rxjs';
-import {User} from '../interfaces/user';
+import {User} from '../_interfaces/user';
+import {Router} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +22,7 @@ export class LoginService {
     messageRegister$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
     errorMessageArray = [];
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private router: Router) {
         if (localStorage.getItem('user')) {
             this.userData$.next(JSON.parse(localStorage.getItem('user')));
         }
@@ -36,9 +37,10 @@ export class LoginService {
             .toPromise()
             .then(data => {
                 localStorage.removeItem('user');
-                this.setUserData(data['user'], data['token']);
+                this.setUserData(data['user'].ID, data['token']);
             })
             .catch(error => {
+                console.log(error);
                 this.errorMessageArray = error.error['msg'];
                 for (let i = 0; i < this.errorMessageArray.length; i++) {
                     switch (this.errorMessageArray[i]) {
@@ -108,6 +110,7 @@ export class LoginService {
         this.messageLogin$.next(null);
         this.messageRegister$.next(null);
         localStorage.removeItem('user');
+        this.router.navigate(['']);
     }
 
     getUserData() {
@@ -115,21 +118,40 @@ export class LoginService {
     }
 
     // Locally log the user in
-    private setUserData(user, token: string) {
-        if (user !== null) {
-            this.userData$.next({
-                id: user.id,
-                username: user.username,
-                firstname: user.firstname,
-                lastname: user.lastname,
-                email: user.email,
-                picture: user.picture || 'https://avatars.dicebear.com/v2/identicon/' + user.firstname + user.lastname + '.svg',
-                userType: user.userType,
-                token: token,
-            });
-            this.userData$.subscribe(data => localStorage.setItem('user', JSON.stringify(data)));
+    private setUserData(userId, token: string) {
+        if (userId !== null) {
+            this.getCurrentUser(userId).then(data => {
+                const user = data['user'];
+                const usersocial = [];
 
-            console.log(user);
+                for (let i = 0; i < user.usersocial.length; i++) {
+                    usersocial[i] = {
+                        ID: user.usersocial[i].ID,
+                        socialID: user.usersocial[i].socialID,
+                        socialPlatform: user.usersocial[i].socialPlatform,
+                        picture: user.usersocial[i].picture
+                    };
+                }
+
+                let socialpicture;
+                if (user.usersocial.length > 0) {
+                    socialpicture = usersocial[0].picture;
+                }
+
+                this.userData$.next({
+                    ID: user.ID,
+                    username: user.username,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email,
+                    picture: user.picture || socialpicture,
+                    usertype: user.userType,
+                    token: token,
+                    socials: usersocial,
+                });
+                console.log(data['user']);
+                this.userData$.subscribe(userData => localStorage.setItem('user', JSON.stringify(userData)));
+            });
         } else {
             this.userData$.next(null);
         }
@@ -137,22 +159,10 @@ export class LoginService {
 
     setUserSocialData(user) {
         if (user !== null) {
-            this.userData$.next({
-                id: user.id,
-                username: '',
-                firstname: user.name.substr(0, user.name.indexOf(' ')),
-                lastname: user.name.substr(user.name.indexOf(' ') + 1),
-                email: user.email,
-                picture: user.image || 'https://avatars.dicebear.com/v2/identicon/' + user.email + '.svg',
-                userType: 0,
-                token: user.token,
-            });
-            this.userData$.subscribe(data => localStorage.setItem('user', JSON.stringify(data)));
-
             this.getUserSocial('socialID', user.id)
                 .then(data => {
                     const usersocials = data['usersocials'];
-                    console.log(usersocials.length);
+
                     if (usersocials.length === 0) {
                         this.insertUser({
                             firstname: user.name.substr(0, user.name.indexOf(' ')),
@@ -161,18 +171,24 @@ export class LoginService {
                         })
                             .then(newUserObject => {
                                 const newUser = newUserObject['user'];
-                                console.log(
-                                    newUserObject
-                                );
                                 this.insertUserSocial({
                                     userID: newUser.ID,
                                     socialID: user.id,
                                     socialPlatform: user.provider,
-                                    picture: user.image
-                                });
+                                    picture: 'https://graph.facebook.com/' + user.id + '/picture?height=500'
+                                })
+                                    .then(() => {
+                                        console.log('setUserData');
+                                        this.setUserData(newUser.ID, '5');
+                                    });
+
+                            })
+                            .then(() => {
+                                this.router.navigate(['']);
                             });
                     } else {
-                        console.log('al geregistreerd');
+                        this.router.navigate(['']);
+                        this.setUserData(usersocials[0].userID, '5');
                     }
                 });
         } else {
@@ -188,6 +204,11 @@ export class LoginService {
                 operator: 'like'
             }]
         })
+            .toPromise();
+    }
+
+    getCurrentUser(userId) {
+        return this.http.get(this.urlUser + '/' + userId)
             .toPromise();
     }
 

@@ -12,7 +12,7 @@
 namespace Symfony\Component\HttpKernel\DependencyInjection;
 
 /**
- * Resets provided services.
+ * Resets provided _services.
  *
  * @author Alexander M. Turek <me@derrabus.de>
  * @author Nicolas Grekas <p@tchwork.com>

@@ -1,5 +1,10 @@
-<div [hidden]="!loading">
+<div class="page-header">
     <div class="container">
+        <span class="page-header-title">{{beer?.name}}</span>
+    </div>
+</div>
+<div [hidden]="!loading">
+    <div class="container pb-5">
         <div class="col-12 d-flex flex-md-row flex-column p-0">
             <div class="col-md-9 col-12 pl-md-0 px-0">
                 <app-beerprofile [item]="beer"></app-beerprofile>

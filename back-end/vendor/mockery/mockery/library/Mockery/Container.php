@@ -81,7 +81,7 @@ class Container
      * Generates a new mock object for this container
      *
      * I apologies in advance for this. A God Method just fits the API which
-     * doesn't require differentiating between classes, interfaces, abstracts,
+     * doesn't require differentiating between classes, _interfaces, abstracts,
      * names or partials - just so long as it's something that can be mocked.
      * I'll refactor it one day so it's easier to follow.
      *
@@ -121,7 +121,7 @@ class Container
 
         while (count($args) > 0) {
             $arg = current($args);
-            // check for multiple interfaces
+            // check for multiple _interfaces
             if (is_string($arg) && strpos($arg, ',') && !strpos($arg, ']')) {
                 $interfaces = explode(',', str_replace(' ', '', $arg));
                 $builder->addTargets($interfaces);

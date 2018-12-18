@@ -3,6 +3,7 @@
 namespace App\DataServices;
 
 use App\Models\User;
+use App\DataServices\UserSocialDataService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
@@ -45,7 +46,7 @@ class UserDataService
      */
     public static function get(int $userId)
     {
-        return User::findOrFail($userId);
+        return User::with('usersocial')->findOrFail($userId);
     }
 
     /**

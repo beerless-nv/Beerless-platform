@@ -1,7 +1,8 @@
 import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
-import {BeersService} from '../../../../services/beers.service';
+import {BeersService} from '../../../../_services/beers.service';
 import {Observable, of} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
+import {LocalStorageService} from '../../../../_services/local-storage.service';
 
 @Component({
     selector: 'app-index-beers',
@@ -16,7 +17,7 @@ export class IndexBeersComponent implements OnInit {
     beerNameOld;
     page;
 
-    constructor(private beersService: BeersService, private router: Router, private route: ActivatedRoute, private cdRef: ChangeDetectorRef) {
+    constructor(private beersService: BeersService, private router: Router, private route: ActivatedRoute, private cdRef: ChangeDetectorRef, private localStorageService: LocalStorageService) {
     }
 
     ngOnInit() {
@@ -44,15 +45,14 @@ export class IndexBeersComponent implements OnInit {
                 this.getPage(1);
                 this.beersService.getBeersByName('name', this.beerName)
                     .then(data => {
-                        this.beersList = data['beers'];
-                        localStorage.setItem('BeerSearchResults', JSON.stringify(this.beersList));
+                        this.beersList = this.localStorageService.getBeerSearchResults();
                     })
                     .then(() => {
                         this.beerNameOld = naam;
                     });
             } else {
                 this.getPage(this.page);
-                this.beersList = JSON.parse(localStorage.getItem('BeerSearchResults'));
+                this.beersList = this.localStorageService.getBeerSearchResults();
             }
         } else {
             this.beersList = null;
@@ -62,10 +62,11 @@ export class IndexBeersComponent implements OnInit {
 
     getBeersNewest() {
         if (this.newestBeersList !== null) {
-            this.beersService.getBeersNewest().then(data => localStorage.setItem('NewestBeersArray', JSON.stringify(data['beers'])));
-            this.newestBeersList = JSON.parse(localStorage.getItem('NewestBeersArray'));
+            this.beersService.getBeersNewest().then(() => {
+                this.newestBeersList = this.localStorageService.getNewestBeers();
+            });
         } else {
-            this.newestBeersList = JSON.parse(localStorage.getItem('NewestBeersArray'));
+            this.newestBeersList = this.localStorageService.getNewestBeers();
         }
     }
 

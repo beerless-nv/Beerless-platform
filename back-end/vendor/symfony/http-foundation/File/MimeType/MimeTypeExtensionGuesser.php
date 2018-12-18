@@ -106,7 +106,7 @@ class MimeTypeExtensionGuesser implements ExtensionGuesserInterface
         'application/relax-ng-compact-syntax' => 'rnc',
         'application/resource-lists+xml' => 'rl',
         'application/resource-lists-diff+xml' => 'rld',
-        'application/rls-services+xml' => 'rs',
+        'application/rls-_services+xml' => 'rs',
         'application/rpki-ghostbusters' => 'gbr',
         'application/rpki-manifest' => 'mft',
         'application/rpki-roa' => 'roa',
