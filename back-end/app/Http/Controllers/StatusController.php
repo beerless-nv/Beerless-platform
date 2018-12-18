@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
-use App\DataServices\RelationshipDataService;
+use App\DataServices\StatusDataService;
 
 /**
- * Contains CRUD functions for table 'Relationship'.
+ * Contains CRUD functions for table 'Status'.
  */
-class RelationshipController extends Controller
+class StatusController extends Controller
 {
     /**
-     * Returns a JSON array of all rows in table 'Relationship'.
+     * Returns a JSON array of all rows in table 'Status'.
      * 
-     * GET /relationships
+     * GET /statuses
      *
      * @param Request $request
      * @return Response
@@ -57,25 +57,25 @@ class RelationshipController extends Controller
         
         return response()->json([
             'success' => true,
-            'relationships' => RelationshipDataService::getAll($joinTables, $sortOrder, $limit, $offset)
+            'statuses' => StatusDataService::getAll($joinTables, $sortOrder, $limit, $offset)
         ], 200);
     }
 
     /**
-     * Insert an item into table 'Relationship'.
+     * Insert an item into table 'Status'.
      * Takes the item fields as request parameters.
      * Requires the field 'title'.
      * 
-     * POST /relationships
+     * POST /statuses
      *
      * @param Request $request
      * @return Response
      */
     public function insert(Request $request)
     {
-        $relationship = '';
+        $status = '';
         if(isset($request->input('inputObject')['title'])){
-            $relationship = RelationshipDataService::insert($request->input('inputObject'));
+            $status = StatusDataService::insert($request->input('inputObject'));
         } else{
             return response()->json([
                 'success' => false,
@@ -85,35 +85,35 @@ class RelationshipController extends Controller
         
         return response()->json([
             'success' => true,
-            'relationship' => $relationship
+            'status' => $status
         ], 201);
     }
 
 
     /**
-     * Returns a specific JSON object of type 'Relationship'.
+     * Returns a specific JSON object of type 'Status'.
      * Takes the id as a request parameter.
      * 
-     * GET /relationships/relationshipId
+     * GET /statuses/statusId
      * 
      * @param Request $request
-     * @param integer $relationshipId
+     * @param integer $statusId
      * @return Reponse
      */
-    public function get(Request $request, int $relationshipId)
+    public function get(Request $request, int $statusId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
         
         return response()->json([
             'success' => true,
-            'relationship' => RelationshipDataService::get($artrelationshipIdicleId, $joinTables)
+            'status' => StatusDataService::get($statusId, $joinTables)
         ],200);
     }
 
     /**
      * Undocumented function
      * 
-     * GET /relationships/search
+     * GET /statuses/search
      *
      * @param Request $request
      * @return Response
@@ -155,49 +155,49 @@ class RelationshipController extends Controller
 
         return response()->json([
             "success" => true,
-            'relationships' => RelationshipDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+            'statuses' => StatusDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
         ]);
     }
 
     /**
-     * Deletes an item in table 'Relationship'.
+     * Deletes an item in table 'Status'.
      * Takes the id as a request parameter.
      * 
-     * DELETE /relationships/relationshipId
+     * DELETE /statuses/statusId
      *
      * @param Request $request
-     * @param integer $relationshipId
+     * @param integer $statusId
      * @return void
      */
-    public function delete(Request $request, int $relationshipId)
+    public function delete(Request $request, int $statusId)
     {
-        RelationshipDataService::delete($relationshipId);
+        StatusDataService::delete($statusId);
         return response()->json([
             'success' => true
         ], 204);
     }
 
     /**
-     * Updates an item in table 'Relationship'.
+     * Updates an item in table 'Status'.
      * Takes the item fields as request parameters.
      * Requires the field 'name'.
      * 
-     * PATCH /relationships/$relationshipId
+     * PATCH /statuses/$statusId
      *
      * @param Request $request
-     * @param integer $relationshipId
+     * @param integer $statusId
      * @return void
      */
-    public function patch(Request $request, int $relationshipId)
+    public function patch(Request $request, int $statusId)
     {
         $updateArray = array();
         foreach ($request->input('updateArray') as $item) {
             $updateArray[$item['propName']] = $item['value'];
         }
-        $relationship = RelationshipDataService::update($relationshipId, $updateArray);
+        $status = StatusDataService::update($statusId, $updateArray);
         return response()->json([
             'success' => true,
-            'relationship' => $relationship
+            'status' => $status
         ], 200);
     }
 }

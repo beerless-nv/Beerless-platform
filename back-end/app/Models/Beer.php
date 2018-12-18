@@ -40,4 +40,14 @@ class Beer extends Model
     {
         return $this->belongsTo('App\Models\Beertype', 'beertypeID', 'ID');
     }
+
+    public function user()
+    {
+        return $this->hasMany('App\Models\User', 'favouriteBeerID', 'ID');
+    }
+
+    public function activity()
+    {
+        return $this->hasMany('App\Models\Activity', 'beerID', 'ID');
+    }
 }

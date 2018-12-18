@@ -16,6 +16,7 @@ class User extends Authenticatable
         'country' => '',
         'province' => '',
         'place' => '',
+        'totalPoints' => ''
     ];
     protected $fillable = [
         'username',
@@ -27,7 +28,9 @@ class User extends Authenticatable
         'bio',
         'country',
         'province',
-        'place'
+        'place',
+        'totalPoints',
+        'favouriteBeer'
     ];
     protected $dates = [];
     protected $hidden = ['password'];
@@ -43,8 +46,38 @@ class User extends Authenticatable
     ];
 
     // Relationships
+    public function article()
+    {
+        return $this->hasMany('App\Models\UserSocial', 'userID', 'ID');
+    }
+
     public function usersocial()
     {
         return $this->hasMany('App\Models\UserSocial', 'userID', 'ID');
+    }
+
+    public function activity()
+    {
+        return $this->hasmany('App\Models\Activity', 'userID', 'ID');
+    }
+
+    public function user_1()
+    {
+        return $this->hasmany('App\Models\Activity', 'user_1_ID', 'ID');
+    }
+
+    public function user_2()
+    {
+        return $this->hasmany('App\Models\Activity', 'user_2_ID', 'ID');
+    }
+
+    public function actionuser()
+    {
+        return $this->hasmany('App\Models\Activity', 'actionUserID', 'ID');
+    }
+
+    public function favouritebeer()
+    {
+        return $this->belongsTo('App\Models\Beer', 'favouriteBeerID', 'ID');
     }
 }

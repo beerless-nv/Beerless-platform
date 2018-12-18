@@ -42,11 +42,16 @@ class Brewery extends Model
     // Relationships
     public function beers()
     {
-        return $this->hasMany('App\Models\Beer');
+        return $this->hasMany('App\Models\Beer', 'breweryID', 'ID');
     }
 
     public function contact()
     {
-        return $this->hasOne('App\Models\Contact', 'breweryID');
+        return $this->hasOne('App\Models\Contact', 'breweryID', 'ID');
+    }
+
+    public function activity()
+    {
+        return $this->hasMany('App\Models\Activity', 'breweryID', 'ID');
     }
 }
