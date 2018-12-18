@@ -9,109 +9,26 @@
                 </small>
             </div>
             <div class="article-title-container">
-                <small class="article-category">Biernieuws</small>
-                <h2 class="article-title my-2 d-lg-block d-none">Dit zijn de Beste Bockbieren van Nederland!</h2>
-                <h4 class="article-title my-2 d-lg-none d-md-block d-none">Dit zijn de Beste Bockbieren van
-                    Nederland!</h4>
-                <h5 class="article-title my-2 d-md-none d-block">Dit zijn de Beste Bockbieren van Nederland!</h5>
-                <small><i class="far fa-clock mr-1"></i> 26 oktober 2018 om 16:00</small>
+                <small class="article-category" *ngIf="firsttag">{{firsttag?.name}}</small>
+                <h2 class="article-title my-2 d-lg-block d-none">{{article?.title}}</h2>
+                <h4 class="article-title my-2 d-lg-none d-md-block d-none">{{article?.title}}</h4>
+                <h5 class="article-title my-2 d-md-none d-block">{{article?.title}}</h5>
+                <small><i class="far fa-clock mr-1"></i>{{article?.timestampCreated}}</small>
             </div>
         </div>
         <div class="col-xl-9 col-lg-8 col-md-7 col-12 pl-0 pr-md-3 pr-0">
             <div class="card article-content">
                 <div class="p-md-5 p-3">
                     <p class="article-intro">
-                        Wat een feest bij vandeStreek bier in Utrecht. Daar werden vrijdag de prijzen uitgereikt voor
-                        het Beste Bockbier van Nederland 2018. Er werd gejureerd in drie verschillende categorieën:
-                        Donker Bock, Dubbel Bock en Special Bock. De winnaars zijn respectievelijk Muifelbrouwerij,
-                        Bronckhorster Brewing Company en SNAB.
+                        {{article?.intro}}
                     </p>
-                    <p>
-                        Vorig jaar werd er voor het eerst in meer dan 10 jaar geen Beste Bockbier wedstrijd
-                        georganiseerd. Dat was een flink een gemis voor bierland Nederland. Daarom kwam de Beste
-                        Bockbier competitie dit jaar weer en vandaag, vrijdag 26 oktober zijn de winnende bockbieren
-                        bekend gemaakt!
-                    </p>
-                    <h5 class="article-inline-title">
-                        Beste Bockbier van Nederland
-                    </h5>
-                    <p>
-                        Onder de bezielende leiding van bierexpert Derek Walsh heeft de competitie dit jaar een
-                        doorstart gemaakt. Voor het eerst hoeven brouwers geen inschrijfgeld te betalen om hun bier op
-                        de keuringstafel te krijgen en konden zij tot en met 7 oktober hun bieren insturen. De
-                        voorwaarde? De acht flesjes bier moesten tijdig aanwezig zijn om gekeurd te worden en voldoen
-                        aan de stijlvoorwaarden. That’s it!
-                    </p>
-                    <p>
-                        De Beste Bockbier competitie is een wedstrijd, geen verkiezing. De bockbieren werden maandag 15
-                        oktober door een deskundige jury gekeurd en beoordeeld. De winnaars mogen zich een jaar lang
-                        Beste Bockbier van Nederland noemen. Alles draait hier om de eer en waardering voor het bier. De
-                        jury bestaande uit keurmeesters, biersommeliers en journalisten, werd vooraf natuurlijk niet
-                        geïnformeerd over de bieren die geschonken werden, dus werd er blind geproefd uit speciale
-                        proefglazen.
-                    </p>
-                    <h5 class="article-inline-title">
-                        And the winner is…
-                    </h5>
-                    <p>
-                        Er werd heel wat gekeken, geroken en geproefd om te beoordelen of de ingezonden bockbieren
-                        voldoen aan de typebeschrijving en of het bier technische afwijkingen bevat. Na iedere ronde
-                        werden maximaal 4 bieren geselecteerd om door te gaan naar de volgende ronde, totdat het tijd
-                        was voor de finaleronde.
-                    </p>
-                    <p>
-                        In de finale is het beste bockbier binnen elke categorie gekozen. Vandaag, vrijdag 26 oktober,
-                        werden de winnaars bekend gemaakt tijdens een mooi bierevent bij vandeStreek-bier in Utrecht! En
-                        wij hebben de winnaars natuurlijk voor je op een rijtje gezet.
-                    </p>
-                    <h5 class="article-inline-title">
-                        Categorie Bock
-                    </h5>
-                    <p>
-                        Deze bockbieren bevatten tussen de 6 en 7,4% alcohol en heeft als subcategorie ook ‘Donkerbock’
-                        bij zich. De winnaar in deze categorie is …
-                        1 – Muifel Brouwerij – D’n Ossenbock
-                        2 – Maallust – Landloper
-                        3 – La Trappe – Bockbier
-                    </p>
-                    <h5 class="article-inline-title">
-                        Categorie Dubbelbock/Sterke Bock
-                    </h5>
-                    <p>
-                        1 – SNAB – IJsbock
-                        2 – SNAB – Ezelenbock
-                        3 – Zeeburg – Dubbelbock
-                        De bieren in deze categorie bevatten 7,5 tot 8,5% alcohol met als subcategorie Donker
-                        Dubbelbock, IJsbock/Sterk Bock. De winnaar in deze categorie is …
-                    </p>
-                    <h5 class="article-inline-title">
-                        Categorie Speciaal Bock
-                    </h5>
-                    <p>
-                        1 – Bronckhorster Brewing Company – Brok in de keel Barrel Aged
-                        2 – SNAB – IJsbock Hout
-                        3 – Gooische Bierbrouwerij – Gooische Bock
-                        In deze categorie vinden we bockbieren met 6 tot 8,5% alcohol, met als subcategorie
-                        Weizenbock/Weizendoppelbock, Blond Bock/Dubbelbock, Rauch & Houtgerijpte Bock of gebrouwen met
-                        speciale grondstoffen. De grote winnaar is deze categorie is …
-                    </p>
-                    <h5 class="article-inline-title">
-                        Prijswinnende Bockbieren
-                    </h5>
-                    <p>
-                        Bockbier is het meest gedronken en meest gebrouwen seizoensbier van Nederland. Niet gek dus dat
-                        naast de Lekkerste Bockbier competitie ook de Beste Bockbier competitie wordt georganiseerd.
-                        Tijdens de bekendmaking bij vandeStreek bier straalde de blijdschap er dan ook vanaf bij de
-                        brouwers. Gaaf wanneer jouw bockbier door experts wordt verkozen tot de beste van Nederland!
-                    </p>
-                    <p>
-                        Meer leren over bockbier en bier in het algemeen? Doe de Bierista Bieropleiding. Leuk, lekker en
-                        leerzaam!
-                    </p>
+                    <div [innerHTML]="article?.content">
+                        {{article?.content}}
+                    </div>
                     <div class="article-footer">
                         <div class="d-flex flex-column">
-                            <small><i class="fas fa-clock mr-1"></i> 26 oktober 2018 om 16:00</small>
-                            <small><i class="fas fa-tag mr-1 mt-2"></i> Biernieuws</small>
+                            <small><i class="fas fa-clock mr-1"></i> {{article?.timestampCreated}}</small>
+                            <small *ngIf="firsttag"><i class="fas fa-tag mr-1 mt-2"></i> {{firsttag?.name}}</small>
                         </div>
                         <strong class="font-weight-bold small">
                             Delen <a href="" class="link-muted-yellow ml-1"><i class="fab fa-twitter"></i></a> <a
@@ -120,39 +37,11 @@
                     </div>
                     <div class="footer-next-articles text-dark">
                         <h5 class="font-weight-bold mb-3">Bekijk ook</h5>
-                        <a routerLink="" class="link-black-yellow">
-                            <div class="media mt-3 d-flex align-items-center">
-                                <div class="footer-next-articles-img"
-                                     style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
-                                <div class="media-body ml-3">
-                                    <span class="article-category">Biernieuws</span>
-                                    <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
-                                    <small><i class="far fa-clock mr-1"></i> 26 oktober 2018</small>
-                                </div>
-                            </div>
-                        </a>
-                        <a routerLink="" class="link-black-yellow">
-                            <div class="media mt-3 d-flex align-items-center">
-                                <div class="footer-next-articles-img"
-                                     style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
-                                <div class="media-body ml-3">
-                                    <span class="article-category">Biernieuws</span>
-                                    <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
-                                    <small><i class="far fa-clock mr-1"></i> 26 oktober 2018</small>
-                                </div>
-                            </div>
-                        </a>
-                        <a routerLink="" class="link-black-yellow">
-                            <div class="media mt-3 d-flex align-items-center">
-                                <div class="footer-next-articles-img"
-                                     style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
-                                <div class="media-body ml-3">
-                                    <span class="article-category">Biernieuws</span>
-                                    <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
-                                    <small><i class="far fa-clock mr-1"></i> 26 oktober 2018</small>
-                                </div>
-                            </div>
-                        </a>
+                        <app-suggested-article-item
+                        *ngFor="let article of otherArticles; let i = index"
+                        [article]="article"
+                        >
+                        </app-suggested-article-item>
                     </div>
                 </div>
             </div>
@@ -173,42 +62,11 @@
             <div class="sticky-sidebar">
                 <div class="popular-articles">
                     <h5 class="font-weight-bold mb-3">Populair</h5>
-                    <a routerLink="" class="link-black-yellow">
-                        <div class="media mt-3 d-flex align-items-center">
-                            <div class="footer-next-articles-img"
-                                 style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
-                            <div class="media-body ml-3">
-                                <span class="article-category">Biernieuws</span>
-                                <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
-                                <small class="article-timestamp"><i class="far fa-clock mr-1"></i> 26 september 2018
-                                </small>
-                            </div>
-                        </div>
-                    </a>
-                    <a routerLink="" class="link-black-yellow">
-                        <div class="media mt-3 d-flex align-items-center">
-                            <div class="footer-next-articles-img"
-                                 style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
-                            <div class="media-body ml-3">
-                                <span class="article-category">Biernieuws</span>
-                                <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
-                                <small class="article-timestamp"><i class="far fa-clock mr-1"></i> 26 oktober 2018
-                                </small>
-                            </div>
-                        </div>
-                    </a>
-                    <a routerLink="" class="link-black-yellow">
-                        <div class="media mt-3 d-flex align-items-center">
-                            <div class="footer-next-articles-img"
-                                 style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
-                            <div class="media-body ml-3">
-                                <span class="article-category">Biernieuws</span>
-                                <h6 class="article-title mt-2 mb-1">Dit zijn de Beste Bockbieren van Nederland!</h6>
-                                <small class="article-timestamp"><i class="far fa-clock mr-1"></i> 26 oktober 2018
-                                </small>
-                            </div>
-                        </div>
-                    </a>
+                    <app-suggested-article-item
+                        *ngFor="let article of otherArticles; let i = index"
+                        [article]="article"
+                    >
+                    </app-suggested-article-item>
                 </div>
             </div>
         </div>

@@ -1,0 +1,12 @@
+<a (click)="loadArticle(article?.slug)" class="link-black-yellow mouse-pointer">
+  <div class="media mt-3 d-flex align-items-center">
+      <div class="footer-next-articles-img"
+           style="background-image: url('/src/assets/images/artikel_1.jpeg');"></div>
+      <div class="media-body ml-3">
+          <span class="article-category" *ngIf="firsttag">{{firsttag?.name}}</span>
+          <h6 class="article-title mt-2 mb-1">{{article?.title}}</h6>
+          <small class="article-timestamp"><i class="far fa-clock mr-1"></i> {{article?.timestampCreated}}
+          </small>
+      </div>
+  </div>
+</a>

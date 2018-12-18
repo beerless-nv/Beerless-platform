@@ -45,7 +45,7 @@ class ArticleDataService
      */
     public static function get(int $articleId, $joinTables){
         $query = Article::query();
-        \joinTables($query, 'beertype', $articleId);
+        \joinTables($query, 'article', $articleId);
         return $query->findOrFail($articleId);
     }
 
@@ -59,12 +59,14 @@ class ArticleDataService
         $query = Article::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'beertype', $joinTables);
+        \joinTables($query, 'article', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $value){
             if($value['propName'] == 'title'){
-                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($value['value']) . '%']);
-            } else{
+                $query->whereRaw('LOWER(title) like ?', ['%' . strtolower($value['value']) . '%']);
+            } if($value['propName'] == 'slug') {
+                $query->whereRaw('LOWER(slug) like ?', ['%' . strtolower($value['value']) . '%']);
+            }else{
                 $query->where($value['propName'], $value['operator'], $value['value']);
             }
         }
@@ -94,12 +96,12 @@ class ArticleDataService
      * @return Article
      */
     public static function update(int $articleId ,array $updateArray){
-        $beer = Article::findOrFail($articleId);
+        $article = Article::findOrFail($articleId);
         foreach ($updateArray as $key => $value){
-            $beer[$key] = $value;
+            $article[$key] = $value;
         }
 
-        $beer->save();
-        return $beer;
+        $article->save();
+        return $article;
     }
 }

@@ -29,7 +29,7 @@ const routes: Routes = [
         path: 'blog',
         children: [
             {path: '', component: IndexBlogComponent},
-            {path: 'article/:id', component: ArticleComponent},
+            {path: 'article/:slug', component: ArticleComponent},
         ]
     },
     // ALL pages from users
