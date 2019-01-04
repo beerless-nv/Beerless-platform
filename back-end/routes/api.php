@@ -126,7 +126,7 @@ Route::prefix('users')->group(function() {
     Route::get('/{userId}', 'UserController@get');
     Route::post('/', 'UserController@insert');
     Route::delete('/{userId}', 'UserController@delete');
-    Route::patch('/{userId}', 'UserController@patch');     
+    Route::patch('/patchProfile/{userId}', 'UserController@patchProfile');
 });
 
 Route::prefix('usersocials')->group(function() {

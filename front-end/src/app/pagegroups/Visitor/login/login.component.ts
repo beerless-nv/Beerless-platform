@@ -13,6 +13,7 @@ import {AuthService, FacebookLoginProvider, GoogleLoginProvider, LinkedinLoginPr
 })
 export class LoginComponent implements OnInit {
 
+    registrationSuccessful = false;
     isRegistrated = true;
     messageLogin;
     messageRegister;
@@ -31,6 +32,12 @@ export class LoginComponent implements OnInit {
         });
 
         this.formRegister = new FormGroup({
+            firstName: new FormControl('', [
+                Validators.required
+            ]),
+            lastName: new FormControl('', [
+                Validators.required
+            ]),
             username: new FormControl('', [
                 Validators.required,
                 Validators.minLength(3),
@@ -64,7 +71,11 @@ export class LoginComponent implements OnInit {
     }
 
     register() {
-        this.loginService.signUp(this.formRegister.value);
+        this.loginService.signUp(this.formRegister.value).then(data => {
+            if (data['success'] === true) {
+                this.registrationSuccessful = true;
+            }
+        });
     }
 
     socialLogin(socialPlatform: string) {

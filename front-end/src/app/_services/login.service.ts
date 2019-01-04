@@ -5,6 +5,7 @@ import {catchError, share, tap} from 'rxjs/operators';
 import {EMPTY, Observable, BehaviorSubject} from 'rxjs';
 import {User} from '../_interfaces/user';
 import {Router} from '@angular/router';
+import {ToastsService} from "./toasts.service";
 
 @Injectable({
     providedIn: 'root'
@@ -22,7 +23,7 @@ export class LoginService {
     messageRegister$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
     errorMessageArray = [];
 
-    constructor(private http: HttpClient, private router: Router) {
+    constructor(private http: HttpClient, private router: Router, private toastsService: ToastsService) {
         if (localStorage.getItem('user')) {
             this.userData$.next(JSON.parse(localStorage.getItem('user')));
         }
@@ -36,27 +37,31 @@ export class LoginService {
         })
             .toPromise()
             .then(data => {
+                this.toastsService.addToast('Ingelogd', 'Proficiat, u ben ingelogd!', 0);
                 localStorage.removeItem('user');
                 this.setUserData(data['user'].ID, data['token']);
             })
             .catch(error => {
-                console.log(error);
                 this.errorMessageArray = error.error['msg'];
-                for (let i = 0; i < this.errorMessageArray.length; i++) {
-                    switch (this.errorMessageArray[i]) {
-                        case 'username_required':
-                            this.errorMessageArray[i] = 'Vul een gebruikersnaam in!';
-                            break;
-                        case 'password_required':
-                            this.errorMessageArray[i] = 'Vul een wachtwoord in!';
-                            break;
-                        case 'user_does_not_exist':
-                            this.errorMessageArray[i] = 'Deze gebruikersnaam bestaat niet!';
-                            break;
-                        case 'password_incorrect':
-                            this.errorMessageArray[i] = 'Wachtwoord is fout!';
-                            break;
+                if (this.errorMessageArray != null) {
+                    for (let i = 0; i < this.errorMessageArray.length; i++) {
+                        switch (this.errorMessageArray[i]) {
+                            case 'username_required':
+                                this.errorMessageArray[i] = 'Vul een gebruikersnaam in!';
+                                break;
+                            case 'password_required':
+                                this.errorMessageArray[i] = 'Vul een wachtwoord in!';
+                                break;
+                            case 'user_does_not_exist':
+                                this.errorMessageArray[i] = 'Deze gebruikersnaam bestaat niet!';
+                                break;
+                            case 'password_incorrect':
+                                this.errorMessageArray[i] = 'Wachtwoord is fout!';
+                                break;
+                        }
                     }
+                } else {
+                    this.errorMessageArray = null;
                 }
                 this.messageLogin$.next(this.errorMessageArray);
 
@@ -73,32 +78,45 @@ export class LoginService {
         }, {headers: headers})
             .toPromise()
             .then(data => {
-                console.log(data);
+
                 return data;
             })
             .catch(error => {
                 this.errorMessageArray = error.error['msg'];
-                for (let i = 0; i < this.errorMessageArray.length; i++) {
-                    switch (this.errorMessageArray[i]) {
-                        case 'username_required':
-                            this.errorMessageArray[i] = 'Vul een gebruikersnaam in!';
-                            break;
-                        case 'username_not_unique':
-                            this.errorMessageArray[i] = 'Deze gebruikersnaam bestaat al!';
-                            break;
-                        case 'email_required':
-                            this.errorMessageArray[i] = 'Vul een e-mailadres in!';
-                            break;
-                        case 'email_not_valid':
-                            this.errorMessageArray[i] = 'Vul een geldig e-mailadres in!';
-                            break;
-                        case 'email_not_unique':
-                            this.errorMessageArray[i] = 'Dit e-mailadres is al in gebruik!';
-                            break;
-                        case 'password_required':
-                            this.errorMessageArray[i] = 'Vul een wachtwoord in!';
-                            break;
+                if (this.errorMessageArray != null) {
+                    for (let i = 0; i < this.errorMessageArray.length; i++) {
+                        switch (this.errorMessageArray[i]) {
+                            case 'firstName_required':
+                                this.errorMessageArray[i] = 'Vul een voornaam in!';
+                                break;
+                            case 'lastName_required':
+                                this.errorMessageArray[i] = 'Vul een achternaam in!';
+                                break;
+                            case 'username_required':
+                                this.errorMessageArray[i] = 'Vul een gebruikersnaam in!';
+                                break;
+                            case 'username_not_unique':
+                                this.errorMessageArray[i] = 'Deze gebruikersnaam bestaat al!';
+                                break;
+                            case 'email_required':
+                                this.errorMessageArray[i] = 'Vul een e-mailadres in!';
+                                break;
+                            case 'email_not_valid':
+                                this.errorMessageArray[i] = 'Vul een geldig e-mailadres in!';
+                                break;
+                            case 'email_not_unique':
+                                this.errorMessageArray[i] = 'Dit e-mailadres is al in gebruik!';
+                                break;
+                            case 'password_required':
+                                this.errorMessageArray[i] = 'Vul een wachtwoord in!';
+                                break;
+                            default:
+                                this.errorMessageArray[i] = error.error['msg'];
+                                break;
+                        }
                     }
+                } else {
+                    this.errorMessageArray = null;
                 }
                 this.messageRegister$.next(this.errorMessageArray);
             });
@@ -149,7 +167,6 @@ export class LoginService {
                     token: token,
                     socials: usersocial,
                 });
-                console.log(data['user']);
                 this.userData$.subscribe(userData => localStorage.setItem('user', JSON.stringify(userData)));
             });
         } else {
@@ -178,7 +195,6 @@ export class LoginService {
                                     picture: 'https://graph.facebook.com/' + user.id + '/picture?height=500'
                                 })
                                     .then(() => {
-                                        console.log('setUserData');
                                         this.setUserData(newUser.ID, '5');
                                     });
 

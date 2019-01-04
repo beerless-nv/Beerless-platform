@@ -184,7 +184,7 @@
 
         .stat {
           //background-color: $yellow;
-          border: 1px solid $primary;
+          border: 1px solid $muted;
           color: $primary;
           border-radius: 0.25rem;
           height: 45px;
@@ -196,8 +196,8 @@
 
           .stat-number-circle {
             background-color: #fff;
-            color: $grey-dark;
-            font-weight: bold;
+            color: $grey;
+            //font-weight: normal;
             border-radius: 50%;
             height: 30px;
             width: 30px;
@@ -214,6 +214,9 @@
               position: absolute;
               left: 11px;
             }
+          }
+          .icon-stats {
+            height: 20px;
           }
         }
       }

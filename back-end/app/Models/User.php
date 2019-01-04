@@ -9,28 +9,29 @@ class User extends Authenticatable
     protected $attributes = [
         'username' => '',
         'password' => '',
-        'firstname' => '',
-        'lastname' => '',
+        'firstName' => '',
+        'lastName' => '',
         'picture' => '',
         'bio' => '',
         'country' => '',
         'province' => '',
         'place' => '',
-        'totalPoints' => ''
+        'favouriteBeerID' => 0,
+        'totalPoints' => 0
     ];
     protected $fillable = [
         'username',
         'email',
         'password',
-        'firstname',
-        'lastname',
+        'firstName',
+        'lastName',
         'picture',
         'bio',
         'country',
         'province',
         'place',
         'totalPoints',
-        'favouriteBeer'
+        'favouriteBeerID'
     ];
     protected $dates = [];
     protected $hidden = ['password'];

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../../../../../_services/login.service';
+import {UserService} from "../../../../../_services/user.service";
 
 @Component({
     selector: 'app-settings-profile',
@@ -20,7 +21,7 @@ export class SettingsProfileComponent implements OnInit {
 
     passwordMatch = true;
 
-    constructor(private loginService: LoginService) {
+    constructor(private loginService: LoginService, private userService: UserService) {
     }
 
     ngOnInit() {
@@ -34,8 +35,8 @@ export class SettingsProfileComponent implements OnInit {
             username: new FormControl(this.user.username, [Validators.required, Validators.maxLength(255), Validators.minLength(3)]),
             email: new FormControl(this.user.email, [Validators.required, Validators.email]),
             picture: new FormControl(''),
-            firstName: new FormControl(this.user.firstName, [Validators.maxLength(255)]),
-            lastName: new FormControl(this.user.lastName, [Validators.maxLength(255)]),
+            firstName: new FormControl(this.user.firstName, [Validators.required, Validators.maxLength(255)]),
+            lastName: new FormControl(this.user.lastName, [Validators.required, Validators.maxLength(255)]),
             bio: new FormControl(this.user.bio, [Validators.maxLength(500)]),
         });
 
@@ -76,7 +77,15 @@ export class SettingsProfileComponent implements OnInit {
         }
     }
 
-    changePassword() {
+    updateProfile() {
+        this.userService.updateUserProfile(this.formProfile.value);
+    }
+
+    updateAddress() {
+
+    }
+
+    updatePassword() {
         if (this.formPassword.value.newPassword !== this.formPassword.value.repeatPassword) {
             this.passwordMatch = false;
         } else {

@@ -25,6 +25,7 @@ import {UsersModule} from './pagegroups/Member/users/users.module';
 import {WishlistUsersComponent} from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
 import {ProfileUsersComponent} from './pagegroups/Visitor/users/profile-users/profile-users.component';
 import {NavbarMobileComponent} from './sharedComponents/navbar-mobile/navbar-mobile.component';
+import { ToastComponent } from './sharedComponents/toast/toast.component';
 
 @NgModule({
     declarations: [
@@ -41,6 +42,7 @@ import {NavbarMobileComponent} from './sharedComponents/navbar-mobile/navbar-mob
         WishlistUsersComponent,
         ProfileUsersComponent,
         NavbarMobileComponent,
+        ToastComponent,
     ],
     imports: [
         BrowserModule,

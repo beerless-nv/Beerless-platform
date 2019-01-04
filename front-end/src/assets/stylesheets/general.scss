@@ -26,11 +26,23 @@ body {
 
 @include media-breakpoint-down(xs) {
   body {
-    font-size: 80% !important;
+    font-size: 90% !important;
 
     .small {
       font-size: 100% !important;
     }
+  }
+  input {
+    font-size: 100% !important;
+  }
+  button {
+    font-size: 100% !important;
+  }
+  a {
+    font-size: 100% !important;
+  }
+  select {
+    font-size: 100% !important;
   }
 }
 
@@ -256,6 +268,7 @@ input.input-dark {
 .blank-page {
   top: 0;
   z-index: 9990;
+  position: fixed;
 }
 
 //

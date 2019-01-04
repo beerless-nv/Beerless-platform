@@ -20,20 +20,23 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <h2 class="user-profile-name mb-lg-2 mb-1 d-lg-block d-none">{{user?.firstName}}
+                                        <h2 class="user-profile-name mb-1 d-lg-block d-none">{{user?.firstName}}
                                             {{user?.lastName}}
                                             <span class="badge badge-primary function-tag">18603</span>
                                         </h2>
-                                        <h4 class="user-profile-name mb-lg-2 mb-1 d-lg-none d-sm-block d-none">{{user?.firstName}}
+                                        <h4 class="user-profile-name d-lg-none d-sm-block d-none">{{user?.firstName}}
                                             {{user?.lastName}}
                                             <span class="badge badge-primary function-tag">18603</span>
                                         </h4>
-                                        <h5 class="user-profile-name mb-lg-2 mb-1 d-sm-none d-block">{{user?.firstName}}
+                                        <h5 class="user-profile-name d-sm-none d-block">{{user?.firstName}}
                                             {{user?.lastName}}
                                             <span class="badge badge-primary function-tag">18603</span>
                                         </h5>
-                                        <p class="text-white mb-3 d-sm-block d-none">{{user?.place}}, {{user?.province}},
-                                            {{user?.country}}</p>
+                                        <p class="text-white mb-3 mt-lg-2 mt-1 d-sm-block d-none" *ngIf="user?.place || user?.province || user?.country">
+                                            <span *ngIf="user?.place">{{user?.place}}</span>
+                                            <span *ngIf="user?.province">, {{user?.province}}</span>
+                                            <span *ngIf="user?.country">, {{user?.country}}</span>
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="mb-3 d-sm-block d-none">
@@ -58,7 +61,9 @@
                                                 <span class="badge badge-primary function-tag">18603</span>
                                             </h5>
                                             <p class="text-white mb-0 small d-sm-block d-none">
-                                                {{user?.place}}, {{user?.province}}, {{user?.country}}
+                                                <span *ngIf="user?.place">{{user?.place}}</span>
+                                                <span *ngIf="user?.province">, {{user?.province}}</span>
+                                                <span *ngIf="user?.country">, {{user?.country}}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -101,19 +106,22 @@
                         <p class="title">Stats</p>
                         <div class="d-flex flex-wrap justify-content-between">
                             <div class="stat">
-                                <i class="fas fa-beer"></i>
+                                <!--<i class="fas fa-beer"></i>-->
+                                <img src="/src/assets/images/beer-glass.svg" alt="" class="icon-stats">
                                 <div class="stat-number-circle">
                                     <div class="stat-number">85</div>
                                 </div>
                             </div>
                             <div class="stat">
-                                <i class="fas fa-warehouse"></i>
+                                <!--<i class="fas fa-warehouse"></i>-->
+                                <img src="/src/assets/images/brewery.svg" alt="" class="icon-stats">
                                 <div class="stat-number-circle">
                                     <div class="stat-number">6</div>
                                 </div>
                             </div>
                             <div class="stat">
-                                <i class="fas fa-file-alt"></i>
+                                <!--<i class="fas fa-file-alt"></i>-->
+                                <img src="/src/assets/images/article.svg" alt="" class="icon-stats">
                                 <div class="stat-number-circle">
                                     <div class="stat-number">999</div>
                                 </div>

@@ -177,7 +177,10 @@
   div.tab-content {
     background-color: white;
     width: 100%;
-    padding: 3rem 3rem !important;
+    padding: ($spacer*3) !important;
+    @include media-breakpoint-down(sm) {
+      padding: ($spacer * 1.25) !important;
+    }
     border: 1px solid $muted-light;
     border-top: none;
     border-radius: 0 0 0.25rem 0.25rem;

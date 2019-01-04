@@ -1,0 +1,17 @@
+<div class="toast-container d-flex justify-content-end">
+    <div class="toast-row">
+        <div class="card" [hidden]="!toast">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span class="d-flex flex-wrap align-items-center">
+                    <i class="fas fa-check title-icon bg-success" [hidden]="toast?.style != 0"></i>
+                    <i class="fas fa-exclamation title-icon bg-danger" [hidden]="toast?.style != 1"></i>
+                    {{ toast?.title }}
+                </span>
+                <i class="fas fa-times mouse-pointer" (click)="deleteToast()"></i>
+            </div>
+            <div class="card-body">
+                {{ toast?.content}}
+            </div>
+        </div>
+    </div>
+</div>

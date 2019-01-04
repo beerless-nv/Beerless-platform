@@ -30,8 +30,11 @@ class UserController extends Controller
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
         $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
-        if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
-        else {$sortOrder = null;}
+        if ($orderBy != null) {
+            $sortOrder[$orderBy[0]] = $orderBy[1];
+        } else {
+            $sortOrder = null;
+        }
 
         $limit = null;
         if ($request->query('limit') != null) {
@@ -100,11 +103,15 @@ class UserController extends Controller
     {
         // Validate incoming request
         $validator = Validator::make($request->all(), [
+            'inputObject.firstName' => 'required',
+            'inputObject.lastName' => 'required',
             'inputObject.username' => 'required|unique:user,username',
             'inputObject.email' => 'required|email|unique:user,email',
             'inputObject.password' => 'required'
         ],
             [
+                'inputObject.firstName' => 'firstName_required',
+                'inputObject.lastName' => 'lastName_required',
                 'inputObject.username.required' => 'username_required',
                 'inputObject.username.unique' => 'username_not_unique',
                 'inputObject.email.required' => 'email_required',
@@ -217,5 +224,72 @@ class UserController extends Controller
             'success' => true,
             'user' => $user
         ], 201);
+    }
+
+    /**
+     * Updates an item in table 'User'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'id'.
+     *
+     * PATCH /users/$userId
+     *
+     * @param Request $request
+     * @param integer $userId
+     * @return Response
+     */
+    public function patchProfile(Request $request, int $userId)
+    {
+        $user = $this->get($request, $userId);
+        $adjustedUsername = false;
+        if ($user->original['user']['username'] !== $request->updateObject['username']) {
+            $adjustedUsername = true;
+
+        } else if($user->original['user']['email'] !== $request->updateObject['email']) {
+            $adjustedEmail = true;
+        }
+
+        // Validate incoming request
+        $validator = Validator::make($request->updateObject, [
+            'username' => 'required',
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'email' => 'required',
+            'picture' => 'required'
+        ],
+            [
+                'username' => 'username_required',
+                'username.unique' => 'username_not_unique',
+                'firstName.required' => 'firstName_required',
+                'lastName.required' => 'lastName_required',
+                'email.required' => 'email_required',
+                'email.unique' => 'email_not_unique',
+                'email.unique' => 'email_not_unique',
+                'picture.required' => 'picture_required',
+            ]);
+
+        $validator->sometimes('username', 'unique:user,username', function($adjustedUsername) {
+            return $adjustedUsername;
+        });
+        $validator->sometimes('email', 'unique:user,email', function($adjustedEmail) {
+            return $adjustedEmail;
+        });
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'msg' => $validator->messages()->all()
+            ], 400);
+        }
+
+//        $updateArray = array();
+//        foreach ($request->input('updateArray') as $item) {
+//            if ($item['value'] != null)
+//            $updateArray[$item['propName']] = $item['value'];
+//        }
+//        $user = UserDataService::update($userId, $updateArray);
+        return response()->json([
+            'success' => true,
+            'user' => $user->original['user']['username']
+        ], 200);
     }
 }

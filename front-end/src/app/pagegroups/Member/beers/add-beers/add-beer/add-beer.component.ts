@@ -66,21 +66,6 @@ export class AddBeerComponent implements OnInit {
             season: new FormControl(0),
             since: new FormControl('')
         });
-        // this.form = new FormGroup({
-        //     name: new FormControl(this.beerName, Validators.required),
-        //     brewery: new FormControl(''),
-        //     beertype: new FormControl(0),
-        //     gisting: new FormControl(0),
-        //     omschrijving: new FormControl(''),
-        //     abv: new FormControl(''),
-        //     ibu: new FormControl(''),
-        //     logo: new FormControl(''),
-        //     image: new FormControl(''),
-        //     ebc: new FormControl(''),
-        //     temperatuur: new FormControl(''),
-        //     seizoen: new FormControl(0),
-        //     sinds: new FormControl('')
-        // });
     }
 
     //

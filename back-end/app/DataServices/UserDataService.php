@@ -85,7 +85,7 @@ class UserDataService
      * @param array $updateArray
      * @return User
      */
-    public static function update(int $userId ,array $updateArray)
+    public static function update(int $userId, array $updateArray)
     {
         $user = User::findOrFail($userId);
         foreach ($updateArray as $key => $value){

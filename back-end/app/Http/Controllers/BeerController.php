@@ -180,17 +180,7 @@ class BeerController extends Controller
         ], 204);
     }
 
-    /**
-     * Updates an item in table 'Beer'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'id' and 'name'.
-     * 
-     * PATCH /beers/$beerId
-     *
-     * @param Request $request
-     * @param integer $beerId
-     * @return void
-     */
+
     public function patch(Request $request, int $beerId)
     {
         $updateArray = array();
