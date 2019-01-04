@@ -16,10 +16,10 @@
                            (keyup.enter)="beer.blur()">
                     <i class="fas fa-search"></i>
                 </div>
-                <small class="text-grey font-italic mb-5 position-absolute" [ngbCollapse]="!beersList?.length">
+                <small class="text-grey font-italic mb-5 position-absolute" [ngbCollapse]="!beersListTotal">
                     <strong>
-                        {{ beersList?.length }} <span [ngbCollapse]="beersList?.length==1">resultaten</span>
-                        <span [ngbCollapse]="beersList?.length!=1">resultaat</span>
+                        {{ beersListTotal }} <span [ngbCollapse]="beersListTotal==1">resultaten</span>
+                        <span [ngbCollapse]="beersListTotal!=1">resultaat</span>
                     </strong> voor <strong>"{{beerName}}"</strong>
                 </small>
             </div>
@@ -36,29 +36,29 @@
         <div class="col-12 d-flex flex-wrap p-0">
             <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 py-5 d-flex flex-column">
                 <app-beer-item
-                        *ngFor="let beer of beersList | paginate: {itemsPerPage: 10, currentPage: page}; let i = index"
+                        *ngFor="let beer of beersList | paginate: {itemsPerPage: 10, currentPage: page, totalItems: beersListTotal}; let i = index"
                         [item]="beer"
                         [index]="i"
                 ></app-beer-item>
-                <div class="card mb-2" [hidden]="!beersList?.length">
+                <div class="card mb-2" [hidden]="!beersListTotal">
                     <div class="card-body p-4 text-center">
                         <strong>Het bier dat je zoekt niet gevonden? <a routerLink="/beers/add" [queryParams]="{name: beer.value}">Voeg het toe</a>.</strong>
                     </div>
                 </div>
-                <div class="card mb-2" [hidden]="beersList?.length">
+                <div class="card mb-2" [hidden]="beersListTotal">
                     <div class="card-body p-4 text-center">
-                        <strong [hidden]="beersList?.length || beer.value">
+                        <strong [hidden]="beersListTotal || beer.value">
                             Zoek een bier met de zoekbalk bovenaan.
                         </strong>
-                        <div [hidden]="beersList?.length || !beer.value">
+                        <div [hidden]="beersListTotal || !beer.value">
                             <p>We hebben geen bieren gevonden die overeenkomen met uw zoekterm "<strong>{{beerName}}</strong>".</p>
                             <p class="m-0">Zorg ervoor dat de naam van het bier juist is gespeld of voeg het bier toe.</p>
                         </div>
                     </div>
                 </div>
                 <div class="text-center mt-3">
-                    <pagination-controls (pageChange)="getPage($event)"
-                                         [autoHide]="!beersList?.length"
+                    <pagination-controls (pageChange)="setPage($event)"
+                                         [autoHide]="!beersListTotal"
                                          class="pagination-style"
                                          [ngbCollapse]="!beersList">
                     </pagination-controls>

@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {LocalStorageService} from './local-storage.service';
+import { ToastsService } from './toasts.service';
+import { PARAMETERS } from '@angular/core/src/util/decorators';
 
 @Injectable({
     providedIn: 'root'
@@ -15,7 +17,7 @@ export class BeersService {
     readonly urlGetBeersNewest = environment.backend + 'beers';
     readonly urlUploadImageBeer = environment.backend + 'beers/uploadImage';
 
-    constructor(private http: HttpClient, private localStorageService: LocalStorageService) {
+    constructor(private http: HttpClient, private localStorageService: LocalStorageService, private toastsService: ToastsService) {
     }
 
     getBeersByName(name, value) {
@@ -33,6 +35,50 @@ export class BeersService {
                 this.localStorageService.clearBeerSearchResults();
                 this.localStorageService.setBeerSearchResults(data['beers']);
             });
+    }
+
+    getBeersByNameCount(name, value) {
+        const params = new HttpParams()
+            .set('joinTables', 'beertype,brewery');
+
+        return this.http.post(this.urlGetBeersByName, {
+                searchParams : [{
+                    propName: name,
+                    value: value
+                }]
+            }, {params})
+            .toPromise()
+            .then(data => {
+                return data['beers'].length;
+            });
+    }
+
+    getBeersByNamePagination(name, value, limit, offset){        
+        var params;
+
+        if(offset !== 0){
+            params = new HttpParams()
+            .set('joinTables', 'beertype,brewery')
+            .set('limit', limit)
+            .set('offset', offset);
+        }else {
+            params = new HttpParams()
+            .set('joinTables', 'beertype,brewery')
+            .set('limit', limit);
+        }       
+
+
+        return this.http.post(this.urlGetBeersByName, {
+            searchParams : [{
+                propName: name,
+                value: value
+            }]
+        }, {params})
+        .toPromise()
+        .then(data => {
+            this.localStorageService.clearBeerSearchResults();
+            this.localStorageService.setBeerSearchResults(data['beers']);
+        })
     }
 
     getBeerById(id) {
@@ -64,7 +110,9 @@ export class BeersService {
             {
                 inputObject: beer
             })
-            .subscribe();
+            .subscribe(() => {
+                this.toastsService.addToast('Bevestiging', 'Het bier werd succesvol toegevoegd.', 0);
+            });
     }
 
     uploadImageBeer(selectedImage, imageName, imagePath) {

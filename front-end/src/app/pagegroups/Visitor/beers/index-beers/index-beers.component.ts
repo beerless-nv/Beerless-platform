@@ -12,6 +12,7 @@ import {LocalStorageService} from '../../../../_services/local-storage.service';
 export class IndexBeersComponent implements OnInit {
     loading = false;
     beersList;
+    beersListTotal;
     newestBeersList;
     beerName;
     beerNameOld;
@@ -43,16 +44,18 @@ export class IndexBeersComponent implements OnInit {
         if (this.beerName) {
             if (this.beerName !== this.beerNameOld) {
                 this.getPage(1);
-                this.beersService.getBeersByName('name', this.beerName)
+                this.beersService.getBeersByNamePagination('name', this.beerName, 10, (this.page-1)*10)
                     .then(data => {
                         this.beersList = this.localStorageService.getBeerSearchResults();
                     })
                     .then(() => {
                         this.beerNameOld = naam;
                     });
+                this.getCurrentBierCount();
             } else {
                 this.getPage(this.page);
                 this.beersList = this.localStorageService.getBeerSearchResults();
+                this.getCurrentBierCount();
             }
         } else {
             this.beersList = null;
@@ -70,9 +73,24 @@ export class IndexBeersComponent implements OnInit {
         }
     }
 
+    setPage(page){
+        this.beersService.getBeersByNamePagination('name', this.beerName, 10, (page-1)*10)
+            .then(() => {
+                this.getPage(page);
+                this.getBeersByName(this.beerName);
+            });        
+    }
+
     getPage(page) {
-        this.page = page;
+        this.page = page;  
         this.routeChange();
+    }
+
+    getCurrentBierCount(){
+        this.beersService.getBeersByNameCount('name', this.beerName)
+            .then(data => {
+                this.beersListTotal = data;
+            })
     }
 
     routeChange() {
