@@ -59,6 +59,7 @@ export class IndexBeersComponent implements OnInit {
             }
         } else {
             this.beersList = null;
+            this.beersListTotal = null;
             this.getPage(this.page);
         }
     }
