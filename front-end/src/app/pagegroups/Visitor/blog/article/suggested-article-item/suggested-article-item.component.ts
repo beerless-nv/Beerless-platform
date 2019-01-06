@@ -39,7 +39,6 @@ export class SuggestedArticleItemComponent implements OnInit {
     }
 
     loadArticle() {
-        // this.blogService.setActiveBlog(this.article);
         this.router.navigate(['/blog/article/' + this.article.slug]);
     }
 
