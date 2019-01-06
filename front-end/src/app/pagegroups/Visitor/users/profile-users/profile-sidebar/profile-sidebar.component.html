@@ -1,0 +1,59 @@
+    <div class="card shadow-lg" [class.user-sidebar-sticky]="sidebarSticky">
+        <div class="card-img-top d-lg-block d-none"
+             [style.background-image]="'url(' + (user?.picture || user?.usersocial[0].picture) + ')'"></div>
+        <div class="card-body">
+            <div class="text-grey small d-sm-none d-block">
+                <p class="font-weight-bold mb-0">
+                    {{user?.firstName}} {{user?.lastName}}
+                </p>
+                <p>
+                    {{user?.place}}, {{user?.province}}, {{user?.country}}
+                </p>
+            </div>
+            <div class="mt-1 mb-4 stats">
+                <p class="title">Stats</p>
+                <div class="d-flex flex-wrap justify-content-between">
+                    <div class="stat">
+                        <!--<i class="fas fa-beer"></i>-->
+                        <img src="/src/assets/images/beer-glass.svg" alt="" class="icon-stats">
+                        <div class="stat-number-circle">
+                            <div class="stat-number">85</div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <!--<i class="fas fa-warehouse"></i>-->
+                        <img src="/src/assets/images/brewery.svg" alt="" class="icon-stats">
+                        <div class="stat-number-circle">
+                            <div class="stat-number">6</div>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <!--<i class="fas fa-file-alt"></i>-->
+                        <img src="/src/assets/images/article.svg" alt="" class="icon-stats">
+                        <div class="stat-number-circle">
+                            <div class="stat-number">999</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bio">
+                <p class="title">Over {{user?.firstName}}</p>
+                <p class="small bio-text">
+                    {{user?.bio | slice: 0:limit}}
+                    <span [hidden]="moreShown">...</span>
+                    <a [hidden]="moreShown" href
+                       (click)="limit=user?.bio.length; moreShown = true; $event.preventDefault()"
+                       class="ml-2 font-weight-bold"> Toon meer</a>
+                    <a [hidden]="!moreShown" href (click)="limit=120; moreShown = false"
+                       class="ml-2 font-weight-bold"> Toon minder</a>
+                </p>
+            </div>
+            <div class="d-sm-none d-block text-center mt-3">
+                <a routerLink="" class="btn btn-outline-primary btn-small">
+                    <small class="p-0">
+                        <i class="fas fa-user-plus mr-md-2 mr-1 ml-1"></i> Vriend toevoegen
+                    </small>
+                </a>
+            </div>
+        </div>
+    </div>

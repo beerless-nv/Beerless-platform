@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {LocalStorageService} from './local-storage.service';
-import { ToastsService } from './toasts.service';
-import { PARAMETERS } from '@angular/core/src/util/decorators';
+import {ToastsService} from './toasts.service';
+import {PARAMETERS} from '@angular/core/src/util/decorators';
 
 @Injectable({
     providedIn: 'root'
@@ -25,15 +25,15 @@ export class BeersService {
             .set('joinTables', 'beertype,brewery');
 
         return this.http.post(this.urlGetBeersByName, {
-                searchParams : [{
-                    propName: name,
-                    value: value
-                }]
-            }, {params})
+            searchParams: [{
+                propName: name,
+                value: value
+            }]
+        }, {params})
             .toPromise()
             .then(data => {
                 this.localStorageService.clearBeerSearchResults();
-                this.localStorageService.setBeerSearchResults(data['beers']);
+                // this.localStorageService.setBeerSearchResults(data['beers']);
             });
     }
 
@@ -42,43 +42,43 @@ export class BeersService {
             .set('joinTables', 'beertype,brewery');
 
         return this.http.post(this.urlGetBeersByName, {
-                searchParams : [{
-                    propName: name,
-                    value: value
-                }]
-            }, {params})
+            searchParams: [{
+                propName: name,
+                value: value
+            }]
+        }, {params})
             .toPromise()
             .then(data => {
                 return data['beers'].length;
             });
     }
 
-    getBeersByNamePagination(name, value, limit, offset){        
-        var params;
+    getBeersByNamePagination(name, value, limit, offset) {
+        let params;
 
-        if(offset !== 0){
+        if (offset !== 0) {
             params = new HttpParams()
-            .set('joinTables', 'beertype,brewery')
-            .set('limit', limit)
-            .set('offset', offset);
-        }else {
+                .set('joinTables', 'beertype,brewery')
+                .set('limit', limit)
+                .set('offset', offset);
+        } else {
             params = new HttpParams()
-            .set('joinTables', 'beertype,brewery')
-            .set('limit', limit);
-        }       
+                .set('joinTables', 'beertype,brewery')
+                .set('limit', limit);
+        }
 
 
         return this.http.post(this.urlGetBeersByName, {
-            searchParams : [{
+            searchParams: [{
                 propName: name,
-                value: value
+                value: value,
             }]
         }, {params})
-        .toPromise()
-        .then(data => {
-            this.localStorageService.clearBeerSearchResults();
-            this.localStorageService.setBeerSearchResults(data['beers']);
-        })
+            .toPromise()
+            .then(data => {
+                this.localStorageService.clearBeerSearchResults();
+                this.localStorageService.setBeerSearchResults(value, (offset / 10) + 1, data['beers']);
+            });
     }
 
     getBeerById(id) {

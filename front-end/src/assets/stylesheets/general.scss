@@ -63,6 +63,11 @@ a.btn {
   padding: 0.4rem !important;
 }
 
+.btn-hover-opacity-50:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
 //input {
 //  border-color: $muted-light !important;
 //  color: $dark !important;

@@ -1,22 +1,3 @@
-<!--&lt;!&ndash; SIDE NAVIGATION &ndash;&gt;-->
-<!--<div class="position-fixed bg-white sidenav navbar-light shadow-lg py-4" [ngbCollapse]="isCollapsed"-->
-<!--(click)="isCollapsed = !isCollapsed">-->
-<!--<div class="navbar-nav ml-4">-->
-<!--<a class="nav-item nav-link" routerLink="/home" routerLinkActive="active">Home</a>-->
-<!--<a class="nav-item nav-link" routerLink="/beers" routerLinkActive="active">Bieren</a>-->
-<!--<a class="nav-item nav-link" routerLink="/brouwerijen" routerLinkActive="active">Brouwerijen</a>-->
-<!--<a class="nav-item nav-link" routerLink="/blog" routerLinkActive="active">Blog</a>-->
-<!--</div>-->
-<!--<div class="divider my-4"></div>-->
-<!--<div class="navbar-nav ml-4">-->
-<!--<a class="nav-item nav-link" routerLink="/login" routerLinkActive="active"><i-->
-<!--class="fas fa-user-circle mr-2"></i> Log in</a>-->
-<!--<a class="nav-item nav-link" routerLink="/help" routerLinkActive="active"><i class="fas fa-question mr-2"></i>-->
-<!--Help</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="sidenav-overlay position-fixed" [ngbCollapse]="isCollapsed" (click)="isCollapsed = !isCollapsed"></div>-->
-
 <!-- MAIN NAVIGATION -->
 <nav class="navbar navbar-expand-lg navbar-light px-4 py-0 bg-white fixed-top">
     <a class="navbar-brand ml-2" routerLink="/home"><img src="/src/assets/images/logo_beerless_donker.svg" alt=""
@@ -32,7 +13,7 @@
             <div class="navbar-nav position-relative d-flex align-items-center">
                 <a class="nav-item nav-link nav-link-padding" routerLink="/home" routerLinkActive="active">Home</a>
                 <a class="nav-item nav-link nav-link-padding" routerLink="/beers" routerLinkActive="active">Bieren</a>
-                <a class="nav-item nav-link nav-link-padding" routerLink="/brouwerijen" routerLinkActive="active">Brouwerijen</a>
+                <!--<a class="nav-item nav-link nav-link-padding" routerLink="/brouwerijen" routerLinkActive="active">Brouwerijen</a>-->
                 <a class="nav-item nav-link nav-link-padding" routerLink="/blog" routerLinkActive="active">Blog</a>
                 <div class="nav-divider"></div>
             </div>
@@ -52,8 +33,8 @@
                         <div class="nav-submenu">
                             <a class="nav-item nav-link nav-link-padding" routerLink="/user/profile/{{user.ID}}"
                                routerLinkActive="active">Profiel</a>
-                            <a class="nav-item nav-link nav-link-padding" routerLink="/user/wishlist/{{user.ID}}"
-                               routerLinkActive="active">Wishlist</a>
+                            <!--<a class="nav-item nav-link nav-link-padding" routerLink="/user/wishlist/{{user.ID}}"-->
+                               <!--routerLinkActive="active">Wishlist</a>-->
                             <a class="nav-item nav-link nav-link-padding" routerLink="/user/settings"
                                routerLinkActive="active">Instellingen</a>
                             <a class="nav-item nav-link nav-link-padding" (click)="logout()" routerLinkActive="active">Uitloggen</a>

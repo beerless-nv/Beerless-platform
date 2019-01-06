@@ -1,7 +1,7 @@
 <div class="container py-5">
     <div class="col-12 px-0 d-flex flex-wrap">
         <div class="article-image position-relative"
-             style="background-image: url('/src/assets/images/artikel_1.jpeg');">
+             [style.background-image]="'url(' + environment.articlePictureURL + article?.picture + ')'">
             <div class="article-share-container">
                 <small>
                     Delen <a href="" class="link-white-yellow ml-1"><i class="fab fa-twitter"></i></a>

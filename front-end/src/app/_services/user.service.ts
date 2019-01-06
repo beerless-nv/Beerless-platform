@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {LoginService} from "./login.service";
+import {LoginService} from './login.service';
+import {ToastsService} from './toasts.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,7 +12,7 @@ export class UserService {
     private readonly URLUsers = environment.backend + 'users';
     userId: number;
 
-    constructor(private http: HttpClient, private loginService: LoginService) {
+    constructor(private http: HttpClient, private loginService: LoginService, private toastsService: ToastsService) {
     }
 
     getUserById(userId) {
@@ -24,31 +25,6 @@ export class UserService {
         this.loginService.userData$.subscribe(data => this.userId = data.ID);
 
         return this.http.patch(this.URLUsers + '/patchProfile/' + this.userId, {
-            // updateArray: [{
-            //         propName: 'username',
-            //         value: user.username
-            //     },
-            //     {
-            //         propName: 'email',
-            //         value: user.email
-            //     },
-            //     {
-            //         propName: 'firstName',
-            //         value: user.firstName
-            //     },
-            //     {
-            //         propName: 'lastName',
-            //         value: user.lastName
-            //     },
-            //     {
-            //         propName: 'picture',
-            //         value: user.picture
-            //     },
-            //     {
-            //         propName: 'bio',
-            //         value: user.bio
-            //     },
-            // ]
             updateObject: {
                 username: user.username,
                 email: user.email,
@@ -60,10 +36,46 @@ export class UserService {
         })
             .toPromise()
             .then(data => {
-                console.log('user', data['user']);
+                this.loginService.userData$.next(data['user']);
+                this.toastsService.addToast('Profiel gewijzigd', 'Je profiel is bijgewerkt!', 0);
             })
             .catch(error => {
                 console.log('error', error);
+            });
+    }
+
+    updateUserAddress(user) {
+        this.loginService.userData$.subscribe(data => this.userId = data.ID);
+
+        return this.http.patch(this.URLUsers + '/patchAddress/' + this.userId, {
+            updateObject: {
+                country: user.country,
+                province: user.province,
+                place: user.place,
+            }
+        })
+            .toPromise()
+            .then(data => {
+                this.loginService.userData$.next(data['user']);
+                this.toastsService.addToast('Profiel gewijzigd', 'Je profiel is bijgewerkt!', 0);
+            })
+            .catch(error => {
+                console.log('error', error);
+            });
+    }
+
+    uploadPicture(selectedPicture, pictureName, picturePath) {
+        const uploadData = new FormData();
+        uploadData.append('picture', selectedPicture);
+        uploadData.append('pictureName', pictureName);
+        uploadData.append('picturePath', picturePath);
+
+        console.log(uploadData);
+
+        this.http.post(this.URLUsers + '/uploadPicture', uploadData)
+            .toPromise()
+            .then(data => {
+                return data;
             });
     }
 }

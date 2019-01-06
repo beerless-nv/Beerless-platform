@@ -8,17 +8,12 @@ import {ActivatedRoute, Router} from '@angular/router';
     styles: []
 })
 export class ProfileUsersComponent implements OnInit {
-
     userId;
     user;
-    backgroundPictureSrc = './src/assets/images/beer-background.jpg';
-
-    limit = 120;
-    moreShown = false;
 
     sidebarSticky = false;
     sidebarTopMargin = false;
-    coverTopMargin = false;
+
 
     constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) {
     }
@@ -41,11 +36,5 @@ export class ProfileUsersComponent implements OnInit {
         this.sidebarSticky = window.pageYOffset > 80;
 
         this.sidebarTopMargin = window.pageYOffset > 300;
-
-        if (window.innerWidth > 992) {
-            this.coverTopMargin = window.pageYOffset > 180;
-        } else {
-            this.coverTopMargin = window.pageYOffset > 30;
-        }
     }
 }

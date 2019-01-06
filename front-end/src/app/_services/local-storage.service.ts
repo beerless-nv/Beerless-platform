@@ -19,8 +19,8 @@ export class LocalStorageService {
 
     // BeerSearchResults
 
-    setBeerSearchResults(data) {
-        localStorage.setItem(this.storageNameBeerSearchResults, JSON.stringify(data));
+    setBeerSearchResults(name, page, data) {
+        localStorage.setItem(this.storageNameBeerSearchResults, JSON.stringify({search_term: name, page: page, search_result: data}));
     }
 
     getBeerSearchResults() {

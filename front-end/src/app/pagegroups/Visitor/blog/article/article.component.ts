@@ -4,6 +4,7 @@ import {ArticleService} from 'src/app/_services/article.service';
 import {ArticletagService} from 'src/app/_services/articletag.service';
 import {TagService} from 'src/app/_services/tag.service';
 import {BlogService} from 'src/app/_services/blog.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
     selector: 'app-article',
@@ -16,6 +17,7 @@ export class ArticleComponent implements OnInit {
     article;
     firsttag;
     otherArticles = Array();
+    environment = environment;
 
     constructor(private route: ActivatedRoute, private articleService: ArticleService, private articletagService: ArticletagService, private tagService: TagService, public blogService: BlogService, private router: Router) {
     }
@@ -24,23 +26,27 @@ export class ArticleComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             this.slug = params.get('slug');
 
-            this.articleService.getArticleBySlug(this.slug).then(data => {
-                this.article = data[0];
+            this.articleService.getArticleBySlug(this.slug)
+                .then(data => {
+                    this.article = data[0];
 
-                this.articletagService.getWhereArticleID(this.article.ID).then(articletags => {
-                    if (articletags[0] != null) {
-                        this.tagService.getTagById(articletags[0].tagID).then(tag => {
-                            this.firsttag = tag;
+                    this.setOtherArticles();
+
+                    this.articletagService.getWhereArticleID(this.article.ID)
+                        .then(articletags => {
+                            if (articletags[0] != null) {
+                                this.tagService.getTagById(articletags[0].tagID)
+                                    .then(tag => {
+                                        this.firsttag = tag;
+                                    });
+                            }
                         });
-                    }
                 });
-            });
         });
-
-        this.setOtherArticles();
     }
 
     setOtherArticles() {
+        this.otherArticles = Array();
         let tempArray;
         this.articleService.getAllRecentArticles().then(data => {
             tempArray = data['articles'];

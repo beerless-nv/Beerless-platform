@@ -118,8 +118,10 @@ Route::prefix('beertypes')->group(function() {
 });
 
 Route::prefix('users')->group(function() {
-    Route::post('/signUp', 'UserController@signUp');  
-    Route::post('/signIn', 'UserController@signIn'); 
+    Route::post('/uploadPicture', 'UserController@uploadPicture');
+
+    Route::post('/signUp', 'UserController@signUp');
+    Route::post('/signIn', 'UserController@signIn');
     Route::post('/search', 'UserController@search');
 
     Route::get('/', 'UserController@getAll');   
@@ -127,6 +129,7 @@ Route::prefix('users')->group(function() {
     Route::post('/', 'UserController@insert');
     Route::delete('/{userId}', 'UserController@delete');
     Route::patch('/patchProfile/{userId}', 'UserController@patchProfile');
+    Route::patch('/patchAddress/{userId}', 'UserController@patchAddress');
 });
 
 Route::prefix('usersocials')->group(function() {

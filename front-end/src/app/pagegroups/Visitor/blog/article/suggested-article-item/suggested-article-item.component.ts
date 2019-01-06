@@ -3,7 +3,8 @@ import {ArticletagService} from 'src/app/_services/articletag.service';
 import {TagService} from 'src/app/_services/tag.service';
 import {ArticleService} from 'src/app/_services/article.service';
 import {BlogService} from 'src/app/_services/blog.service';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
+import {environment} from '../../../../../../environments/environment';
 
 @Component({
     selector: 'app-suggested-article-item',
@@ -14,6 +15,7 @@ export class SuggestedArticleItemComponent implements OnInit {
 
     @Input() article: any;
     firsttag;
+    environment = environment;
 
     constructor(private articletagService: ArticletagService, private tagService: TagService, private articleService: ArticleService, private blogService: BlogService, private router: Router) {
     }

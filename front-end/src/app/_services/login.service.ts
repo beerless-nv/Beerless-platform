@@ -151,23 +151,13 @@ export class LoginService {
                     };
                 }
 
-                let socialpicture;
+                // let socialpicture;
                 if (user.usersocial.length > 0) {
-                    socialpicture = usersocial[0].picture;
+                    user.picture = usersocial[0].picture;
                 }
 
-                this.userData$.next({
-                    ID: user.ID,
-                    username: user.username,
-                    firstName: user.firstName,
-                    lastName: user.lastName,
-                    email: user.email,
-                    picture: user.picture || socialpicture,
-                    usertype: user.userType,
-                    token: token,
-                    socials: usersocial,
-                });
-                this.userData$.subscribe(userData => localStorage.setItem('user', JSON.stringify(userData)));
+                this.userData$.next(user);
+                localStorage.setItem('user', JSON.stringify(user));
             });
         } else {
             this.userData$.next(null);

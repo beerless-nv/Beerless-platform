@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../../../../../_services/login.service';
 import {UserService} from "../../../../../_services/user.service";
+import {environment} from "../../../../../../environments/environment";
 
 @Component({
     selector: 'app-settings-profile',
@@ -18,6 +19,7 @@ export class SettingsProfileComponent implements OnInit {
 
     user;
     pictureSrc;
+    pictureFile;
 
     passwordMatch = true;
 
@@ -27,23 +29,43 @@ export class SettingsProfileComponent implements OnInit {
     ngOnInit() {
         this.loginService.userData$.subscribe(data => {
             this.user = data;
-            console.log(this.user);
         });
 
         // forms
         this.formProfile = new FormGroup({
-            username: new FormControl(this.user.username, [Validators.required, Validators.maxLength(255), Validators.minLength(3)]),
-            email: new FormControl(this.user.email, [Validators.required, Validators.email]),
+            username: new FormControl(this.user.username, [
+                Validators.required,
+                Validators.maxLength(255),
+                Validators.minLength(3)
+            ]),
+            email: new FormControl(this.user.email, [
+                Validators.required,
+                Validators.email
+            ]),
             picture: new FormControl(''),
-            firstName: new FormControl(this.user.firstName, [Validators.required, Validators.maxLength(255)]),
-            lastName: new FormControl(this.user.lastName, [Validators.required, Validators.maxLength(255)]),
-            bio: new FormControl(this.user.bio, [Validators.maxLength(500)]),
+            firstName: new FormControl(this.user.firstName, [
+                Validators.required,
+                Validators.maxLength(255)
+            ]),
+            lastName: new FormControl(this.user.lastName, [
+                Validators.required,
+                Validators.maxLength(255)
+            ]),
+            bio: new FormControl(this.user.bio, [
+                Validators.maxLength(500)
+            ]),
         });
 
         this.formAddress = new FormGroup({
-            place: new FormControl('', [Validators.maxLength(255)]),
-            province: new FormControl('', [Validators.maxLength(255)]),
-            country: new FormControl('', [Validators.maxLength(255)]),
+            place: new FormControl(this.user.place, [
+                Validators.maxLength(255)
+            ]),
+            province: new FormControl(this.user.province, [
+                Validators.maxLength(255)
+            ]),
+            country: new FormControl(this.user.country, [
+                Validators.maxLength(255)
+            ]),
         });
 
         this.formPassword = new FormGroup({
@@ -68,21 +90,37 @@ export class SettingsProfileComponent implements OnInit {
 
     showProfilePicture(event) {
         if (event.target.files && event.target.files[0]) {
-            const file = event.target.files[0];
+            this.pictureFile = event.target.files[0];
 
             const reader = new FileReader();
             reader.onload = e => this.pictureSrc = reader.result;
 
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(this.pictureFile);
         }
     }
 
+    // update profile
+
+    onUpload(selectedPicture, pictureName, picturePath) {
+        console.log(pictureName);
+        console.log(selectedPicture);
+        this.userService.uploadPicture(selectedPicture, pictureName, picturePath);
+    }
+
     updateProfile() {
+        if (this.formProfile.value.picture === '') {
+            this.formProfile.value.picture = this.user.picture;
+        } else {
+            const pictureName = 'picture-user-' + this.user.ID + '.jpg';
+            this.onUpload(this.pictureFile, pictureName, '/user/picture/');
+            this.formProfile.value.picture = environment.userPictureURL + pictureName;
+        }
+
         this.userService.updateUserProfile(this.formProfile.value);
     }
 
     updateAddress() {
-
+        this.userService.updateUserAddress(this.formAddress.value);
     }
 
     updatePassword() {

@@ -12,7 +12,7 @@
                 <div class="form-group mb-1 input-icon">
                     <input type="text" class="form-control" placeholder="Zoek een bier" value="{{beerName}}"
                            #beer
-                           (blur)="getBeersByName(beer.value)"
+                           (blur)="routeChange(beer.value, 1)"
                            (keyup.enter)="beer.blur()">
                     <i class="fas fa-search"></i>
                 </div>
@@ -36,7 +36,7 @@
         <div class="col-12 d-flex flex-wrap p-0">
             <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 py-5 d-flex flex-column">
                 <app-beer-item
-                        *ngFor="let beer of beersList | paginate: {itemsPerPage: 10, currentPage: page, totalItems: beersListTotal}; let i = index"
+                        *ngFor="let beer of beersList?.search_result | paginate: {itemsPerPage: 10, currentPage: page, totalItems: beersListTotal}; let i = index"
                         [item]="beer"
                         [index]="i"
                 ></app-beer-item>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="text-center mt-3">
-                    <pagination-controls (pageChange)="setPage($event)"
+                    <pagination-controls (pageChange)="getPage($event)"
                                          [autoHide]="!beersListTotal"
                                          class="pagination-style"
                                          [ngbCollapse]="!beersList">

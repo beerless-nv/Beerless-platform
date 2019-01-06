@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use Tymon\JWTAuth\Facades\JWTFactory;
 
 use App\Models\User;
 use App\DataServices\UserDataService;
@@ -239,12 +239,13 @@ class UserController extends Controller
      */
     public function patchProfile(Request $request, int $userId)
     {
-        $user = $this->get($request, $userId);
         $adjustedUsername = false;
-        if ($user->original['user']['username'] !== $request->updateObject['username']) {
+        $adjustedEmail = false;
+        $userOriginal = $this->get($request, $userId);
+        if ($userOriginal->original['user']['username'] !== $request->updateObject['username']) {
             $adjustedUsername = true;
 
-        } else if($user->original['user']['email'] !== $request->updateObject['email']) {
+        } else if ($userOriginal->original['user']['email'] !== $request->updateObject['email']) {
             $adjustedEmail = true;
         }
 
@@ -254,7 +255,6 @@ class UserController extends Controller
             'firstName' => 'required',
             'lastName' => 'required',
             'email' => 'required',
-            'picture' => 'required'
         ],
             [
                 'username' => 'username_required',
@@ -263,14 +263,12 @@ class UserController extends Controller
                 'lastName.required' => 'lastName_required',
                 'email.required' => 'email_required',
                 'email.unique' => 'email_not_unique',
-                'email.unique' => 'email_not_unique',
-                'picture.required' => 'picture_required',
             ]);
 
-        $validator->sometimes('username', 'unique:user,username', function($adjustedUsername) {
+        $validator->sometimes('username', 'unique:user,username', function () use ($adjustedUsername) {
             return $adjustedUsername;
         });
-        $validator->sometimes('email', 'unique:user,email', function($adjustedEmail) {
+        $validator->sometimes('email', 'unique:user,email', function () use ($adjustedEmail) {
             return $adjustedEmail;
         });
 
@@ -281,15 +279,36 @@ class UserController extends Controller
             ], 400);
         }
 
-//        $updateArray = array();
-//        foreach ($request->input('updateArray') as $item) {
-//            if ($item['value'] != null)
-//            $updateArray[$item['propName']] = $item['value'];
-//        }
-//        $user = UserDataService::update($userId, $updateArray);
+        $user = UserDataService::update($userId, $request->updateObject);
+
         return response()->json([
             'success' => true,
-            'user' => $user->original['user']['username']
+            'user' => $user
         ], 200);
+    }
+
+    public function patchAddress(Request $request, int $userId)
+    {
+        $user = UserDataService::update($userId, $request->updateObject);
+
+        return response()->json([
+            'success' => true,
+            'user' => $user
+        ], 200);
+    }
+
+    /**
+     * Loads image to server
+     *
+     * @param Request $request
+     */
+    public function uploadPicture(Request $request)
+    {
+        $image = $request->file('picture');
+        $imageName = $request->input('picturePath') . $request->input('pictureName');
+
+        if ($image) {
+            Storage::disk('ftp')->put($imageName, File::get($image));
+        }
     }
 }

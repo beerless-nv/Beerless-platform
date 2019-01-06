@@ -26,7 +26,7 @@ export class ArticleService {
     getAllRecentArticles() {
         const params = new HttpParams()
             .set('orderBy', 'timestampCreated.desc')
-            .set('limit', '10');
+            .set('limit', '3');
 
         return this.http.get(this.urlGetAllArticles, {params})
             .toPromise()

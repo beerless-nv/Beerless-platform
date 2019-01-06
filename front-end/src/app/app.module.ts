@@ -25,7 +25,11 @@ import {UsersModule} from './pagegroups/Member/users/users.module';
 import {WishlistUsersComponent} from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
 import {ProfileUsersComponent} from './pagegroups/Visitor/users/profile-users/profile-users.component';
 import {NavbarMobileComponent} from './sharedComponents/navbar-mobile/navbar-mobile.component';
-import { ToastComponent } from './sharedComponents/toast/toast.component';
+import {ToastComponent} from './sharedComponents/toast/toast.component';
+import {ProfileCoverComponent} from './pagegroups/Visitor/users/profile-users/profile-cover/profile-cover.component';
+import { ProfileSidebarComponent } from './pagegroups/Visitor/users/profile-users/profile-sidebar/profile-sidebar.component';
+import { ProfileFavouriteComponent } from './pagegroups/Visitor/users/profile-users/profile-favourite/profile-favourite.component';
+import { ProfileActivitiesComponent } from './pagegroups/Visitor/users/profile-users/profile-activities/profile-activities.component';
 
 @NgModule({
     declarations: [
@@ -43,6 +47,10 @@ import { ToastComponent } from './sharedComponents/toast/toast.component';
         ProfileUsersComponent,
         NavbarMobileComponent,
         ToastComponent,
+        ProfileCoverComponent,
+        ProfileSidebarComponent,
+        ProfileFavouriteComponent,
+        ProfileActivitiesComponent,
     ],
     imports: [
         BrowserModule,
