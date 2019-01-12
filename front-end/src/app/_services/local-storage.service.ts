@@ -9,6 +9,7 @@ export class LocalStorageService {
     private readonly storageNameBeerSearchResults = 'BeerSearchResults';
     private readonly storageNameNewestBeers = 'NewestBeers';
     private readonly storageNameToasts = 'Notification';
+    private readonly storageNameUser = 'User';
 
     constructor() {
     }
@@ -63,6 +64,24 @@ export class LocalStorageService {
 
     clearToast() {
         localStorage.removeItem(this.storageNameToasts);
+    }
+
+
+    //
+    // localStorage for users
+    //
+
+    setUser(data) {
+        localStorage.setItem(this.storageNameUser, JSON.stringify(data));
+    }
+
+    getUser() {
+        const data = localStorage.getItem(this.storageNameUser);
+        return JSON.parse(data);
+    }
+
+    clearUser() {
+        localStorage.removeItem(this.storageNameUser);
     }
 
 

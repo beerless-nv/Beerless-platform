@@ -14,19 +14,15 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h2 class="user-profile-name mb-1 d-lg-block d-none">{{user?.firstName}}
-                                        {{user?.lastName}}
-                                        <span class="badge badge-primary function-tag">18603</span>
-                                    </h2>
                                     <h4 class="user-profile-name d-lg-none d-sm-block d-none">{{user?.firstName}}
                                         {{user?.lastName}}
-                                        <span class="badge badge-primary function-tag">18603</span>
+                                        <span class="badge badge-primary function-tag">{{user?.totalPoints}}</span>
                                     </h4>
                                     <h5 class="user-profile-name d-sm-none d-block">{{user?.firstName}}
                                         {{user?.lastName}}
-                                        <span class="badge badge-primary function-tag">18603</span>
+                                        <span class="badge badge-primary function-tag">user?.totalPoints</span>
                                     </h5>
-                                    <p class="text-white mb-3 mt-lg-2 mt-1 d-sm-block d-none"
+                                    <p class="text-white mb-3 mt-lg-2 mt-1 d-lg-none d-sm-block d-none"
                                        *ngIf="user?.place || user?.province || user?.country">
                                         <span *ngIf="user?.place">{{user?.place}}</span>
                                         <span *ngIf="user?.province">, {{user?.province}}</span>

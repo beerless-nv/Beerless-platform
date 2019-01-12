@@ -13,7 +13,7 @@ import {HeroSubscribeComponent} from './pagegroups/Visitor/home/hero/hero-subscr
 import {HomeModule} from './pagegroups/Visitor/home/home.module';
 import {FooterComponent} from './sharedComponents/footer/footer.component';
 import {BeersModule} from './pagegroups/Member/beers/beers.module';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LoginModule} from './pagegroups/Visitor/login/login.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -27,9 +27,10 @@ import {ProfileUsersComponent} from './pagegroups/Visitor/users/profile-users/pr
 import {NavbarMobileComponent} from './sharedComponents/navbar-mobile/navbar-mobile.component';
 import {ToastComponent} from './sharedComponents/toast/toast.component';
 import {ProfileCoverComponent} from './pagegroups/Visitor/users/profile-users/profile-cover/profile-cover.component';
-import { ProfileSidebarComponent } from './pagegroups/Visitor/users/profile-users/profile-sidebar/profile-sidebar.component';
-import { ProfileFavouriteComponent } from './pagegroups/Visitor/users/profile-users/profile-favourite/profile-favourite.component';
-import { ProfileActivitiesComponent } from './pagegroups/Visitor/users/profile-users/profile-activities/profile-activities.component';
+import {ProfileSidebarComponent} from './pagegroups/Visitor/users/profile-users/profile-sidebar/profile-sidebar.component';
+import {ProfileFavouriteComponent} from './pagegroups/Visitor/users/profile-users/profile-favourite/profile-favourite.component';
+import {ProfileActivitiesComponent} from './pagegroups/Visitor/users/profile-users/profile-activities/profile-activities.component';
+import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 
 @NgModule({
     declarations: [
@@ -65,8 +66,13 @@ import { ProfileActivitiesComponent } from './pagegroups/Visitor/users/profile-u
         ReactiveFormsModule,
         BlogModule,
         UsersModule,
+        LoadingBarHttpClientModule
     ],
-    providers: [],
+    providers: [{
+        provide: HTTP_INTERCEPTORS,
+        useClass: AppComponent,
+        multi: true
+    }],
     bootstrap: [AppComponent]
 })
 export class AppModule {

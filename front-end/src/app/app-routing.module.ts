@@ -12,6 +12,8 @@ import {SettingsUsersComponent} from './pagegroups/Member/users/settings-users/s
 import {ProfileUsersComponent} from './pagegroups/Visitor/users/profile-users/profile-users.component';
 import {WishlistUsersComponent} from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
 import {AuthGuardService} from './_services/authorization/auth-guard.service';
+import {BeersService} from './_services/beers.service';
+import {BeerSearchResolverService} from './_resolvers/beer-search-resolver.service';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
@@ -49,6 +51,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
+    providers: [BeerSearchResolverService],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

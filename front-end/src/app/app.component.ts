@@ -1,20 +1,28 @@
-import {Component, ElementRef, Inject, OnInit, PLATFORM_ID, ViewChild} from '@angular/core';
-import {formatDate, isPlatformBrowser, LocationStrategy} from '@angular/common';
+import {ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
+import {isPlatformBrowser, LocationStrategy} from '@angular/common';
 import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {Observable, ObservableInput, of} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {LoadingService} from './_services/loading.service';
+import {errorHandler} from "@angular/platform-browser/src/browser";
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
+    changeDetection: ChangeDetectionStrategy.Default,
     styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, HttpInterceptor {
     private _isPopState = false;
     private _routeScrollPositions: { [url: string]: number } = {};
     private _deferredRestore = false;
+    loading: Boolean = false;
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
                 private router: Router,
-                private locStrat: LocationStrategy) {
+                private locStrat: LocationStrategy,
+                private loadingService: LoadingService) {
     }
 
     ngOnInit(): void {
@@ -22,6 +30,21 @@ export class AppComponent implements OnInit {
             // prevent nguniversal problems
             this.addScrollTopListeners();
         }
+
+        this.loadingService.loading$.subscribe(value => {
+            this.loading = value;
+        });
+    }
+
+    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        this.loadingService.startLoading();
+        return next.handle(req).pipe(
+            tap(event => {
+                if (event.type !== 0) {
+                    this.loadingService.finishLoading();
+                }
+            })
+        );
     }
 
     /**

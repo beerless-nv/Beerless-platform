@@ -6,6 +6,8 @@ import {EMPTY, Observable, BehaviorSubject} from 'rxjs';
 import {User} from '../_interfaces/user';
 import {Router} from '@angular/router';
 import {ToastsService} from "./toasts.service";
+import {LocalStorageService} from "./local-storage.service";
+import {AuthService} from "./authorization/auth.service";
 
 @Injectable({
     providedIn: 'root'
@@ -23,9 +25,11 @@ export class LoginService {
     messageRegister$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
     errorMessageArray = [];
 
-    constructor(private http: HttpClient, private router: Router, private toastsService: ToastsService) {
-        if (localStorage.getItem('user')) {
-            this.userData$.next(JSON.parse(localStorage.getItem('user')));
+    constructor(private http: HttpClient, private router: Router, private toastsService: ToastsService, private localStorageService: LocalStorageService, private authService: AuthService) {
+        if (this.authService.isAuthenticated()) {
+            this.userData$.next(this.localStorageService.getUser());
+        } else {
+            this.userData$.next(null);
         }
     }
 
@@ -37,8 +41,7 @@ export class LoginService {
         })
             .toPromise()
             .then(data => {
-                this.toastsService.addToast('Ingelogd', 'Proficiat, u ben ingelogd!', 0);
-                localStorage.removeItem('user');
+                this.localStorageService.clearUser();
                 this.setUserData(data['user'].ID, data['token']);
             })
             .catch(error => {
@@ -127,7 +130,7 @@ export class LoginService {
         this.userData$.next(null);
         this.messageLogin$.next(null);
         this.messageRegister$.next(null);
-        localStorage.removeItem('user');
+        this.localStorageService.clearUser();
         this.router.navigate(['']);
     }
 
@@ -136,7 +139,7 @@ export class LoginService {
     }
 
     // Locally log the user in
-    private setUserData(userId, token: string) {
+    setUserData(userId: number, token: string) {
         if (userId !== null) {
             this.getCurrentUser(userId).then(data => {
                 const user = data['user'];
@@ -150,14 +153,16 @@ export class LoginService {
                         picture: user.usersocial[i].picture
                     };
                 }
+                // token
+                user.token = token;
 
                 // let socialpicture;
                 if (user.usersocial.length > 0) {
                     user.picture = usersocial[0].picture;
                 }
 
+                this.localStorageService.setUser(user);
                 this.userData$.next(user);
-                localStorage.setItem('user', JSON.stringify(user));
             });
         } else {
             this.userData$.next(null);
@@ -213,7 +218,7 @@ export class LoginService {
             .toPromise();
     }
 
-    getCurrentUser(userId) {
+    getCurrentUser(userId: number) {
         return this.http.get(this.urlUser + '/' + userId)
             .toPromise();
     }

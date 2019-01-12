@@ -3,6 +3,7 @@ import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {LoginService} from './login.service';
 import {ToastsService} from './toasts.service';
+import {LocalStorageService} from './local-storage.service';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class UserService {
     private readonly URLUsers = environment.backend + 'users';
     userId: number;
 
-    constructor(private http: HttpClient, private loginService: LoginService, private toastsService: ToastsService) {
+    constructor(private http: HttpClient, private loginService: LoginService, private toastsService: ToastsService, private localStorageService: LocalStorageService) {
     }
 
     getUserById(userId) {
@@ -36,7 +37,7 @@ export class UserService {
         })
             .toPromise()
             .then(data => {
-                this.loginService.userData$.next(data['user']);
+                this.loginService.setUserData(data['user'].ID, this.localStorageService.getUser().token);
                 this.toastsService.addToast('Profiel gewijzigd', 'Je profiel is bijgewerkt!', 0);
             })
             .catch(error => {

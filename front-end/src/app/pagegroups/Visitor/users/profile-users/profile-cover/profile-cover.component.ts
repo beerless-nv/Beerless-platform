@@ -10,7 +10,7 @@ export class ProfileCoverComponent implements OnInit {
 
     @Input() user: any;
 
-    backgroundPictureSrc = './src/assets/images/beer-background.jpg';
+    backgroundPictureSrc = './src/assets/images/home_hero_extended.jpg';
     coverTopMargin = false;
 
     constructor() {

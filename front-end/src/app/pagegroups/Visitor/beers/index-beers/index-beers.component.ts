@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BeersService} from '../../../../_services/beers.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LocalStorageService} from '../../../../_services/local-storage.service';
@@ -39,14 +39,18 @@ export class IndexBeersComponent implements OnInit {
             }
         });
         this.cdRef.detectChanges();
+        console.log(this.route.snapshot.data);
 
         this.getBeersNewest();
+        // this.newestBeersList = this.route.snapshot.data['beers'];
     }
 
     getBeersByName(name, page) {
         this.beerName = name;
-        this.beerNameOld = this.localStorageService.getBeerSearchResults().search_term;
-        this.pageOld = this.localStorageService.getBeerSearchResults().page;
+        if (this.localStorageService.getBeerSearchResults() != null) {
+            this.beerNameOld = this.localStorageService.getBeerSearchResults().search_term;
+            this.pageOld = this.localStorageService.getBeerSearchResults().page;
+        }
 
         // if (name) {
         //     if (name !== this.beerNameOld) {

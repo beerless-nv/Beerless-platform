@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../../../../../_services/login.service';
-import {UserService} from "../../../../../_services/user.service";
-import {environment} from "../../../../../../environments/environment";
+import {UserService} from '../../../../../_services/user.service';
+import {environment} from '../../../../../../environments/environment';
 
 @Component({
     selector: 'app-settings-profile',
@@ -11,13 +11,14 @@ import {environment} from "../../../../../../environments/environment";
 })
 export class SettingsProfileComponent implements OnInit {
 
+    @Input() user: any;
+
     maxLengthTextarea = 500;
 
     formProfile: FormGroup;
     formAddress: FormGroup;
     formPassword: FormGroup;
 
-    user;
     pictureSrc;
     pictureFile;
 
@@ -27,10 +28,6 @@ export class SettingsProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loginService.userData$.subscribe(data => {
-            this.user = data;
-        });
-
         // forms
         this.formProfile = new FormGroup({
             username: new FormControl(this.user.username, [
@@ -85,7 +82,6 @@ export class SettingsProfileComponent implements OnInit {
                 Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
             ]),
         });
-
     }
 
     showProfilePicture(event) {
@@ -111,7 +107,17 @@ export class SettingsProfileComponent implements OnInit {
         if (this.formProfile.value.picture === '') {
             this.formProfile.value.picture = this.user.picture;
         } else {
-            const pictureName = 'picture-user-' + this.user.ID + '.jpg';
+            const dateToday = new Date();
+            const pictureName = 'picture-user-' + this.user.ID + '-'
+                + (dateToday.getDate() < 10 ? '0' + dateToday.getDate() : dateToday.getDate())
+                + ((dateToday.getMonth() + 1) < 10 ? '0' + (dateToday.getMonth() + 1) : (dateToday.getMonth() + 1) )
+                + dateToday.getFullYear()
+                + '-'
+                + (dateToday.getHours() < 10 ? '0' + dateToday.getHours() : dateToday.getHours())
+                + (dateToday.getMinutes() < 10 ? '0' + dateToday.getMinutes() : dateToday.getMinutes())
+                + (dateToday.getSeconds() < 10 ? '0' + dateToday.getSeconds() : dateToday.getSeconds())
+                + '.jpg';
+
             this.onUpload(this.pictureFile, pictureName, '/user/picture/');
             this.formProfile.value.picture = environment.userPictureURL + pictureName;
         }
@@ -119,9 +125,13 @@ export class SettingsProfileComponent implements OnInit {
         this.userService.updateUserProfile(this.formProfile.value);
     }
 
+    // update address
+
     updateAddress() {
         this.userService.updateUserAddress(this.formAddress.value);
     }
+
+    // update password
 
     updatePassword() {
         if (this.formPassword.value.newPassword !== this.formPassword.value.repeatPassword) {

@@ -4,10 +4,10 @@
             <i class="fas fa-user"></i>
         </a>
         <div class="nav-mobile-submenu" [hidden]="submenu != 'user'" (click)="hideAllSubmenu()">
-            <a routerLink="/user/profile/14" class="nav-mobile-submenu-item">
+            <a routerLink="/user/profile/{{user?.ID}}" class="nav-mobile-submenu-item">
                 Profiel
             </a>
-            <a routerLink="/user/wishlist/14" class="nav-mobile-submenu-item">
+            <a routerLink="/user/wishlist/{{user?.ID}}" class="nav-mobile-submenu-item">
                 Wishlist
             </a>
             <a routerLink="/user/settings" class="nav-mobile-submenu-item">

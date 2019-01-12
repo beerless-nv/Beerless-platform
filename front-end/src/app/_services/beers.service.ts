@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import {LocalStorageService} from './local-storage.service';
 import {ToastsService} from './toasts.service';
 import {PARAMETERS} from '@angular/core/src/util/decorators';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -33,7 +34,7 @@ export class BeersService {
             .toPromise()
             .then(data => {
                 this.localStorageService.clearBeerSearchResults();
-                // this.localStorageService.setBeerSearchResults(data['beers']);
+                this.localStorageService.setBeerSearchResults(value, 1, data['beers']);
             });
     }
 
@@ -104,6 +105,7 @@ export class BeersService {
                 this.localStorageService.setNewestBeers(data['beers']);
             });
     }
+
 
     insertBeer(beer) {
         this.http.post(this.urlInsertBeer,

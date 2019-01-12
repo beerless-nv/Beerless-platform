@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {BeersService} from '../../../../_services/beers.service';
 import {ActivatedRoute} from '@angular/router';
 import {Observable} from 'rxjs';

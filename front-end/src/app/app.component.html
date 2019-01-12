@@ -1,12 +1,23 @@
+
+<!-- navigation -->
 <app-navbar class="d-lg-block d-none"></app-navbar>
 <app-navbar-mobile class="d-lg-none d-block"></app-navbar-mobile>
 
-<!-- reserve space for navbar -->
+
+<!-- reserve space for desktop navbar -->
 <div class="top-offset-content bg-white d-lg-block d-none"></div>
-<router-outlet></router-outlet>
+<ngx-loading-bar [color]="'#f9b054'" [fixed]="true"></ngx-loading-bar>
+
+
+<div [hidden]="!loading" class="loading-screen"></div>
+<div [hidden]="loading">
+    <router-outlet></router-outlet>
+</div>
+
 
 <!-- display toast messages -->
 <app-toast></app-toast>
+
 
 <!-- reserve space for navbar-mobile -->
 <div class="bottom-offset-content bg-white d-lg-none d-block"></div>

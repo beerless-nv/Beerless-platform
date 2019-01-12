@@ -6,7 +6,7 @@
 <div class="container pb-5">
     <tabset id="tabset-tabs">
         <tab heading="Profiel" id="settings-users-profile">
-            <app-settings-profile></app-settings-profile>
+            <app-settings-profile [user]="user" *ngIf="user"></app-settings-profile>
         </tab>
         <!--<tab heading="Sociaal" id="settings-users-social">-->
             <!--haha-->

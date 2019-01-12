@@ -10,6 +10,8 @@
     </button>
     <div class="collapse navbar-collapse my-0" id="navbarNavAltMarkup">
         <div class="ml-auto row h-100">
+
+            <!-- Main menu -->
             <div class="navbar-nav position-relative d-flex align-items-center">
                 <a class="nav-item nav-link nav-link-padding" routerLink="/home" routerLinkActive="active">Home</a>
                 <a class="nav-item nav-link nav-link-padding" routerLink="/beers" routerLinkActive="active">Bieren</a>
@@ -17,6 +19,8 @@
                 <a class="nav-item nav-link nav-link-padding" routerLink="/blog" routerLinkActive="active">Blog</a>
                 <div class="nav-divider"></div>
             </div>
+
+            <!-- Right menu (profile) -->
             <div class="navbar-nav ml-2rem mr-2 d-flex align-items-center">
                 <a *ngIf="!user" class="nav-item nav-link" routerLink="/login" routerLinkActive="active"><i
                         class="fas fa-user-circle"></i></a>
