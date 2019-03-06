@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="bg-super-light">
-    <div class="container">
+    <div class="container page-container-sm-w100">
 
         <!--<h1 class="mb-3">Bieren</h1>-->
         <div class="col-12 p-0 d-flex flex-md-row flex-column mb-2">
@@ -42,7 +42,9 @@
                 ></app-beer-item>
                 <div class="card mb-2" [hidden]="!beersListTotal">
                     <div class="card-body p-4 text-center">
-                        <strong>Het bier dat je zoekt niet gevonden? <a routerLink="/beers/add" [queryParams]="{name: beer.value}">Voeg het toe</a>.</strong>
+                        <strong>Het bier dat je zoekt niet gevonden? <a routerLink="/beers/add"
+                                                                        [queryParams]="{name: beer.value}">Voeg het
+                            toe</a>.</strong>
                     </div>
                 </div>
                 <div class="card mb-2" [hidden]="beersListTotal">
@@ -51,8 +53,10 @@
                             Zoek een bier met de zoekbalk bovenaan.
                         </strong>
                         <div [hidden]="beersListTotal || !beer.value">
-                            <p>We hebben geen bieren gevonden die overeenkomen met uw zoekterm "<strong>{{beerName}}</strong>".</p>
-                            <p class="m-0">Zorg ervoor dat de naam van het bier juist is gespeld of voeg het bier toe.</p>
+                            <p>We hebben geen bieren gevonden die overeenkomen met uw zoekterm
+                                "<strong>{{beerName}}</strong>".</p>
+                            <p class="m-0">Zorg ervoor dat de naam van het bier juist is gespeld of voeg het bier
+                                toe.</p>
                         </div>
                     </div>
                 </div>
@@ -66,21 +70,9 @@
             </div>
 
             <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 py-5">
-                <div class="card beers-sidebar border-yellow-top">
-                    <div class="card-header">
-                        <strong>Nieuwste bieren</strong>
-                    </div>
-                    <div class="card-body">
-                        <app-beers-sidebar *ngFor="let beer of newestBeersList | slice:0:5; let i = index"
-                                            [item]="beer"
-                                            [index]="i">
-                        </app-beers-sidebar>
-
-                        <p class="text-center pt-3 mb-0 font-weight-bold"><a routerLink="/beers">Meer bieren ...</a>
-                        </p>
-                    </div>
-                </div>
+                <app-beers-sidebar></app-beers-sidebar>
             </div>
+
         </div>
     </div>
 </div>

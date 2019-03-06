@@ -16,7 +16,7 @@ class Relationship extends Model
         'statusID'
     ];
     protected $dates = [];
-    protected $table ='Relationship';
+    protected $table ='relationship';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

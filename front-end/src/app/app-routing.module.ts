@@ -12,12 +12,12 @@ import {SettingsUsersComponent} from './pagegroups/Member/users/settings-users/s
 import {ProfileUsersComponent} from './pagegroups/Visitor/users/profile-users/profile-users.component';
 import {WishlistUsersComponent} from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
 import {AuthGuardService} from './_services/authorization/auth-guard.service';
-import {BeersService} from './_services/beers.service';
-import {BeerSearchResolverService} from './_resolvers/beer-search-resolver.service';
+import {SignupComponent} from './pagegroups/Visitor/signup/signup.component';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'signup', component: SignupComponent},
     // All pages from beers
     {
         path: 'beers', children: [
@@ -28,8 +28,7 @@ const routes: Routes = [
     },
     // ALL pages from blog
     {
-        path: 'blog',
-        children: [
+        path: 'blog', children: [
             {path: '', component: IndexBlogComponent},
             {path: 'article/:slug', component: ArticleComponent},
         ]
@@ -37,7 +36,6 @@ const routes: Routes = [
     // ALL pages from users
     {
         path: 'user', children: [
-            // {path: '', component: IndexBlogComponent},
             {path: 'settings', component: SettingsUsersComponent},
             {path: 'profile/:id', component: ProfileUsersComponent},
             {path: 'wishlist/:id', component: WishlistUsersComponent},
@@ -45,13 +43,15 @@ const routes: Routes = [
     },
     // Homepage doorverwijzen naar home
     {path: '', redirectTo: 'home', pathMatch: 'full'},
+    // {path: '', component: HomeComponent},
     // Niet gedefinieerde routes doorverwijzen naar error page
     {path: '**', redirectTo: 'home'},
+    // {path: '**', component: HomeComponent},
 ];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})],
-    providers: [BeerSearchResolverService],
+    providers: [],
     exports: [RouterModule]
 })
 export class AppRoutingModule {

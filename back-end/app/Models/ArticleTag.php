@@ -13,7 +13,7 @@ class ArticleTag extends Model
         'tagID'
     ];
     protected $dates = [];
-    protected $table ='ArticleTag';
+    protected $table ='articleTag';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

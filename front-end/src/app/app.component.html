@@ -1,4 +1,3 @@
-
 <!-- navigation -->
 <app-navbar class="d-lg-block d-none"></app-navbar>
 <app-navbar-mobile class="d-lg-none d-block"></app-navbar-mobile>
@@ -6,11 +5,15 @@
 
 <!-- reserve space for desktop navbar -->
 <div class="top-offset-content bg-white d-lg-block d-none"></div>
-<ngx-loading-bar [color]="'#f9b054'" [fixed]="true"></ngx-loading-bar>
+<ngx-loading-bar [color]="'#f9b054'" [fixed]="true" [hidden]="error"></ngx-loading-bar>
 
+<div [hidden]="loading == false && error == false">
+    <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
+        <app-error *ngIf="error == true"></app-error>
+    </div>
+</div>
 
-<div [hidden]="!loading" class="loading-screen"></div>
-<div [hidden]="loading">
+<div [hidden]="loading == true || error == true">
     <router-outlet></router-outlet>
 </div>
 

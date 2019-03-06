@@ -20,6 +20,13 @@
   }
 }
 
+.card-sm-100w {
+  @include media-breakpoint-down(xs) {
+    border-radius: 0;
+    border: none;
+  }
+}
+
 .card-columns {
   @include media-breakpoint-only(sm) {
     column-count: 2;

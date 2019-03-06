@@ -5,9 +5,9 @@ import {catchError, share, tap} from 'rxjs/operators';
 import {EMPTY, Observable, BehaviorSubject} from 'rxjs';
 import {User} from '../_interfaces/user';
 import {Router} from '@angular/router';
-import {ToastsService} from "./toasts.service";
-import {LocalStorageService} from "./local-storage.service";
-import {AuthService} from "./authorization/auth.service";
+import {ToastsService} from './toasts.service';
+import {LocalStorageService} from './local-storage.service';
+import {AuthService} from './authorization/auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class LoginService {
 
     readonly urlSignIn = environment.backend + 'users/signIn';
     readonly urlSignUp = environment.backend + 'users/signUp';
-    readonly urlUser = environment.backend + 'users';
+    readonly urlUser = environment.backend + 'users/';
     readonly urlUserSocial = environment.backend + 'usersocials';
 
     userData$: BehaviorSubject<User> = new BehaviorSubject(null);
@@ -139,7 +139,7 @@ export class LoginService {
     }
 
     // Locally log the user in
-    setUserData(userId: number, token: string) {
+    setUserData(userId: number, token) {
         if (userId !== null) {
             this.getCurrentUser(userId).then(data => {
                 const user = data['user'];
@@ -169,6 +169,7 @@ export class LoginService {
         }
     }
 
+    // log in user via social login
     setUserSocialData(user) {
         if (user !== null) {
             this.getUserSocial('socialID', user.id)
@@ -183,6 +184,7 @@ export class LoginService {
                         })
                             .then(newUserObject => {
                                 const newUser = newUserObject['user'];
+
                                 this.insertUserSocial({
                                     userID: newUser.ID,
                                     socialID: user.id,
@@ -190,7 +192,8 @@ export class LoginService {
                                     picture: 'https://graph.facebook.com/' + user.id + '/picture?height=500'
                                 })
                                     .then(() => {
-                                        this.setUserData(newUser.ID, '5');
+                                        const token = this.getToken(user.id);
+                                        this.setUserData(newUser.ID, token);
                                     });
 
                             })
@@ -199,7 +202,9 @@ export class LoginService {
                             });
                     } else {
                         this.router.navigate(['']);
-                        this.setUserData(usersocials[0].userID, '5');
+                        this.getToken(user.id).then(token => {
+                            this.setUserData(usersocials[0].userID, token);
+                        });
                     }
                 });
         } else {
@@ -219,7 +224,7 @@ export class LoginService {
     }
 
     getCurrentUser(userId: number) {
-        return this.http.get(this.urlUser + '/' + userId)
+        return this.http.get(this.urlUser + userId)
             .toPromise();
     }
 
@@ -235,5 +240,19 @@ export class LoginService {
             inputObject: usersocial
         })
             .toPromise();
+    }
+
+    getToken(socialID: string) {
+        return this.http.post(this.urlUser + 'socialToken', {
+            socialID: socialID
+        })
+            .toPromise()
+            .then(data => {
+                console.log(data);
+                return data['token'];
+            })
+            .catch(error => {
+                console.error(error);
+            });
     }
 }

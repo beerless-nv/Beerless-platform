@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {LocalStorageService} from './local-storage.service';
 import {ToastsService} from './toasts.service';
@@ -15,7 +15,7 @@ export class BeersService {
     readonly urlGetAllBeers = environment.backend + 'beers/';
     readonly urlInsertBeer = environment.backend + 'beers';
     readonly urlGetBeersByName = environment.backend + 'beers/search';
-    readonly urlGetBeersNewest = environment.backend + 'beers';
+    readonly urlGetBeersNewest = environment.backend + 'beers/new';
     readonly urlUploadImageBeer = environment.backend + 'beers/uploadImage';
 
     constructor(private http: HttpClient, private localStorageService: LocalStorageService, private toastsService: ToastsService) {
@@ -55,6 +55,7 @@ export class BeersService {
     }
 
     getBeersByNamePagination(name, value, limit, offset) {
+        console.log('hey');
         let params;
 
         if (offset !== 0) {
@@ -67,7 +68,6 @@ export class BeersService {
                 .set('joinTables', 'beertype,brewery')
                 .set('limit', limit);
         }
-
 
         return this.http.post(this.urlGetBeersByName, {
             searchParams: [{
@@ -94,11 +94,7 @@ export class BeersService {
     }
 
     getBeersNewest() {
-        const params = new HttpParams()
-            .set('joinTables', 'brewery')
-            .set('orderBy', 'timestampCreated.desc');
-
-        return this.http.get(this.urlGetBeersNewest, {params})
+        return this.http.get(this.urlGetBeersNewest)
             .toPromise()
             .then(data => {
                 this.localStorageService.clearNewestBeers();

@@ -33,3 +33,15 @@ app-beer-item {
 .image-beer-profile {
   max-height: 300px;
 }
+
+.table-valign-top {
+  td {
+    vertical-align: top;
+  }
+}
+
+#table-beer-profile {
+  tr td:first-child {
+    padding-right: 1.5rem;
+  }
+}

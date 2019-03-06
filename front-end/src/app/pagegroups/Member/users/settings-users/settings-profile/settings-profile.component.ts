@@ -104,13 +104,17 @@ export class SettingsProfileComponent implements OnInit {
     }
 
     updateProfile() {
+        let pictureName;
+
         if (this.formProfile.value.picture === '') {
             this.formProfile.value.picture = this.user.picture;
+
+            this.userService.updateUserProfile(this.formProfile.value);
         } else {
             const dateToday = new Date();
-            const pictureName = 'picture-user-' + this.user.ID + '-'
+            pictureName = 'picture-user-' + this.user.ID + '-'
                 + (dateToday.getDate() < 10 ? '0' + dateToday.getDate() : dateToday.getDate())
-                + ((dateToday.getMonth() + 1) < 10 ? '0' + (dateToday.getMonth() + 1) : (dateToday.getMonth() + 1) )
+                + ((dateToday.getMonth() + 1) < 10 ? '0' + (dateToday.getMonth() + 1) : (dateToday.getMonth() + 1))
                 + dateToday.getFullYear()
                 + '-'
                 + (dateToday.getHours() < 10 ? '0' + dateToday.getHours() : dateToday.getHours())
@@ -118,11 +122,10 @@ export class SettingsProfileComponent implements OnInit {
                 + (dateToday.getSeconds() < 10 ? '0' + dateToday.getSeconds() : dateToday.getSeconds())
                 + '.jpg';
 
-            this.onUpload(this.pictureFile, pictureName, '/user/picture/');
+            // this.onUpload(this.pictureFile, pictureName, '/user/picture/');
             this.formProfile.value.picture = environment.userPictureURL + pictureName;
+            this.userService.updateUserProfileWithPicture(this.formProfile.value, this.pictureFile, pictureName, '/user/picture/');
         }
-
-        this.userService.updateUserProfile(this.formProfile.value);
     }
 
     // update address

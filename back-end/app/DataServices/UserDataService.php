@@ -57,10 +57,21 @@ class UserDataService
      * @param array $searchParams
      * @return User||User[]||null
      */
-    public static function search()
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset)
     {
-        // $user = new User();
-        // return $user->all();
+        $query = User::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
+        \joinTables($query, 'user', $joinTables);
+        \sortQuery($query, $sortOrder);
+        foreach ($searchParams as $value){
+            if($value['propName'] == 'name'){
+                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($value['value']) . '%']);
+            } else{
+                $query->where($value['propName'], $value['operator'], $value['value']);
+            }
+        }
+        return $query->get();
     }
 
     /**

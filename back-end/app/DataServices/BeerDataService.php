@@ -30,9 +30,9 @@ class BeerDataService
      * @return Beer
      */
     public static function insert(array $inputArray)
-    {       
+    {
         $beer = new Beer();
-        foreach ($inputArray as $key => $value){
+        foreach ($inputArray as $key => $value) {
             $beer[$key] = $value;
         }
         $beer->save();
@@ -45,11 +45,11 @@ class BeerDataService
      * @param integer $beerId
      * @return Beer
      */
-    public static function get(int $beerId, $joinTables)
+    public static function get(int $beerId, $joinTables, $value)
     {
         $query = Beer::query();
         \joinTables($query, 'beer', $joinTables);
-        return $query->findOrFail($beerId);
+        return $query->findOrFail($beerId, $value);
     }
 
     /**
@@ -59,20 +59,27 @@ class BeerDataService
      * @return Beer[]
      */
     public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset)
-    {        
+    {
+
         $query = Beer::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
         \joinTables($query, 'beer', $joinTables);
         \sortQuery($query, $sortOrder);
-        foreach ($searchParams as $value){
-            if($value['propName'] == 'name'){
+        foreach ($searchParams as $value) {
+            if ($value['propName'] == 'name') {
                 $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($value['value']) . '%']);
-            } else{
+            } else {
                 $query->where($value['propName'], $value['operator'], $value['value']);
             }
         }
-        return $query->get();
+
+        if ($searchParams[0]['value'] == '') {
+            return '';
+        } else {
+            return $query->get();
+        }
+
     }
 
     /**
@@ -83,11 +90,11 @@ class BeerDataService
      */
     public static function delete(int $beerId)
     {
-        if(Beer::where('id', $beerId)->exists()){
+        if (Beer::where('id', $beerId)->exists()) {
             Beer::destroy($beerId);
-        } else{
+        } else {
             throw new ModelNotFoundException();
-        }        
+        }
     }
 
     /**
@@ -97,10 +104,10 @@ class BeerDataService
      * @param array $updateArray
      * @return Beer
      */
-    public static function update(int $beerId ,array $updateArray)
+    public static function update(int $beerId, array $updateArray)
     {
         $beer = Beer::findOrFail($beerId);
-        foreach ($updateArray as $key => $value){
+        foreach ($updateArray as $key => $value) {
             $beer[$key] = $value;
         }
 

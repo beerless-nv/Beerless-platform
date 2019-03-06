@@ -5,7 +5,9 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/com
 import {Observable, ObservableInput, of} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {LoadingService} from './_services/loading.service';
-import {errorHandler} from "@angular/platform-browser/src/browser";
+import {SwUpdate} from '@angular/service-worker';
+// import 'rxjs/add/operator/catch';
+// import 'rxjs/add/observable/throw';
 
 @Component({
     selector: 'app-root',
@@ -18,14 +20,24 @@ export class AppComponent implements OnInit, HttpInterceptor {
     private _routeScrollPositions: { [url: string]: number } = {};
     private _deferredRestore = false;
     loading: Boolean = false;
+    error: Boolean = false;
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
                 private router: Router,
                 private locStrat: LocationStrategy,
-                private loadingService: LoadingService) {
+                private loadingService: LoadingService,
+                private swUpdate: SwUpdate) {
     }
 
     ngOnInit(): void {
+
+        // Message to update app when on PWA
+        this.swUpdate.available.subscribe(evt => {
+                if (confirm('De Beerless app is aangepast. Wil je de nieuwe versie openen?')) {
+                    window.location.reload();
+                }
+            });
+
         if (isPlatformBrowser(this.platformId)) {
             // prevent nguniversal problems
             this.addScrollTopListeners();
@@ -34,17 +46,30 @@ export class AppComponent implements OnInit, HttpInterceptor {
         this.loadingService.loading$.subscribe(value => {
             this.loading = value;
         });
+        this.loadingService.error$.subscribe(value => {
+            this.error = value;
+        });
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.loadingService.startLoading();
-        return next.handle(req).pipe(
-            tap(event => {
-                if (event.type !== 0) {
+        // console.log();
+
+        return next.handle(req)
+            .pipe(
+                tap(event => {
+                    if (event.type !== 0) {
+                        console.log(event);
+                        this.loadingService.finishLoading();
+                        this.loadingService.noError();
+                    }
+                }),
+                catchError( err => {
+                    this.loadingService.hasError();
                     this.loadingService.finishLoading();
-                }
-            })
-        );
+                    return of(err);
+                })
+            );
     }
 
     /**

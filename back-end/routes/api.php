@@ -11,6 +11,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::prefix('relationships')->group(function() {
     Route::post('/search', 'RelationshipController@search');
     Route::get('/', 'RelationshipController@getAll');    
@@ -96,12 +100,13 @@ Route::prefix('breweries')->group(function() {
 
 Route::prefix('beers')->group(function() {
     Route::post('/uploadImage', 'BeerController@uploadImage');
+    Route::get('/new', 'BeerController@getNewest');
 
     Route::post('/search', 'BeerController@search');
     Route::get('/', 'BeerController@getAll');    
     Route::post('/', 'BeerController@insert');   
     Route::get('/{beerId}', 'BeerController@get');
-    
+
     Route::delete('/{beerId}', 'BeerController@delete');
     Route::patch('/{beerId}', 'BeerController@patch');
 });
@@ -123,6 +128,7 @@ Route::prefix('users')->group(function() {
     Route::post('/signUp', 'UserController@signUp');
     Route::post('/signIn', 'UserController@signIn');
     Route::post('/search', 'UserController@search');
+    Route::post('/socialToken', 'UserController@getSocialToken');
 
     Route::get('/', 'UserController@getAll');   
     Route::get('/{userId}', 'UserController@get');

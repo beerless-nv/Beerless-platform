@@ -14,7 +14,7 @@ class UserSocial extends Model
         'picture',
     ];
     protected $dates = [];
-    protected $table ='UserSocial';
+    protected $table ='userSocial';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

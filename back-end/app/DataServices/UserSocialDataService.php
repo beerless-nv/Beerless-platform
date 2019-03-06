@@ -40,9 +40,11 @@ class UserSocialDataService
      * @param array $searchParams
      * @return UserSocial[]
      */
-    public static function search(array $searchParams, $joinTables, $sortOrder)
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset)
     {
         $query = UserSocial::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
         \joinTables($query, 'usersocial', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $value) {

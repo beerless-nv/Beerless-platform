@@ -14,7 +14,7 @@ class Activity extends Model
         'breweryID'
     ];
     protected $dates = [];
-    protected $table ='Activity';
+    protected $table ='activity';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

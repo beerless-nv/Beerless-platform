@@ -28,9 +28,19 @@ import {NavbarMobileComponent} from './sharedComponents/navbar-mobile/navbar-mob
 import {ToastComponent} from './sharedComponents/toast/toast.component';
 import {ProfileCoverComponent} from './pagegroups/Visitor/users/profile-users/profile-cover/profile-cover.component';
 import {ProfileSidebarComponent} from './pagegroups/Visitor/users/profile-users/profile-sidebar/profile-sidebar.component';
-import {ProfileFavouriteComponent} from './pagegroups/Visitor/users/profile-users/profile-favourite/profile-favourite.component';
-import {ProfileActivitiesComponent} from './pagegroups/Visitor/users/profile-users/profile-activities/profile-activities.component';
+import {ProfileFavouriteComponent} from './pagegroups/Visitor/users/profile-users/profile-content/profile-about/profile-favourite/profile-favourite.component';
+import {ProfileActivitiesComponent} from './pagegroups/Visitor/users/profile-users/profile-content/profile-activities/profile-activities.component';
 import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
+import {ProfileContentComponent} from './pagegroups/Visitor/users/profile-users/profile-content/profile-content.component';
+import {ProfileAboutComponent} from './pagegroups/Visitor/users/profile-users/profile-content/profile-about/profile-about.component';
+import {ProfilePersonalComponent} from './pagegroups/Visitor/users/profile-users/profile-content/profile-about/profile-personal/profile-personal.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
+import { ErrorComponent } from './sharedComponents/error/error.component';
+import { SignupComponent } from './pagegroups/Visitor/signup/signup.component';
+import { RegularMenuItemComponent } from './sharedComponents/navbar/regular-menu-item/regular-menu-item.component';
+import { SignupBackgroundCardComponent } from './pagegroups/Visitor/signup/signup-background-card/signup-background-card.component';
+import { SignupFormComponent } from './pagegroups/Visitor/signup/signup-form/signup-form.component';
 
 @NgModule({
     declarations: [
@@ -52,6 +62,15 @@ import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
         ProfileSidebarComponent,
         ProfileFavouriteComponent,
         ProfileActivitiesComponent,
+        ProfileContentComponent,
+        ProfileAboutComponent,
+        ProfilePersonalComponent,
+        ProfilePersonalComponent,
+        ErrorComponent,
+        SignupComponent,
+        RegularMenuItemComponent,
+        SignupBackgroundCardComponent,
+        SignupFormComponent,
     ],
     imports: [
         BrowserModule,
@@ -66,7 +85,8 @@ import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
         ReactiveFormsModule,
         BlogModule,
         UsersModule,
-        LoadingBarHttpClientModule
+        LoadingBarHttpClientModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],
     providers: [{
         provide: HTTP_INTERCEPTORS,

@@ -20,7 +20,7 @@ class Article extends Model
         'userID',
     ];
     protected $dates = [];
-    protected $table ='Article';
+    protected $table ='article';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

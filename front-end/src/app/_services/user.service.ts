@@ -22,6 +22,12 @@ export class UserService {
             .then(data => data['user']);
     }
 
+    updateUserProfileWithPicture(user, selectedPicture, pictureName, picturePath) {
+        this.uploadPicture(selectedPicture, pictureName, picturePath).then(() => {
+            this.updateUserProfile(user);
+        });
+    }
+
     updateUserProfile(user) {
         this.loginService.userData$.subscribe(data => this.userId = data.ID);
 
@@ -65,18 +71,19 @@ export class UserService {
             });
     }
 
-    uploadPicture(selectedPicture, pictureName, picturePath) {
+    uploadPicture(selectedPicture, pictureName, picturePath): Promise<any> {
         const uploadData = new FormData();
         uploadData.append('picture', selectedPicture);
         uploadData.append('pictureName', pictureName);
         uploadData.append('picturePath', picturePath);
 
-        console.log(uploadData);
-
-        this.http.post(this.URLUsers + '/uploadPicture', uploadData)
+        return this.http.post(this.URLUsers + '/uploadPicture', uploadData)
             .toPromise()
             .then(data => {
                 return data;
+            })
+            .catch(error => {
+                console.log('error', error);
             });
     }
 }

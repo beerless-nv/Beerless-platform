@@ -30,7 +30,7 @@ class Brewery extends Model
         'contactID'
     ];
     protected $dates = [];
-    protected $table = "Brewery";
+    protected $table = "brewery";
     protected $primaryKey = "ID";
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

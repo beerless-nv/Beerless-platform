@@ -1,3 +1,9 @@
 .loading-screen {
-  height: 100vh;
+  height: calc(100vh - 160px);
+}
+
+.error-message {
+  .error-gif {
+    width: 100%;
+  }
 }

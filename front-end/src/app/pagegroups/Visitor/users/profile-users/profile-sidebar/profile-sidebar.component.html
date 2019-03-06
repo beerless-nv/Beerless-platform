@@ -46,18 +46,6 @@
                 </div>
             </div>
         </div>
-        <!--<div class="bio">
-            <p class="title">Over {{user?.firstName}}</p>
-            <p class="small bio-text">
-                {{user?.bio | slice: 0:limit}}
-                <span [hidden]="moreShown">...</span>
-                <a [hidden]="moreShown" href
-                   (click)="limit=user?.bio.length; moreShown = true; $event.preventDefault()"
-                   class="ml-2 font-weight-bold"> Toon meer</a>
-                <a [hidden]="!moreShown" href (click)="limit=120; moreShown = false"
-                   class="ml-2 font-weight-bold"> Toon minder</a>
-            </p>
-        </div>-->
         <div class="d-sm-none d-block text-center mt-3">
             <a routerLink="" class="btn btn-outline-primary btn-small">
                 <small class="p-0">

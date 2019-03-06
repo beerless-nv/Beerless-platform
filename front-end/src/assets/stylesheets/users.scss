@@ -81,6 +81,13 @@
 }
 
 .user-profile {
+  .title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    //color: $grey;
+  }
+
   .user-profile-cover-picture-container {
     z-index: 10;
     position: sticky;
@@ -265,12 +272,6 @@
     }
 
     .card-body {
-      .title {
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        font-weight: bold;
-        //color: $grey;
-      }
     }
   }
 
@@ -283,5 +284,11 @@
 
   .top-margin-user-profile-reset {
     top: 0 !important;
+  }
+
+  .profile-content {
+    margin-top: -52px;
+    position: relative;
+    width: 100%;
   }
 }

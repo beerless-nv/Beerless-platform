@@ -25,7 +25,7 @@ class Beer extends Model
         'beertypeID'
     ];
     protected $dates = [];
-    protected $table ='Beer';
+    protected $table ='beer';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

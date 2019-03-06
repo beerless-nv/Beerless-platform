@@ -13,7 +13,7 @@ class Beertype extends Model
         'description',
     ];
     protected $dates = [];
-    protected $table = "Beertype";
+    protected $table = "beertype";
     protected $primaryKey = "ID";
     public $timestamps = false;
     const CREATED_AT = 'timestampCreated';

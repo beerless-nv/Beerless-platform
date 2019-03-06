@@ -21,7 +21,7 @@ class Contact extends Model
         'instagram',
     ];
     protected $dates = [];
-    protected $table = "Contact";
+    protected $table = "contact";
     protected $primaryKey = "ID";
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

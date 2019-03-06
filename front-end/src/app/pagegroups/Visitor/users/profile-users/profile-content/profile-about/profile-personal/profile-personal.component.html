@@ -1,0 +1,18 @@
+<div class="card mb-3 p-3">
+    <p class="small font-weight-bold text-primary mb-4">@{{user?.username}}</p>
+    <h4 class="font-weight-bold">{{user?.firstName}} {{user?.lastName}}</h4>
+    <p class="mb-0">{{user?.place}}<span *ngIf="user?.province">,</span> {{user?.province}}<span
+            *ngIf="user?.country">,</span> {{user?.country}}</p>
+    <div class="bio-text mt-4">
+        <p class="title">Over mezelf</p>
+        {{user?.bio | slice: 0:limit}}
+        <span [hidden]="user?.bio.length < limit" class="small">
+            <span [hidden]="moreShown">...</span>
+            <a [hidden]="moreShown" href
+               (click)="limit=user?.bio.length; moreShown = true; $event.preventDefault()"
+               class="ml-2 font-weight-bold"> Toon meer</a>
+            <a [hidden]="!moreShown" href (click)="limit=200; moreShown = false"
+               class="ml-2 font-weight-bold"> Toon minder</a>
+        </span>
+    </div>
+</div>

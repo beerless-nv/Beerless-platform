@@ -12,7 +12,7 @@ class Tag extends Model
         'name'
     ];
     protected $dates = [];
-    protected $table ='Tag';
+    protected $table ='tag';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

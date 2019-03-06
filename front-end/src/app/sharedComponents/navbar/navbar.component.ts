@@ -13,15 +13,20 @@ export class NavbarComponent implements OnInit {
     isCollapsed = true;
     user;
 
+    menuItems = [
+        {name: 'Home', routerLink: '/home'},
+        {name: 'Bieren', routerLink: '/beers'},
+        {name: 'Blog', routerLink: '/blog'},
+    ];
+
     constructor(public loginService: LoginService, public cdRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {
         this.loginService.userData$.subscribe( data => {
             this.user = data;
-            this.user.picture = this.user.picture;
+            this.cdRef.detectChanges();
         });
-        // this.cdRef.detectChanges();
     }
 
     logout() {

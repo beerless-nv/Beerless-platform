@@ -7,9 +7,10 @@
             <app-profile-sidebar [user]="user" ></app-profile-sidebar>
         </div>
 
-        <div class="col-xl-9 col-lg-8 mt-3 pt-3 pl-lg-3 px-0">
-            <app-profile-favourite></app-profile-favourite>
-            <app-profile-activities [user]="user"></app-profile-activities>
+        <div class="col-xl-9 col-lg-8 pl-lg-3 px-0 position-relative">
+            <div class="profile-content">
+                <app-profile-content [user]="user"></app-profile-content>
+            </div>
         </div>
     </div>
 </div>

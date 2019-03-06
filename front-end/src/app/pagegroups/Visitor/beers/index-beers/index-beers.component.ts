@@ -13,7 +13,6 @@ export class IndexBeersComponent implements OnInit {
     loading = false;
     beersList;
     beersListTotal;
-    newestBeersList;
     beerName;
     beerNameOld = null;
     page: number;
@@ -41,7 +40,6 @@ export class IndexBeersComponent implements OnInit {
         this.cdRef.detectChanges();
         console.log(this.route.snapshot.data);
 
-        this.getBeersNewest();
         // this.newestBeersList = this.route.snapshot.data['beers'];
     }
 
@@ -114,16 +112,6 @@ export class IndexBeersComponent implements OnInit {
     getBeersHistory() {
         this.beersList = this.localStorageService.getBeerSearchResults();
         this.getCurrentBierCount();
-    }
-
-    getBeersNewest() {
-        if (this.newestBeersList !== null) {
-            this.beersService.getBeersNewest().then(() => {
-                this.newestBeersList = this.localStorageService.getNewestBeers();
-            });
-        } else {
-            this.newestBeersList = this.localStorageService.getNewestBeers();
-        }
     }
 
     getPage(page) {

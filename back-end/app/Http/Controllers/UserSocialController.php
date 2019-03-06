@@ -71,9 +71,36 @@ class UserSocialController extends Controller
         if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];}
         else {$sortOrder = null;}
 
+        $limit = null;
+        if($request->query('limit') != null){
+            $limit = intval($request->query('limit'));
+            if(!is_int($limit) || $limit < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'limit_not_valid'
+                ]);
+            }
+        }
+
+        $offset = null;
+        if($request->query('offset') != null){
+            $offset = intval($request->query('offset'));
+            if(!is_int($offset) || $offset < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'offset_not_valid'
+                ]);
+            } if($limit == null){
+                return response()->json([
+                    'success' => false,
+                    'msg' => 'limit_not_set'
+                ]);
+            }
+        }
+
         return response()->json([
             "success" => true,
-            'usersocials' => UserSocialDataService::search($request->input('searchParams'), $joinTables, $sortOrder)
+            'usersocials' => UserSocialDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
         ]);
     }
 }

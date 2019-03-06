@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserSocial;
+use Google_Client;
+use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Validator;
 
@@ -13,6 +15,10 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 use App\Models\User;
 use App\DataServices\UserDataService;
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Illuminate\Http\Request;
 
 /**
  * Contains CRUD functions for table 'User'.
@@ -91,7 +97,47 @@ class UserController extends Controller
 
     public function search(Request $request)
     {
-        // return UserDataService::search();
+        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
+
+        $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
+        if ($orderBy != null) {
+            $sortOrder[$orderBy[0]] = $orderBy[1];
+        } else {
+            $sortOrder = null;
+        }
+
+        $limit = null;
+        if ($request->query('limit') != null) {
+            $limit = intval($request->query('limit'));
+            if (!is_int($limit) || $limit < 1) {
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'limit_not_valid'
+                ]);
+            }
+        }
+
+        $offset = null;
+        if ($request->query('offset') != null) {
+            $offset = intval($request->query('offset'));
+            if (!is_int($offset) || $offset < 1) {
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'offset_not_valid'
+                ]);
+            }
+            if ($limit == null) {
+                return response()->json([
+                    'success' => false,
+                    'msg' => 'limit_not_set'
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'users' => UserDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+        ]);
     }
 
     /**
@@ -148,7 +194,6 @@ class UserController extends Controller
      */
     public function signIn(Request $request)
     {
-
         // Validate incoming request
         $validator = Validator::make($request->all(), [
             'username' => 'required',
@@ -169,7 +214,7 @@ class UserController extends Controller
         $username = $request->input('username');
         $password = $request->input('password');
         try {
-            // Check user existance
+            // Check user existence
             if (User::where('username', $username)->exists()) {
                 $user = User::where('username', $username)->first();
 
@@ -188,6 +233,60 @@ class UserController extends Controller
                 }
             } else {
                 $retVal['msg'] = array('user_does_not_exist');
+            }
+
+            // Return failed login with failure msg
+            return response()->json($retVal, 401);
+
+        } catch (JWTException $e) {
+            $retVal['success'] = 'error';
+            $retVal['msg'] = array($e->getMessage());
+            return response()->json($retVal, 500);
+        }
+    }
+
+    /**
+     * Returns a valid JWT token for the social login.
+     *
+     * GET /users/token
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function getSocialToken(Request $request)
+    {
+        // Validate incoming request
+        $validator = Validator::make($request->all(), [
+            'socialID' => 'required',
+        ],
+            [
+                'socialID.required' => 'socialID_required',
+            ]);
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        }
+
+        try {
+            // Check if socialID matches a person in the database, if so a JWT is created
+            $userId = UserSocial::with('user')->where('socialID', $request['socialID'])->value('userID');
+
+            if ($userId !== null) {
+                // Credentials are correct, socialID is present in the database
+                $user = User::with('usersocial')->where('ID', $userId)->get();
+
+                // Create JWT token
+                $retVal['success'] = true;
+                $customClaims = ['role' => $user[0]['usertype']];
+                $retVal['token'] = JWTAuth::fromUser($user[0], $customClaims);
+                $retVal['user'] = $user;
+
+                return response()->json($retVal, 200);
+            } else {
+                // Credentials are wrong, social userID isn't present in the database
+                $retVal['msg'] = array('credentials_incorrect');
             }
 
             // Return failed login with failure msg

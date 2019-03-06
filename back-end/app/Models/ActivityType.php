@@ -11,7 +11,7 @@ class ActivityType extends Model
     ];
     protected $fillable = [ ];
     protected $dates = [];
-    protected $table ='ActivityType';
+    protected $table ='activityType';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';

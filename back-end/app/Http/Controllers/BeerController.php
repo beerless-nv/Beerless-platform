@@ -104,10 +104,12 @@ class BeerController extends Controller
     public function get(Request $request, int $beerId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
         
         return response()->json([
             'success' => true,
-            'beer' => BeerDataService::get($beerId, $joinTables)
+            'beer' => BeerDataService::get($beerId, $joinTables, $value)
         ],200);
     }
 
@@ -200,7 +202,12 @@ class BeerController extends Controller
      */
     public function getNewest()
     {
-        return response()->json(Beer::with('Brewery')->latest('timestampCreated')->take(5)->get());
+        $newestBeers = Beer::with('Brewery')->latest('timestampCreated')->take(5)->get();
+
+        return response()->json([
+            'success' => true,
+            'beers' => $newestBeers
+        ],200);
     }
 
     /**

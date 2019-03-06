@@ -10,7 +10,7 @@ class Status extends Model
         'name'
     ];
     protected $dates = [];
-    protected $table ='Status';
+    protected $table ='status';
     protected $primaryKey = 'ID';
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';
