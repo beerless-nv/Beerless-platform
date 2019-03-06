@@ -100,6 +100,14 @@ You can add multiple fields to the array to filter even further. In the operator
 ## Other functionalities
 There are some more things that can be added to the request to customize them. Some are gicen through URL queries, others just over the body.
 
+### Get a specific value from a row
+If you'd like to get a single value from a specific row in a table, you can achieve this by using a query parameter. Add the parameter 'value' and specify which value you want to get from the database:
+
+```
+GET /beers/beerId?value=ABV
+```
+
+
 ### Joining tables
 This is done through a URL query. By adding the parameter 'joinTables' you say which ones are included. If there are multiple, they have to be seperated by a single comma:
 
