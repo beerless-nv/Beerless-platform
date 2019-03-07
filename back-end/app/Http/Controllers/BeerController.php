@@ -55,41 +55,14 @@ class BeerController extends Controller
                 ]);
             }
         }
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'beers' => BeerDataService::getAll($joinTables, $sortOrder, $limit, $offset)
+            'beers' => BeerDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
-
-    /**
-     * Insert an item into table 'Beer'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'name'.
-     * 
-     * POST /beers
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function insert(Request $request)
-    {
-        $beer = '';
-        if(isset($request->input('inputObject')['name'])){
-            $beer = BeerDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'name_required'
-            ], 400);
-        }
-        
-        return response()->json([
-            'success' => true,
-            'beer' => $beer
-        ], 201);
-    }
-
 
     /**
      * Returns a specific JSON object of type 'Beer'.
@@ -114,12 +87,13 @@ class BeerController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all records from table 'Beer' that match with the given parameters.
+     * Requires the searchParams Array.
      * 
-     * GET /beers/search
+     * POST /beers/search
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
     public function search(Request $request)
     {
@@ -155,32 +129,52 @@ class BeerController extends Controller
                 ]);
             }
         }
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             "success" => true,
-            'beers' => BeerDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+            'beers' => BeerDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Deletes an item in table 'Beer'.
-     * Takes the id as a request parameter.
-     * 
-     * DELETE /beers/beerId
+     * Insert an item into table 'Beer'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'name'.
+     *
+     * POST /beers
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function insert(Request $request)
+    {
+        $beer = '';
+        if(isset($request->input('inputObject')['name'])){
+            $beer = BeerDataService::insert($request->input('inputObject'));
+        } else{
+            return response()->json([
+                'success' => false,
+                'msg' => 'name_required'
+            ], 400);
+        }
+
+        return response()->json([
+            'success' => true,
+            'beer' => $beer
+        ], 201);
+    }
+
+    /**
+     * Updates an entry in the table 'Beer'.
+     *
+     * PATCH /beers/beerId
      *
      * @param Request $request
      * @param integer $beerId
-     * @return void
+     * @return Response
      */
-    public function delete(Request $request, int $beerId)
-    {
-        BeerDataService::delete($beerId);
-        return response()->json([
-            'success' => true
-        ], 204);
-    }
-
-
     public function patch(Request $request, int $beerId)
     {
         $updateArray = array();
@@ -194,6 +188,23 @@ class BeerController extends Controller
         ], 200);
     }
 
+    /**
+     * Deletes an item in table 'Beer'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /beers/beerId
+     *
+     * @param Request $request
+     * @param integer $beerId
+     * @return Response
+     */
+    public function delete(Request $request, int $beerId)
+    {
+        BeerDataService::delete($beerId);
+        return response()->json([
+            'success' => true
+        ], 204);
+    }
 
     /**
      * Undocumented function

@@ -56,37 +56,12 @@ class BreweryController extends Controller
             }
         }
 
-        return response()->json([
-            'success' => true,
-            'breweries' => BreweryDataService::getAll($joinTables, $sortOrder, $limit, $offset)
-        ], 200);
-    }
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
 
-    /**
-     * Insert an item into table 'Brewery'.
-     * Requires the field 'name'.
-     * 
-     * POST /breweries
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function insert(Request $request)
-    {
-        $brewery;
-        if(isset($request->input('inputObject')['name'])){
-            $brewery = BreweryDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'name_required'
-            ], 400);
-        }
-        
         return response()->json([
             'success' => true,
-            'brewery' => $brewery
-        ], 201);
+            'breweries' => BreweryDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
+        ], 200);
     }
 
 
@@ -104,13 +79,23 @@ class BreweryController extends Controller
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'brewery' => BreweryDataService::get($breweryId, $joinTables)
+            'brewery' => BreweryDataService::get($breweryId, $joinTables, $value)
         ],200);
     }
-    
 
+    /**
+     * Returns a JSON array of all records from table 'Brewery' that match with the given parameters.
+     * Takes the propName, value and operator as a request parameter.
+     *
+     * GET /breweries/search
+     *
+     * @param Request $request
+     * @return Response
+     */
     public function search(Request $request){
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
@@ -145,34 +130,44 @@ class BreweryController extends Controller
             }
         }
 
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             "success" => true,
-            'beers' => BreweryDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+            'beers' => BreweryDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Deletes an item in table 'Brewery'.
-     * Takes the id as a request parameter.
-     * 
-     * DELETE /breweries/breweryId
+     * Insert an item into table 'Brewery'.
+     * Requires the field 'name'.
+     *
+     * POST /breweries
      *
      * @param Request $request
-     * @param integer $breweryId
      * @return Response
      */
-    public function delete(Request $request, int $breweryId)
+    public function insert(Request $request)
     {
-        BreweryDataService::delete($breweryId);
-        return response()->json([
-            'success' => true
-        ], 204);
-    }
+        $brewery;
+        if(isset($request->input('inputObject')['name'])){
+            $brewery = BreweryDataService::insert($request->input('inputObject'));
+        } else{
+            return response()->json([
+                'success' => false,
+                'msg' => 'name_required'
+            ], 400);
+        }
 
+        return response()->json([
+            'success' => true,
+            'brewery' => $brewery
+        ], 201);
+    }
 
     /**
      * Updates an entry in the table 'Brewery'.
-     * 
+     *
      * PATCH /breweries/breweryId
      *
      * @param Request $request
@@ -191,29 +186,21 @@ class BreweryController extends Controller
         ], 200);
     }
 
-
     /**
-     * Returns a specific JSON object or a JSON array of type 'Brewery'.
-     * Takes the name as a request parameter.
+     * Deletes an item in table 'Brewery'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /breweries/breweryId
      *
      * @param Request $request
+     * @param integer $breweryId
      * @return Response
      */
-    public function getByName(Request $request)
+    public function delete(Request $request, int $breweryId)
     {
-        $name = $request->input("name");
-        if ($name) {
-            return response()->json(Brewery::whereRaw("LOWER(Brewery.name) Like ?", ['%' . strtolower($name) . '%'])->get());
-        }
-    }    
-
-    /**
-     * Returns a JSON array of all records from table 'Brewery' with columns 'id' and 'name'.
-     *
-     * @return Response
-     */
-    public function getAllNameId()
-    {
-        return response()->json(Brewery::select('id', 'name')->get());
+        BreweryDataService::delete($breweryId);
+        return response()->json([
+            'success' => true
+        ], 204);
     }
 }

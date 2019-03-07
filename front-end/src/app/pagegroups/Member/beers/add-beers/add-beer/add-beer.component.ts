@@ -102,7 +102,7 @@ export class AddBeerComponent implements OnInit {
         if (this.breweryName$ != null) {
             this.breweryName$.subscribe(val => this.form.value.breweryID = val.id);
         } else {
-            this.breweriesService.getBreweriesByName(this.form.value.breweryID).subscribe(val => this.form.value.breweryID = val.id);
+            this.breweriesService.getBreweriesByName(this.form.value.breweryID, 'name').then(val => this.form.value.breweryID = val.id);
             console.log(this.breweryName$);
         }
 
@@ -137,7 +137,6 @@ export class AddBeerComponent implements OnInit {
 
     setBreweryName(brewery) {
         this.breweryName$ = of(brewery);
-        console.log(brewery);
         this.breweryName$.subscribe(val => this.form.controls['breweryID'].setValue(val.name));
 
         // disable brewery input
@@ -146,7 +145,7 @@ export class AddBeerComponent implements OnInit {
     }
 
     getAllBreweries() {
-        this.breweriesService.getAllBreweries().subscribe(val => this.breweriesList = val);
+        this.breweriesService.getAllBreweries().then(val => this.breweriesList = val);
     }
 
     getBreweriesByName(name) {

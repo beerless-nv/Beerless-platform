@@ -13,12 +13,51 @@ class ArticleTagDataService
      *
      * @return ArticleTag[]
      */
-    public static function getAll($joinTables, $sortOrder)
+    public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
+    {
+        $query = ArticleTag::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
+        \joinTables($query, 'articletag', $joinTables);
+        \sortQuery($query, $sortOrder);
+        return $query->get($value);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param integer $articletagId
+     * @return ArticleTag
+     */
+    public static function get(int $articletagId, $joinTables, $value)
     {
         $query = ArticleTag::query();
         \joinTables($query, 'articletag', $joinTables);
+        return $query->findOrFail($articletagId, $value);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param array $searchParams
+     * @return ArticleTag[]
+     */
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
+    {        
+        $query = ArticleTag::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
+        \joinTables($query, 'articletag', $joinTables);
         \sortQuery($query, $sortOrder);
-        return $query->get();
+        foreach ($searchParams as $param){
+            $query->where($param['propName'], $param['operator'], $param['value']);
+        }
+
+        if ($searchParams[0]['value'] == '') {
+            return '';
+        } else {
+            return $query->get($value);
+        }
     }
 
     /**
@@ -28,62 +67,13 @@ class ArticleTagDataService
      * @return ArticleTag
      */
     public static function insert(array $inputArray)
-    {       
+    {
         $articletag = new ArticleTag();
         foreach ($inputArray as $key => $value){
             $articletag[$key] = $value;
         }
         $articletag->save();
         return $articletag;
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param integer $articletagId
-     * @return ArticleTag
-     */
-    public static function get(int $articletagId, $joinTables)
-    {
-        $query = ArticleTag::query();
-        \joinTables($query, 'articletag', $joinTables);
-        return $query->findOrFail($articletagId);
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param array $searchParams
-     * @return ArticleTag[]
-     */
-    public static function search(array $searchParams, $joinTables, $sortOrder)
-    {        
-        $query = ArticleTag::query();
-        \joinTables($query, 'articletag', $joinTables);
-        \sortQuery($query, $sortOrder);
-        foreach ($searchParams as $value){
-            if($value['propName'] == 'name'){
-                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($value['value']) . '%']);
-            } else{
-                $query->where($value['propName'], $value['operator'], $value['value']);
-            }
-        }
-        return $query->get();
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param integer $articletagId
-     * @return void
-     */
-    public static function delete(int $articletagId)
-    {
-        if(ArticleTag::where('id', $articletagId)->exists()){
-            ArticleTag::destroy($articletagId);
-        } else{
-            throw new ModelNotFoundException();
-        }        
     }
 
     /**
@@ -102,5 +92,20 @@ class ArticleTagDataService
 
         $articletag->save();
         return $articletag;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param integer $articletagId
+     * @return void
+     */
+    public static function delete(int $articletagId)
+    {
+        if(ArticleTag::where('id', $articletagId)->exists()){
+            ArticleTag::destroy($articletagId);
+        } else{
+            throw new ModelNotFoundException();
+        }        
     }
 }

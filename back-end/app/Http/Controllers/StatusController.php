@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\StatusDataService;
@@ -54,41 +55,14 @@ class StatusController extends Controller
                 ]);
             }
         }
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'statuses' => StatusDataService::getAll($joinTables, $sortOrder, $limit, $offset)
+            'statuses' => StatusDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
-
-    /**
-     * Insert an item into table 'Status'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'title'.
-     * 
-     * POST /statuses
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function insert(Request $request)
-    {
-        $status = '';
-        if(isset($request->input('inputObject')['title'])){
-            $status = StatusDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'title_required'
-            ], 400);
-        }
-        
-        return response()->json([
-            'success' => true,
-            'status' => $status
-        ], 201);
-    }
-
 
     /**
      * Returns a specific JSON object of type 'Status'.
@@ -103,10 +77,12 @@ class StatusController extends Controller
     public function get(Request $request, int $statusId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'status' => StatusDataService::get($statusId, $joinTables)
+            'status' => StatusDataService::get($statusId, $joinTables, $value)
         ],200);
     }
 
@@ -153,40 +129,52 @@ class StatusController extends Controller
             }
         }
 
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             "success" => true,
-            'statuses' => StatusDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+            'statuses' => StatusDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Deletes an item in table 'Status'.
-     * Takes the id as a request parameter.
-     * 
-     * DELETE /statuses/statusId
+     * Insert an item into table 'Status'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'title'.
+     *
+     * POST /statuses
      *
      * @param Request $request
-     * @param integer $statusId
-     * @return void
+     * @return Response
      */
-    public function delete(Request $request, int $statusId)
+    public function insert(Request $request)
     {
-        StatusDataService::delete($statusId);
+        $status = '';
+        if(isset($request->input('inputObject')['title'])){
+            $status = StatusDataService::insert($request->input('inputObject'));
+        } else{
+            return response()->json([
+                'success' => false,
+                'msg' => 'title_required'
+            ], 400);
+        }
+
         return response()->json([
-            'success' => true
-        ], 204);
+            'success' => true,
+            'status' => $status
+        ], 201);
     }
 
     /**
      * Updates an item in table 'Status'.
      * Takes the item fields as request parameters.
      * Requires the field 'name'.
-     * 
+     *
      * PATCH /statuses/$statusId
      *
      * @param Request $request
      * @param integer $statusId
-     * @return void
+     * @return Response
      */
     public function patch(Request $request, int $statusId)
     {
@@ -199,5 +187,23 @@ class StatusController extends Controller
             'success' => true,
             'status' => $status
         ], 200);
+    }
+
+    /**
+     * Deletes an item in table 'Status'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /statuses/statusId
+     *
+     * @param Request $request
+     * @param integer $statusId
+     * @return Response
+     */
+    public function delete(Request $request, int $statusId)
+    {
+        StatusDataService::delete($statusId);
+        return response()->json([
+            'success' => true
+        ], 204);
     }
 }

@@ -86,16 +86,15 @@ Route::prefix('articles')->group(function() {
 });
 
 Route::prefix('breweries')->group(function() {
-    Route::get('/allNameId', 'BreweryController@getAllNameId');
-    Route::get('/getByName', 'BreweryController@getByName');
+//    Route::get('/allNameId', 'BreweryController@getAllNameId');
+//    Route::get('/getByName', 'BreweryController@getByName');
+    Route::get('/', 'BreweryController@getAll');
+    Route::get('/{breweryId}', 'BreweryController@get');
     Route::post('/search', 'BreweryController@search');
 
-    Route::get('/', 'BreweryController@getAll');    
-    Route::post('/', 'BreweryController@insert');   
-    Route::get('/{breweryId}', 'BreweryController@get');
-    
-    Route::delete('/{breweryId}', 'BreweryController@delete');
+    Route::post('/', 'BreweryController@insert');
     Route::patch('/{breweryId}', 'BreweryController@patch');
+    Route::delete('/{breweryId}', 'BreweryController@delete');
 });
 
 Route::prefix('beers')->group(function() {
@@ -139,8 +138,9 @@ Route::prefix('users')->group(function() {
 });
 
 Route::prefix('usersocials')->group(function() {
+    Route::get('/', 'UserSocialController@getAll');
+    Route::get('/{userId}', 'UserSocialController@get');
     Route::post('/search', 'UserSocialController@search');
 
-    Route::get('/{userId}', 'UserSocialController@get');
     Route::post('/', 'UserSocialController@insert');
 });

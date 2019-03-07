@@ -13,14 +13,56 @@ class BeerDataService
      *
      * @return Beer[]
      */
-    public static function getAll($joinTables, $sortOrder, $limit, $offset)
+    public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
     {
         $query = Beer::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
         \joinTables($query, 'beer', $joinTables);
         \sortQuery($query, $sortOrder);
-        return $query->get();
+        return $query->get($value);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param integer $beerId
+     * @return Beer
+     */
+    public static function get(int $beerId, $joinTables, $value)
+    {
+        $query = Beer::query();
+        \joinTables($query, 'beer', $joinTables);
+        return $query->findOrFail($beerId, $value);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param array $searchParams
+     * @return Beer[]
+     */
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
+    {
+
+        $query = Beer::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
+        \joinTables($query, 'beer', $joinTables);
+        \sortQuery($query, $sortOrder);
+        foreach ($searchParams as $param) {
+            if ($param['propName'] == 'name') {
+                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($param['value']) . '%']);
+            } else {
+                $query->where($param['propName'], $param['operator'], $param['value']);
+            }
+        }
+
+        if ($searchParams[0]['value'] == '') {
+            return '';
+        } else {
+            return $query->get($value);
+        }
     }
 
     /**
@@ -43,43 +85,18 @@ class BeerDataService
      * Undocumented function
      *
      * @param integer $beerId
+     * @param array $updateArray
      * @return Beer
      */
-    public static function get(int $beerId, $joinTables, $value)
+    public static function update(int $beerId, array $updateArray)
     {
-        $query = Beer::query();
-        \joinTables($query, 'beer', $joinTables);
-        return $query->findOrFail($beerId, $value);
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param array $searchParams
-     * @return Beer[]
-     */
-    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset)
-    {
-
-        $query = Beer::query();
-        \limitQuery($query, $limit);
-        \offsetQuery($query, $offset);
-        \joinTables($query, 'beer', $joinTables);
-        \sortQuery($query, $sortOrder);
-        foreach ($searchParams as $value) {
-            if ($value['propName'] == 'name') {
-                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($value['value']) . '%']);
-            } else {
-                $query->where($value['propName'], $value['operator'], $value['value']);
-            }
+        $beer = Beer::findOrFail($beerId);
+        foreach ($updateArray as $key => $value) {
+            $beer[$key] = $value;
         }
 
-        if ($searchParams[0]['value'] == '') {
-            return '';
-        } else {
-            return $query->get();
-        }
-
+        $beer->save();
+        return $beer;
     }
 
     /**
@@ -95,23 +112,5 @@ class BeerDataService
         } else {
             throw new ModelNotFoundException();
         }
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param integer $beerId
-     * @param array $updateArray
-     * @return Beer
-     */
-    public static function update(int $beerId, array $updateArray)
-    {
-        $beer = Beer::findOrFail($beerId);
-        foreach ($updateArray as $key => $value) {
-            $beer[$key] = $value;
-        }
-
-        $beer->save();
-        return $beer;
     }
 }

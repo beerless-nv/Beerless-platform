@@ -13,28 +13,14 @@ class BeertypeDataService
      *
      * @return Beertype[]
      */
-    public static function getAll($joinTables, $sortOrder, $limit, $offset){
+    public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
+    {
         $query = Beertype::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
         \joinTables($query, 'beertype', $joinTables);
         \sortQuery($query, $sortOrder);
-        return $query->get();
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param array $inputArray
-     * @return Beertype
-     */
-    public static function insert(array $inputArray){       
-        $beer = new Beertype();
-        foreach ($inputArray as $key => $value){
-            $beer[$key] = $value;
-        }
-        $beer->save();
-        return $beer;
+        return $query->get($value);
     }
 
     /**
@@ -43,10 +29,11 @@ class BeertypeDataService
      * @param integer $beertypeId
      * @return Beertype
      */
-    public static function get(int $beertypeId, $joinTables){
+    public static function get(int $beertypeId, $joinTables, $value)
+    {
         $query = Beertype::query();
         \joinTables($query, 'beertype', $joinTables);
-        return $query->findOrFail($beertypeId);
+        return $query->findOrFail($beertypeId, $value);
     }
 
     /**
@@ -55,35 +42,42 @@ class BeertypeDataService
      * @param array $searchParams
      * @return Beertype[]
      */
-    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset){
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
+    {
         $query = Beertype::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
         \joinTables($query, 'beertype', $joinTables);
         \sortQuery($query, $sortOrder);
-        foreach ($searchParams as $value){
-            if($value['propName'] == 'name'){
-                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($value['value']) . '%']);
-            } else{
-                $query->where($value['propName'], $value['operator'], $value['value']);
+        foreach ($searchParams as $param) {
+            if ($param['propName'] == 'name') {
+                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($param['value']) . '%']);
+            } else {
+                $query->where($param['propName'], $param['operator'], $param['value']);
             }
         }
-        return $query->get();
+
+        if ($searchParams[0]['value'] == '') {
+            return '';
+        } else {
+            return $query->get($value);
+        }
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $beertypeId
-     * @return void
+     * @param array $inputArray
+     * @return Beertype
      */
-    public static function delete(int $beertypeId){
-        if(Beertype::where('id', $beertypeId)->exists()){
-            Beertype::destroy($beertypeId);
-        } else{
-            throw new ModelNotFoundException();
+    public static function insert(array $inputArray)
+    {
+        $beer = new Beertype();
+        foreach ($inputArray as $key => $value) {
+            $beer[$key] = $value;
         }
-        
+        $beer->save();
+        return $beer;
     }
 
     /**
@@ -93,13 +87,30 @@ class BeertypeDataService
      * @param array $updateArray
      * @return Beertype
      */
-    public static function update(int $beertypeId ,array $updateArray){
+    public static function update(int $beertypeId, array $updateArray)
+    {
         $beer = Beertype::findOrFail($beertypeId);
-        foreach ($updateArray as $key => $value){
+        foreach ($updateArray as $key => $value) {
             $beer[$key] = $value;
         }
 
         $beer->save();
         return $beer;
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param integer $beertypeId
+     * @return void
+     */
+    public static function delete(int $beertypeId)
+    {
+        if (Beertype::where('id', $beertypeId)->exists()) {
+            Beertype::destroy($beertypeId);
+        } else {
+            throw new ModelNotFoundException();
+        }
+
     }
 }

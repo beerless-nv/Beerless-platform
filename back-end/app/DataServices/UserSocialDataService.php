@@ -1,10 +1,63 @@
 <?php
+
 namespace App\DataServices;
 
 use App\Models\UserSocial;
 
 class UserSocialDataService
 {
+    /**
+     * Undocumented function
+     *
+     * @return UserSocial[]
+     */
+    public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
+    {
+        $query = UserSocial::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
+        \joinTables($query, 'usersocial', $joinTables);
+        \sortQuery($query, $sortOrder);
+        return $query->get($value);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param integer $usersocialId
+     * @return UserSocial
+     */
+    public static function get(int $usersocialId, $joinTables, $value)
+    {
+        $query = UserSocial::query();
+        \joinTables($query, 'usersocial', $joinTables);
+        return $query->findOrFail($usersocialId, $value);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param array $searchParams
+     * @return UserSocial[]
+     */
+    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
+    {
+        $query = UserSocial::query();
+        \limitQuery($query, $limit);
+        \offsetQuery($query, $offset);
+        \joinTables($query, 'usersocial', $joinTables);
+        \sortQuery($query, $sortOrder);
+        foreach ($searchParams as $param) {
+            $query->where($param['propName'], $param['operator'], $param['value']);
+        }
+
+        if ($searchParams[0]['value'] == '') {
+            return [];
+        } else {
+            return $query->get($value);
+        }
+    }
+
     /**
      * Undocumented function
      *
@@ -25,35 +78,32 @@ class UserSocialDataService
      * Undocumented function
      *
      * @param integer $usersocialId
+     * @param array $updateArray
      * @return UserSocial
      */
-    public static function get(int $usersocialId, $joinTables)
+    public static function update(int $usersocialId, array $updateArray)
     {
-        $query = UserSocial::query();
-        \joinTables($query, 'usersocial', $joinTables);
-        return $query->findOrFail($usersocialId);
+        $usersocial = UserSocial::findOrFail($usersocialId);
+        foreach ($updateArray as $key => $value){
+            $usersocial[$key] = $value;
+        }
+
+        $usersocial->save();
+        return $usersocial;
     }
 
     /**
      * Undocumented function
      *
-     * @param array $searchParams
-     * @return UserSocial[]
+     * @param integer $usersocialId
+     * @return void
      */
-    public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset)
+    public static function delete(int $usersocialId)
     {
-        $query = UserSocial::query();
-        \limitQuery($query, $limit);
-        \offsetQuery($query, $offset);
-        \joinTables($query, 'usersocial', $joinTables);
-        \sortQuery($query, $sortOrder);
-        foreach ($searchParams as $value) {
-            if ($value['propName'] == 'name') {
-                $query->whereRaw('LOWER(name) like ?', ['%' . strtolower($value['value']) . '%']);
-            } else {
-                $query->where($value['propName'], $value['operator'], $value['value']);
-            }
+        if(UserSocial::where('id', $usersocialId)->exists()){
+            UserSocial::destroy($usersocialId);
+        } else{
+            throw new ModelNotFoundException();
         }
-        return $query->get();
     }
 }

@@ -1,22 +1,15 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {LocalStorageService} from './local-storage.service';
 import {ToastsService} from './toasts.service';
-import {PARAMETERS} from '@angular/core/src/util/decorators';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
 })
 export class BeersService {
 
-    readonly urlGetBeerById = environment.backend + 'beers/';
-    readonly urlGetAllBeers = environment.backend + 'beers/';
-    readonly urlInsertBeer = environment.backend + 'beers';
-    readonly urlGetBeersByName = environment.backend + 'beers/search';
-    readonly urlGetBeersNewest = environment.backend + 'beers/new';
-    readonly urlUploadImageBeer = environment.backend + 'beers/uploadImage';
+    readonly urlBeer = environment.backend + 'beers';
 
     constructor(private http: HttpClient, private localStorageService: LocalStorageService, private toastsService: ToastsService) {
     }
@@ -25,7 +18,7 @@ export class BeersService {
         const params = new HttpParams()
             .set('joinTables', 'beertype,brewery');
 
-        return this.http.post(this.urlGetBeersByName, {
+        return this.http.post(this.urlBeer + '/search', {
             searchParams: [{
                 propName: name,
                 value: value
@@ -42,7 +35,7 @@ export class BeersService {
         const params = new HttpParams()
             .set('joinTables', 'beertype,brewery');
 
-        return this.http.post(this.urlGetBeersByName, {
+        return this.http.post(this.urlBeer + '/search', {
             searchParams: [{
                 propName: name,
                 value: value
@@ -55,7 +48,6 @@ export class BeersService {
     }
 
     getBeersByNamePagination(name, value, limit, offset) {
-        console.log('hey');
         let params;
 
         if (offset !== 0) {
@@ -69,7 +61,7 @@ export class BeersService {
                 .set('limit', limit);
         }
 
-        return this.http.post(this.urlGetBeersByName, {
+        return this.http.post(this.urlBeer + '/search', {
             searchParams: [{
                 propName: name,
                 value: value,
@@ -86,7 +78,7 @@ export class BeersService {
         const params = new HttpParams()
             .set('joinTables', 'beertype,brewery');
 
-        return this.http.get(this.urlGetBeerById + id, {params})
+        return this.http.get(this.urlBeer + '/' + id, {params})
             .toPromise()
             .then(data => {
                 return data;
@@ -94,7 +86,7 @@ export class BeersService {
     }
 
     getBeersNewest() {
-        return this.http.get(this.urlGetBeersNewest)
+        return this.http.get(this.urlBeer + '/new')
             .toPromise()
             .then(data => {
                 this.localStorageService.clearNewestBeers();
@@ -104,7 +96,7 @@ export class BeersService {
 
 
     insertBeer(beer) {
-        this.http.post(this.urlInsertBeer,
+        this.http.post(this.urlBeer,
             {
                 inputObject: beer
             })
@@ -119,9 +111,7 @@ export class BeersService {
         uploadData.append('imageName', imageName);
         uploadData.append('imagePath', imagePath);
 
-        console.log(uploadData);
-
-        this.http.post(this.urlUploadImageBeer, uploadData)
+        this.http.post(this.urlBeer + '/uploadImage', uploadData)
             .subscribe();
     }
 }

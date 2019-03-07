@@ -54,11 +54,86 @@ class ArticleController extends Controller
                 ]);
             }
         }
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'articles' => ArticleDataService::getAll($joinTables, $sortOrder, $limit, $offset)
+            'articles' => ArticleDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
+    }
+
+    /**
+     * Returns a specific JSON object of type 'Article'.
+     * Takes the id as a request parameter.
+     *
+     * GET /articles/articleId
+     *
+     * @param Request $articleId
+     * @param integer $articleId
+     * @return Reponse
+     */
+    public function get(Request $request, int $articleId)
+    {
+        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
+        return response()->json([
+            'success' => true,
+            'article' => ArticleDataService::get($articleId, $joinTables, $value)
+        ],200);
+    }
+
+    /**
+     * Undocumented function
+     *
+     * GET /articles/search
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function search(Request $request)
+    {
+        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
+
+        $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
+        if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];}
+        else {$sortOrder = null;}
+
+        $limit = null;
+        if($request->query('limit') != null){
+            $limit = intval($request->query('limit'));
+            if(!is_int($limit) || $limit < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'limit_not_valid'
+                ]);
+            }
+        }
+
+        $offset = null;
+        if($request->query('offset') != null){
+            $offset = intval($request->query('offset'));
+            if(!is_int($offset) || $offset < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'offset_not_valid'
+                ]);
+            } if($limit == null){
+                return response()->json([
+                    'success' => false,
+                    'msg' => 'limit_not_set'
+                ]);
+            }
+        }
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
+        return response()->json([
+            "success" => true,
+            'articles' => ArticleDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
+        ]);
     }
 
     /**
@@ -89,104 +164,16 @@ class ArticleController extends Controller
         ], 201);
     }
 
-
-    /**
-     * Returns a specific JSON object of type 'Article'.
-     * Takes the id as a request parameter.
-     * 
-     * GET /articles/articleId
-     * 
-     * @param Request $articleId
-     * @param integer $articleId
-     * @return Reponse
-     */
-    public function get(Request $request, int $articleId)
-    {
-        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
-        
-        return response()->json([
-            'success' => true,
-            'article' => ArticleDataService::get($articleId, $joinTables)
-        ],200);
-    }
-
-    /**
-     * Undocumented function
-     * 
-     * GET /articles/search
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function search(Request $request)
-    {
-        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
-
-        $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
-        if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
-        else {$sortOrder = null;}
-
-        $limit = null;
-        if($request->query('limit') != null){
-            $limit = intval($request->query('limit'));
-            if(!is_int($limit) || $limit < 1){
-                return response()->json([
-                    'succes' => false,
-                    'msg' => 'limit_not_valid'
-                ]);
-            }
-        }        
-        
-        $offset = null;
-        if($request->query('offset') != null){
-            $offset = intval($request->query('offset'));
-            if(!is_int($offset) || $offset < 1){
-                return response()->json([
-                    'succes' => false,
-                    'msg' => 'offset_not_valid'
-                ]);
-            } if($limit == null){
-                return response()->json([
-                    'success' => false,
-                    'msg' => 'limit_not_set'
-                ]);
-            }
-        }
-
-        return response()->json([
-            "success" => true,
-            'articles' => ArticleDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
-        ]);
-    }
-
-    /**
-     * Deletes an item in table 'Article'.
-     * Takes the id as a request parameter.
-     * 
-     * DELETE /articles/articleId
-     *
-     * @param Request $request
-     * @param integer $articleId
-     * @return void
-     */
-    public function delete(Request $request, int $articleId)
-    {
-        ArticleDataService::delete($articleId);
-        return response()->json([
-            'success' => true
-        ], 204);
-    }
-
     /**
      * Updates an item in table 'Article'.
      * Takes the item fields as request parameters.
      * Requires the field 'name'.
-     * 
+     *
      * PATCH /articles/$articleId
      *
      * @param Request $request
      * @param integer $articleId
-     * @return void
+     * @return Response
      */
     public function patch(Request $request, int $articleId)
     {
@@ -199,5 +186,23 @@ class ArticleController extends Controller
             'success' => true,
             'article' => $article
         ], 200);
+    }
+
+    /**
+     * Deletes an item in table 'Article'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /articles/articleId
+     *
+     * @param Request $request
+     * @param integer $articleId
+     * @return Response
+     */
+    public function delete(Request $request, int $articleId)
+    {
+        ArticleDataService::delete($articleId);
+        return response()->json([
+            'success' => true
+        ], 204);
     }
 }

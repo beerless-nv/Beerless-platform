@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\ArticleTagDataService;
@@ -29,39 +30,40 @@ class ArticleTagController extends Controller
         $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
         if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
         else {$sortOrder = null;}
-        
-        return response()->json([
-            'success' => true,
-            'articletags' => ArticleTagDataService::getAll($joinTables, $sortOrder)
-        ], 200);
-    }
 
-    /**
-     * Insert an item into table 'ArticleTag'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'name'.
-     * 
-     * POST /articletags
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function insert(Request $request)
-    {
-        $articletag = '';
-        if(isset($request->input('inputObject')['articleID']) && isset($request->input('inputObject')['tagID'])){
-            $articletag = ArticleTagDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'all_fields_required'
-            ], 400);
+        $limit = null;
+        if($request->query('limit') != null){
+            $limit = intval($request->query('limit'));
+            if(!is_int($limit) || $limit < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'limit_not_valid'
+                ]);
+            }
         }
-        
+
+        $offset = null;
+        if($request->query('offset') != null){
+            $offset = intval($request->query('offset'));
+            if(!is_int($offset) || $offset < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'offset_not_valid'
+                ]);
+            } if($limit == null){
+                return response()->json([
+                    'success' => false,
+                    'msg' => 'limit_not_set'
+                ]);
+            }
+        }
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'articletag' => $articletag
-        ], 201);
+            'articletags' => ArticleTagDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
+        ], 200);
     }
 
 
@@ -78,10 +80,12 @@ class ArticleTagController extends Controller
     public function get(Request $request, int $articletagId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'articletag' => ArticleTagDataService::get($articletagId, $joinTables)
+            'articletag' => ArticleTagDataService::get($articletagId, $joinTables, $value)
         ],200);
     }
 
@@ -91,7 +95,7 @@ class ArticleTagController extends Controller
      * GET /articletags/search
      *
      * @param Request $request
-     * @return void
+     * @return Response
      */
     public function search(Request $request)
     {
@@ -101,40 +105,79 @@ class ArticleTagController extends Controller
         if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
         else {$sortOrder = null;}
 
+        $limit = null;
+        if($request->query('limit') != null){
+            $limit = intval($request->query('limit'));
+            if(!is_int($limit) || $limit < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'limit_not_valid'
+                ]);
+            }
+        }
+
+        $offset = null;
+        if($request->query('offset') != null){
+            $offset = intval($request->query('offset'));
+            if(!is_int($offset) || $offset < 1){
+                return response()->json([
+                    'succes' => false,
+                    'msg' => 'offset_not_valid'
+                ]);
+            } if($limit == null){
+                return response()->json([
+                    'success' => false,
+                    'msg' => 'limit_not_set'
+                ]);
+            }
+        }
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             "success" => true,
-            'articletags' => ArticleTagDataService::search($request->input('searchParams'), $joinTables, $sortOrder)
+            'articletags' => ArticleTagDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Deletes an item in table 'ArticleTag'.
-     * Takes the id as a request parameter.
-     * 
-     * DELETE /articletags/articletagId
+     * Insert an item into table 'ArticleTag'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'name'.
+     *
+     * POST /articletags
      *
      * @param Request $request
-     * @param integer $articletagId
-     * @return void
+     * @return Response
      */
-    public function delete(Request $request, int $articletagId)
+    public function insert(Request $request)
     {
-        ArticleTagDataService::delete($articletagId);
+        $articletag = '';
+        if(isset($request->input('inputObject')['articleID']) && isset($request->input('inputObject')['tagID'])){
+            $articletag = ArticleTagDataService::insert($request->input('inputObject'));
+        } else{
+            return response()->json([
+                'success' => false,
+                'msg' => 'all_fields_required'
+            ], 400);
+        }
+
         return response()->json([
-            'success' => true
-        ], 204);
+            'success' => true,
+            'articletag' => $articletag
+        ], 201);
     }
 
     /**
      * Updates an item in table 'ArticleTag'.
      * Takes the item fields as request parameters.
      * Requires the field 'id' and 'name'.
-     * 
+     *
      * PATCH /articletags/$articletagId
      *
      * @param Request $request
      * @param integer $articletagId
-     * @return void
+     * @return Response
      */
     public function patch(Request $request, int $articletagId)
     {
@@ -147,5 +190,23 @@ class ArticleTagController extends Controller
             'success' => true,
             'articletag' => $articletag
         ], 200);
+    }
+
+    /**
+     * Deletes an item in table 'ArticleTag'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /articletags/articletagId
+     *
+     * @param Request $request
+     * @param integer $articletagId
+     * @return Response
+     */
+    public function delete(Request $request, int $articletagId)
+    {
+        ArticleTagDataService::delete($articletagId);
+        return response()->json([
+            'success' => true
+        ], 204);
     }
 }

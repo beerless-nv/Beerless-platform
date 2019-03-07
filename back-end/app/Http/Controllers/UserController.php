@@ -70,9 +70,11 @@ class UserController extends Controller
             }
         }
 
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'users' => UserDataService::getAll($joinTables, $sortOrder, $limit, $offset)
+            'users' => UserDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
 
@@ -86,11 +88,13 @@ class UserController extends Controller
      */
     public function get(Request $request, int $userId)
     {
-//        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
+        $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
 
         return response()->json([
             'success' => true,
-            'user' => UserDataService::get($userId)
+            'user' => UserDataService::get($userId, $joinTables, $value)
         ], 200);
     }
 
@@ -134,9 +138,11 @@ class UserController extends Controller
             }
         }
 
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'users' => UserDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+            'users' => UserDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 

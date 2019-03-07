@@ -9,40 +9,37 @@ import {environment} from '../../environments/environment';
 })
 export class BreweriesService {
 
-    readonly urlGetBreweriesByName = environment.backend + 'breweries/getByName';
-    readonly urlGetAllBreweries = environment.backend + 'breweries/allNameId';
+    readonly urlBrewery = environment.backend + 'breweries';
 
     constructor(private http: HttpClient) {
     }
 
-    getBreweriesByName(name): Observable<any> {
+    getBreweriesByName(name, value) {
         const params = new HttpParams()
-            .set('name', name);
+            .set('value', 'ID,name');
 
-        return this.http.get(this.urlGetBreweriesByName, {params})
-            .pipe(
-                tap(req => console.log('get-request', req)),
-                catchError(
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                        return EMPTY;
-                    }),
-                share()
-            );
+        return this.http.post(this.urlBrewery + '/search', {
+            searchParams: [{
+                propName: name,
+                value: value
+            }, {params}]
+        })
+            .toPromise()
+            .then(data => {
+                console.log(data);
+                return data['breweries'];
+            });
     }
 
-    getAllBreweries(): Observable<any> {
-        return this.http.get(this.urlGetAllBreweries)
-            .pipe(
-                tap(),
-                catchError(
-                    (error) => {
-                        console.log(error);
-                        alert(error.message);
-                        return EMPTY;
-                    }),
-                share()
-            );
+    getAllBreweries() {
+        const params = new HttpParams()
+            .set('value', 'ID,name');
+
+        return this.http.get(this.urlBrewery, {params})
+            .toPromise()
+            .then(data => {
+                console.log(data);
+                return data['breweries'];
+            });
     }
 }

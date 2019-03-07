@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\RelationshipDataService;
@@ -54,41 +55,14 @@ class RelationshipController extends Controller
                 ]);
             }
         }
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'relationships' => RelationshipDataService::getAll($joinTables, $sortOrder, $limit, $offset)
+            'relationships' => RelationshipDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
-
-    /**
-     * Insert an item into table 'Relationship'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'title'.
-     * 
-     * POST /relationships
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function insert(Request $request)
-    {
-        $relationship = '';
-        if(isset($request->input('inputObject')['title'])){
-            $relationship = RelationshipDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'title_required'
-            ], 400);
-        }
-        
-        return response()->json([
-            'success' => true,
-            'relationship' => $relationship
-        ], 201);
-    }
-
 
     /**
      * Returns a specific JSON object of type 'Relationship'.
@@ -103,10 +77,12 @@ class RelationshipController extends Controller
     public function get(Request $request, int $relationshipId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'relationship' => RelationshipDataService::get($artrelationshipIdicleId, $joinTables)
+            'relationship' => RelationshipDataService::get($relationshipId, $joinTables, $value)
         ],200);
     }
 
@@ -153,40 +129,52 @@ class RelationshipController extends Controller
             }
         }
 
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             "success" => true,
-            'relationships' => RelationshipDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+            'relationships' => RelationshipDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Deletes an item in table 'Relationship'.
-     * Takes the id as a request parameter.
-     * 
-     * DELETE /relationships/relationshipId
+     * Insert an item into table 'Relationship'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'title'.
+     *
+     * POST /relationships
      *
      * @param Request $request
-     * @param integer $relationshipId
-     * @return void
+     * @return Response
      */
-    public function delete(Request $request, int $relationshipId)
+    public function insert(Request $request)
     {
-        RelationshipDataService::delete($relationshipId);
+        $relationship = '';
+        if(isset($request->input('inputObject')['title'])){
+            $relationship = RelationshipDataService::insert($request->input('inputObject'));
+        } else{
+            return response()->json([
+                'success' => false,
+                'msg' => 'title_required'
+            ], 400);
+        }
+
         return response()->json([
-            'success' => true
-        ], 204);
+            'success' => true,
+            'relationship' => $relationship
+        ], 201);
     }
 
     /**
      * Updates an item in table 'Relationship'.
      * Takes the item fields as request parameters.
      * Requires the field 'name'.
-     * 
+     *
      * PATCH /relationships/$relationshipId
      *
      * @param Request $request
      * @param integer $relationshipId
-     * @return void
+     * @return Response
      */
     public function patch(Request $request, int $relationshipId)
     {
@@ -199,5 +187,23 @@ class RelationshipController extends Controller
             'success' => true,
             'relationship' => $relationship
         ], 200);
+    }
+
+    /**
+     * Deletes an item in table 'Relationship'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /relationships/relationshipId
+     *
+     * @param Request $request
+     * @param integer $relationshipId
+     * @return Response
+     */
+    public function delete(Request $request, int $relationshipId)
+    {
+        RelationshipDataService::delete($relationshipId);
+        return response()->json([
+            'success' => true
+        ], 204);
     }
 }

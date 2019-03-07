@@ -54,41 +54,14 @@ class ActivityController extends Controller
                 ]);
             }
         }
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'activities' => ActivityDataService::getAll($joinTables, $sortOrder, $limit, $offset)
+            'activities' => ActivityDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
-
-    /**
-     * Insert an item into table 'Activity'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'title'.
-     * 
-     * POST /activities
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function insert(Request $request)
-    {
-        $activity = '';
-        if(isset($request->input('inputObject')['title'])){
-            $activity = ActivityDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'title_required'
-            ], 400);
-        }
-        
-        return response()->json([
-            'success' => true,
-            'activity' => $activity
-        ], 201);
-    }
-
 
     /**
      * Returns a specific JSON object of type 'Activity'.
@@ -103,10 +76,12 @@ class ActivityController extends Controller
     public function get(Request $request, int $activityId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'activity' => ActivityDataService::get($activityId, $joinTables)
+            'activity' => ActivityDataService::get($activityId, $joinTables, $value)
         ],200);
     }
 
@@ -153,40 +128,52 @@ class ActivityController extends Controller
             }
         }
 
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             "success" => true,
-            'activities' => ActivityDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+            'activities' => ActivityDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Deletes an item in table 'Activity'.
-     * Takes the id as a request parameter.
-     * 
-     * DELETE /activities/activityId
+     * Insert an item into table 'Activity'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'title'.
+     *
+     * POST /activities
      *
      * @param Request $request
-     * @param integer $activityId
-     * @return void
+     * @return Response
      */
-    public function delete(Request $request, int $activityId)
+    public function insert(Request $request)
     {
-        ActivityDataService::delete($activityId);
+        $activity = '';
+        if(isset($request->input('inputObject')['title'])){
+            $activity = ActivityDataService::insert($request->input('inputObject'));
+        } else{
+            return response()->json([
+                'success' => false,
+                'msg' => 'title_required'
+            ], 400);
+        }
+
         return response()->json([
-            'success' => true
-        ], 204);
+            'success' => true,
+            'activity' => $activity
+        ], 201);
     }
 
     /**
      * Updates an item in table 'Activity'.
      * Takes the item fields as request parameters.
      * Requires the field 'name'.
-     * 
+     *
      * PATCH /activities/$activityId
      *
      * @param Request $request
      * @param integer $activityId
-     * @return void
+     * @return Response
      */
     public function patch(Request $request, int $activityId)
     {
@@ -199,5 +186,23 @@ class ActivityController extends Controller
             'success' => true,
             'activity' => $activity
         ], 200);
+    }
+
+    /**
+     * Deletes an item in table 'Activity'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /activities/activityId
+     *
+     * @param Request $request
+     * @param integer $activityId
+     * @return Response
+     */
+    public function delete(Request $request, int $activityId)
+    {
+        ActivityDataService::delete($activityId);
+        return response()->json([
+            'success' => true
+        ], 204);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\TagDataService;
@@ -54,41 +55,14 @@ class TagController extends Controller
                 ]);
             }
         }
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'tags' => TagDataService::getAll($joinTables, $sortOrder, $limit, $offset)
+            'tags' => TagDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
-
-    /**
-     * Insert an item into table 'Tag'.
-     * Takes the item fields as request parameters.
-     * Requires the field 'title'.
-     * 
-     * POST /tags
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function insert(Request $request)
-    {
-        $tag = '';
-        if(isset($request->input('inputObject')['name'])){
-            $tag = TagDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'name_required'
-            ], 400);
-        }
-        
-        return response()->json([
-            'success' => true,
-            'tag' => $tag
-        ], 201);
-    }
-
 
     /**
      * Returns a specific JSON object of type 'Tag'.
@@ -103,10 +77,12 @@ class TagController extends Controller
     public function get(Request $request, int $tagId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
-        
+
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             'success' => true,
-            'tag' => TagDataService::get($tagId, $joinTables)
+            'tag' => TagDataService::get($tagId, $joinTables, $value)
         ],200);
     }
 
@@ -153,40 +129,52 @@ class TagController extends Controller
             }
         }
 
+        $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
+
         return response()->json([
             "success" => true,
-            'tags' => TagDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset)
+            'tags' => TagDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Deletes an item in table 'Tag'.
-     * Takes the id as a request parameter.
-     * 
-     * DELETE /tags/tagId
+     * Insert an item into table 'Tag'.
+     * Takes the item fields as request parameters.
+     * Requires the field 'title'.
+     *
+     * POST /tags
      *
      * @param Request $request
-     * @param integer $tagId
-     * @return void
+     * @return Response
      */
-    public function delete(Request $request, int $tagId)
+    public function insert(Request $request)
     {
-        TagDataService::delete($tagId);
+        $tag = '';
+        if(isset($request->input('inputObject')['name'])){
+            $tag = TagDataService::insert($request->input('inputObject'));
+        } else{
+            return response()->json([
+                'success' => false,
+                'msg' => 'name_required'
+            ], 400);
+        }
+
         return response()->json([
-            'success' => true
-        ], 204);
+            'success' => true,
+            'tag' => $tag
+        ], 201);
     }
 
     /**
      * Updates an item in table 'Tag'.
      * Takes the item fields as request parameters.
      * Requires the field 'name'.
-     * 
+     *
      * PATCH /tags/$tagId
      *
      * @param Request $request
      * @param integer $tagId
-     * @return void
+     * @return Response
      */
     public function patch(Request $request, int $tagId)
     {
@@ -199,5 +187,23 @@ class TagController extends Controller
             'success' => true,
             'tag' => $tag
         ], 200);
+    }
+
+    /**
+     * Deletes an item in table 'Tag'.
+     * Takes the id as a request parameter.
+     * 
+     * DELETE /tags/tagId
+     *
+     * @param Request $request
+     * @param integer $tagId
+     * @return Response
+     */
+    public function delete(Request $request, int $tagId)
+    {
+        TagDataService::delete($tagId);
+        return response()->json([
+            'success' => true
+        ], 204);
     }
 }
