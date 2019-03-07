@@ -58,7 +58,7 @@ class BeertypeDataService
         }
 
         if ($searchParams[0]['value'] == '') {
-            return '';
+            return [];
         } else {
             return $query->get($value);
         }
