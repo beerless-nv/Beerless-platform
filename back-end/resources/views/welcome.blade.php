@@ -123,7 +123,7 @@
                 </svg>
             </a>basic requests
         </h2>
-        <p>A list of all rows of a resource can be gotten by a simple get request:</p>
+        <p>A list of all rows of a resource can be requested by a simple get request:</p>
         <pre><code>GET /beers
 
 returns: {
@@ -139,7 +139,7 @@ returns: {
         <pre><code>POST /beers
 
 requires: {
-    "ipnutObject": {
+    "inputObject": {
         "name":"fooName",
         ...
     }
@@ -158,7 +158,7 @@ returns: {
     beer: {beerObj}
 }
 </code></pre>
-        <p>Deleting a specific row basen on id is done via a delete request:</p>
+        <p>Deleting a specific row based on id is done via a delete request:</p>
         <pre><code>DELETE /beers/beerId
 
 returns: {
@@ -189,7 +189,7 @@ returns: {
                 </svg>
             </a>Search
         </h3>
-        <p>This endpoint is available on every endpoint under the url '/search' and should be accompagnied by a body
+        <p>This endpoint is available on every endpoint via the url '/search' and should be accompanied by a body
             which specifies on which fields to filter.</p>
         <pre><code>GET /beer/search
 
@@ -213,7 +213,7 @@ requires: {
                 </svg>
             </a>Other functionalities
         </h2>
-        <p>There are some more things that can be added to the request to customize them. Some are gicen through URL
+        <p>There are some more things that can be added to the request to customize them. Some are given through URL
             queries, others just over the body.</p>
         <h3><a id="user-content-get-a-specific-value-from-a-row" class="anchor" aria-hidden="true"
                href="#get-a-specific-value-from-a-row">
@@ -238,7 +238,7 @@ requires: {
             </a>Joining tables
         </h3>
         <p>This is done through a URL query. By adding the parameter 'joinTables' you say which ones are included. If
-            there are multiple, they have to be seperated by a single comma:</p>
+            there are multiple parameters, they have to be separated by a single comma:</p>
         <pre><code>GET /beers?joinTables=beertype,brewery
 </code></pre>
         <h3><a id="user-content-ordering-results" class="anchor" aria-hidden="true" href="#ordering-results">
@@ -250,7 +250,7 @@ requires: {
             </a>Ordering results
         </h3>
         <p>This also achieved through a query parameter. It's not possible to sort on multiple fields. To sort you
-            include the field and which way it should be seperated: ascending(asc) or descending(desc) seperated by a
+            include the field and which way it should be separated: ascending(asc) or descending(desc) separated by a
             point:</p>
         <pre><code>GET /beers?orderBy=IBU.desc
 </code></pre>
@@ -262,14 +262,14 @@ requires: {
                 </svg>
             </a>Limit and offset
         </h3>
-        <p>To limit a result, just use it as qeury parameter in the URL, this should always be a number greater than
+        <p>To limit a result, just use it as query parameter in the URL, this should always be a number greater than
             0.</p>
         <pre><code>GET /beers?limit=5
 </code></pre>
         <p>The same goes for offset, although this one can only be used in combination with limit:</p>
         <pre><code>GET /beers?offset=5
 </code></pre>
-        <p>These query paramerts can only be used on the following resources:</p>
+        <p>These query parameters can only be used on the following resources:</p>
         <ul>
             <li>beers</li>
             <li>beertypes</li>

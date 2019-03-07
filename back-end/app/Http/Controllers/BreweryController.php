@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Brewery;
 use App\DataServices\BreweryDataService;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Contains CRUD functions for table 'Brewery'.
@@ -134,7 +135,23 @@ class BreweryController extends Controller
 
         return response()->json([
             "success" => true,
-            'beers' => BreweryDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
+            'breweries' => BreweryDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
+        ]);
+    }
+
+    /**
+     *
+     *
+     * @param Request $request
+     * @return Response
+     */
+    public function getBeersFromBrewery(Request $request)
+    {
+
+
+        return response()->json([
+            "success" => true,
+            'breweries' => []
         ]);
     }
 
