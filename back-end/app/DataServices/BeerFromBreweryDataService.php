@@ -3,6 +3,9 @@
 namespace App\DataServices;
 
 
+use App\Models\BeerFromBrewery;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class BeerFromBreweryDataService
 {
     /**

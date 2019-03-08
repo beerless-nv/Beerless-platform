@@ -37,12 +37,12 @@ Route::prefix('statuses')->group(function() {
 
 Route::prefix('activitytypes')->group(function() {
     Route::get('/', 'ActivityTypeController@getAll');
-    Route::get('/{activitytypeId}', 'ActivityTypeController@get');
+    Route::get('/{activityTypeId}', 'ActivityTypeController@get');
     Route::post('/search', 'ActivityTypeController@search');
 
     Route::post('/', 'ActivityTypeController@insert');
-    Route::patch('/{activitytypeId}', 'ActivityTypeController@patch');
-    Route::delete('/{activitytypeId}', 'ActivityTypeController@delete');
+    Route::patch('/{activityTypeId}', 'ActivityTypeController@patch');
+    Route::delete('/{activityTypeId}', 'ActivityTypeController@delete');
 });
 
 Route::prefix('activities')->group(function() {
@@ -57,12 +57,12 @@ Route::prefix('activities')->group(function() {
 
 Route::prefix('articletags')->group(function() {
     Route::get('/', 'ArticleTagController@getAll');
-    Route::get('/{articletagId}', 'ArticleTagController@get');
+    Route::get('/{articleTagId}', 'ArticleTagController@get');
     Route::post('/search', 'ArticleTagController@search');
 
     Route::post('/', 'ArticleTagController@insert');
-    Route::patch('/{articletagId}', 'ArticleTagController@patch');
-    Route::delete('/{articletagId}', 'ArticleTagController@delete');
+    Route::patch('/{articleTagId}', 'ArticleTagController@patch');
+    Route::delete('/{articleTagId}', 'ArticleTagController@delete');
 });
 
 Route::prefix('tags')->group(function() {
@@ -110,12 +110,12 @@ Route::prefix('beers')->group(function() {
 
 Route::prefix('beertypes')->group(function() {
     Route::get('/', 'BeertypeController@getAll');
-    Route::get('/{beertypeId}', 'BeertypeController@get');
+    Route::get('/{beerTypeId}', 'BeertypeController@get');
     Route::post('/search', 'BeertypeController@search');
 
     Route::post('/', 'BeertypeController@insert');
-    Route::patch('/{beertypeId}', 'BeertypeController@patch');
-    Route::delete('/{beertypeId}', 'BeertypeController@delete');
+    Route::patch('/{beerTypeId}', 'BeertypeController@patch');
+    Route::delete('/{beerTypeId}', 'BeertypeController@delete');
 });
 
 Route::prefix('users')->group(function() {
@@ -136,10 +136,20 @@ Route::prefix('users')->group(function() {
 
 Route::prefix('usersocials')->group(function() {
     Route::get('/', 'UserSocialController@getAll');
-    Route::get('/{userId}', 'UserSocialController@get');
+    Route::get('/{userSocialId}', 'UserSocialController@get');
     Route::post('/search', 'UserSocialController@search');
 
     Route::post('/', 'UserSocialController@insert');
-    Route::patch('/{usersocialId}', 'UserSocialController@patch');
-    Route::delete('/{usersocialId}', 'UserSocialController@delete');
+    Route::patch('/{userSocialId}', 'UserSocialController@patch');
+    Route::delete('/{userSocialId}', 'UserSocialController@delete');
+});
+
+Route::prefix('beerfrombreweries')->group(function() {
+    Route::get('/', 'BeerFromBreweryController@getAll');
+    Route::get('/{beerFromBreweryId}', 'BeerFromBreweryController@get');
+    Route::post('/search', 'BeerFromBreweryController@search');
+
+    Route::post('/', 'BeerFromBreweryController@insert');
+    Route::patch('/{beerFromBreweryId}', 'BeerFromBreweryController@patch');
+    Route::delete('/{beerFromBreweryId}', 'BeerFromBreweryController@delete');
 });
