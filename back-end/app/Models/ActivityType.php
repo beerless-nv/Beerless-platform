@@ -5,14 +5,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class ActivityType extends Model
 {
-    protected $attributes = [
-        'name' => '',
-        'points' => ''
-    ];
-    protected $fillable = [ ];
-    protected $dates = [];
     protected $table ='activityType';
     protected $primaryKey = 'ID';
+
+    protected $attributes = [];
+    protected $fillable = [];
+    protected $dates = [];
+
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';
 

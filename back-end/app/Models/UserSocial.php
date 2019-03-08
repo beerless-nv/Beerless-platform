@@ -5,17 +5,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserSocial extends Model
 {
-    protected $attributes = [
-    ];
-    protected $fillable = [
-        'userID',
-        'socialID',
-        'socialPlatform',
-        'picture',
-    ];
-    protected $dates = [];
     protected $table ='userSocial';
     protected $primaryKey = 'ID';
+
+    protected $attributes = [];
+    protected $fillable = [
+        'socialPlatform'
+    ];
+    protected $dates = [];
+
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';
 

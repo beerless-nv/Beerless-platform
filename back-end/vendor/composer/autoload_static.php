@@ -419,7 +419,7 @@ class ComposerStaticInit63289f1017fd16425a03c8de78ba653f
         'App\\Models\\Article' => __DIR__ . '/../..' . '/app/Models/Article.php',
         'App\\Models\\ArticleTag' => __DIR__ . '/../..' . '/app/Models/ArticleTag.php',
         'App\\Models\\Beer' => __DIR__ . '/../..' . '/app/Models/Beer.php',
-        'App\\Models\\Beertype' => __DIR__ . '/../..' . '/app/Models/Beertype.php',
+        'App\\Models\\Beerstyle' => __DIR__ . '/../..',
         'App\\Models\\Brewery' => __DIR__ . '/../..' . '/app/Models/Brewery.php',
         'App\\Models\\Contact' => __DIR__ . '/../..' . '/app/Models/Contact.php',
         'App\\Models\\Relationship' => __DIR__ . '/../..' . '/app/Models/Relationship.php',

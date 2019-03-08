@@ -1,12 +1,10 @@
 <div class="page-header">
-    <div class="container">
+    <div class="container-pageheader">
         <span class="page-header-title">Bieren</span>
     </div>
 </div>
 <div class="bg-super-light">
-    <div class="container page-container-sm-w100">
-
-        <!--<h1 class="mb-3">Bieren</h1>-->
+    <div class="container">
         <div class="col-12 p-0 d-flex flex-md-row flex-column mb-2">
             <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1 position-relative">
                 <div class="form-group mb-1 input-icon">
@@ -34,7 +32,7 @@
 
 
         <div class="col-12 d-flex flex-wrap p-0">
-            <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 py-5 d-flex flex-column">
+            <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 pt-5 d-flex flex-column">
                 <app-beer-item
                         *ngFor="let beer of beersList?.search_result | paginate: {itemsPerPage: 10, currentPage: page, totalItems: beersListTotal}; let i = index"
                         [item]="beer"
@@ -69,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 py-5">
+            <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 pt-5">
                 <app-beers-sidebar></app-beers-sidebar>
             </div>
 

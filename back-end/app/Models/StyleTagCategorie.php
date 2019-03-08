@@ -1,11 +1,12 @@
 <?php
-namespace App\Models;
+
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class StyleTagCategorie extends Model
 {
-    protected $table ='tag';
+    protected $table ='styleTagCategorie';
     protected $primaryKey = 'ID';
 
     protected $attributes = [];
@@ -16,8 +17,8 @@ class Tag extends Model
     const UPDATED_AT = 'timestampUpdated';
 
     // Relationships
-    public function articleTag()
+    public function styleTag()
     {
-        return $this->hasMany('App\Models\ArticleTag', 'articleID', 'ID');
+        return $this->hasMany('App\Models\StyleTag', 'styleTagCategorieID', 'ID');
     }
 }

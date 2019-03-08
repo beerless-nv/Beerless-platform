@@ -5,22 +5,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    protected $attributes = [ ];
-    protected $fillable = [
-        'activityTypeID',
-        'userID',
-        'articleID',
-        'beerID',
-        'breweryID'
-    ];
-    protected $dates = [];
     protected $table ='activity';
     protected $primaryKey = 'ID';
+
+    protected $attributes = [
+        'articleID' => null,
+        'beerID' => null,
+        'breweryID' => null
+    ];
+    protected $fillable = [];
+    protected $dates = [];
+
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';
 
     // Relationships
-    public function activitytype()
+    public function activityType()
     {
         return $this->belongsTo('App\Models\ActivityType', 'activityTypeID', 'ID');
     }

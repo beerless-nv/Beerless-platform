@@ -2,7 +2,7 @@
 
 namespace App\DataServices;
 
-use App\Models\Beertype;
+use App\Models\Beerstyle;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
@@ -11,11 +11,11 @@ class BeertypeDataService
     /**
      * Undocumented function
      *
-     * @return Beertype[]
+     * @return Beerstyle[]
      */
     public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Beertype::query();
+        $query = Beerstyle::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
         \joinTables($query, 'beertype', $joinTables);
@@ -27,11 +27,11 @@ class BeertypeDataService
      * Undocumented function
      *
      * @param integer $beertypeId
-     * @return Beertype
+     * @return Beerstyle
      */
     public static function get(int $beertypeId, $joinTables, $value)
     {
-        $query = Beertype::query();
+        $query = Beerstyle::query();
         \joinTables($query, 'beertype', $joinTables);
         return $query->findOrFail($beertypeId, $value);
     }
@@ -40,11 +40,11 @@ class BeertypeDataService
      * Undocumented function
      *
      * @param array $searchParams
-     * @return Beertype[]
+     * @return Beerstyle[]
      */
     public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Beertype::query();
+        $query = Beerstyle::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
         \joinTables($query, 'beertype', $joinTables);
@@ -68,11 +68,11 @@ class BeertypeDataService
      * Undocumented function
      *
      * @param array $inputArray
-     * @return Beertype
+     * @return Beerstyle
      */
     public static function insert(array $inputArray)
     {
-        $beer = new Beertype();
+        $beer = new Beerstyle();
         foreach ($inputArray as $key => $value) {
             $beer[$key] = $value;
         }
@@ -85,11 +85,11 @@ class BeertypeDataService
      *
      * @param integer $beertypeId
      * @param array $updateArray
-     * @return Beertype
+     * @return Beerstyle
      */
     public static function update(int $beertypeId, array $updateArray)
     {
-        $beer = Beertype::findOrFail($beertypeId);
+        $beer = Beerstyle::findOrFail($beertypeId);
         foreach ($updateArray as $key => $value) {
             $beer[$key] = $value;
         }
@@ -106,8 +106,8 @@ class BeertypeDataService
      */
     public static function delete(int $beertypeId)
     {
-        if (Beertype::where('id', $beertypeId)->exists()) {
-            Beertype::destroy($beertypeId);
+        if (Beerstyle::where('id', $beertypeId)->exists()) {
+            Beerstyle::destroy($beertypeId);
         } else {
             throw new ModelNotFoundException();
         }

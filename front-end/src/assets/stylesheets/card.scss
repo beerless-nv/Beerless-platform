@@ -23,7 +23,18 @@
 .card-sm-100w {
   @include media-breakpoint-down(xs) {
     border-radius: 0;
+    .card-img-top {
+      border-radius: 0;
+    }
+    .card-body {
+      border-radius: 0;
+    }
+    .card-footer {
+      border-radius: 0;
+    }
+
     border: none;
+    margin: auto -15px;
   }
 }
 

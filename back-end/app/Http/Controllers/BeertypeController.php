@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Beertype;
+use App\Models\Beerstyle;
 use App\DataServices\BeertypeDataService;
 
 class BeertypeController extends Controller
 {
     /**
-     * returns a JSON array of all columns in table 'Beertype'
+     * returns a JSON array of all columns in table 'Beerstyle'
      *
      * GET /beertypes
      * 
-     * @uses App\Models\Beertype
+     * @uses App\Models\Beerstyle
      * @return Reponse
      */
     public function getAll(Request $request)
@@ -60,13 +60,13 @@ class BeertypeController extends Controller
     }
 
     /**
-     * Returns a specific JSON object of type 'Beertype'.
+     * Returns a specific JSON object of type 'Beerstyle'.
      * Takes the id as a request parameter.
      * 
      * GET /beertypes/beertypeId
      *
      * @param Request $request
-     * @uses App\Models\Beertype
+     * @uses App\Models\Beerstyle
      * @return Response
      */
     public function get(Request $request, int $beertypeId)
@@ -124,7 +124,7 @@ class BeertypeController extends Controller
     }
 
     /**
-     * Insert an item into table 'Beertype'.
+     * Insert an item into table 'Beerstyle'.
      * Requires the field 'name'.
      *
      * POST /beertypes
@@ -150,7 +150,7 @@ class BeertypeController extends Controller
     }
 
     /**
-     * Updates an entry in the table 'Beertype'.
+     * Updates an entry in the table 'Beerstyle'.
      *
      * PATCH /beertypes/beertypeId
      *
@@ -171,7 +171,7 @@ class BeertypeController extends Controller
     }
 
     /**
-     * Deletes an item in table 'Beertype'.
+     * Deletes an item in table 'Beerstyle'.
      * Takes the id as a request parameter.
      *
      * @param Request $request

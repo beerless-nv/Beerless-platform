@@ -76,6 +76,14 @@
   }
 }
 
+.article-image-sm-100w {
+  @include media-breakpoint-down(xs) {
+    margin: auto -15px;
+    width: calc(100% + 30px);
+    border-radius: 0;
+  }
+}
+
 .article-content {
   border-top: none;
   border-top-left-radius: 0;

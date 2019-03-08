@@ -3,10 +3,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Beerstyle extends Model
 {
-    protected $table ='tag';
-    protected $primaryKey = 'ID';
+    protected $table = "beerstyle";
+    protected $primaryKey = "ID";
 
     protected $attributes = [];
     protected $fillable = [];
@@ -16,8 +16,13 @@ class Tag extends Model
     const UPDATED_AT = 'timestampUpdated';
 
     // Relationships
-    public function articleTag()
+    public function beers()
     {
-        return $this->hasMany('App\Models\ArticleTag', 'articleID', 'ID');
+        return $this->belongsTo('App\Models\Beer');
+    }
+
+    public function styleTag()
+    {
+        return $this->belongsTo('App\Models\StyleTag');
     }
 }

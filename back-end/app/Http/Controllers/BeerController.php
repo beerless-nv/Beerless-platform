@@ -249,7 +249,7 @@ class BeerController extends Controller
         if ($name) {
             return response()->json(Beer::whereRaw("LOWER(Beer.name) Like ?", ['%' . strtolower($name) . '%'])
                 ->with('Brewery')
-                ->with('Beertype')
+                ->with('Beerstyle')
                 ->get());
         }
     }

@@ -5,7 +5,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Brewery extends Model
 {
-    // Default values
+    protected $table = "brewery";
+    protected $primaryKey = "ID";
+
     protected $attributes = [
         'description' => null,
         'country' => null,
@@ -16,33 +18,16 @@ class Brewery extends Model
         'province' => null,
         'beerAmount' => 0,
     ];
-
-    // Which values are allowed to be assigned through mass assignment
-    protected $fillable = [
-        'description',
-        'country',
-        'place',
-        'postcode',
-        'streetAndNumber',
-        'logo',
-        'province',
-        'beerAmount',
-        'contactID'
-    ];
+    protected $fillable = [];
     protected $dates = [];
-    protected $table = "brewery";
-    protected $primaryKey = "ID";
+
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';
 
-    public static $rules = [
-        // Validation rules
-    ];
-
     // Relationships
-    public function beers()
+    public function beersFromBrewery()
     {
-        return $this->hasMany('App\Models\Beer', 'breweryID', 'ID');
+        return $this->hasMany('App\Models\BeersFromBrewery', 'breweryID', 'ID');
     }
 
     public function contact()

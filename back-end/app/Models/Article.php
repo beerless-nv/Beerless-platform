@@ -5,23 +5,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    protected $attributes = [
-        'slug' => '',
-        'picture' => '',
-        'intro' =>'',
-        'content' => ''
-    ];
-    protected $fillable = [
-        'title',
-        'slug',
-        'content',
-        'picture',
-        'intro',
-        'userID',
-    ];
-    protected $dates = [];
     protected $table ='article';
     protected $primaryKey = 'ID';
+
+    protected $attributes = [];
+    protected $fillable = [];
+    protected $dates = [];
+
     const CREATED_AT = 'timestampCreated';
     const UPDATED_AT = 'timestampUpdated';
 
@@ -31,7 +21,7 @@ class Article extends Model
         return $this->belongsTo('App\Models\User', 'userID', 'ID');
     }
 
-    public function articletag()
+    public function articleTag()
     {
         return $this->hasMany('App\Models\ArticleTag', 'articleID', 'ID');
     }

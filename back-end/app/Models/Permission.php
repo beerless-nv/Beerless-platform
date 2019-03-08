@@ -1,12 +1,13 @@
 <?php
-namespace App\Models;
+
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class Permission extends Model
 {
-    protected $table ='tag';
-    protected $primaryKey = 'ID';
+    protected $table = "permission";
+    protected $primaryKey = "ID";
 
     protected $attributes = [];
     protected $fillable = [];
@@ -16,8 +17,8 @@ class Tag extends Model
     const UPDATED_AT = 'timestampUpdated';
 
     // Relationships
-    public function articleTag()
+    public function roleTablePermission()
     {
-        return $this->hasMany('App\Models\ArticleTag', 'articleID', 'ID');
+        return $this->hasOne('App\Models\RoleTablePermission', 'permissionID', 'ID');
     }
 }

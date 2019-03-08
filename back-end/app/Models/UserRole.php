@@ -1,11 +1,12 @@
 <?php
-namespace App\Models;
+
+namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tag extends Model
+class UserRole extends Model
 {
-    protected $table ='tag';
+    protected $table = 'userRole';
     protected $primaryKey = 'ID';
 
     protected $attributes = [];
@@ -16,8 +17,13 @@ class Tag extends Model
     const UPDATED_AT = 'timestampUpdated';
 
     // Relationships
-    public function articleTag()
+    public function role()
     {
-        return $this->hasMany('App\Models\ArticleTag', 'articleID', 'ID');
+        return $this->belongsTo('App\Models\Role', 'roleID', 'ID');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'userID', 'ID');
     }
 }
