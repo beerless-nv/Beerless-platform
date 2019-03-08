@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
@@ -152,14 +153,24 @@ class ArticleTagController extends Controller
      */
     public function insert(Request $request)
     {
-        $articletag = '';
-        if(isset($request->input('inputObject')['articleID']) && isset($request->input('inputObject')['tagID'])){
+        // Validate incoming requests
+        $validator = Validator::make($request->all(), [
+            'inputObject.articleID' => 'required|numeric',
+            'inputObject.tagID' => 'required|numeric',
+        ],
+            [
+                'inputObject.articleID.required' => 'article_required',
+                'inputObject.articleID.numeric' => 'articleID_not_numeric',
+                'inputObject.tagID.required' => 'tag_required',
+                'inputObject.tagID.numeric' => 'tagID_not_numeric',
+            ]);
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
             $articletag = ArticleTagDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'all_fields_required'
-            ], 400);
         }
 
         return response()->json([

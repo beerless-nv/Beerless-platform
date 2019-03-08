@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserSocial;
-use Google_Client;
-use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -16,8 +14,6 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\User;
 use App\DataServices\UserDataService;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 
 /**
@@ -192,7 +188,7 @@ class UserController extends Controller
     }
 
     /**
-     * Checks wether a user has submitted valid credentials on login.
+     * Checks whether a user has submitted valid credentials on login.
      * Returns a valid token if correct.
      *
      * @param Request $request
@@ -215,7 +211,6 @@ class UserController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         }
-
 
         $username = $request->input('username');
         $password = $request->input('password');
@@ -313,23 +308,23 @@ class UserController extends Controller
      * @param Request $request
      * @return Response
      */
-    public function insert(Request $request)
-    {
-        $user = '';
-        if (isset($request->input('inputObject')['email'])) {
-            $user = UserDataService::insert($request->input('inputObject'));
-        } else {
-            return response()->json([
-                'success' => false,
-                'msg' => 'email_required'
-            ], 400);
-        }
-
-        return response()->json([
-            'success' => true,
-            'user' => $user
-        ], 201);
-    }
+//    public function insert(Request $request)
+//    {
+//        $user = '';
+//        if (isset($request->input('inputObject')['email'])) {
+//            $user = UserDataService::insert($request->input('inputObject'));
+//        } else {
+//            return response()->json([
+//                'success' => false,
+//                'msg' => 'email_required'
+//            ], 400);
+//        }
+//
+//        return response()->json([
+//            'success' => true,
+//            'user' => $user
+//        ], 201);
+//    }
 
     /**
      * Updates an item in table 'User'.

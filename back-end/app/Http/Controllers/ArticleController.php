@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\ArticleDataService;
@@ -148,14 +149,32 @@ class ArticleController extends Controller
      */
     public function insert(Request $request)
     {
-        $article = '';
-        if(isset($request->input('inputObject')['title'])){
+        $validator = Validator::make($request->all(), [
+            'inputObject.title' => 'required|unique:article,title',
+            'inputObject.slug' => 'required|unique:article,slug',
+            'inputObject.picture' => 'required',
+            'inputObject.intro' => 'required',
+            'inputObject.content' => 'required',
+            'inputObject.userID' => 'required|numeric',
+        ],
+            [
+                'inputObject.title.required' => 'title_required',
+                'inputObject.title.unique' => 'title_not_unique',
+                'inputObject.slug.required' => 'slug_required',
+                'inputObject.slug.unique' => 'slug_not_unique',
+                'inputObject.picture.required' => 'picture_required',
+                'inputObject.intro.required' => 'intro_required',
+                'inputObject.content.required' => 'content_required',
+                'inputObject.userID.required' => 'user_required',
+                'inputObject.userID.numeric' => 'userID_required',
+            ]);
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
             $article = ArticleDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'title_required'
-            ], 400);
         }
         
         return response()->json([

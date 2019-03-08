@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataServices\BeerFromBreweryDataService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Contains CRUD functions for table 'BeerFromBrewery"
@@ -145,14 +146,24 @@ class BeerFromBreweryController extends Controller
      */
     public function insert(Request $request)
     {
-        $beerFromBrewery = '';
-        if(isset($request->input('inputObject')['title'])){
+        // Validate incoming requests
+        $validator = Validator::make($request->all(), [
+            'inputObject.beerID' => 'required|numeric',
+            'inputObject.breweryID' => 'required|numeric',
+        ],
+            [
+                'inputObject.beerID.required' => 'beer_required',
+                'inputObject.beerID.numeric' => 'beerID_not_numeric',
+                'inputObject.breweryID.required' => 'brewery_required',
+                'inputObject.breweryID.numeric' => 'breweryID_not_numeric',
+            ]);
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
             $beerFromBrewery = BeerFromBreweryDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'title_required'
-            ], 400);
         }
 
         return response()->json([

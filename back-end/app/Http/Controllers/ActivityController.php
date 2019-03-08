@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\ActivityDataService;
@@ -148,14 +149,24 @@ class ActivityController extends Controller
      */
     public function insert(Request $request)
     {
-        $activity = '';
-        if(isset($request->input('inputObject')['title'])){
+        // Validate incoming requests
+        $validator = Validator::make($request->all(), [
+            'inputObject.activityTypeID' => 'required|numeric',
+            'inputObject.userID' => 'required|numeric',
+        ],
+            [
+                'inputObject.activityTypeID.required' => 'activityType_required',
+                'inputObject.activityTypeID.numeric' => 'activityTypeID_not_numeric',
+                'inputObject.userID.required' => 'user_required',
+                'inputObject.userID.numeric' => 'userID_not_numeric',
+            ]);
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
             $activity = ActivityDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'title_required'
-            ], 400);
         }
 
         return response()->json([
@@ -177,11 +188,26 @@ class ActivityController extends Controller
      */
     public function patch(Request $request, int $activityId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
-        }
-        $activity = ActivityDataService::update($activityId, $updateArray);
+        // Validate incoming requests
+        $validator = Validator::make($request->all(), [
+            'inputObject.activityTypeID' => 'required',
+            'inputObject.userID' => 'required',
+        ],
+            [
+                'inputObject.activityTypeID.required' => 'activityType_required',
+                'inputObject.userID.required' => 'user_required',
+            ]);
+
+//        if ($validator->fails()) {
+//            $retVal['msg'] = $validator->messages()->all();
+//            return response()->json($retVal, 400);
+//        } else {
+//            foreach ($request->input('updateArray') as $item) {
+//                $updateArray[$item['propName']] = $item['value'];
+//            }
+//            $activity = ActivityDataService::update($activityId, $updateArray);
+//        }
+
         return response()->json([
             'success' => true,
             'activity' => $activity
