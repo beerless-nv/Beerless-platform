@@ -13,11 +13,13 @@ import {ProfileUsersComponent} from './pagegroups/Visitor/users/profile-users/pr
 import {WishlistUsersComponent} from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
 import {AuthGuardService} from './_services/authorization/auth-guard.service';
 import {SignupComponent} from './pagegroups/Visitor/signup/signup.component';
+import {SigninComponent} from './pagegroups/Visitor/signin/signin.component';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'login', component: LoginComponent},
-    {path: 'signup', component: SignupComponent},
+    {path: 'sign-up', component: SignupComponent},
+    {path: 'sign-in', component: SigninComponent},
     // All pages from beers
     {
         path: 'beers', children: [

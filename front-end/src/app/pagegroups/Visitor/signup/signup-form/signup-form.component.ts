@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {LoginService} from '../../../../_services/login.service';
+import {SignupService} from '../../../../_services/authorization/signup.service';
+import {ErrorService} from "../../../../_services/error.service";
 
 @Component({
     selector: 'app-signup-form',
@@ -13,7 +14,7 @@ export class SignupFormComponent implements OnInit {
     formRegister: FormGroup;
     registrationSuccessful = false;
 
-    constructor(public loginService: LoginService) {
+    constructor(private signupService: SignupService, private errorService: ErrorService) {
     }
 
     ngOnInit() {
@@ -42,11 +43,11 @@ export class SignupFormComponent implements OnInit {
             picture: new FormControl('https://avatars.dicebear.com/v2/identicon/' + Math.random().toString(36).substr(0, 13) + '.svg'),
         });
 
-        this.loginService.messageRegister$.subscribe(data => this.messageRegister = data);
+        this.errorService.messageRegister$.subscribe(data => this.messageRegister = data);
     }
 
     register() {
-        this.loginService.signUp(this.formRegister.value).then(data => {
+        this.signupService.signUp(this.formRegister.value).then(data => {
             if (data['success'] === true) {
                 this.registrationSuccessful = true;
             }

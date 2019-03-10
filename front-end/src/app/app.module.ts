@@ -41,6 +41,9 @@ import { SignupComponent } from './pagegroups/Visitor/signup/signup.component';
 import { RegularMenuItemComponent } from './sharedComponents/navbar/regular-menu-item/regular-menu-item.component';
 import { SignupBackgroundCardComponent } from './pagegroups/Visitor/signup/signup-background-card/signup-background-card.component';
 import { SignupFormComponent } from './pagegroups/Visitor/signup/signup-form/signup-form.component';
+import { InputFieldComponent } from './sharedComponents/input-field/input-field.component';
+import { SigninComponent } from './pagegroups/Visitor/signin/signin.component';
+import {MyHttpClientInterceptor} from './_interceptors/My-HttpClientInterceptor';
 
 @NgModule({
     declarations: [
@@ -71,6 +74,8 @@ import { SignupFormComponent } from './pagegroups/Visitor/signup/signup-form/sig
         RegularMenuItemComponent,
         SignupBackgroundCardComponent,
         SignupFormComponent,
+        InputFieldComponent,
+        SigninComponent,
     ],
     imports: [
         BrowserModule,
@@ -90,7 +95,7 @@ import { SignupFormComponent } from './pagegroups/Visitor/signup/signup-form/sig
     ],
     providers: [{
         provide: HTTP_INTERCEPTORS,
-        useClass: AppComponent,
+        useClass: MyHttpClientInterceptor,
         multi: true
     }],
     bootstrap: [AppComponent]

@@ -23,7 +23,6 @@ class BreweryController extends Controller
       */
     public function getAll(Request $request)
     {
-
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
         $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));

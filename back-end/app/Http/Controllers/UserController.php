@@ -168,17 +168,16 @@ class UserController extends Controller
                 'inputObject.password.required' => 'password_required'
             ]);
 
+        $retVal['success'] = false;
         if ($validator->fails()) {
-            return response()->json([
-                'success' => false,
-                'msg' => $validator->messages()->all()
-            ], 400);
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal,400);
+        } else {
+            $inputObject = $request->input('inputObject');
+            $inputObject['password'] = Hash::make($inputObject['password']);
+
+            $user = UserDataService::insert($inputObject);
         }
-
-        $inputObject = $request->input('inputObject');
-        $inputObject['password'] = Hash::make($inputObject['password']);
-
-        $user = UserDataService::insert($inputObject);
 
         // Return response
         return response()->json([

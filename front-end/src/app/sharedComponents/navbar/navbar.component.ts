@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LoginService} from 'src/app/_services/login.service';
-import {User} from 'src/app/_interfaces/user';
 
 @Component({
     selector: 'app-navbar',

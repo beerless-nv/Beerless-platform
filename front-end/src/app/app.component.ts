@@ -6,6 +6,7 @@ import {Observable, ObservableInput, of} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {LoadingService} from './_services/loading.service';
 import {SwUpdate} from '@angular/service-worker';
+import {ErrorService} from './_services/error.service';
 // import 'rxjs/add/operator/catch';
 // import 'rxjs/add/observable/throw';
 
@@ -15,7 +16,7 @@ import {SwUpdate} from '@angular/service-worker';
     changeDetection: ChangeDetectionStrategy.Default,
     styleUrls: ['./app.component.sass']
 })
-export class AppComponent implements OnInit, HttpInterceptor {
+export class AppComponent implements OnInit {
     private _isPopState = false;
     private _routeScrollPositions: { [url: string]: number } = {};
     private _deferredRestore = false;
@@ -26,17 +27,18 @@ export class AppComponent implements OnInit, HttpInterceptor {
                 private router: Router,
                 private locStrat: LocationStrategy,
                 private loadingService: LoadingService,
-                private swUpdate: SwUpdate) {
+                private swUpdate: SwUpdate,
+                private errorService: ErrorService) {
     }
 
     ngOnInit(): void {
 
         // Message to update app when on PWA
         this.swUpdate.available.subscribe(evt => {
-                if (confirm('De Beerless app is aangepast. Wil je de nieuwe versie openen?')) {
-                    window.location.reload();
-                }
-            });
+            if (confirm('De Beerless app is aangepast. Wil je de nieuwe versie openen?')) {
+                window.location.reload();
+            }
+        });
 
         if (isPlatformBrowser(this.platformId)) {
             // prevent nguniversal problems
@@ -51,26 +53,29 @@ export class AppComponent implements OnInit, HttpInterceptor {
         });
     }
 
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.loadingService.startLoading();
-        // console.log();
-
-        return next.handle(req)
-            .pipe(
-                tap(event => {
-                    if (event.type !== 0) {
-                        console.log(event);
-                        this.loadingService.finishLoading();
-                        this.loadingService.noError();
-                    }
-                }),
-                catchError( err => {
-                    this.loadingService.hasError();
-                    this.loadingService.finishLoading();
-                    return of(err);
-                })
-            );
-    }
+    // intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    //     this.loadingService.startLoading();
+    //
+    //     return next.handle(req)
+    //         .pipe(
+    //             tap(event => {
+    //                 if (event.type !== 0) {
+    //                     this.loadingService.finishLoading();
+    //                     this.loadingService.noError();
+    //                 }
+    //             }),
+    //             catchError(err => {
+    //                 if (err.status === 400) {
+    //                     this.errorService.handleErrorMsg(err.error['msg']);
+    //                 } else {
+    //                     this.loadingService.hasError();
+    //                 }
+    //                 this.loadingService.finishLoading();
+    //
+    //                 return of(err.error['success']);
+    //             })
+    //         );
+    // }
 
     /**
      * Save the current ``window.pageYOffset`` in {@link _routeScrollPositions}, keyed by the given url.
@@ -122,6 +127,7 @@ export class AppComponent implements OnInit, HttpInterceptor {
         }
 
         this.router.events.subscribe((event) => {
+            this.errorService.messageRegister$.next(null);
             if (event instanceof NavigationStart) {
                 // the position should not be saved at NavigationStart during popstate navigation because it will already be mangled
                 if (!this._isPopState) {

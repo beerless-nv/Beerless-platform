@@ -1,38 +1,39 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ErrorService {
 
-  constructor() { }
+    errorMessages = [
+        {error: 'firstName_required', message: 'Vul een voornaam in!'},
+        {error: 'lastName_required', message: 'Vul een achternaam in!'},
+        {error: 'username_required', message: 'Vul een gebruikersnaam in!'},
+        {error: 'username_not_unique', message: 'Deze gebruikersnaam bestaat al!'},
+        {error: 'email_required', message: 'Vul een e-mailadres in!'},
+        {error: 'email_not_valid', message: 'Vul een geldig e-mailadres in!'},
+        {error: 'email_not_unique', message: 'Dit e-mailadres is al in gebruik!'},
+        {error: 'password_required', message: 'Vul een wachtwoord in!'},
+    ];
 
-  handleErrorMsg(msg){
-    switch (msg) {
-      case 'username_required':
-        return "Gelieve een gebruikersnaam in te geven";
-        break;
-      case 'email_required':
-        return "Gelieve een emailadres in te geven";
-        break;
-      case 'password_required':
-        return "Gelieve een wachtwoord in te geven";
-        break;
-      case 'username_not_unique':
-        return "Deze gebruikersnaam bestaat al";
-        break;
-      case 'email_not_unique':
-        return "Dit emailadres is al in gebruik";
-        break;
-      case 'email_not_valid':
-        return "Gelieve een geldig emailadres in te geven";
-        break;  
-      case 'password_incorrect':
-        return "Wachtwoord is niet correct";
-        break;
-      case 'user_does_not_exist':
-        return "Deze gebruiker bestaat niet";
-        break;
+    messageRegister$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
+
+    constructor() {
     }
-  }
+
+    handleErrorMsg(errorMessages) {
+        const errorMessageArray = [];
+        if (errorMessages != null) {
+            for (let i = 0; i < errorMessages.length; i++) {
+                for (let j = 0; j < this.errorMessages.length; j++) {
+                    if (errorMessages[i] === this.errorMessages[j].error) {
+                        errorMessageArray[j] = this.errorMessages[j].message;
+                    }
+                }
+            }
+        }
+
+        this.messageRegister$.next(errorMessageArray);
+    }
 }

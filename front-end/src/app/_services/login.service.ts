@@ -71,60 +71,6 @@ export class LoginService {
             });
     }
 
-    // Create user through API
-    signUp(user) {
-        const headers = new HttpHeaders();
-        headers.append('X-Requested-With', 'XMLHttpRequest');
-
-        return this.http.post(this.urlSignUp, {
-            inputObject: user
-        }, {headers: headers})
-            .toPromise()
-            .then(data => {
-
-                return data;
-            })
-            .catch(error => {
-                this.errorMessageArray = error.error['msg'];
-                if (this.errorMessageArray != null) {
-                    for (let i = 0; i < this.errorMessageArray.length; i++) {
-                        switch (this.errorMessageArray[i]) {
-                            case 'firstName_required':
-                                this.errorMessageArray[i] = 'Vul een voornaam in!';
-                                break;
-                            case 'lastName_required':
-                                this.errorMessageArray[i] = 'Vul een achternaam in!';
-                                break;
-                            case 'username_required':
-                                this.errorMessageArray[i] = 'Vul een gebruikersnaam in!';
-                                break;
-                            case 'username_not_unique':
-                                this.errorMessageArray[i] = 'Deze gebruikersnaam bestaat al!';
-                                break;
-                            case 'email_required':
-                                this.errorMessageArray[i] = 'Vul een e-mailadres in!';
-                                break;
-                            case 'email_not_valid':
-                                this.errorMessageArray[i] = 'Vul een geldig e-mailadres in!';
-                                break;
-                            case 'email_not_unique':
-                                this.errorMessageArray[i] = 'Dit e-mailadres is al in gebruik!';
-                                break;
-                            case 'password_required':
-                                this.errorMessageArray[i] = 'Vul een wachtwoord in!';
-                                break;
-                            default:
-                                this.errorMessageArray[i] = error.error['msg'];
-                                break;
-                        }
-                    }
-                } else {
-                    this.errorMessageArray = null;
-                }
-                this.messageRegister$.next(this.errorMessageArray);
-            });
-    }
-
     // Locally log the user out
     logout() {
         this.userData$.next(null);
