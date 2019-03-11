@@ -21,7 +21,7 @@ Route::prefix('relationships')->group(function() {
     Route::post('/search', 'RelationshipController@search');
 
     Route::post('/', 'RelationshipController@insert');
-    Route::patch('/{relationshipId}', 'RelationshipController@patch');
+    Route::put('/{relationshipId}', 'RelationshipController@update');
     Route::delete('/{relationshipId}', 'RelationshipController@delete');
 });
 
@@ -31,7 +31,7 @@ Route::prefix('statuses')->group(function() {
     Route::post('/search', 'StatusController@search');
 
     Route::post('/', 'StatusController@insert');
-    Route::patch('/{statusId}', 'StatusController@patch');
+    Route::put('/{statusId}', 'StatusController@update');
     Route::delete('/{statusId}', 'StatusController@delete');
 });
 
@@ -41,7 +41,7 @@ Route::prefix('activitytypes')->group(function() {
     Route::post('/search', 'ActivityTypeController@search');
 
     Route::post('/', 'ActivityTypeController@insert');
-    Route::patch('/{activityTypeId}', 'ActivityTypeController@patch');
+    Route::put('/{activityTypeId}', 'ActivityTypeController@update');
     Route::delete('/{activityTypeId}', 'ActivityTypeController@delete');
 });
 
@@ -51,7 +51,7 @@ Route::prefix('activities')->group(function() {
     Route::post('/search', 'ActivityController@search');
 
     Route::post('/', 'ActivityController@insert');
-    Route::patch('/{activityId}', 'ActivityController@patch');
+    Route::put('/{activityId}', 'ActivityController@update');
     Route::delete('/{activityId}', 'ActivityController@delete');
 });
 
@@ -61,7 +61,7 @@ Route::prefix('articletags')->group(function() {
     Route::post('/search', 'ArticleTagController@search');
 
     Route::post('/', 'ArticleTagController@insert');
-    Route::patch('/{articleTagId}', 'ArticleTagController@patch');
+    Route::put('/{articleTagId}', 'ArticleTagController@update');
     Route::delete('/{articleTagId}', 'ArticleTagController@delete');
 });
 
@@ -71,7 +71,7 @@ Route::prefix('tags')->group(function() {
     Route::post('/search', 'TagController@search');
 
     Route::post('/', 'TagController@insert');
-    Route::patch('/{tagId}', 'TagController@patch');
+    Route::put('/{tagId}', 'TagController@update');
     Route::delete('/{tagId}', 'TagController@delete');
 });
 
@@ -81,7 +81,7 @@ Route::prefix('articles')->group(function() {
     Route::post('/search', 'ArticleController@search');
 
     Route::post('/', 'ArticleController@insert');
-    Route::patch('/{articleId}', 'ArticleController@patch');
+    Route::put('/{articleId}', 'ArticleController@update');
     Route::delete('/{articleId}', 'ArticleController@delete');
 });
 
@@ -91,7 +91,7 @@ Route::prefix('breweries')->group(function() {
     Route::post('/search', 'BreweryController@search');
 
     Route::post('/', 'BreweryController@insert');
-    Route::patch('/{breweryId}', 'BreweryController@patch');
+    Route::put('/{breweryId}', 'BreweryController@update');
     Route::delete('/{breweryId}', 'BreweryController@delete');
 });
 
@@ -104,7 +104,7 @@ Route::prefix('beers')->group(function() {
     Route::post('/search', 'BeerController@search');
 
     Route::post('/', 'BeerController@insert');
-    Route::patch('/{beerId}', 'BeerController@patch');
+    Route::put('/{beerId}', 'BeerController@update');
     Route::delete('/{beerId}', 'BeerController@delete');
 });
 
@@ -114,7 +114,7 @@ Route::prefix('beertypes')->group(function() {
     Route::post('/search', 'BeertypeController@search');
 
     Route::post('/', 'BeertypeController@insert');
-    Route::patch('/{beerTypeId}', 'BeertypeController@patch');
+    Route::put('/{beerTypeId}', 'BeertypeController@update');
     Route::delete('/{beerTypeId}', 'BeertypeController@delete');
 });
 
@@ -129,8 +129,8 @@ Route::prefix('users')->group(function() {
     Route::post('/search', 'UserController@search');
 
     Route::post('/', 'UserController@insert');
-    Route::patch('/patchProfile/{userId}', 'UserController@patchProfile');
-    Route::patch('/patchAddress/{userId}', 'UserController@patchAddress');
+    Route::put('/updateProfile/{userId}', 'UserController@updateProfile');
+    Route::put('/updateAddress/{userId}', 'UserController@updateAddress');
     Route::delete('/{userId}', 'UserController@delete');
 });
 
@@ -140,7 +140,7 @@ Route::prefix('usersocials')->group(function() {
     Route::post('/search', 'UserSocialController@search');
 
     Route::post('/', 'UserSocialController@insert');
-    Route::patch('/{userSocialId}', 'UserSocialController@patch');
+    Route::put('/{userSocialId}', 'UserSocialController@update');
     Route::delete('/{userSocialId}', 'UserSocialController@delete');
 });
 
@@ -150,7 +150,7 @@ Route::prefix('beerfrombreweries')->group(function() {
     Route::post('/search', 'BeerFromBreweryController@search');
 
     Route::post('/', 'BeerFromBreweryController@insert');
-    Route::patch('/{beerFromBreweryId}', 'BeerFromBreweryController@patch');
+    Route::put('/{beerFromBreweryId}', 'BeerFromBreweryController@update');
     Route::delete('/{beerFromBreweryId}', 'BeerFromBreweryController@delete');
 });
 
@@ -160,6 +160,6 @@ Route::prefix('contacts')->group(function() {
     Route::post('/search', 'ContactController@search');
 
     Route::post('/', 'ContactController@insert');
-    Route::patch('/{contactId}', 'ContactController@patch');
+    Route::put('/{contactId}', 'ContactController@update');
     Route::delete('/{contactId}', 'ContactController@delete');
 });

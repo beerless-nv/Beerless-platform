@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\StatusDataService;
@@ -20,7 +20,7 @@ class StatusController extends Controller
      * GET /statuses
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -93,7 +93,7 @@ class StatusController extends Controller
      * GET /statuses/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -146,7 +146,7 @@ class StatusController extends Controller
      * POST /statuses
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -181,7 +181,7 @@ class StatusController extends Controller
      *
      * @param Request $request
      * @param integer $statusId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $statusId)
     {
@@ -204,7 +204,7 @@ class StatusController extends Controller
      *
      * @param Request $request
      * @param integer $statusId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $statusId)
     {

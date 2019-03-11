@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserSocial;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -25,7 +26,7 @@ class UserController extends Controller
      * Returns a JSON array of all rows in table 'User'
      *
      * @param Request request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -80,7 +81,7 @@ class UserController extends Controller
      *
      * @param Request $request
      * @param integer $userId
-     * @return Response
+     * @return JsonResponse
      */
     public function get(Request $request, int $userId)
     {
@@ -145,7 +146,7 @@ class UserController extends Controller
     /**
      * Creates a user based on email, username and password.
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function signUp(Request $request)
     {
@@ -191,7 +192,7 @@ class UserController extends Controller
      * Returns a valid token if correct.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function signIn(Request $request)
     {
@@ -251,7 +252,7 @@ class UserController extends Controller
      * GET /users/token
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getSocialToken(Request $request)
     {
@@ -305,7 +306,7 @@ class UserController extends Controller
      * POST /users
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
 //    public function insert(Request $request)
 //    {
@@ -334,7 +335,7 @@ class UserController extends Controller
      *
      * @param Request $request
      * @param integer $userId
-     * @return Response
+     * @return JsonResponse
      */
     public function patchProfile(Request $request, int $userId)
     {

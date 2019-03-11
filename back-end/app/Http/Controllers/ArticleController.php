@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -19,7 +20,7 @@ class ArticleController extends Controller
      * GET /articles
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -92,7 +93,7 @@ class ArticleController extends Controller
      * GET /articles/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -145,7 +146,7 @@ class ArticleController extends Controller
      * POST /articles
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -192,7 +193,7 @@ class ArticleController extends Controller
      *
      * @param Request $request
      * @param integer $articleId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $articleId)
     {
@@ -215,7 +216,7 @@ class ArticleController extends Controller
      *
      * @param Request $request
      * @param integer $articleId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $articleId)
     {

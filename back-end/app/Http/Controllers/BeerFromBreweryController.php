@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataServices\BeerFromBreweryDataService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,7 +18,7 @@ class BeerFromBreweryController extends Controller
      * GET /beerfrombreweries
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -89,7 +90,7 @@ class BeerFromBreweryController extends Controller
      * GET /beerfrombreweries/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -142,7 +143,7 @@ class BeerFromBreweryController extends Controller
      * POST /beerfrombreweries
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -181,7 +182,7 @@ class BeerFromBreweryController extends Controller
      *
      * @param Request $request
      * @param integer $beerFromBreweryId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $beerFromBreweryId)
     {
@@ -204,7 +205,7 @@ class BeerFromBreweryController extends Controller
      *
      * @param Request $request
      * @param integer $beerFromBreweryId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $beerFromBreweryId)
     {

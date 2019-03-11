@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Relationship;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\RelationshipDataService;
@@ -21,7 +21,7 @@ class RelationshipController extends Controller
      * GET /relationships
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -94,7 +94,7 @@ class RelationshipController extends Controller
      * GET /relationships/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -147,7 +147,7 @@ class RelationshipController extends Controller
      * POST /relationships
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -211,7 +211,7 @@ class RelationshipController extends Controller
      *
      * @param Request $request
      * @param integer $relationshipId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $relationshipId)
     {
@@ -234,7 +234,7 @@ class RelationshipController extends Controller
      *
      * @param Request $request
      * @param integer $relationshipId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $relationshipId)
     {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\ActivityDataService;
@@ -14,12 +15,34 @@ use App\DataServices\ActivityDataService;
 class ActivityController extends Controller
 {
     /**
+     * Validator for the table 'Activity'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'inputObject.activityTypeID' => 'required|numeric',
+            'inputObject.userID' => 'required|numeric',
+        ],
+            [
+                'inputObject.activityTypeID.required' => 'activityType_required',
+                'inputObject.activityTypeID.numeric' => 'activityTypeID_not_numeric',
+                'inputObject.userID.required' => 'user_required',
+                'inputObject.userID.numeric' => 'userID_not_numeric',
+            ]);
+    }
+
+
+
+
+    /**
      * Returns a JSON array of all rows in table 'Activity'.
-     * 
+     *
      * GET /activities
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -70,9 +93,9 @@ class ActivityController extends Controller
      * 
      * GET /activities/activityId
      * 
-     * @param Request $activityId
+     * @param Request $request
      * @param integer $activityId
-     * @return Reponse
+     * @return JsonResponse
      */
     public function get(Request $request, int $activityId)
     {
@@ -92,7 +115,7 @@ class ActivityController extends Controller
      * GET /activities/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -145,21 +168,11 @@ class ActivityController extends Controller
      * POST /activities
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
-        // Validate incoming requests
-        $validator = Validator::make($request->all(), [
-            'inputObject.activityTypeID' => 'required|numeric',
-            'inputObject.userID' => 'required|numeric',
-        ],
-            [
-                'inputObject.activityTypeID.required' => 'activityType_required',
-                'inputObject.activityTypeID.numeric' => 'activityTypeID_not_numeric',
-                'inputObject.userID.required' => 'user_required',
-                'inputObject.userID.numeric' => 'userID_not_numeric',
-            ]);
+        $validator = $this->validator($request->all());
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -184,9 +197,9 @@ class ActivityController extends Controller
      *
      * @param Request $request
      * @param integer $activityId
-     * @return Response
+     * @return JsonResponse
      */
-    public function patch(Request $request, int $activityId)
+    public function update(Request $request, int $activityId)
     {
         // Validate incoming requests
         $validator = Validator::make($request->all(), [
@@ -222,7 +235,7 @@ class ActivityController extends Controller
      *
      * @param Request $request
      * @param integer $activityId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $activityId)
     {

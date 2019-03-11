@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class BeerController extends Controller
      * GET /beers
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -93,7 +94,7 @@ class BeerController extends Controller
      * POST /beers/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -146,7 +147,7 @@ class BeerController extends Controller
      * POST /beers
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -173,7 +174,7 @@ class BeerController extends Controller
      *
      * @param Request $request
      * @param integer $beerId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $beerId)
     {
@@ -196,7 +197,7 @@ class BeerController extends Controller
      *
      * @param Request $request
      * @param integer $beerId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $beerId)
     {
@@ -209,7 +210,7 @@ class BeerController extends Controller
     /**
      * Undocumented function
      *
-     * @return Response
+     * @return JsonResponse
      */
     public function getNewest()
     {
@@ -241,7 +242,7 @@ class BeerController extends Controller
      * Takes the name as a request parameter.
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getByName(Request $request)
     {

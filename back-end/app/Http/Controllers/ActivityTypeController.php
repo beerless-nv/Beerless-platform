@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +21,7 @@ class ActivityTypeController extends Controller
      * GET /activitytypes
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -73,7 +74,7 @@ class ActivityTypeController extends Controller
      *
      * @param Request $request
      * @param integer $activitytypeId
-     * @return Reponse
+     * @return JsonResponse
      */
     public function get(Request $request, int $activitytypeId)
     {
@@ -93,7 +94,7 @@ class ActivityTypeController extends Controller
      * GET /activitytypes/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -146,7 +147,7 @@ class ActivityTypeController extends Controller
      * POST /activitytypes
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -182,7 +183,7 @@ class ActivityTypeController extends Controller
      *
      * @param Request $request
      * @param integer $activitytypeId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $activitytypeId)
     {
@@ -205,7 +206,7 @@ class ActivityTypeController extends Controller
      *
      * @param Request $request
      * @param integer $activitytypeId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $activitytypeId)
     {

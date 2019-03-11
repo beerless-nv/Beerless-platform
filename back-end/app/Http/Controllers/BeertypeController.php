@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\Beerstyle;
 use App\DataServices\BeertypeDataService;
@@ -71,7 +72,7 @@ class BeertypeController extends Controller
      *
      * @param Request $request
      * @uses App\Models\Beerstyle
-     * @return Response
+     * @return JsonResponse
      */
     public function get(Request $request, int $beertypeId)
     {
@@ -138,8 +139,8 @@ class BeertypeController extends Controller
      *
      * POST /beertypes
      *
-     * @param Reqeust $request
-     * @return Response
+     * @param Request $request
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -187,7 +188,7 @@ class BeertypeController extends Controller
      *
      * @param Request $request
      * @param integer $beertypeId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $beertypeId)
     {
@@ -208,7 +209,7 @@ class BeertypeController extends Controller
      *
      * @param Request $request
      * @param integer $beertypeId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $beertypeId)
     {

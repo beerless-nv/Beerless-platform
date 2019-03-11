@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Brewery;
 use App\DataServices\BreweryDataService;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Contains CRUD functions for table 'Brewery'.
@@ -20,7 +20,7 @@ class BreweryController extends Controller
       * GET /breweries
       *
       * @param Request $request
-      * @return Response
+      * @return JsonResponse
       */
     public function getAll(Request $request)
     {
@@ -74,7 +74,7 @@ class BreweryController extends Controller
       *
       * @param Request $request
       * @param integer $breweryId
-      * @return Response
+      * @return JsonResponse
       */
     public function get(Request $request, int $breweryId)
     {
@@ -95,7 +95,7 @@ class BreweryController extends Controller
      * GET /breweries/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request){
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
@@ -143,7 +143,7 @@ class BreweryController extends Controller
      *
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getBeersFromBrewery(Request $request)
     {
@@ -162,7 +162,7 @@ class BreweryController extends Controller
      * POST /breweries
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -204,7 +204,7 @@ class BreweryController extends Controller
      *
      * @param Request $request
      * @param integer $breweryId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $breweryId){
         $updateArray = array();
@@ -226,7 +226,7 @@ class BreweryController extends Controller
      *
      * @param Request $request
      * @param integer $breweryId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $breweryId)
     {

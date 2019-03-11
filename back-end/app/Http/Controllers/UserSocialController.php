@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\DataServices\UserSocialDataService;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +14,7 @@ class UserSocialController extends Controller
      * GET /usersocials
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -66,7 +67,7 @@ class UserSocialController extends Controller
      *
      * @param Request $request
      * @param integer $usersocialId
-     * @return Response
+     * @return JsonResponse
      */
     public function get(Request $request, int $usersocialId)
     {
@@ -86,7 +87,7 @@ class UserSocialController extends Controller
      * GET /usersocials/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -139,7 +140,7 @@ class UserSocialController extends Controller
      * POST /usersocials
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -182,7 +183,7 @@ class UserSocialController extends Controller
      *
      * @param Request $request
      * @param integer $usersocialId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $usersocialId)
     {
@@ -205,7 +206,7 @@ class UserSocialController extends Controller
      *
      * @param Request $request
      * @param integer $usersocialId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $usersocialId)
     {

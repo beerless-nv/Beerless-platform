@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 use App\DataServices\ArticleTagDataService;
@@ -22,7 +22,7 @@ class ArticleTagController extends Controller
      * GET /articletags
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -96,7 +96,7 @@ class ArticleTagController extends Controller
      * GET /articletags/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -149,7 +149,7 @@ class ArticleTagController extends Controller
      * POST /articletags
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -188,7 +188,7 @@ class ArticleTagController extends Controller
      *
      * @param Request $request
      * @param integer $articletagId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $articletagId)
     {
@@ -211,7 +211,7 @@ class ArticleTagController extends Controller
      *
      * @param Request $request
      * @param integer $articletagId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $articletagId)
     {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataServices\ContactDataService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,7 +18,7 @@ class ContactController extends Controller
      * GET /contacts
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function getAll(Request $request)
     {
@@ -90,7 +91,7 @@ class ContactController extends Controller
      * GET /contacts/search
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function search(Request $request)
     {
@@ -143,7 +144,7 @@ class ContactController extends Controller
      * POST /contacts
      *
      * @param Request $request
-     * @return Response
+     * @return JsonResponse
      */
     public function insert(Request $request)
     {
@@ -179,7 +180,7 @@ class ContactController extends Controller
      *
      * @param Request $request
      * @param integer $contactId
-     * @return Response
+     * @return JsonResponse
      */
     public function patch(Request $request, int $contactId)
     {
@@ -202,7 +203,7 @@ class ContactController extends Controller
      *
      * @param Request $request
      * @param integer $contactId
-     * @return Response
+     * @return JsonResponse
      */
     public function delete(Request $request, int $contactId)
     {
