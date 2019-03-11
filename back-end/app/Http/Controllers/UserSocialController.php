@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\DataServices\UserSocialDataService;
+use Illuminate\Support\Facades\Validator;
 
 class UserSocialController extends Controller
 {
@@ -142,14 +143,28 @@ class UserSocialController extends Controller
      */
     public function insert(Request $request)
     {
-        $usersocial = '';
-        if(isset($request->input('inputObject')['userID']) && isset($request->input('inputObject')['socialID']) && isset($request->input('inputObject')['socialPlatform']) && isset($request->input('inputObject')['picture'])){
+        // Validate incoming requests
+        $validator = Validator::make($request->all(), [
+            'inputObject.userID' => 'required|numeric',
+            'inputObject.socialID' => 'required|numeric',
+            'inputObject.socialPlatform' => 'required',
+            'inputObject.picture' => 'required',
+        ],
+            [
+                'inputObject.userID.required' => 'user_required',
+                'inputObject.userID.numeric' => 'userID_not_numeric',
+                'inputObject.socialID.required' => 'socialID_required',
+                'inputObject.socialID.numeric' => 'socialID_not_numeric',
+                'inputObject.socialPlatform.required' => 'socialPlatform_required',
+                'inputObject.picture.required' => 'picture_required',
+            ]);
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
             $usersocial = UserSocialDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'all_fields_required'
-            ], 400);
         }
 
         return response()->json([

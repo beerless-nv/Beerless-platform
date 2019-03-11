@@ -9,6 +9,9 @@
 namespace App\DataServices;
 
 
+use App\Models\Contact;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class ContactDataService
 {
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
@@ -149,14 +150,20 @@ class StatusController extends Controller
      */
     public function insert(Request $request)
     {
-        $status = '';
-        if(isset($request->input('inputObject')['title'])){
+        // Validate incoming requests
+        $validator = Validator::make($request->all(), [
+            'inputObject.name' => 'required',
+        ],
+            [
+                'inputObject.name.required' => 'name_required',
+            ]);
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
             $status = StatusDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'title_required'
-            ], 400);
         }
 
         return response()->json([

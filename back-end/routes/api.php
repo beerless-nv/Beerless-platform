@@ -153,3 +153,13 @@ Route::prefix('beerfrombreweries')->group(function() {
     Route::patch('/{beerFromBreweryId}', 'BeerFromBreweryController@patch');
     Route::delete('/{beerFromBreweryId}', 'BeerFromBreweryController@delete');
 });
+
+Route::prefix('contacts')->group(function() {
+    Route::get('/', 'ContactController@getAll');
+    Route::get('/{contactId}', 'ContactController@get');
+    Route::post('/search', 'ContactController@search');
+
+    Route::post('/', 'ContactController@insert');
+    Route::patch('/{contactId}', 'ContactController@patch');
+    Route::delete('/{contactId}', 'ContactController@delete');
+});

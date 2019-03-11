@@ -12,7 +12,7 @@ class BeertypeController extends Controller
      * returns a JSON array of all columns in table 'Beerstyle'
      *
      * GET /beertypes
-     * 
+     *
      * @uses App\Models\Beerstyle
      * @return Reponse
      */
@@ -21,29 +21,33 @@ class BeertypeController extends Controller
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
         $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
-        if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
-        else {$sortOrder = null;}
+        if ($orderBy != null) {
+            $sortOrder[$orderBy[0]] = $orderBy[1];
+        } else {
+            $sortOrder = null;
+        }
 
         $limit = null;
-        if($request->query('limit') != null){
+        if ($request->query('limit') != null) {
             $limit = intval($request->query('limit'));
-            if(!is_int($limit) || $limit < 1){
+            if (!is_int($limit) || $limit < 1) {
                 return response()->json([
                     'succes' => false,
                     'msg' => 'limit_not_valid'
                 ]);
             }
-        }        
-        
+        }
+
         $offset = null;
-        if($request->query('offset') != null){
+        if ($request->query('offset') != null) {
             $offset = intval($request->query('offset'));
-            if(!is_int($offset) || $offset < 1){
+            if (!is_int($offset) || $offset < 1) {
                 return response()->json([
                     'succes' => false,
                     'msg' => 'offset_not_valid'
                 ]);
-            } if($limit == null){
+            }
+            if ($limit == null) {
                 return response()->json([
                     'success' => false,
                     'msg' => 'limit_not_set'
@@ -62,7 +66,7 @@ class BeertypeController extends Controller
     /**
      * Returns a specific JSON object of type 'Beerstyle'.
      * Takes the id as a request parameter.
-     * 
+     *
      * GET /beertypes/beertypeId
      *
      * @param Request $request
@@ -78,36 +82,41 @@ class BeertypeController extends Controller
         return response()->json([
             'success' => true,
             'beertype' => BeertypeDataService::get($beertypeId, $joinTables, $value)
-        ],200);
+        ], 200);
     }
 
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
         $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
-        if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
-        else {$sortOrder = null;}
+        if ($orderBy != null) {
+            $sortOrder[$orderBy[0]] = $orderBy[1];
+        } else {
+            $sortOrder = null;
+        }
 
         $limit = null;
-        if($request->query('limit') != null){
+        if ($request->query('limit') != null) {
             $limit = intval($request->query('limit'));
-            if(!is_int($limit) || $limit < 1){
+            if (!is_int($limit) || $limit < 1) {
                 return response()->json([
                     'succes' => false,
                     'msg' => 'limit_not_valid'
                 ]);
             }
-        }        
-        
+        }
+
         $offset = null;
-        if($request->query('offset') != null){
+        if ($request->query('offset') != null) {
             $offset = intval($request->query('offset'));
-            if(!is_int($offset) || $offset < 1){
+            if (!is_int($offset) || $offset < 1) {
                 return response()->json([
                     'succes' => false,
                     'msg' => 'offset_not_valid'
                 ]);
-            } if($limit == null){
+            }
+            if ($limit == null) {
                 return response()->json([
                     'success' => false,
                     'msg' => 'limit_not_set'
@@ -132,11 +141,33 @@ class BeertypeController extends Controller
      * @param Reqeust $request
      * @return Response
      */
-    public function insert(Request $request){
+    public function insert(Request $request)
+    {
+//        // Validate incoming requests
+//        $validator = Validator::make($request->all(), [
+//            'inputObject.activityTypeID' => 'required|numeric',
+//            'inputObject.userID' => 'required|numeric',
+//        ],
+//            [
+//                'inputObject.activityTypeID.required' => 'activityType_required',
+//                'inputObject.activityTypeID.numeric' => 'activityTypeID_not_numeric',
+//                'inputObject.userID.required' => 'user_required',
+//                'inputObject.userID.numeric' => 'userID_not_numeric',
+//            ]);
+//
+//        $retVal['success'] = false;
+//        if ($validator->fails()) {
+//            $retVal['msg'] = $validator->messages()->all();
+//            return response()->json($retVal, 400);
+//        } else {
+//            $activity = ActivityDataService::insert($request->input('inputObject'));
+//        }
+
+
         $beertype;
-        if(isset($request->input('inputObject')['name'])){
+        if (isset($request->input('inputObject')['name'])) {
             $beertype = BeertypeDataService::insert($request->input('inputObject'));
-        } else{
+        } else {
             return response()->json([
                 'success' => false,
                 'msg' => 'name_required'
@@ -158,7 +189,8 @@ class BeertypeController extends Controller
      * @param integer $beertypeId
      * @return Response
      */
-    public function patch(Request $request, int $beertypeId){
+    public function patch(Request $request, int $beertypeId)
+    {
         $updateArray = array();
         foreach ($request->input('updateArray') as $item) {
             $updateArray[$item['propName']] = $item['value'];
@@ -178,7 +210,8 @@ class BeertypeController extends Controller
      * @param integer $beertypeId
      * @return Response
      */
-    public function delete(Request $request, int $beertypeId){
+    public function delete(Request $request, int $beertypeId)
+    {
         BeertypeDataService::delete($beertypeId);
         return response()->json([
             'success' => true

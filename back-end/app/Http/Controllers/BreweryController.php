@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Brewery;
 use App\DataServices\BreweryDataService;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -165,14 +166,29 @@ class BreweryController extends Controller
      */
     public function insert(Request $request)
     {
-        $brewery;
-        if(isset($request->input('inputObject')['name'])){
+        // Validate incoming requests
+        $validator = Validator::make($request->all(), [
+            'inputObject.name' => 'required|unique:brewery,name',
+            'inputObject.description' => 'required',
+            'inputObject.country' => 'required',
+            'inputObject.streetAndNumber' => 'required',
+            'inputObject.province' => 'required',
+        ],
+            [
+                'inputObject.name.required' => 'name_required',
+                'inputObject.name.unique' => 'name_not_unique',
+                'inputObject.description.required' => 'description_required',
+                'inputObject.country.required' => 'country_required',
+                'inputObject.streetAndNumber.required' => 'streetAndNumber_required',
+                'inputObject.province.required' => 'province_required',
+            ]);
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
             $brewery = BreweryDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'name_required'
-            ], 400);
         }
 
         return response()->json([

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Relationship;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
@@ -132,7 +134,7 @@ class RelationshipController extends Controller
         $value = ($request->query('value') == null) ? null : explode(',', $request->query('value'));
 
         return response()->json([
-            "success" => true,
+            'success' => true,
             'relationships' => RelationshipDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
@@ -149,14 +151,49 @@ class RelationshipController extends Controller
      */
     public function insert(Request $request)
     {
-        $relationship = '';
-        if(isset($request->input('inputObject')['title'])){
+        // Validate incoming requests
+        $validator = Validator::make($request->all(), [
+            'inputObject.user_1ID' => 'required|numeric',
+            'inputObject.user_2ID' => 'required|numeric',
+            'inputObject.actionUserID' => 'required|numeric',
+            'inputObject.statusID' => 'required|numeric|min:1|max:4',
+        ],
+            [
+                'inputObject.user_1ID.required' => 'user_1_required',
+                'inputObject.user_1ID.numeric' => 'user_1ID_not_numeric',
+                'inputObject.user_2ID.required' => 'user_2_required',
+                'inputObject.user_2ID.numeric' => 'user_2ID_not_numeric',
+                'inputObject.actionUserID.required' => 'actionUser_required',
+                'inputObject.actionUserID.numeric' => 'actionUserID_not_numeric',
+                'inputObject.statusID.required' => 'status_required',
+                'inputObject.statusID.numeric' => 'statusID_not_numeric',
+                'inputObject.statusID.min' => 'statusID_less_than_1',
+                'inputObject.statusID.max' => 'statusID_greater_than_4',
+            ]);
+
+        $relationCheck1 = Relationship::where('user_1ID', $request->input('inputObject')['user_1ID'])
+            ->where('user_2ID', $request->input('inputObject')['user_2ID'])
+            ->where('statusID', '!=', 1)
+            ->where('statusID', '!=', 2)
+            ->where('statusID', '!=', 4)
+            ->exists();
+        $relationCheck2 = Relationship::where('user_1ID', $request->input('inputObject')['user_2ID'])
+            ->where('user_1ID', $request->input('inputObject')['user_2ID'])
+            ->where('statusID', '!=', 1)
+            ->where('statusID', '!=', 2)
+            ->where('statusID', '!=', 4)
+            ->exists();
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else if ($relationCheck1 != null  || $relationCheck2 != null) {
+            // if relation doesn't exist or is declined
             $relationship = RelationshipDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'title_required'
-            ], 400);
+        } else {
+            $retVal['msg'] = array('relationship_request_not_possible');
+            return response()->json($retVal, 400);
         }
 
         return response()->json([
