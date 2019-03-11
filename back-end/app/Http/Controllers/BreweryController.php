@@ -14,42 +14,74 @@ use Symfony\Component\HttpFoundation\JsonResponse;
  */
 class BreweryController extends Controller
 {
-     /**
-      * Returns a JSON array of all columns in table 'Brewery'.
-      * 
-      * GET /breweries
-      *
-      * @param Request $request
-      * @return JsonResponse
-      */
+    /**
+     * Validator for the table 'Brewery'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|unique:brewery,name',
+            'description' => 'required',
+            'country' => 'required',
+            'streetAndNumber' => 'required',
+            'province' => 'required',
+        ],
+            [
+                'name.required' => 'name_required',
+                'name.unique' => 'name_not_unique',
+                'description.required' => 'description_required',
+                'country.required' => 'country_required',
+                'streetAndNumber.required' => 'streetAndNumber_required',
+                'province.required' => 'province_required',
+            ]);
+    }
+
+
+
+
+    /**
+     * Returns a JSON array of all columns in table 'Brewery'.
+     *
+     * GET /breweries
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function getAll(Request $request)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
         $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
-        if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
-        else {$sortOrder = null;}
+        if ($orderBy != null) {
+            $sortOrder[$orderBy[0]] = $orderBy[1];
+        } else {
+            $sortOrder = null;
+        }
 
         $limit = null;
-        if($request->query('limit') != null){
+        if ($request->query('limit') != null) {
             $limit = intval($request->query('limit'));
-            if(!is_int($limit) || $limit < 1){
+            if (!is_int($limit) || $limit < 1) {
                 return response()->json([
                     'succes' => false,
                     'msg' => 'limit_not_valid'
                 ]);
             }
-        }        
-        
+        }
+
         $offset = null;
-        if($request->query('offset') != null){
+        if ($request->query('offset') != null) {
             $offset = intval($request->query('offset'));
-            if(!is_int($offset) || $offset < 1){
+            if (!is_int($offset) || $offset < 1) {
                 return response()->json([
                     'succes' => false,
                     'msg' => 'offset_not_valid'
                 ]);
-            } if($limit == null){
+            }
+            if ($limit == null) {
                 return response()->json([
                     'success' => false,
                     'msg' => 'limit_not_set'
@@ -66,16 +98,16 @@ class BreweryController extends Controller
     }
 
 
-     /**
-      * Returns a specific JSON object of type 'Brewery'.
-      * Takes the id as a request parameter.
-      * 
-      * GET /breweries/breweryId
-      *
-      * @param Request $request
-      * @param integer $breweryId
-      * @return JsonResponse
-      */
+    /**
+     * Returns a specific JSON object of type 'Brewery'.
+     * Takes the id as a request parameter.
+     *
+     * GET /breweries/breweryId
+     *
+     * @param Request $request
+     * @param integer $breweryId
+     * @return JsonResponse
+     */
     public function get(Request $request, int $breweryId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
@@ -85,45 +117,49 @@ class BreweryController extends Controller
         return response()->json([
             'success' => true,
             'brewery' => BreweryDataService::get($breweryId, $joinTables, $value)
-        ],200);
+        ], 200);
     }
 
     /**
      * Returns a JSON array of all records from table 'Brewery' that match with the given parameters.
-     * Takes the propName, value and operator as a request parameter.
      *
      * GET /breweries/search
      *
      * @param Request $request
      * @return JsonResponse
      */
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
         $orderBy = ($request->query('orderBy') == null) ? null : explode('.', $request->query('orderBy'));
-        if($orderBy != null){$sortOrder[$orderBy[0]] = $orderBy[1];} 
-        else {$sortOrder = null;}
+        if ($orderBy != null) {
+            $sortOrder[$orderBy[0]] = $orderBy[1];
+        } else {
+            $sortOrder = null;
+        }
 
         $limit = null;
-        if($request->query('limit') != null){
+        if ($request->query('limit') != null) {
             $limit = intval($request->query('limit'));
-            if(!is_int($limit) || $limit < 1){
+            if (!is_int($limit) || $limit < 1) {
                 return response()->json([
                     'succes' => false,
                     'msg' => 'limit_not_valid'
                 ]);
             }
-        }        
-        
+        }
+
         $offset = null;
-        if($request->query('offset') != null){
+        if ($request->query('offset') != null) {
             $offset = intval($request->query('offset'));
-            if(!is_int($offset) || $offset < 1){
+            if (!is_int($offset) || $offset < 1) {
                 return response()->json([
                     'succes' => false,
                     'msg' => 'offset_not_valid'
                 ]);
-            } if($limit == null){
+            }
+            if ($limit == null) {
                 return response()->json([
                     'success' => false,
                     'msg' => 'limit_not_set'
@@ -157,7 +193,6 @@ class BreweryController extends Controller
 
     /**
      * Insert an item into table 'Brewery'.
-     * Requires the field 'name'.
      *
      * POST /breweries
      *
@@ -166,22 +201,7 @@ class BreweryController extends Controller
      */
     public function insert(Request $request)
     {
-        // Validate incoming requests
-        $validator = Validator::make($request->all(), [
-            'inputObject.name' => 'required|unique:brewery,name',
-            'inputObject.description' => 'required',
-            'inputObject.country' => 'required',
-            'inputObject.streetAndNumber' => 'required',
-            'inputObject.province' => 'required',
-        ],
-            [
-                'inputObject.name.required' => 'name_required',
-                'inputObject.name.unique' => 'name_not_unique',
-                'inputObject.description.required' => 'description_required',
-                'inputObject.country.required' => 'country_required',
-                'inputObject.streetAndNumber.required' => 'streetAndNumber_required',
-                'inputObject.province.required' => 'province_required',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -200,18 +220,23 @@ class BreweryController extends Controller
     /**
      * Updates an entry in the table 'Brewery'.
      *
-     * PATCH /breweries/breweryId
+     * PUT /breweries/breweryId
      *
      * @param Request $request
      * @param integer $breweryId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $breweryId){
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+    public function update(Request $request, int $breweryId)
+    {
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $brewery = BreweryDataService::update($breweryId, $request->input('updateObject'));
         }
-        $brewery = BreweryDataService::update($breweryId, $updateArray);
+        
         return response()->json([
             'success' => true,
             'brewery' => $brewery
@@ -221,7 +246,7 @@ class BreweryController extends Controller
     /**
      * Deletes an item in table 'Brewery'.
      * Takes the id as a request parameter.
-     * 
+     *
      * DELETE /breweries/breweryId
      *
      * @param Request $request

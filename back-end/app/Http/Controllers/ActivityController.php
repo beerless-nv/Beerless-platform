@@ -22,14 +22,14 @@ class ActivityController extends Controller
      */
     public function validator(array $data) {
         return Validator::make($data, [
-            'inputObject.activityTypeID' => 'required|numeric',
-            'inputObject.userID' => 'required|numeric',
+            'activityTypeID' => 'required|numeric',
+            'userID' => 'required|numeric',
         ],
             [
-                'inputObject.activityTypeID.required' => 'activityType_required',
-                'inputObject.activityTypeID.numeric' => 'activityTypeID_not_numeric',
-                'inputObject.userID.required' => 'user_required',
-                'inputObject.userID.numeric' => 'userID_not_numeric',
+                'activityTypeID.required' => 'activityType_required',
+                'activityTypeID.numeric' => 'activityTypeID_not_numeric',
+                'userID.required' => 'user_required',
+                'userID.numeric' => 'userID_not_numeric',
             ]);
     }
 
@@ -110,7 +110,7 @@ class ActivityController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'Activity' which match with the specified search parameters.
      * 
      * GET /activities/search
      *
@@ -163,7 +163,6 @@ class ActivityController extends Controller
     /**
      * Insert an item into table 'Activity'.
      * Takes the item fields as request parameters.
-     * Requires the field 'title'.
      *
      * POST /activities
      *
@@ -172,7 +171,7 @@ class ActivityController extends Controller
      */
     public function insert(Request $request)
     {
-        $validator = $this->validator($request->all());
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -191,9 +190,8 @@ class ActivityController extends Controller
     /**
      * Updates an item in table 'Activity'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
-     * PATCH /activities/$activityId
+     * PUT /activities/$activityId
      *
      * @param Request $request
      * @param integer $activityId
@@ -201,25 +199,14 @@ class ActivityController extends Controller
      */
     public function update(Request $request, int $activityId)
     {
-        // Validate incoming requests
-        $validator = Validator::make($request->all(), [
-            'inputObject.activityTypeID' => 'required',
-            'inputObject.userID' => 'required',
-        ],
-            [
-                'inputObject.activityTypeID.required' => 'activityType_required',
-                'inputObject.userID.required' => 'user_required',
-            ]);
+        $validator = $this->validator($request->input('updateObject'));
 
-//        if ($validator->fails()) {
-//            $retVal['msg'] = $validator->messages()->all();
-//            return response()->json($retVal, 400);
-//        } else {
-//            foreach ($request->input('updateArray') as $item) {
-//                $updateArray[$item['propName']] = $item['value'];
-//            }
-//            $activity = ActivityDataService::update($activityId, $updateArray);
-//        }
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $activity = ActivityDataService::update($activityId, $request->input('updateObject'));
+        }
 
         return response()->json([
             'success' => true,

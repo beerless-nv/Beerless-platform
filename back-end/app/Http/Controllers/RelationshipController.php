@@ -16,6 +16,36 @@ use App\DataServices\RelationshipDataService;
 class RelationshipController extends Controller
 {
     /**
+     * Validator for the table 'Activity'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'user_1ID' => 'required|numeric',
+            'user_2ID' => 'required|numeric',
+            'actionUserID' => 'required|numeric',
+            'statusID' => 'required|numeric|min:1|max:4',
+        ],
+            [
+                'user_1ID.required' => 'user_1_required',
+                'user_1ID.numeric' => 'user_1ID_not_numeric',
+                'user_2ID.required' => 'user_2_required',
+                'user_2ID.numeric' => 'user_2ID_not_numeric',
+                'actionUserID.required' => 'actionUser_required',
+                'actionUserID.numeric' => 'actionUserID_not_numeric',
+                'statusID.required' => 'status_required',
+                'statusID.numeric' => 'statusID_not_numeric',
+                'statusID.min' => 'statusID_less_than_1',
+                'statusID.max' => 'statusID_greater_than_4',
+            ]);
+    }
+
+
+
+
+    /**
      * Returns a JSON array of all rows in table 'Relationship'.
      * 
      * GET /relationships
@@ -89,7 +119,7 @@ class RelationshipController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'Activity' which match with the specified search parameters.
      * 
      * GET /relationships/search
      *
@@ -142,7 +172,6 @@ class RelationshipController extends Controller
     /**
      * Insert an item into table 'Relationship'.
      * Takes the item fields as request parameters.
-     * Requires the field 'title'.
      *
      * POST /relationships
      *
@@ -151,25 +180,7 @@ class RelationshipController extends Controller
      */
     public function insert(Request $request)
     {
-        // Validate incoming requests
-        $validator = Validator::make($request->all(), [
-            'inputObject.user_1ID' => 'required|numeric',
-            'inputObject.user_2ID' => 'required|numeric',
-            'inputObject.actionUserID' => 'required|numeric',
-            'inputObject.statusID' => 'required|numeric|min:1|max:4',
-        ],
-            [
-                'inputObject.user_1ID.required' => 'user_1_required',
-                'inputObject.user_1ID.numeric' => 'user_1ID_not_numeric',
-                'inputObject.user_2ID.required' => 'user_2_required',
-                'inputObject.user_2ID.numeric' => 'user_2ID_not_numeric',
-                'inputObject.actionUserID.required' => 'actionUser_required',
-                'inputObject.actionUserID.numeric' => 'actionUserID_not_numeric',
-                'inputObject.statusID.required' => 'status_required',
-                'inputObject.statusID.numeric' => 'statusID_not_numeric',
-                'inputObject.statusID.min' => 'statusID_less_than_1',
-                'inputObject.statusID.max' => 'statusID_greater_than_4',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $relationCheck1 = Relationship::where('user_1ID', $request->input('inputObject')['user_1ID'])
             ->where('user_2ID', $request->input('inputObject')['user_2ID'])
@@ -178,7 +189,7 @@ class RelationshipController extends Controller
             ->where('statusID', '!=', 4)
             ->exists();
         $relationCheck2 = Relationship::where('user_1ID', $request->input('inputObject')['user_2ID'])
-            ->where('user_1ID', $request->input('inputObject')['user_2ID'])
+            ->where('user_2ID', $request->input('inputObject')['user_1ID'])
             ->where('statusID', '!=', 1)
             ->where('statusID', '!=', 2)
             ->where('statusID', '!=', 4)
@@ -188,7 +199,7 @@ class RelationshipController extends Controller
         if ($validator->fails()) {
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
-        } else if ($relationCheck1 != null  || $relationCheck2 != null) {
+        } else if ($relationCheck1 == null  && $relationCheck2 == null) {
             // if relation doesn't exist or is declined
             $relationship = RelationshipDataService::insert($request->input('inputObject'));
         } else {
@@ -205,21 +216,24 @@ class RelationshipController extends Controller
     /**
      * Updates an item in table 'Relationship'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
-     * PATCH /relationships/$relationshipId
+     * PUT /relationships/$relationshipId
      *
      * @param Request $request
      * @param integer $relationshipId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $relationshipId)
+    public function update(Request $request, int $relationshipId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $relationship = RelationshipDataService::update($relationshipId, $request->input('updateObject'));
         }
-        $relationship = RelationshipDataService::update($relationshipId, $updateArray);
+
         return response()->json([
             'success' => true,
             'relationship' => $relationship

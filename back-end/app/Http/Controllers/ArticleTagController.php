@@ -17,6 +17,28 @@ use App\DataServices\ArticleTagDataService;
 class ArticleTagController extends Controller
 {
     /**
+     * Validator for the table 'ArticleTag'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'articleID' => 'required|numeric',
+            'tagID' => 'required|numeric',
+        ],
+            [
+                'articleID.required' => 'article_required',
+                'articleID.numeric' => 'articleID_not_numeric',
+                'tagID.required' => 'tag_required',
+                'tagID.numeric' => 'tagID_not_numeric',
+            ]);
+    }
+
+
+
+
+    /**
      * Returns a JSON array of all rows in table 'ArticleTag'.
      * 
      * GET /articletags
@@ -91,7 +113,7 @@ class ArticleTagController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'ArticleTag' which match with the specified search parameters.
      * 
      * GET /articletags/search
      *
@@ -144,7 +166,6 @@ class ArticleTagController extends Controller
     /**
      * Insert an item into table 'ArticleTag'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
      * POST /articletags
      *
@@ -153,17 +174,7 @@ class ArticleTagController extends Controller
      */
     public function insert(Request $request)
     {
-        // Validate incoming requests
-        $validator = Validator::make($request->all(), [
-            'inputObject.articleID' => 'required|numeric',
-            'inputObject.tagID' => 'required|numeric',
-        ],
-            [
-                'inputObject.articleID.required' => 'article_required',
-                'inputObject.articleID.numeric' => 'articleID_not_numeric',
-                'inputObject.tagID.required' => 'tag_required',
-                'inputObject.tagID.numeric' => 'tagID_not_numeric',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -182,21 +193,24 @@ class ArticleTagController extends Controller
     /**
      * Updates an item in table 'ArticleTag'.
      * Takes the item fields as request parameters.
-     * Requires the field 'id' and 'name'.
      *
-     * PATCH /articletags/$articletagId
+     * PUT /articletags/$articletagId
      *
      * @param Request $request
      * @param integer $articletagId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $articletagId)
+    public function update(Request $request, int $articletagId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $articletag = ArticleTagDataService::update($articletagId, $request->input('updateObject'));
         }
-        $articletag = ArticleTagDataService::update($articletagId, $updateArray);
+
         return response()->json([
             'success' => true,
             'articletag' => $articletag

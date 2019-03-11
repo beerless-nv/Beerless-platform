@@ -13,6 +13,28 @@ use Illuminate\Support\Facades\Validator;
 class BeerFromBreweryController extends Controller
 {
     /**
+     * Validator for the table 'BeerFromBrewery'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'beerID' => 'required|numeric',
+            'breweryID' => 'required|numeric',
+        ],
+            [
+                'beerID.required' => 'beer_required',
+                'beerID.numeric' => 'beerID_not_numeric',
+                'breweryID.required' => 'brewery_required',
+                'breweryID.numeric' => 'breweryID_not_numeric',
+            ]);
+    }
+
+
+
+
+    /**
      * Returns a JSON array of all rows in table 'BeerFromBrewery'.
      *
      * GET /beerfrombreweries
@@ -85,7 +107,7 @@ class BeerFromBreweryController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'BeerFromBrewery' which match with the specified search parameters.
      *
      * GET /beerfrombreweries/search
      *
@@ -138,7 +160,6 @@ class BeerFromBreweryController extends Controller
     /**
      * Insert an item into table 'BeerFromBrewery'.
      * Takes the item fields as request parameters.
-     * Requires the field 'title'.
      *
      * POST /beerfrombreweries
      *
@@ -147,17 +168,7 @@ class BeerFromBreweryController extends Controller
      */
     public function insert(Request $request)
     {
-        // Validate incoming requests
-        $validator = Validator::make($request->all(), [
-            'inputObject.beerID' => 'required|numeric',
-            'inputObject.breweryID' => 'required|numeric',
-        ],
-            [
-                'inputObject.beerID.required' => 'beer_required',
-                'inputObject.beerID.numeric' => 'beerID_not_numeric',
-                'inputObject.breweryID.required' => 'brewery_required',
-                'inputObject.breweryID.numeric' => 'breweryID_not_numeric',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -176,21 +187,24 @@ class BeerFromBreweryController extends Controller
     /**
      * Updates an item in table 'BeerFromBrewery'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
-     * PATCH /beerfrombreweries/$beerFromBreweryId
+     * PUT /beerfrombreweries/$beerFromBreweryId
      *
      * @param Request $request
      * @param integer $beerFromBreweryId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $beerFromBreweryId)
+    public function update(Request $request, int $beerFromBreweryId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $beerFromBrewery = BeerFromBreweryDataService::update($beerFromBreweryId, $request->input('updateObject'));
         }
-        $beerFromBrewery = BeerFromBreweryDataService::update($beerFromBreweryId, $updateArray);
+
         return response()->json([
             'success' => true,
             'beerFromBrewery' => $beerFromBrewery

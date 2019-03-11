@@ -15,6 +15,37 @@ use App\DataServices\ArticleDataService;
 class ArticleController extends Controller
 {
     /**
+     * Validator for the table 'Article'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'title' => 'required|unique:article,title',
+            'slug' => 'required|unique:article,slug',
+            'picture' => 'required',
+            'intro' => 'required',
+            'content' => 'required',
+            'userID' => 'required|numeric',
+        ],
+            [
+                'title.required' => 'title_required',
+                'title.unique' => 'title_not_unique',
+                'slug.required' => 'slug_required',
+                'slug.unique' => 'slug_not_unique',
+                'picture.required' => 'picture_required',
+                'intro.required' => 'intro_required',
+                'content.required' => 'content_required',
+                'userID.required' => 'user_required',
+                'userID.numeric' => 'userID_required',
+            ]);
+    }
+
+
+
+
+    /**
      * Returns a JSON array of all rows in table 'Article'.
      * 
      * GET /articles
@@ -88,7 +119,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'Article' which match with the specified search parameters.
      *
      * GET /articles/search
      *
@@ -141,8 +172,7 @@ class ArticleController extends Controller
     /**
      * Insert an item into table 'Article'.
      * Takes the item fields as request parameters.
-     * Requires the field 'title'.
-     * 
+     *
      * POST /articles
      *
      * @param Request $request
@@ -150,25 +180,7 @@ class ArticleController extends Controller
      */
     public function insert(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'inputObject.title' => 'required|unique:article,title',
-            'inputObject.slug' => 'required|unique:article,slug',
-            'inputObject.picture' => 'required',
-            'inputObject.intro' => 'required',
-            'inputObject.content' => 'required',
-            'inputObject.userID' => 'required|numeric',
-        ],
-            [
-                'inputObject.title.required' => 'title_required',
-                'inputObject.title.unique' => 'title_not_unique',
-                'inputObject.slug.required' => 'slug_required',
-                'inputObject.slug.unique' => 'slug_not_unique',
-                'inputObject.picture.required' => 'picture_required',
-                'inputObject.intro.required' => 'intro_required',
-                'inputObject.content.required' => 'content_required',
-                'inputObject.userID.required' => 'user_required',
-                'inputObject.userID.numeric' => 'userID_required',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -187,21 +199,30 @@ class ArticleController extends Controller
     /**
      * Updates an item in table 'Article'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
-     * PATCH /articles/$articleId
+     * PUT /articles/$articleId
      *
      * @param Request $request
      * @param integer $articleId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $articleId)
+    public function update(Request $request, int $articleId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $article = ArticleDataService::update($articleId, $request->input('updateObject'));
         }
-        $article = ArticleDataService::update($articleId, $updateArray);
+
+
+//        $updateArray = array();
+//        foreach ($request->input('updateArray') as $item) {
+//            $updateArray[$item['propName']] = $item['value'];
+//        }
+//        $article = ArticleDataService::update($articleId, $updateArray);
         return response()->json([
             'success' => true,
             'article' => $article

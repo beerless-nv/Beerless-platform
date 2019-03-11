@@ -10,6 +10,28 @@ use App\DataServices\BeertypeDataService;
 class BeertypeController extends Controller
 {
     /**
+     * Validator for the table 'Activity'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'activityTypeID' => 'required|numeric',
+            'userID' => 'required|numeric',
+        ],
+            [
+                'activityTypeID.required' => 'activityType_required',
+                'activityTypeID.numeric' => 'activityTypeID_not_numeric',
+                'userID.required' => 'user_required',
+                'userID.numeric' => 'userID_not_numeric',
+            ]);
+    }
+
+
+
+
+    /**
      * returns a JSON array of all columns in table 'Beerstyle'
      *
      * GET /beertypes

@@ -15,6 +15,24 @@ use App\DataServices\StatusDataService;
 class StatusController extends Controller
 {
     /**
+     * Validator for the table 'Status'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'name' => 'required',
+        ],
+            [
+                'name.required' => 'name_required',
+            ]);
+    }
+
+
+
+
+    /**
      * Returns a JSON array of all rows in table 'Status'.
      * 
      * GET /statuses
@@ -88,7 +106,7 @@ class StatusController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'Activity' which match with the specified search parameters.
      * 
      * GET /statuses/search
      *
@@ -141,7 +159,6 @@ class StatusController extends Controller
     /**
      * Insert an item into table 'Status'.
      * Takes the item fields as request parameters.
-     * Requires the field 'title'.
      *
      * POST /statuses
      *
@@ -150,13 +167,7 @@ class StatusController extends Controller
      */
     public function insert(Request $request)
     {
-        // Validate incoming requests
-        $validator = Validator::make($request->all(), [
-            'inputObject.name' => 'required',
-        ],
-            [
-                'inputObject.name.required' => 'name_required',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -175,21 +186,30 @@ class StatusController extends Controller
     /**
      * Updates an item in table 'Status'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
-     * PATCH /statuses/$statusId
+     * PUT /statuses/$statusId
      *
      * @param Request $request
      * @param integer $statusId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $statusId)
+    public function update(Request $request, int $statusId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $status = StatusDataService::update($statusId, $request->input('updateObject'));
         }
-        $status = StatusDataService::update($statusId, $updateArray);
+
+
+//        $updateArray = array();
+//        foreach ($request->input('updateArray') as $item) {
+//            $updateArray[$item['propName']] = $item['value'];
+//        }
+//        $status = StatusDataService::update($statusId, $updateArray);
         return response()->json([
             'success' => true,
             'status' => $status

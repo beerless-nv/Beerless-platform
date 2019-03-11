@@ -13,6 +13,26 @@ use Illuminate\Support\Facades\Validator;
 class ContactController extends Controller
 {
     /**
+     * Validator for the table 'Activity'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'breweryID' => 'required|unique:contact,breweryID|numeric',
+        ],
+            [
+                'breweryID.required' => 'brewery_required',
+                'breweryID.unique' => 'breweryID_not_unique',
+                'breweryID.numeric' => 'breweryID_not_numeric',
+            ]);
+    }
+
+
+
+
+    /**
      * Returns a JSON array of all rows in table 'Contact'.
      *
      * GET /contacts
@@ -86,7 +106,7 @@ class ContactController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'Contact' which match with the specified search parameters.
      *
      * GET /contacts/search
      *
@@ -139,7 +159,6 @@ class ContactController extends Controller
     /**
      * Insert an item into table 'Contact'.
      * Takes the item fields as request parameters.
-     * Requires the field 'title'.
      *
      * POST /contacts
      *
@@ -148,14 +167,7 @@ class ContactController extends Controller
      */
     public function insert(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'inputObject.breweryID' => 'required|unique:contact,breweryID|numeric',
-        ],
-            [
-                'inputObject.breweryID.required' => 'brewery_required',
-                'inputObject.breweryID.unique' => 'breweryID_not_unique',
-                'inputObject.breweryID.numeric' => 'breweryID_not_numeric',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -174,21 +186,24 @@ class ContactController extends Controller
     /**
      * Updates an item in table 'Contact'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
-     * PATCH /contacts/$contactId
+     * PUT /contacts/$contactId
      *
      * @param Request $request
      * @param integer $contactId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $contactId)
+    public function update(Request $request, int $contactId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $contact = ContactDataService::update($contactId, $request->input('updateObject'));
         }
-        $contact = ContactDataService::update($contactId, $updateArray);
+
         return response()->json([
             'success' => true,
             'contact' => $contact

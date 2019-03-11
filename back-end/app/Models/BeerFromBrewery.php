@@ -10,7 +10,7 @@ class BeerFromBrewery extends Model
     protected $primaryKey = 'ID';
 
     protected $attributes = [
-        'isPublisher' => false
+        'isPublisher' => 1
     ];
     protected $fillable = [];
     protected $dates = [];

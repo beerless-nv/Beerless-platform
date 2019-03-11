@@ -15,6 +15,24 @@ use App\DataServices\TagDataService;
 class TagController extends Controller
 {
     /**
+     * Validator for the table 'Tag'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'name' => 'required',
+        ],
+            [
+                'name.required' => 'name_required',
+            ]);
+    }
+
+
+
+
+    /**
      * Returns a JSON array of all rows in table 'Tag'.
      * 
      * GET /tags
@@ -88,7 +106,7 @@ class TagController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'Tag' which match with the specified search parameters.
      * 
      * GET /tags/search
      *
@@ -141,7 +159,6 @@ class TagController extends Controller
     /**
      * Insert an item into table 'Tag'.
      * Takes the item fields as request parameters.
-     * Requires the field 'title'.
      *
      * POST /tags
      *
@@ -150,13 +167,7 @@ class TagController extends Controller
      */
     public function insert(Request $request)
     {
-        // Validate incoming requests
-        $validator = Validator::make($request->all(), [
-            'inputObject.name' => 'required',
-        ],
-            [
-                'inputObject.name.required' => 'name_required',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -175,21 +186,24 @@ class TagController extends Controller
     /**
      * Updates an item in table 'Tag'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
-     * PATCH /tags/$tagId
+     * PUT /tags/$tagId
      *
      * @param Request $request
      * @param integer $tagId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $tagId)
+    public function update(Request $request, int $tagId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $tag = TagDataService::update($tagId, $request->input('updateObject'));
         }
-        $tag = TagDataService::update($tagId, $updateArray);
+
         return response()->json([
             'success' => true,
             'tag' => $tag

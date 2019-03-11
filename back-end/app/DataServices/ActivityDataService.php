@@ -84,7 +84,6 @@ class ActivityDataService
         foreach ($updateArray as $key => $value){
             $activity[$key] = $value;
         }
-
         $activity->save();
         return $activity;
     }

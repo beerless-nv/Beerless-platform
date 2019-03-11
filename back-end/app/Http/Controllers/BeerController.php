@@ -8,12 +8,55 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Beer;
 use App\DataServices\BeerDataService;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * Contains CRUD functions for table 'Beer'.
  */
 class BeerController extends Controller
 {
+    /**
+     * Validator for the table 'Beer'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'name' => 'required|unique:beer,name',
+            'ABV' => 'required|numeric',
+            'IBU' => 'required|numeric',
+            'EBC' => 'numeric',
+            'temperature' => 'numeric',
+            'fermentation' => 'required',
+            'logo' => 'required',
+            'description' => 'required',
+            'since' => 'required|numeric|digits:4',
+            'beertypeID' => 'required|numeric',
+        ],
+            [
+                'name.required' => 'name_required',
+                'name.unique' => 'name_not_unique',
+                'ABV.required' => 'ABV_required',
+                'ABV.numeric' => 'ABV_not_numeric',
+                'IBU.required' => 'IBU_required',
+                'IBU.numeric' => 'IBU_not_numeric',
+                'EBC.numeric' => 'EBC_not_numeric',
+                'temperature.numeric' => 'temperature_not_numeric',
+                'fermentation.required' => 'fermentation_required',
+                'logo.required' => 'logo_required',
+                'description.required' => 'description_required',
+                'since.required' => 'since_required',
+                'since.numeric' => 'since_not_numeric',
+                'since.digits' => 'since_not_4_digits',
+                'beertypeID.required' => 'beertype_required',
+                'beertypeID.numeric' => 'beertypeID_not_numeric',
+            ]);
+    }
+
+
+
+
     /**
      * Returns a JSON array of all rows in table 'Beer'.
      * 
@@ -142,7 +185,6 @@ class BeerController extends Controller
     /**
      * Insert an item into table 'Beer'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
      * POST /beers
      *
@@ -151,14 +193,14 @@ class BeerController extends Controller
      */
     public function insert(Request $request)
     {
-        $beer = '';
-        if(isset($request->input('inputObject')['name'])){
+        $validator = $this->validator($request->input('inputObject'));
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
             $beer = BeerDataService::insert($request->input('inputObject'));
-        } else{
-            return response()->json([
-                'success' => false,
-                'msg' => 'name_required'
-            ], 400);
         }
 
         return response()->json([
@@ -170,19 +212,24 @@ class BeerController extends Controller
     /**
      * Updates an entry in the table 'Beer'.
      *
-     * PATCH /beers/beerId
+     * PUT /beers/beerId
      *
      * @param Request $request
      * @param integer $beerId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $beerId)
+    public function update(Request $request, int $beerId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        $retVal['success'] = false;
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $beer = BeerDataService::update($beerId, $request->input('updateObject'));
         }
-        $beer = BeerDataService::update($beerId, $updateArray);
+
         return response()->json([
             'success' => true,
             'beer' => $beer

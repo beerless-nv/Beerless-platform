@@ -16,6 +16,26 @@ use App\DataServices\ActivityTypeDataService;
 class ActivityTypeController extends Controller
 {
     /**
+     * Validator for the table 'Activity'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'name' => 'required',
+            'points' => 'required',
+        ],
+            [
+                'name.required' => 'name_required',
+                'points.required' => 'points_required',
+            ]);
+    }
+
+
+
+
+    /**
      * Returns a JSON array of all rows in table 'ActivityType'.
      * 
      * GET /activitytypes
@@ -89,7 +109,7 @@ class ActivityTypeController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'ActivityType' which match with the specified search parameters.
      *
      * GET /activitytypes/search
      *
@@ -142,8 +162,7 @@ class ActivityTypeController extends Controller
     /**
      * Insert an item into table 'ActivityType'.
      * Takes the item fields as request parameters.
-     * Requires the field 'title'.
-     * 
+     *
      * POST /activitytypes
      *
      * @param Request $request
@@ -151,14 +170,7 @@ class ActivityTypeController extends Controller
      */
     public function insert(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'inputObject.name' => 'required',
-            'inputObject.points' => 'required',
-        ],
-            [
-                'inputObject.name.required' => 'name_required',
-                'inputObject.points.required' => 'points_required',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -177,21 +189,29 @@ class ActivityTypeController extends Controller
     /**
      * Updates an item in table 'ActivityType'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
-     * PATCH /activitytypes/$activitytypeId
+     * PUT /activitytypes/$activitytypeId
      *
      * @param Request $request
      * @param integer $activitytypeId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $activitytypeId)
+    public function update(Request $request, int $activitytypeId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $activitytype = ActivityTypeDataService::update($activitytypeId, $request->input('updateObject'));
         }
-        $activitytype = ActivityTypeDataService::update($activitytypeId, $updateArray);
+
+//        $updateArray = array();
+//        foreach ($request->input('updateArray') as $item) {
+//            $updateArray[$item['propName']] = $item['value'];
+//        }
+//        $activitytype = ActivityTypeDataService::update($activitytypeId, $updateArray);
         return response()->json([
             'success' => true,
             'activitytype' => $activitytype

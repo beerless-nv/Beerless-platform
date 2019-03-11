@@ -9,7 +9,33 @@ use Illuminate\Support\Facades\Validator;
 class UserSocialController extends Controller
 {
     /**
-     * Returns a JSON array of all rows in table 'Usersocial'.
+     * Validator for the table 'UserSocial'
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validator(array $data) {
+        return Validator::make($data, [
+            'userID' => 'required|numeric',
+            'socialID' => 'required|numeric',
+            'socialPlatform' => 'required',
+            'picture' => 'required',
+        ],
+            [
+                'userID.required' => 'user_required',
+                'userID.numeric' => 'userID_not_numeric',
+                'socialID.required' => 'socialID_required',
+                'socialID.numeric' => 'socialID_not_numeric',
+                'socialPlatform.required' => 'socialPlatform_required',
+                'picture.required' => 'picture_required',
+            ]);
+    }
+
+
+
+
+    /**
+     * Returns a JSON array of all rows in table 'UserSocial'.
      *
      * GET /usersocials
      *
@@ -82,7 +108,7 @@ class UserSocialController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Returns a JSON array of all rows in table 'UserSocial' which match with the specified search parameters.
      *
      * GET /usersocials/search
      *
@@ -135,7 +161,6 @@ class UserSocialController extends Controller
     /**
      * Insert an item into table 'UserSocial'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
      * POST /usersocials
      *
@@ -144,21 +169,7 @@ class UserSocialController extends Controller
      */
     public function insert(Request $request)
     {
-        // Validate incoming requests
-        $validator = Validator::make($request->all(), [
-            'inputObject.userID' => 'required|numeric',
-            'inputObject.socialID' => 'required|numeric',
-            'inputObject.socialPlatform' => 'required',
-            'inputObject.picture' => 'required',
-        ],
-            [
-                'inputObject.userID.required' => 'user_required',
-                'inputObject.userID.numeric' => 'userID_not_numeric',
-                'inputObject.socialID.required' => 'socialID_required',
-                'inputObject.socialID.numeric' => 'socialID_not_numeric',
-                'inputObject.socialPlatform.required' => 'socialPlatform_required',
-                'inputObject.picture.required' => 'picture_required',
-            ]);
+        $validator = $this->validator($request->input('inputObject'));
 
         $retVal['success'] = false;
         if ($validator->fails()) {
@@ -177,21 +188,24 @@ class UserSocialController extends Controller
     /**
      * Updates an item in table 'UserSocial'.
      * Takes the item fields as request parameters.
-     * Requires the field 'name'.
      *
-     * PATCH /usersocials/$usersocialId
+     * PUT /usersocials/$usersocialId
      *
      * @param Request $request
      * @param integer $usersocialId
      * @return JsonResponse
      */
-    public function patch(Request $request, int $usersocialId)
+    public function update(Request $request, int $usersocialId)
     {
-        $updateArray = array();
-        foreach ($request->input('updateArray') as $item) {
-            $updateArray[$item['propName']] = $item['value'];
+        $validator = $this->validator($request->input('updateObject'));
+
+        if ($validator->fails()) {
+            $retVal['msg'] = $validator->messages()->all();
+            return response()->json($retVal, 400);
+        } else {
+            $usersocial = UserSocialDataService::update($usersocialId, $request->input('updateObject'));
         }
-        $usersocial = UserSocialDataService::update($usersocialId, $updateArray);
+
         return response()->json([
             'success' => true,
             'usersocial' => $usersocial
