@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\DataServices\RoleTablePermissionDataService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\DataServices\ActivityDataService;
+use Illuminate\Support\Facades\Validator;
 
 /**
- * Contains CRUD functions for table 'Activity'.
+ * Contains CRUD functions for table 'RoleTablePermission'.
  */
-class ActivityController extends Controller
+class RoleTablePermissionController extends Controller
 {
     /**
-     * Validator for the table 'Activity'
+     * Validator for the table 'RoleTablePermission'
      *
      * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -23,22 +21,24 @@ class ActivityController extends Controller
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'activityTypeID' => 'required|numeric',
-            'userID' => 'required|numeric',
+            'roleID' => 'required|numeric',
+            'permissionID' => 'required|numeric',
+            'tableName' => 'required',
         ],
             [
-                'activityTypeID.required' => 'activityType_required',
-                'activityTypeID.numeric' => 'activityTypeID_not_numeric',
-                'userID.required' => 'user_required',
-                'userID.numeric' => 'userID_not_numeric',
+                'roleID.required' => 'role_required',
+                'roleID.numeric' => 'roleID_not_numeric',
+                'permissionID.required' => 'permission_required',
+                'permissionID.numeric' => 'permissionID_not_numeric',
+                'tableName.required' => 'tableName_required',
             ]);
     }
 
 
     /**
-     * Returns a JSON array of all rows in table 'Activity'.
+     * Returns a JSON array of all rows in table 'RoleTablePermission'.
      *
-     * GET /activities
+     * GET /roletablepermissions
      *
      * @param Request $request
      * @return JsonResponse
@@ -86,21 +86,21 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activities' => ActivityDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
+            'roletablepermissions' => RoleTablePermissionDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
 
     /**
-     * Returns a specific JSON object of type 'Activity'.
+     * Returns a specific JSON object of type 'RoleTablePermission'.
      * Takes the id as a request parameter.
      *
-     * GET /activities/activityId
+     * GET /roletablepermissions/roleTablePermissionId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $roleTablePermissionId
      * @return JsonResponse
      */
-    public function get(Request $request, int $activityId)
+    public function get(Request $request, int $roleTablePermissionId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
@@ -108,14 +108,14 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activity' => ActivityDataService::get($activityId, $joinTables, $value)
+            'roleTablePermission' => RoleTablePermissionDataService::get($roleTablePermissionId, $joinTables, $value)
         ], 200);
     }
 
     /**
-     * Returns a JSON array of all rows in table 'Activity' which match with the specified search parameters.
+     * Returns a JSON array of all rows in table 'RoleTablePermission' which match with the specified search parameters.
      *
-     * GET /activities/search
+     * GET /roletablepermissions/search
      *
      * @param Request $request
      * @return JsonResponse
@@ -163,15 +163,15 @@ class ActivityController extends Controller
 
         return response()->json([
             "success" => true,
-            'activities' => ActivityDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
+            'roletablepermissions' => RoleTablePermissionDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Insert an item into table 'Activity'.
+     * Insert an item into table 'RoleTablePermission'.
      * Takes the item fields as request parameters.
      *
-     * POST /activities
+     * POST /roletablepermissions
      *
      * @param Request $request
      * @return JsonResponse
@@ -185,26 +185,26 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::insert($request->input('inputObject'));
+            $roleTablePermission = RoleTablePermissionDataService::insert($request->input('inputObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'roleTablePermission' => $roleTablePermission
         ], 201);
     }
 
     /**
-     * Updates an item in table 'Activity'.
+     * Updates an item in table 'RoleTablePermission'.
      * Takes the item fields as request parameters.
      *
-     * PUT /activities/$activityId
+     * PUT /roletablepermissions/$roleTablePermissionId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $roleTablePermissionId
      * @return JsonResponse
      */
-    public function update(Request $request, int $activityId)
+    public function update(Request $request, int $roleTablePermissionId)
     {
         $validator = $this->validator($request->input('updateObject'));
 
@@ -212,28 +212,28 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::update($activityId, $request->input('updateObject'));
+            $roleTablePermission = RoleTablePermissionDataService::update($roleTablePermissionId, $request->input('updateObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'roleTablePermission' => $roleTablePermission
         ], 200);
     }
 
     /**
-     * Deletes an item in table 'Activity'.
+     * Deletes an item in table 'RoleTablePermission'.
      * Takes the id as a request parameter.
      *
-     * DELETE /activities/activityId
+     * DELETE /roletablepermissions/roleTablePermissionId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $roleTablePermissionId
      * @return JsonResponse
      */
-    public function delete(Request $request, int $activityId)
+    public function delete(Request $request, int $roleTablePermissionId)
     {
-        ActivityDataService::delete($activityId);
+        RoleTablePermissionDataService::delete($roleTablePermissionId);
         return response()->json([
             'success' => true
         ], 204);

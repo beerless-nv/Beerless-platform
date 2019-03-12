@@ -1,24 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Tom Nuyts
+ * Date: 12/03/2019
+ * Time: 9:19
+ */
 
 namespace App\DataServices;
 
-use App\Models\Activity;
+
+use App\Models\UserRole;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
-class ActivityDataService
+class UserRoleDataService
 {
     /**
      * Undocumented function
      *
-     * @return Activity[]
+     * @return UserRole[]
      */
     public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = UserRole::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'userrole', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get($value);
     }
@@ -26,28 +32,28 @@ class ActivityDataService
     /**
      * Undocumented function
      *
-     * @param integer $activityId
-     * @return Activity
+     * @param integer $userroleId
+     * @return UserRole
      */
-    public static function get(int $activityId, $joinTables, $value)
+    public static function get(int $userroleId, $joinTables, $value)
     {
-        $query = Activity::query();
-        \joinTables($query, 'activity', $joinTables);
-        return $query->findOrFail($activityId, $value);
+        $query = UserRole::query();
+        \joinTables($query, 'userrole', $joinTables);
+        return $query->findOrFail($userroleId, $value);
     }
 
     /**
      * Undocumented function
      *
      * @param array $searchParams
-     * @return Activity[]
+     * @return UserRole[]
      */
     public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = UserRole::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'userrole', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $param) {
             $query->where($param['propName'], $param['operator'], $param['value']);
@@ -64,45 +70,45 @@ class ActivityDataService
      * Undocumented function
      *
      * @param array $inputArray
-     * @return Activity
+     * @return UserRole
      */
     public static function insert(array $inputArray)
     {
-        $activity = new Activity();
+        $userrole = new UserRole();
         foreach ($inputArray as $key => $value) {
-            $activity[$key] = $value;
+            $userrole[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $userrole->save();
+        return $userrole;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $userroleId
      * @param array $updateArray
-     * @return Activity
+     * @return UserRole
      */
-    public static function update(int $activityId, array $updateArray)
+    public static function update(int $userroleId, array $updateArray)
     {
-        $activity = Activity::findOrFail($activityId);
+        $userrole = UserRole::findOrFail($userroleId);
         foreach ($updateArray as $key => $value) {
-            $activity[$key] = $value;
+            $userrole[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $userrole->save();
+        return $userrole;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $userroleId
      * @return void
      */
-    public static function delete(int $activityId)
+    public static function delete(int $userroleId)
     {
-        if (Activity::where('id', $activityId)->exists()) {
-            Activity::destroy($activityId);
+        if (UserRole::where('id', $userroleId)->exists()) {
+            UserRole::destroy($userroleId);
         } else {
             throw new ModelNotFoundException();
         }

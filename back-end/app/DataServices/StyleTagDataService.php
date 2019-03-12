@@ -1,24 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Tom Nuyts
+ * Date: 12/03/2019
+ * Time: 10:20
+ */
 
 namespace App\DataServices;
 
-use App\Models\Activity;
+
+use App\Models\StyleTag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
-class ActivityDataService
+class StyleTagDataService
 {
     /**
      * Undocumented function
      *
-     * @return Activity[]
+     * @return StyleTag[]
      */
     public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = StyleTag::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'styleTag', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get($value);
     }
@@ -26,28 +32,28 @@ class ActivityDataService
     /**
      * Undocumented function
      *
-     * @param integer $activityId
-     * @return Activity
+     * @param integer $styleTagId
+     * @return StyleTag
      */
-    public static function get(int $activityId, $joinTables, $value)
+    public static function get(int $styleTagId, $joinTables, $value)
     {
-        $query = Activity::query();
-        \joinTables($query, 'activity', $joinTables);
-        return $query->findOrFail($activityId, $value);
+        $query = StyleTag::query();
+        \joinTables($query, 'styleTag', $joinTables);
+        return $query->findOrFail($styleTagId, $value);
     }
 
     /**
      * Undocumented function
      *
      * @param array $searchParams
-     * @return Activity[]
+     * @return StyleTag[]
      */
     public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = StyleTag::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'styleTag', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $param) {
             $query->where($param['propName'], $param['operator'], $param['value']);
@@ -64,45 +70,45 @@ class ActivityDataService
      * Undocumented function
      *
      * @param array $inputArray
-     * @return Activity
+     * @return StyleTag
      */
     public static function insert(array $inputArray)
     {
-        $activity = new Activity();
+        $styleTag = new StyleTag();
         foreach ($inputArray as $key => $value) {
-            $activity[$key] = $value;
+            $styleTag[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $styleTag->save();
+        return $styleTag;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $styleTagId
      * @param array $updateArray
-     * @return Activity
+     * @return StyleTag
      */
-    public static function update(int $activityId, array $updateArray)
+    public static function update(int $styleTagId, array $updateArray)
     {
-        $activity = Activity::findOrFail($activityId);
+        $styleTag = StyleTag::findOrFail($styleTagId);
         foreach ($updateArray as $key => $value) {
-            $activity[$key] = $value;
+            $styleTag[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $styleTag->save();
+        return $styleTag;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $styleTagId
      * @return void
      */
-    public static function delete(int $activityId)
+    public static function delete(int $styleTagId)
     {
-        if (Activity::where('id', $activityId)->exists()) {
-            Activity::destroy($activityId);
+        if (StyleTag::where('id', $styleTagId)->exists()) {
+            StyleTag::destroy($styleTagId);
         } else {
             throw new ModelNotFoundException();
         }

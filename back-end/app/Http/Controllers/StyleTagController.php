@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\DataServices\StyleTagDataService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\DataServices\ActivityDataService;
+use Illuminate\Support\Facades\Validator;
 
 /**
- * Contains CRUD functions for table 'Activity'.
+ * Contains CRUD functions for table 'StyleTag'.
  */
-class ActivityController extends Controller
+class StyleTagController extends Controller
 {
     /**
-     * Validator for the table 'Activity'
+     * Validator for the table 'StyleTag'
      *
      * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -23,22 +21,21 @@ class ActivityController extends Controller
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'activityTypeID' => 'required|numeric',
-            'userID' => 'required|numeric',
+            'name' => 'required|unique:styletag,name',
+            'styleTagCategoryID' => 'required|numeric',
         ],
             [
-                'activityTypeID.required' => 'activityType_required',
-                'activityTypeID.numeric' => 'activityTypeID_not_numeric',
-                'userID.required' => 'user_required',
-                'userID.numeric' => 'userID_not_numeric',
+                'name.required' => 'name_required',
+                'styleTagCategoryID.required' => 'styleTagCategory_required',
+                'styleTagCategoryID.numeric' => 'styleTagCategoryID_not_numeric',
             ]);
     }
 
 
     /**
-     * Returns a JSON array of all rows in table 'Activity'.
+     * Returns a JSON array of all rows in table 'StyleTag'.
      *
-     * GET /activities
+     * GET /styletags
      *
      * @param Request $request
      * @return JsonResponse
@@ -86,21 +83,21 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activities' => ActivityDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
+            'styletags' => StyleTagDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
 
     /**
-     * Returns a specific JSON object of type 'Activity'.
+     * Returns a specific JSON object of type 'StyleTag'.
      * Takes the id as a request parameter.
      *
-     * GET /activities/activityId
+     * GET /styletags/styleTagId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $styleTagId
      * @return JsonResponse
      */
-    public function get(Request $request, int $activityId)
+    public function get(Request $request, int $styleTagId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
@@ -108,14 +105,14 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activity' => ActivityDataService::get($activityId, $joinTables, $value)
+            'styleTag' => StyleTagDataService::get($styleTagId, $joinTables, $value)
         ], 200);
     }
 
     /**
-     * Returns a JSON array of all rows in table 'Activity' which match with the specified search parameters.
+     * Returns a JSON array of all rows in table 'StyleTag' which match with the specified search parameters.
      *
-     * GET /activities/search
+     * GET /styletags/search
      *
      * @param Request $request
      * @return JsonResponse
@@ -163,15 +160,15 @@ class ActivityController extends Controller
 
         return response()->json([
             "success" => true,
-            'activities' => ActivityDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
+            'styletags' => StyleTagDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Insert an item into table 'Activity'.
+     * Insert an item into table 'StyleTag'.
      * Takes the item fields as request parameters.
      *
-     * POST /activities
+     * POST /styletags
      *
      * @param Request $request
      * @return JsonResponse
@@ -185,26 +182,26 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::insert($request->input('inputObject'));
+            $styleTag = StyleTagDataService::insert($request->input('inputObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'styleTag' => $styleTag
         ], 201);
     }
 
     /**
-     * Updates an item in table 'Activity'.
+     * Updates an item in table 'StyleTag'.
      * Takes the item fields as request parameters.
      *
-     * PUT /activities/$activityId
+     * PUT /styletags/$styleTagId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $styleTagId
      * @return JsonResponse
      */
-    public function update(Request $request, int $activityId)
+    public function update(Request $request, int $styleTagId)
     {
         $validator = $this->validator($request->input('updateObject'));
 
@@ -212,28 +209,28 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::update($activityId, $request->input('updateObject'));
+            $styleTag = StyleTagDataService::update($styleTagId, $request->input('updateObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'styleTag' => $styleTag
         ], 200);
     }
 
     /**
-     * Deletes an item in table 'Activity'.
+     * Deletes an item in table 'StyleTag'.
      * Takes the id as a request parameter.
      *
-     * DELETE /activities/activityId
+     * DELETE /styletags/styleTagId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $styleTagId
      * @return JsonResponse
      */
-    public function delete(Request $request, int $activityId)
+    public function delete(Request $request, int $styleTagId)
     {
-        ActivityDataService::delete($activityId);
+        StyleTagDataService::delete($styleTagId);
         return response()->json([
             'success' => true
         ], 204);

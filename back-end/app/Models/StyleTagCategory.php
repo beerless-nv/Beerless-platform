@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StyleTagCategorie extends Model
+class StyleTagCategory extends Model
 {
-    protected $table ='styleTagCategorie';
+    protected $table ='styleTagCategory';
     protected $primaryKey = 'ID';
 
     protected $attributes = [];
@@ -19,6 +19,6 @@ class StyleTagCategorie extends Model
     // Relationships
     public function styleTag()
     {
-        return $this->hasMany('App\Models\StyleTag', 'styleTagCategorieID', 'ID');
+        return $this->hasMany('App\Models\StyleTag', 'styleTagCategoryID', 'ID');
     }
 }

@@ -1,24 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Tom Nuyts
+ * Date: 12/03/2019
+ * Time: 9:33
+ */
 
 namespace App\DataServices;
 
-use App\Models\Activity;
+
+use App\Models\Role;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
-class ActivityDataService
+class RoleDataService
 {
     /**
      * Undocumented function
      *
-     * @return Activity[]
+     * @return Role[]
      */
     public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = Role::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'role', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get($value);
     }
@@ -26,28 +32,28 @@ class ActivityDataService
     /**
      * Undocumented function
      *
-     * @param integer $activityId
-     * @return Activity
+     * @param integer $roleId
+     * @return Role
      */
-    public static function get(int $activityId, $joinTables, $value)
+    public static function get(int $roleId, $joinTables, $value)
     {
-        $query = Activity::query();
-        \joinTables($query, 'activity', $joinTables);
-        return $query->findOrFail($activityId, $value);
+        $query = Role::query();
+        \joinTables($query, 'role', $joinTables);
+        return $query->findOrFail($roleId, $value);
     }
 
     /**
      * Undocumented function
      *
      * @param array $searchParams
-     * @return Activity[]
+     * @return Role[]
      */
     public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = Role::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'role', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $param) {
             $query->where($param['propName'], $param['operator'], $param['value']);
@@ -64,45 +70,45 @@ class ActivityDataService
      * Undocumented function
      *
      * @param array $inputArray
-     * @return Activity
+     * @return Role
      */
     public static function insert(array $inputArray)
     {
-        $activity = new Activity();
+        $role = new Role();
         foreach ($inputArray as $key => $value) {
-            $activity[$key] = $value;
+            $role[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $role->save();
+        return $role;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $roleId
      * @param array $updateArray
-     * @return Activity
+     * @return Role
      */
-    public static function update(int $activityId, array $updateArray)
+    public static function update(int $roleId, array $updateArray)
     {
-        $activity = Activity::findOrFail($activityId);
+        $role = Role::findOrFail($roleId);
         foreach ($updateArray as $key => $value) {
-            $activity[$key] = $value;
+            $role[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $role->save();
+        return $role;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $roleId
      * @return void
      */
-    public static function delete(int $activityId)
+    public static function delete(int $roleId)
     {
-        if (Activity::where('id', $activityId)->exists()) {
-            Activity::destroy($activityId);
+        if (Role::where('id', $roleId)->exists()) {
+            Role::destroy($roleId);
         } else {
             throw new ModelNotFoundException();
         }

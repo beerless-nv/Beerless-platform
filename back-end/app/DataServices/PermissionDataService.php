@@ -1,24 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Tom Nuyts
+ * Date: 12/03/2019
+ * Time: 9:55
+ */
 
 namespace App\DataServices;
 
-use App\Models\Activity;
+
+use App\Models\Permission;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
-class ActivityDataService
+class PermissionDataService
 {
     /**
      * Undocumented function
      *
-     * @return Activity[]
+     * @return Permission[]
      */
     public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = Permission::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'permission', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get($value);
     }
@@ -26,28 +32,28 @@ class ActivityDataService
     /**
      * Undocumented function
      *
-     * @param integer $activityId
-     * @return Activity
+     * @param integer $permissionId
+     * @return Permission
      */
-    public static function get(int $activityId, $joinTables, $value)
+    public static function get(int $permissionId, $joinTables, $value)
     {
-        $query = Activity::query();
-        \joinTables($query, 'activity', $joinTables);
-        return $query->findOrFail($activityId, $value);
+        $query = Permission::query();
+        \joinTables($query, 'permission', $joinTables);
+        return $query->findOrFail($permissionId, $value);
     }
 
     /**
      * Undocumented function
      *
      * @param array $searchParams
-     * @return Activity[]
+     * @return Permission[]
      */
     public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = Permission::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'permission', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $param) {
             $query->where($param['propName'], $param['operator'], $param['value']);
@@ -64,45 +70,45 @@ class ActivityDataService
      * Undocumented function
      *
      * @param array $inputArray
-     * @return Activity
+     * @return Permission
      */
     public static function insert(array $inputArray)
     {
-        $activity = new Activity();
+        $permission = new Permission();
         foreach ($inputArray as $key => $value) {
-            $activity[$key] = $value;
+            $permission[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $permission->save();
+        return $permission;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $permissionId
      * @param array $updateArray
-     * @return Activity
+     * @return Permission
      */
-    public static function update(int $activityId, array $updateArray)
+    public static function update(int $permissionId, array $updateArray)
     {
-        $activity = Activity::findOrFail($activityId);
+        $permission = Permission::findOrFail($permissionId);
         foreach ($updateArray as $key => $value) {
-            $activity[$key] = $value;
+            $permission[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $permission->save();
+        return $permission;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $permissionId
      * @return void
      */
-    public static function delete(int $activityId)
+    public static function delete(int $permissionId)
     {
-        if (Activity::where('id', $activityId)->exists()) {
-            Activity::destroy($activityId);
+        if (Permission::where('id', $permissionId)->exists()) {
+            Permission::destroy($permissionId);
         } else {
             throw new ModelNotFoundException();
         }

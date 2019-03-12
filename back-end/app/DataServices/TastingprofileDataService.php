@@ -1,24 +1,30 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: Tom Nuyts
+ * Date: 12/03/2019
+ * Time: 10:04
+ */
 
 namespace App\DataServices;
 
-use App\Models\Activity;
+
+use App\Models\Tastingprofile;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-
-class ActivityDataService
+class TastingprofileDataService
 {
     /**
      * Undocumented function
      *
-     * @return Activity[]
+     * @return Tastingprofile[]
      */
     public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = Tastingprofile::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'tastingprofile', $joinTables);
         \sortQuery($query, $sortOrder);
         return $query->get($value);
     }
@@ -26,28 +32,28 @@ class ActivityDataService
     /**
      * Undocumented function
      *
-     * @param integer $activityId
-     * @return Activity
+     * @param integer $tastingprofileId
+     * @return Tastingprofile
      */
-    public static function get(int $activityId, $joinTables, $value)
+    public static function get(int $tastingprofileId, $joinTables, $value)
     {
-        $query = Activity::query();
-        \joinTables($query, 'activity', $joinTables);
-        return $query->findOrFail($activityId, $value);
+        $query = Tastingprofile::query();
+        \joinTables($query, 'tastingprofile', $joinTables);
+        return $query->findOrFail($tastingprofileId, $value);
     }
 
     /**
      * Undocumented function
      *
      * @param array $searchParams
-     * @return Activity[]
+     * @return Tastingprofile[]
      */
     public static function search(array $searchParams, $joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = Tastingprofile::query();
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
-        \joinTables($query, 'activity', $joinTables);
+        \joinTables($query, 'tastingprofile', $joinTables);
         \sortQuery($query, $sortOrder);
         foreach ($searchParams as $param) {
             $query->where($param['propName'], $param['operator'], $param['value']);
@@ -64,45 +70,45 @@ class ActivityDataService
      * Undocumented function
      *
      * @param array $inputArray
-     * @return Activity
+     * @return Tastingprofile
      */
     public static function insert(array $inputArray)
     {
-        $activity = new Activity();
+        $tastingprofile = new Tastingprofile();
         foreach ($inputArray as $key => $value) {
-            $activity[$key] = $value;
+            $tastingprofile[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $tastingprofile->save();
+        return $tastingprofile;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $tastingprofileId
      * @param array $updateArray
-     * @return Activity
+     * @return Tastingprofile
      */
-    public static function update(int $activityId, array $updateArray)
+    public static function update(int $tastingprofileId, array $updateArray)
     {
-        $activity = Activity::findOrFail($activityId);
+        $tastingprofile = Tastingprofile::findOrFail($tastingprofileId);
         foreach ($updateArray as $key => $value) {
-            $activity[$key] = $value;
+            $tastingprofile[$key] = $value;
         }
-        $activity->save();
-        return $activity;
+        $tastingprofile->save();
+        return $tastingprofile;
     }
 
     /**
      * Undocumented function
      *
-     * @param integer $activityId
+     * @param integer $tastingprofileId
      * @return void
      */
-    public static function delete(int $activityId)
+    public static function delete(int $tastingprofileId)
     {
-        if (Activity::where('id', $activityId)->exists()) {
-            Activity::destroy($activityId);
+        if (Tastingprofile::where('id', $tastingprofileId)->exists()) {
+            Tastingprofile::destroy($tastingprofileId);
         } else {
             throw new ModelNotFoundException();
         }

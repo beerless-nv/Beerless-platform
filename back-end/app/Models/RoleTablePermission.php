@@ -9,9 +9,7 @@ class RoleTablePermission extends Model
     protected $table = "roleTablePermission";
     protected $primaryKey = "ID";
 
-    protected $attributes = [
-        'description' => null
-    ];
+    protected $attributes = [];
     protected $fillable = [];
     protected $dates = [];
 

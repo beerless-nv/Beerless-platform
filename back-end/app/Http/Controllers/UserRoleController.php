@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\DataServices\UserRoleDataService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\DataServices\ActivityDataService;
+use Illuminate\Support\Facades\Validator;
 
 /**
- * Contains CRUD functions for table 'Activity'.
+ * Contains CRUD functions for table 'UserRole'.
  */
-class ActivityController extends Controller
+class UserRoleController extends Controller
 {
     /**
-     * Validator for the table 'Activity'
+     * Validator for the table 'UserRole'
      *
      * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -23,22 +21,22 @@ class ActivityController extends Controller
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'activityTypeID' => 'required|numeric',
             'userID' => 'required|numeric',
+            'roleID' => 'required|numeric',
         ],
             [
-                'activityTypeID.required' => 'activityType_required',
-                'activityTypeID.numeric' => 'activityTypeID_not_numeric',
                 'userID.required' => 'user_required',
                 'userID.numeric' => 'userID_not_numeric',
+                'roleID.required' => 'role_required',
+                'roleID.numeric' => 'roleID_not_numeric',
             ]);
     }
 
 
     /**
-     * Returns a JSON array of all rows in table 'Activity'.
+     * Returns a JSON array of all rows in table 'UserRole'.
      *
-     * GET /activities
+     * GET /userroles
      *
      * @param Request $request
      * @return JsonResponse
@@ -86,21 +84,21 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activities' => ActivityDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
+            'userroles' => UserRoleDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
 
     /**
-     * Returns a specific JSON object of type 'Activity'.
+     * Returns a specific JSON object of type 'UserRole'.
      * Takes the id as a request parameter.
      *
-     * GET /activities/activityId
+     * GET /userroles/userroleId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $userroleId
      * @return JsonResponse
      */
-    public function get(Request $request, int $activityId)
+    public function get(Request $request, int $userroleId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
@@ -108,14 +106,14 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activity' => ActivityDataService::get($activityId, $joinTables, $value)
+            'userrole' => UserRoleDataService::get($userroleId, $joinTables, $value)
         ], 200);
     }
 
     /**
-     * Returns a JSON array of all rows in table 'Activity' which match with the specified search parameters.
+     * Returns a JSON array of all rows in table 'UserRole' which match with the specified search parameters.
      *
-     * GET /activities/search
+     * GET /userroles/search
      *
      * @param Request $request
      * @return JsonResponse
@@ -163,15 +161,15 @@ class ActivityController extends Controller
 
         return response()->json([
             "success" => true,
-            'activities' => ActivityDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
+            'userroles' => UserRoleDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Insert an item into table 'Activity'.
+     * Insert an item into table 'UserRole'.
      * Takes the item fields as request parameters.
      *
-     * POST /activities
+     * POST /userroles
      *
      * @param Request $request
      * @return JsonResponse
@@ -185,26 +183,26 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::insert($request->input('inputObject'));
+            $userrole = UserRoleDataService::insert($request->input('inputObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'userrole' => $userrole
         ], 201);
     }
 
     /**
-     * Updates an item in table 'Activity'.
+     * Updates an item in table 'UserRole'.
      * Takes the item fields as request parameters.
      *
-     * PUT /activities/$activityId
+     * PUT /userroles/$userroleId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $userroleId
      * @return JsonResponse
      */
-    public function update(Request $request, int $activityId)
+    public function update(Request $request, int $userroleId)
     {
         $validator = $this->validator($request->input('updateObject'));
 
@@ -212,28 +210,28 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::update($activityId, $request->input('updateObject'));
+            $userrole = UserRoleDataService::update($userroleId, $request->input('updateObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'userrole' => $userrole
         ], 200);
     }
 
     /**
-     * Deletes an item in table 'Activity'.
+     * Deletes an item in table 'UserRole'.
      * Takes the id as a request parameter.
      *
-     * DELETE /activities/activityId
+     * DELETE /userroles/userroleId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $userroleId
      * @return JsonResponse
      */
-    public function delete(Request $request, int $activityId)
+    public function delete(Request $request, int $userroleId)
     {
-        ActivityDataService::delete($activityId);
+        UserRoleDataService::delete($userroleId);
         return response()->json([
             'success' => true
         ], 204);

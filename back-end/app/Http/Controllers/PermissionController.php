@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\DataServices\PermissionDataService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\DataServices\ActivityDataService;
+use Illuminate\Support\Facades\Validator;
 
 /**
- * Contains CRUD functions for table 'Activity'.
+ * Contains CRUD functions for table 'Permission'.
  */
-class ActivityController extends Controller
+class PermissionController extends Controller
 {
     /**
-     * Validator for the table 'Activity'
+     * Validator for the table 'Permission'
      *
      * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -23,22 +21,21 @@ class ActivityController extends Controller
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'activityTypeID' => 'required|numeric',
-            'userID' => 'required|numeric',
+            'name' => 'required|unique:permission,name',
+            'description' => 'required',
         ],
             [
-                'activityTypeID.required' => 'activityType_required',
-                'activityTypeID.numeric' => 'activityTypeID_not_numeric',
-                'userID.required' => 'user_required',
-                'userID.numeric' => 'userID_not_numeric',
+                'name.required' => 'name_required',
+                'name.unique' => 'name_not_unique',
+                'description.required' => 'description_required',
             ]);
     }
 
 
     /**
-     * Returns a JSON array of all rows in table 'Activity'.
+     * Returns a JSON array of all rows in table 'Permission'.
      *
-     * GET /activities
+     * GET /permissions
      *
      * @param Request $request
      * @return JsonResponse
@@ -86,21 +83,21 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activities' => ActivityDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
+            'permissions' => PermissionDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
 
     /**
-     * Returns a specific JSON object of type 'Activity'.
+     * Returns a specific JSON object of type 'Permission'.
      * Takes the id as a request parameter.
      *
-     * GET /activities/activityId
+     * GET /permissions/permissionId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $permissionId
      * @return JsonResponse
      */
-    public function get(Request $request, int $activityId)
+    public function get(Request $request, int $permissionId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
@@ -108,14 +105,14 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activity' => ActivityDataService::get($activityId, $joinTables, $value)
+            'permission' => PermissionDataService::get($permissionId, $joinTables, $value)
         ], 200);
     }
 
     /**
-     * Returns a JSON array of all rows in table 'Activity' which match with the specified search parameters.
+     * Returns a JSON array of all rows in table 'Permission' which match with the specified search parameters.
      *
-     * GET /activities/search
+     * GET /permissions/search
      *
      * @param Request $request
      * @return JsonResponse
@@ -163,15 +160,15 @@ class ActivityController extends Controller
 
         return response()->json([
             "success" => true,
-            'activities' => ActivityDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
+            'permissions' => PermissionDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Insert an item into table 'Activity'.
+     * Insert an item into table 'Permission'.
      * Takes the item fields as request parameters.
      *
-     * POST /activities
+     * POST /permissions
      *
      * @param Request $request
      * @return JsonResponse
@@ -185,26 +182,26 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::insert($request->input('inputObject'));
+            $permission = PermissionDataService::insert($request->input('inputObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'permission' => $permission
         ], 201);
     }
 
     /**
-     * Updates an item in table 'Activity'.
+     * Updates an item in table 'Permission'.
      * Takes the item fields as request parameters.
      *
-     * PUT /activities/$activityId
+     * PUT /permissions/$permissionId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $permissionId
      * @return JsonResponse
      */
-    public function update(Request $request, int $activityId)
+    public function update(Request $request, int $permissionId)
     {
         $validator = $this->validator($request->input('updateObject'));
 
@@ -212,28 +209,28 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::update($activityId, $request->input('updateObject'));
+            $permission = PermissionDataService::update($permissionId, $request->input('updateObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'permission' => $permission
         ], 200);
     }
 
     /**
-     * Deletes an item in table 'Activity'.
+     * Deletes an item in table 'Permission'.
      * Takes the id as a request parameter.
      *
-     * DELETE /activities/activityId
+     * DELETE /permissions/permissionId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $permissionId
      * @return JsonResponse
      */
-    public function delete(Request $request, int $activityId)
+    public function delete(Request $request, int $permissionId)
     {
-        ActivityDataService::delete($activityId);
+        PermissionDataService::delete($permissionId);
         return response()->json([
             'success' => true
         ], 204);

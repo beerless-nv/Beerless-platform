@@ -1,5 +1,7 @@
 <?php
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -162,4 +164,74 @@ Route::prefix('contacts')->group(function() {
     Route::post('/', 'ContactController@insert');
     Route::put('/{contactId}', 'ContactController@update');
     Route::delete('/{contactId}', 'ContactController@delete');
+});
+
+Route::prefix('userroles')->group(function() {
+    Route::get('/', 'UserRoleController@getAll');
+    Route::get('/{userRoleId}', 'UserRoleController@get');
+    Route::post('/search', 'UserRoleController@search');
+
+    Route::post('/', 'UserRoleController@insert');
+    Route::put('/{userRoleId}', 'UserRoleController@update');
+    Route::delete('/{userRoleId}', 'UserRoleController@delete');
+});
+
+Route::prefix('roles')->group(function() {
+    Route::get('/', 'RoleController@getAll');
+    Route::get('/{roleId}', 'RoleController@get');
+    Route::post('/search', 'RoleController@search');
+
+    Route::post('/', 'RoleController@insert');
+    Route::put('/{roleId}', 'RoleController@update');
+    Route::delete('/{roleId}', 'RoleController@delete');
+});
+
+Route::prefix('roletablepermissions')->group(function() {
+    Route::get('/', 'RoleTablePermissionController@getAll');
+    Route::get('/{roleTablePermissionId}', 'RoleTablePermissionController@get');
+    Route::post('/search', 'RoleTablePermissionController@search');
+
+    Route::post('/', 'RoleTablePermissionController@insert');
+    Route::put('/{roleTablePermissionId}', 'RoleTablePermissionController@update');
+    Route::delete('/{roleTablePermissionId}', 'RoleTablePermissionController@delete');
+});
+
+Route::prefix('permissions')->group(function() {
+    Route::get('/', 'PermissionController@getAll');
+    Route::get('/{permissionId}', 'PermissionController@get');
+    Route::post('/search', 'PermissionController@search');
+
+    Route::post('/', 'PermissionController@insert');
+    Route::put('/{permissionId}', 'PermissionController@update');
+    Route::delete('/{permissionId}', 'PermissionController@delete');
+});
+
+Route::prefix('tastingprofiles')->group(function() {
+    Route::get('/', 'TastingprofileController@getAll');
+    Route::get('/{tastingprofileId}', 'TastingprofileController@get');
+    Route::post('/search', 'TastingprofileController@search');
+
+    Route::post('/', 'TastingprofileController@insert');
+    Route::put('/{tastingprofileId}', 'TastingprofileController@update');
+    Route::delete('/{tastingprofileId}', 'TastingprofileController@delete');
+});
+
+Route::prefix('styletags')->group(function() {
+    Route::get('/', 'StyleTagController@getAll');
+    Route::get('/{styleTagId}', 'StyleTagController@get');
+    Route::post('/search', 'StyleTagController@search');
+
+    Route::post('/', 'StyleTagController@insert');
+    Route::put('/{styleTagId}', 'StyleTagController@update');
+    Route::delete('/{styleTagId}', 'StyleTagController@delete');
+});
+
+Route::prefix('styletagcategories')->group(function() {
+    Route::get('/', 'StyleTagCategoryController@getAll');
+    Route::get('/{styleTagCategoryId}', 'StyleTagCategoryController@get');
+    Route::post('/search', 'StyleTagCategoryController@search');
+
+    Route::post('/', 'StyleTagCategoryController@insert');
+    Route::put('/{styleTagCategoryId}', 'StyleTagCategoryController@update');
+    Route::delete('/{styleTagCategoryId}', 'StyleTagCategoryController@delete');
 });

@@ -22,8 +22,8 @@ class StyleTag extends Model
         return $this->hasMany('App\Models\Beerstyle', 'styleTagID', 'ID');
     }
 
-    public function styleTagCategorie()
+    public function styleTagCategory()
     {
-        return $this->belongsTo('App\Models\StyleTagCategorie', 'styleTagCategorieID', 'ID');
+        return $this->belongsTo('App\Models\StyleTagCategory', 'styleTagCategoryID', 'ID');
     }
 }

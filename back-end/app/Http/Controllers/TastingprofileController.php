@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use App\DataServices\TastingprofileDataService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use App\DataServices\ActivityDataService;
+use Illuminate\Support\Facades\Validator;
 
 /**
- * Contains CRUD functions for table 'Activity'.
+ * Contains CRUD functions for table 'Tastingprofile'.
  */
-class ActivityController extends Controller
+class TastingprofileController extends Controller
 {
     /**
-     * Validator for the table 'Activity'
+     * Validator for the table 'Tastingprofile'
      *
      * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -23,22 +21,40 @@ class ActivityController extends Controller
     public function validator(array $data)
     {
         return Validator::make($data, [
-            'activityTypeID' => 'required|numeric',
+            'malty' => 'required|numeric',
+            'sweet' => 'required|numeric',
+            'sour' => 'required|numeric',
+            'hoppy' => 'required|numeric',
+            'bitter' => 'required|numeric',
+            'fruity' => 'required|numeric',
             'userID' => 'required|numeric',
+            'beerID' => 'required|numeric',
         ],
             [
-                'activityTypeID.required' => 'activityType_required',
-                'activityTypeID.numeric' => 'activityTypeID_not_numeric',
+                'malty.required' => 'malty_required',
+                'malty.numeric' => 'malty_not_numeric',
+                'sweet.required' => 'sweet_required',
+                'sweet.numeric' => 'sweet_not_numeric',
+                'sour.required' => 'sour_required',
+                'sour.numeric' => 'sour_not_numeric',
+                'hoppy.required' => 'hoppy_required',
+                'hoppy.numeric' => 'hoppy_not_numeric',
+                'bitter.required' => 'bitter_required',
+                'bitter.numeric' => 'bitter_not_numeric',
+                'fruity.required' => 'fruity_required',
+                'fruity.numeric' => 'fruity_not_numeric',
                 'userID.required' => 'user_required',
                 'userID.numeric' => 'userID_not_numeric',
+                'beerID.required' => 'beer_required',
+                'beerID.numeric' => 'beerID_not_numeric',
             ]);
     }
 
 
     /**
-     * Returns a JSON array of all rows in table 'Activity'.
+     * Returns a JSON array of all rows in table 'Tastingprofile'.
      *
-     * GET /activities
+     * GET /tastingprofiles
      *
      * @param Request $request
      * @return JsonResponse
@@ -86,21 +102,21 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activities' => ActivityDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
+            'tastingprofiles' => TastingprofileDataService::getAll($joinTables, $sortOrder, $limit, $offset, $value)
         ], 200);
     }
 
     /**
-     * Returns a specific JSON object of type 'Activity'.
+     * Returns a specific JSON object of type 'Tastingprofile'.
      * Takes the id as a request parameter.
      *
-     * GET /activities/activityId
+     * GET /tastingprofiles/tastingprofileId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $tastingprofileId
      * @return JsonResponse
      */
-    public function get(Request $request, int $activityId)
+    public function get(Request $request, int $tastingprofileId)
     {
         $joinTables = ($request->query('joinTables') == null) ? null : explode(',', $request->query('joinTables'));
 
@@ -108,14 +124,14 @@ class ActivityController extends Controller
 
         return response()->json([
             'success' => true,
-            'activity' => ActivityDataService::get($activityId, $joinTables, $value)
+            'tastingprofile' => TastingprofileDataService::get($tastingprofileId, $joinTables, $value)
         ], 200);
     }
 
     /**
-     * Returns a JSON array of all rows in table 'Activity' which match with the specified search parameters.
+     * Returns a JSON array of all rows in table 'Tastingprofile' which match with the specified search parameters.
      *
-     * GET /activities/search
+     * GET /tastingprofiles/search
      *
      * @param Request $request
      * @return JsonResponse
@@ -163,15 +179,15 @@ class ActivityController extends Controller
 
         return response()->json([
             "success" => true,
-            'activities' => ActivityDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
+            'tastingprofiles' => TastingprofileDataService::search($request->input('searchParams'), $joinTables, $sortOrder, $limit, $offset, $value)
         ]);
     }
 
     /**
-     * Insert an item into table 'Activity'.
+     * Insert an item into table 'Tastingprofile'.
      * Takes the item fields as request parameters.
      *
-     * POST /activities
+     * POST /tastingprofiles
      *
      * @param Request $request
      * @return JsonResponse
@@ -185,26 +201,26 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::insert($request->input('inputObject'));
+            $tastingprofile = TastingprofileDataService::insert($request->input('inputObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'tastingprofile' => $tastingprofile
         ], 201);
     }
 
     /**
-     * Updates an item in table 'Activity'.
+     * Updates an item in table 'Tastingprofile'.
      * Takes the item fields as request parameters.
      *
-     * PUT /activities/$activityId
+     * PUT /tastingprofiles/$tastingprofileId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $tastingprofileId
      * @return JsonResponse
      */
-    public function update(Request $request, int $activityId)
+    public function update(Request $request, int $tastingprofileId)
     {
         $validator = $this->validator($request->input('updateObject'));
 
@@ -212,28 +228,28 @@ class ActivityController extends Controller
             $retVal['msg'] = $validator->messages()->all();
             return response()->json($retVal, 400);
         } else {
-            $activity = ActivityDataService::update($activityId, $request->input('updateObject'));
+            $tastingprofile = TastingprofileDataService::update($tastingprofileId, $request->input('updateObject'));
         }
 
         return response()->json([
             'success' => true,
-            'activity' => $activity
+            'tastingprofile' => $tastingprofile
         ], 200);
     }
 
     /**
-     * Deletes an item in table 'Activity'.
+     * Deletes an item in table 'Tastingprofile'.
      * Takes the id as a request parameter.
      *
-     * DELETE /activities/activityId
+     * DELETE /tastingprofiles/tastingprofileId
      *
      * @param Request $request
-     * @param integer $activityId
+     * @param integer $tastingprofileId
      * @return JsonResponse
      */
-    public function delete(Request $request, int $activityId)
+    public function delete(Request $request, int $tastingprofileId)
     {
-        ActivityDataService::delete($activityId);
+        TastingprofileDataService::delete($tastingprofileId);
         return response()->json([
             'success' => true
         ], 204);
