@@ -10,6 +10,7 @@ export class LocalStorageService {
     private readonly storageNameNewestBeers = 'NewestBeers';
     private readonly storageNameToasts = 'Notification';
     private readonly storageNameUser = 'User';
+    private readonly storageNameAccessToken = 'AccessToken';
 
     constructor() {
     }
@@ -25,8 +26,7 @@ export class LocalStorageService {
     }
 
     getBeerSearchResults() {
-        const data = localStorage.getItem(this.storageNameBeerSearchResults);
-        return JSON.parse(data);
+        return JSON.parse(localStorage.getItem(this.storageNameBeerSearchResults));
     }
 
     clearBeerSearchResults() {
@@ -40,8 +40,7 @@ export class LocalStorageService {
     }
 
     getNewestBeers() {
-        const data = localStorage.getItem(this.storageNameNewestBeers);
-        return JSON.parse(data);
+        return JSON.parse(localStorage.getItem(this.storageNameNewestBeers));
     }
 
     clearNewestBeers() {
@@ -58,8 +57,7 @@ export class LocalStorageService {
     }
 
     getToast() {
-        const data = localStorage.getItem(this.storageNameToasts);
-        return JSON.parse(data);
+        return JSON.parse(localStorage.getItem(this.storageNameToasts));
     }
 
     clearToast() {
@@ -76,12 +74,28 @@ export class LocalStorageService {
     }
 
     getUser() {
-        const data = localStorage.getItem(this.storageNameUser);
-        return JSON.parse(data);
+        return JSON.parse(localStorage.getItem(this.storageNameUser));
     }
 
     clearUser() {
         localStorage.removeItem(this.storageNameUser);
+    }
+
+
+    //
+    // localStorage for access token
+    //
+
+    setAccessToken(data) {
+        localStorage.setItem(this.storageNameAccessToken, JSON.stringify(data));
+    }
+
+    getAccessToken() {
+        return JSON.parse(localStorage.getItem(this.storageNameAccessToken));
+    }
+
+    clearAccessToken() {
+        localStorage.removeItem(this.storageNameAccessToken);
     }
 
 

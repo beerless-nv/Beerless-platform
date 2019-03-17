@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    backend: 'http://localhost/Beerless-platform/back-end/api/',
+    backend: 'http://localhost:3000/api/',
     // backend: 'http://localhost/api/',
     // backend: 'https://api.beerless.be/api/',
     beerImageURL: 'https://assets.beerless.be/assets/images/beer/image/',

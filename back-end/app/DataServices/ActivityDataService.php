@@ -15,7 +15,7 @@ class ActivityDataService
      */
     public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = Activity::query();
+        $query = Activity::with('activityType', 'user', 'article', 'beer', 'brewery');
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
         \joinTables($query, 'activity', $joinTables);

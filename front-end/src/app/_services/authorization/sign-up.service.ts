@@ -5,7 +5,7 @@ import {HttpClient} from '@angular/common/http';
 @Injectable({
     providedIn: 'root'
 })
-export class SignupService {
+export class SignUpService {
 
     readonly urlSignUp = environment.backend + 'users/signUp';
 

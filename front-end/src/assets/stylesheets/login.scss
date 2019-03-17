@@ -33,3 +33,15 @@
     }
   }
 }
+
+.auto-sign-in {
+  margin: ($spacer * 2) 0 0 0;
+  padding: $spacer !important;
+  background-image: none !important;
+  color: $grey-dark !important;
+  text-shadow: none !important;
+
+  @include media-breakpoint-down(xs) {
+    background-color: #fff !important;
+  }
+}

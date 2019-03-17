@@ -44,6 +44,8 @@ import { SignupFormComponent } from './pagegroups/Visitor/signup/signup-form/sig
 import { InputFieldComponent } from './sharedComponents/input-field/input-field.component';
 import { SigninComponent } from './pagegroups/Visitor/signin/signin.component';
 import {MyHttpClientInterceptor} from './_interceptors/My-HttpClientInterceptor';
+import { SigninBackgroundCardComponent } from './pagegroups/Visitor/signin/signin-background-card/signin-background-card.component';
+import { SigninFormComponent } from './pagegroups/Visitor/signin/signin-form/signin-form.component';
 
 @NgModule({
     declarations: [
@@ -76,6 +78,8 @@ import {MyHttpClientInterceptor} from './_interceptors/My-HttpClientInterceptor'
         SignupFormComponent,
         InputFieldComponent,
         SigninComponent,
+        SigninBackgroundCardComponent,
+        SigninFormComponent,
     ],
     imports: [
         BrowserModule,

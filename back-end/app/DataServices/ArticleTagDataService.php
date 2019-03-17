@@ -15,7 +15,7 @@ class ArticleTagDataService
      */
     public static function getAll($joinTables, $sortOrder, $limit, $offset, $value)
     {
-        $query = ArticleTag::query();
+        $query = ArticleTag::with('article.user', 'tag');
         \limitQuery($query, $limit);
         \offsetQuery($query, $offset);
         \joinTables($query, 'articletag', $joinTables);

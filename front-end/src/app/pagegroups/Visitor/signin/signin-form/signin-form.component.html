@@ -1,0 +1,81 @@
+<div class="card border-yellow-top p-0 border-sm-0">
+    <div class="card-body p-sm-5 p-4 pt-5">
+        <div class="flex-row">
+
+
+            <!-- Sign in form -->
+
+            <div>
+                <h4 class="mb-3 font-weight-bold text-primary">Log in</h4>
+                <form novalidate [formGroup]="formLogin" (ngSubmit)="signIn()">
+                    <div class="form-group mb-3">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Gebruikersnaam"
+                                   formControlName="username" id="usernameLogin">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="invalid-input"
+                             *ngIf="formLogin.get('username').touched && formLogin.get('username').invalid">
+                            <div *ngIf="formLogin.get('username').hasError('required')">
+                                Vul een gebruikersnaam in!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3 input-icon">
+                        <div class="input-icon">
+                            <input type="password" class="form-control" placeholder="Wachtwoord"
+                                   formControlName="password" id="passwordLogin">
+                            <i class="fas fa-unlock-alt"></i>
+                        </div>
+                        <div class="invalid-input"
+                             *ngIf="formLogin.get('password').touched && formLogin.get('password').invalid">
+                            <div *ngIf="formLogin.get('password').hasError('required')">
+                                Vul een wachtwoord in!
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Server side error messages -->
+
+                    <p class="invalid-input text-center" *ngFor="let msg of messageLogin">{{msg}}</p>
+
+
+                    <!-- Submit button -->
+
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary text-white px-5" type="submit"
+                                [disabled]="formLogin.invalid">Log in
+                        </button>
+                    </div>
+
+
+                    <!-- Link to sign up -->
+
+                    <p class="text-center">
+                        Heeft u nog geen account?
+                        <strong>
+                            <a routerLink="/sign-up">Registreren</a>
+                        </strong>
+                    </p>
+
+
+                    <!-- Social login -->
+
+                    <div class="divider my-5">
+                        <div class="divider-text-circle">OF</div>
+                    </div>
+                    <div class="form-group">
+                        <a (click)="socialLogin('facebook')" class="btn btn-facebook text-white d-block"><i
+                                class="fab fa-facebook-f mr-3"></i> Log in met <strong>Facebook</strong></a>
+                    </div>
+                    <div class="form-group">
+                        <a (click)="socialLogin('google')" class="btn btn-google text-white d-block"><i
+                                class="fab fa-google mr-3"></i> Log in met <strong>Google</strong></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

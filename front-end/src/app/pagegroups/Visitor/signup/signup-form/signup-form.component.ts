@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {SignupService} from '../../../../_services/authorization/signup.service';
+import {SignUpService} from '../../../../_services/authorization/sign-up.service';
 import {ErrorService} from "../../../../_services/error.service";
 
 @Component({
@@ -14,7 +14,7 @@ export class SignupFormComponent implements OnInit {
     formRegister: FormGroup;
     registrationSuccessful = false;
 
-    constructor(private signupService: SignupService, private errorService: ErrorService) {
+    constructor(private signupService: SignUpService, private errorService: ErrorService) {
     }
 
     ngOnInit() {

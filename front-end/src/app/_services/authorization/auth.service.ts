@@ -10,15 +10,15 @@ export class AuthService {
 
     // Check if user is authenticated
     public isAuthenticated(): boolean {
-        const jwtHelper = new JwtHelperService();
-
-        const user = this.localStorageService.getUser();
-        // Check whether the token is expired and return
-        // true or false
-        if (user != null) {
-            return !jwtHelper.isTokenExpired(user.token);
-        } else {
-            return false;
-        }
+        // const jwtHelper = new JwtHelperService();
+        //
+        // const user = this.localStorageService.getUser();
+        // // Check whether the token is expired and return
+        // // true or false
+        // if (user != null) {
+        //     return !jwtHelper.isTokenExpired(user.token);
+        // } else {
+        //     return false;
+        // }
     }
 }
