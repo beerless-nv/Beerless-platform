@@ -1,12 +1,16 @@
 <div class="page-header">
     <div class="container-no-m">
-        <span class="page-header-title">Bieren</span>
+        <span class="page-header-title">Beers</span>
     </div>
 </div>
 <div class="bg-super-light">
     <div class="container">
         <div class="col-12 p-0 d-flex flex-md-row flex-column mb-2">
             <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1 position-relative">
+
+
+                <!-- Search bar -->
+
                 <div class="form-group mb-1 input-icon">
                     <input type="text" class="form-control" placeholder="Zoek een bier" value="{{beerName}}"
                            #beer
@@ -16,45 +20,75 @@
                 </div>
                 <small class="text-grey font-italic mb-5 position-absolute" [ngbCollapse]="!beersListTotal">
                     <strong>
-                        {{ beersListTotal }} <span [ngbCollapse]="beersListTotal==1">resultaten</span>
-                        <span [ngbCollapse]="beersListTotal!=1">resultaat</span>
-                    </strong> voor <strong>"{{beerName}}"</strong>
+                        {{ beersListTotal }}
+                        <span [ngbCollapse]="beersListTotal==1">results</span>
+                        <span [ngbCollapse]="beersListTotal!=1">result</span>
+                    </strong>
+                    for <strong>"{{beerName}}"</strong>
                 </small>
             </div>
+
+
+            <!-- Add beer button -->
+
             <div class="mb-1 col-md-4 col-12 p-0 pl-md-3 pl-0 mb-md-0 mb-4 order-md-1 order-0">
                 <a routerLink="/beers/add" [queryParams]="{name: beer.value}" class="btn btn-yellow d-flex text-white">
                     <i class="fas fa-plus my-auto mr-3"></i>
-                    <span class="d-lg-block d-none">Nieuw bier toevoegen</span>
-                    <span class="d-lg-none d-block">Bier toevoegen</span>
+                    <span class="d-lg-block d-none">Add new beer</span>
+                    <span class="d-lg-none d-block">Add beer</span>
                 </a>
             </div>
         </div>
 
 
+        <!-- Search result space -->
+
         <div class="col-12 d-flex flex-wrap p-0">
             <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 pt-5 d-flex flex-column">
+
+
+                <!-- Search result items -->
+
                 <app-beer-item
-                        *ngFor="let beer of beersList?.search_result | paginate: {itemsPerPage: 10, currentPage: page, totalItems: beersListTotal}; let i = index"
+                        *ngFor="let beer of beersList?.search_result; let i = index"
                         [item]="beer"
                         [index]="i"
                 ></app-beer-item>
+
+
+                <!-- Not found message -->
+
                 <div class="card mb-2" [hidden]="!beersListTotal">
                     <div class="card-body p-4 text-center">
-                        <strong>Het bier dat je zoekt niet gevonden? <a routerLink="/beers/add"
-                                                                        [queryParams]="{name: beer.value}">Voeg het
-                            toe</a>.</strong>
+                        <strong>
+                            Didn't find the beer you're looking for?
+                            <a routerLink="/beers/add" [queryParams]="{name: beer.value}">Add the beer</a>.
+                        </strong>
                     </div>
                 </div>
+
+
                 <div class="card mb-2" [hidden]="beersListTotal">
                     <div class="card-body p-4 text-center">
+
+
+                        <!-- No input message -->
+
                         <strong [hidden]="beersListTotal || beer.value">
-                            Zoek een bier met de zoekbalk bovenaan.
+                            Find a beer with the search bar at the top.
                         </strong>
+
+
+                        <!-- No results message -->
+
                         <div [hidden]="beersListTotal || !beer.value">
-                            <p>We hebben geen bieren gevonden die overeenkomen met uw zoekterm
-                                "<strong>{{beerName}}</strong>".</p>
-                            <p class="m-0">Zorg ervoor dat de naam van het bier juist is gespeld of voeg het bier
-                                toe.</p>
+                            <p>
+                                We couldn't find beers that match your search term
+                                "<strong>{{beerName}}</strong>".
+                            </p>
+                            <p class="m-0">
+                                Make sure that you've correctly spelled the name of the beer or add the beer.
+                            </p>
                         </div>
                     </div>
                 </div>

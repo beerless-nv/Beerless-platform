@@ -23,48 +23,53 @@ export class IndexBeersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.platformLocation.onPopState(() => {
-            this.getBeersHistory();
-            this.popState = true;
-        });
 
-        this.route.queryParamMap.subscribe(queryParam => {
-            this.beerName = queryParam.get('name');
-            this.page = Number(queryParam.get('page'));
-
-            // Check if queryparameter name exists
-            if (queryParam.get('name') != null) {
-                this.getBeersByName(this.beerName, queryParam.get('page'));
-            }
-        });
-        this.cdRef.detectChanges();
-        console.log(this.route.snapshot.data);
+        // this.platformLocation.onPopState(() => {
+        //     this.getBeersHistory();
+        //     this.popState = true;
+        // });
+        //
+        // this.route.queryParamMap.subscribe(queryParam => {
+        //     this.beerName = queryParam.get('name');
+        //     this.page = Number(queryParam.get('page'));
+        //
+        //     // Check if queryparameter name exists
+        //     if (queryParam.get('name') != null) {
+        //         this.getBeersByName(this.beerName, queryParam.get('page'));
+        //     }
+        // });
+        // this.cdRef.detectChanges();
+        // console.log(this.route.snapshot.data);
 
         // this.newestBeersList = this.route.snapshot.data['beers'];
     }
 
     getBeersByName(name, page) {
-        this.beerName = name;
-        if (this.localStorageService.getBeerSearchResults() != null) {
-            this.beerNameOld = this.localStorageService.getBeerSearchResults().search_term;
-            this.pageOld = this.localStorageService.getBeerSearchResults().page;
-        }
-
-        // if (name) {
-        //     if (name !== this.beerNameOld) {
-        //         this.beersService.getBeersByNamePagination('name', name, 10, (page - 1) * 10)
-        //             .then(() => {
+        // this.beerName = name;
+        // if (this.localStorageService.getBeerSearchResults() != null) {
+        //     this.beerNameOld = this.localStorageService.getBeerSearchResults().search_term;
+        //     this.pageOld = this.localStorageService.getBeerSearchResults().page;
+        // }
+        //
+        //
+        // if (this.beerName) {
+        //     if (this.beerName !== this.beerNameOld) {
+        //         // this.getPage(1);
+        //         this.beersService.getBeersByNamePagination('name', this.beerName, 10, (this.page - 1) * 10)
+        //             .then(data => {
         //                 this.beersList = this.localStorageService.getBeerSearchResults();
         //             });
         //         this.getCurrentBierCount();
+        //
         //     } else {
-        //         if (page !== this.pageOld) {
-        //             this.beersService.getBeersByNamePagination('name', name, 10, (page - 1) * 10)
-        //                 .then(() => {
+        //         if (this.page !== this.pageOld) {
+        //             this.beersService.getBeersByNamePagination('name', this.beerName, 10, (this.page - 1) * 10)
+        //                 .then(data => {
         //                     this.beersList = this.localStorageService.getBeerSearchResults();
         //                 });
-        //             this.getCurrentBierCount();
         //         } else {
+        //             this.getPage(this.pageOld);
+        //
         //             this.beersList = this.localStorageService.getBeerSearchResults();
         //             this.getCurrentBierCount();
         //         }
@@ -72,41 +77,8 @@ export class IndexBeersComponent implements OnInit {
         // } else {
         //     this.beersList = null;
         //     this.beersListTotal = null;
+        //     this.getPage(0);
         // }
-
-        // console.log(this.beerName);
-        // console.log(this.beerNameOld);
-        // console.log(this.page);
-        // console.log(this.pageOld);
-
-
-        if (this.beerName) {
-            if (this.beerName !== this.beerNameOld) {
-                // this.getPage(1);
-                this.beersService.getBeersByNamePagination('name', this.beerName, 10, (this.page - 1) * 10)
-                    .then(data => {
-                        this.beersList = this.localStorageService.getBeerSearchResults();
-                    });
-                this.getCurrentBierCount();
-
-            } else {
-                if (this.page !== this.pageOld) {
-                    this.beersService.getBeersByNamePagination('name', this.beerName, 10, (this.page - 1) * 10)
-                        .then(data => {
-                            this.beersList = this.localStorageService.getBeerSearchResults();
-                        });
-                } else {
-                    this.getPage(this.pageOld);
-
-                    this.beersList = this.localStorageService.getBeerSearchResults();
-                    this.getCurrentBierCount();
-                }
-            }
-        } else {
-            this.beersList = null;
-            this.beersListTotal = null;
-            this.getPage(0);
-        }
     }
 
     getBeersHistory() {

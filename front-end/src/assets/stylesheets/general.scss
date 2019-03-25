@@ -255,6 +255,12 @@ input.input-dark {
 // links
 //
 
+.link-yellow-underline {
+  color: $primary !important;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .link-black-yellow {
   color: $dark;
   text-decoration: none !important;

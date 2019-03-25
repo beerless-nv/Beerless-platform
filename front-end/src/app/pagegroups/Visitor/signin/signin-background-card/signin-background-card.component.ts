@@ -12,4 +12,7 @@ export class SigninBackgroundCardComponent implements OnInit {
   ngOnInit() {
   }
 
+  signIn() {
+
+  }
 }

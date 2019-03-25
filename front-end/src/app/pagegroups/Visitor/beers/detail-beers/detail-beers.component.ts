@@ -21,16 +21,13 @@ export class DetailBeersComponent implements OnInit {
 
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
+            this.getBeerById(params.get('id'));
             this.beerId = params.get('id');
         });
-
-        this.getBeerById();
     }
 
-    getBeerById() {
-        this.beersService.getBeerById(this.beerId)
-            .then(data => this.beer = data['beer'])
-            .then(() => this.loading = true)
-            .then(() => console.log(this.beer));
+    getBeerById(beerId) {
+        this.beersService.getBeerById(beerId)
+            .then(data => this.beer = data);
     }
 }

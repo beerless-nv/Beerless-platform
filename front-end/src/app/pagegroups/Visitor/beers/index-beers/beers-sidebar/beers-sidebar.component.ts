@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BeersService} from '../../../../../_services/beers.service';
 import {environment} from '../../../../../../environments/environment';
-import {LocalStorageService} from "../../../../../_services/local-storage.service";
+import {LocalStorageService} from '../../../../../_services/local-storage.service';
 
 @Component({
     selector: 'app-beers-sidebar',
@@ -13,8 +13,9 @@ export class BeersSidebarComponent implements OnInit {
     environment = environment;
 
     newestBeersList;
+    numberOfBeers = 5;
 
-    constructor(private beersService: BeersService, private localStorageService: LocalStorageService,) {
+    constructor(private beersService: BeersService, private localStorageService: LocalStorageService) {
     }
 
     ngOnInit() {
@@ -22,12 +23,13 @@ export class BeersSidebarComponent implements OnInit {
     }
 
     getBeersNewest() {
-        if (this.newestBeersList !== null) {
-            this.beersService.getBeersNewest().then(() => {
-                this.newestBeersList = this.localStorageService.getNewestBeers();
-            });
-        } else {
-            this.newestBeersList = this.localStorageService.getNewestBeers();
-        }
+        this.beersService.getBeersNewest(this.numberOfBeers).then(data => {
+            this.newestBeersList = data;
+        });
+    }
+
+    getMoreBeersNewest() {
+        this.numberOfBeers = this.numberOfBeers + 5;
+        this.getBeersNewest();
     }
 }

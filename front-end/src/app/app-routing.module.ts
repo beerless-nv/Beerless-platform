@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
 import {HomeComponent} from './pagegroups/Visitor/home/home.component';
-import {LoginComponent} from './pagegroups/Visitor/login/login.component';
 import {IndexBeersComponent} from './pagegroups/Visitor/beers/index-beers/index-beers.component';
 import {AddBeersComponent} from './pagegroups/Member/beers/add-beers/add-beers.component';
 import {DetailBeersComponent} from './pagegroups/Visitor/beers/detail-beers/detail-beers.component';
@@ -14,10 +13,10 @@ import {WishlistUsersComponent} from './pagegroups/Visitor/users/wishlist-users/
 import {AuthGuardService} from './_services/authorization/auth-guard.service';
 import {SignupComponent} from './pagegroups/Visitor/signup/signup.component';
 import {SigninComponent} from './pagegroups/Visitor/signin/signin.component';
+import {BeerprofileComponent} from './pagegroups/Visitor/beers/detail-beers/beerprofile/beerprofile.component';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
-    {path: 'login', component: LoginComponent},
     {path: 'sign-up', component: SignupComponent},
     {path: 'sign-in', component: SigninComponent},
     // All pages from beers
@@ -26,6 +25,7 @@ const routes: Routes = [
             {path: '', component: IndexBeersComponent},
             {path: 'add', component: AddBeersComponent, canActivate: [AuthGuardService]},
             {path: 'detail/:id', component: DetailBeersComponent},
+            {path: 'detail/embed/:id', component: BeerprofileComponent},
         ]
     },
     // ALL pages from blog

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser, LocationStrategy} from '@angular/common';
-import {NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable, ObservableInput, of} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
@@ -22,13 +22,20 @@ export class AppComponent implements OnInit {
     private _deferredRestore = false;
     loading: Boolean = false;
     error: Boolean = false;
+    currentUrl;
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
-                private router: Router,
+                public router: Router,
+                public route: ActivatedRoute,
                 private locStrat: LocationStrategy,
                 private loadingService: LoadingService,
                 private swUpdate: SwUpdate,
                 private errorService: ErrorService) {
+        router.events.subscribe((e) => {
+            if (e instanceof NavigationEnd) {
+                this.currentUrl = e.url;
+            }
+        });
     }
 
     ngOnInit(): void {

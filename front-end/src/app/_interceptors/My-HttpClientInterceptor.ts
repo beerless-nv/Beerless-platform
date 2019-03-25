@@ -12,13 +12,21 @@ import {Observable, of} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {LoadingService} from '../_services/loading.service';
 import {ErrorService} from '../_services/error.service';
+import {AuthService} from '../_services/authorization/auth.service';
 
 @Injectable()
 export class MyHttpClientInterceptor implements HttpInterceptor {
 
-    constructor(private loadingService: LoadingService, private errorService: ErrorService) {}
+    constructor(private loadingService: LoadingService, private errorService: ErrorService, private authService: AuthService) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        request = request.clone({
+            setParams: {
+                access_token: this.authService.getToken(),
+            },
+        });
+
+        console.log(request);
         this.loadingService.startLoading();
 
         return next.handle(request)

@@ -20,5 +20,10 @@ export class AuthService {
         // } else {
         //     return false;
         // }
+        return true;
+    }
+
+    public getToken(): string {
+        return this.localStorageService.getAccessToken();
     }
 }

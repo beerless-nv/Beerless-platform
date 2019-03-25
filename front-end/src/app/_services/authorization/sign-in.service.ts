@@ -24,6 +24,8 @@ export class SignInService {
             user.username = null;
         }
 
+        // const header = Hea
+
         return this.http.post(this.urlUsers + '/login', user)
             .toPromise()
             .then(data => {

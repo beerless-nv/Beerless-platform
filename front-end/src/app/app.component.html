@@ -1,28 +1,34 @@
-<!-- navigation -->
-<app-navbar class="d-lg-block d-none"></app-navbar>
-<app-navbar-mobile class="d-lg-none d-block"></app-navbar-mobile>
+<div *ngIf="!currentUrl?.includes('embed')">
+    <!-- navigation -->
+    <app-navbar class="d-lg-block d-none"></app-navbar>
+    <app-navbar-mobile class="d-lg-none d-block"></app-navbar-mobile>
 
 
-<!-- reserve space for desktop navbar -->
-<div class="top-offset-content bg-white d-lg-block d-none"></div>
-<ngx-loading-bar [color]="'#f9b054'" [fixed]="true" [hidden]="error"></ngx-loading-bar>
+    <!-- reserve space for desktop navbar -->
+    <div class="top-offset-content bg-white d-lg-block d-none"></div>
+    <ngx-loading-bar [color]="'#f9b054'" [fixed]="true" [hidden]="error"></ngx-loading-bar>
 
-<div [hidden]="loading == false && error == false">
-    <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
-        <app-error *ngIf="error == true"></app-error>
+    <div [hidden]="loading == false && error == false">
+        <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
+            <app-error *ngIf="error == true"></app-error>
+        </div>
     </div>
 </div>
+
+
 
 <div [hidden]="loading == true || error == true">
     <router-outlet></router-outlet>
 </div>
 
 
-<!-- display toast messages -->
-<app-toast></app-toast>
+<div *ngIf="!currentUrl?.includes('embed')">
+    <!-- display toast messages -->
+    <app-toast></app-toast>
 
 
-<!-- reserve space for navbar-mobile -->
-<div class="bottom-offset-content bg-white d-lg-none d-block"></div>
+    <!-- reserve space for navbar-mobile -->
+    <div class="bottom-offset-content bg-white d-lg-none d-block"></div>
 
-<app-footer class="d-lg-block d-none"></app-footer>
+    <app-footer class="d-lg-block d-none"></app-footer>
+</div>

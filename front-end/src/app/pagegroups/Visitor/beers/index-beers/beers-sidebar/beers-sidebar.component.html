@@ -1,24 +1,40 @@
 <div class="card card-sm-100w beers-sidebar border-yellow-top">
     <div class="card-header">
-        <strong>Nieuwste bieren</strong>
+        <strong>Newest beers</strong>
     </div>
     <div class="card-body">
-        <div class="d-flex align-items-center mb-2" *ngFor="let beer of newestBeersList | slice:0:5; let i = index">
+
+
+        <!-- Newest beers items -->
+
+        <div class="d-flex align-items-center mb-2" *ngFor="let beer of newestBeersList; let i = index">
+
+
+            <!-- Beer image -->
+
             <div class="pr-4">
                 <img src="{{environment.beerLogoURL + beer?.logo}}" alt="logo {{beer?.name}}" [ngbCollapse]="!beer?.logo"
                      class="bieren-sidebar-image">
                 <img src="/src/assets/images/bier_no_image.svg" alt="bier zonder afbeelding" [ngbCollapse]="beer?.logo"
                      class="bieren-sidebar-image">
             </div>
+
+
+            <!-- Beer details -->
+
             <div class="mr-4 truncate-text">
-                <a routerLink="/beers/detail/{{beer?.ID}}" class="link-black-yellow font-weight-bold m-0 small"
+                <a routerLink="/beers/detail/{{beer?.id}}" class="link-black-yellow font-weight-bold m-0 small"
                    ngbTooltip="naam bier">{{beer?.name}}</a>
-                <p class="my-0 small"><a routerLink="/breweries/detail/{{beer?.brewery?.ID}}"
-                                         class="link-black-yellow">{{beer?.brewery?.name}}</a></p>
+                <p class="my-0 small"><a routerLink="/breweries/detail/{{beer?.breweries[0]?.id}}"
+                                         class="link-black-yellow">{{beer?.breweries[0]?.name}}</a></p>
             </div>
         </div>
 
-        <p class="text-center pt-3 mb-0 font-weight-bold"><a routerLink="/beers">Meer bieren ...</a>
+
+        <!-- See more beers than 5 -->
+
+        <p class="text-center pt-3 mb-0 font-weight-bold" *ngIf="numberOfBeers < 10">
+            <a class="link-yellow-underline" (click)="getMoreBeersNewest()">More beers ...</a>
         </p>
     </div>
 </div>

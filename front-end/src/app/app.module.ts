@@ -14,7 +14,6 @@ import {HomeModule} from './pagegroups/Visitor/home/home.module';
 import {FooterComponent} from './sharedComponents/footer/footer.component';
 import {BeersModule} from './pagegroups/Member/beers/beers.module';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {LoginModule} from './pagegroups/Visitor/login/login.module';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ReactiveFormsModule} from '@angular/forms';
 import {DetailBeersComponent} from './pagegroups/Visitor/beers/detail-beers/detail-beers.component';
@@ -36,16 +35,16 @@ import {ProfileAboutComponent} from './pagegroups/Visitor/users/profile-users/pr
 import {ProfilePersonalComponent} from './pagegroups/Visitor/users/profile-users/profile-content/profile-about/profile-personal/profile-personal.component';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
-import { ErrorComponent } from './sharedComponents/error/error.component';
-import { SignupComponent } from './pagegroups/Visitor/signup/signup.component';
-import { RegularMenuItemComponent } from './sharedComponents/navbar/regular-menu-item/regular-menu-item.component';
-import { SignupBackgroundCardComponent } from './pagegroups/Visitor/signup/signup-background-card/signup-background-card.component';
-import { SignupFormComponent } from './pagegroups/Visitor/signup/signup-form/signup-form.component';
-import { InputFieldComponent } from './sharedComponents/input-field/input-field.component';
-import { SigninComponent } from './pagegroups/Visitor/signin/signin.component';
+import {ErrorComponent} from './sharedComponents/error/error.component';
+import {SignupComponent} from './pagegroups/Visitor/signup/signup.component';
+import {RegularMenuItemComponent} from './sharedComponents/navbar/regular-menu-item/regular-menu-item.component';
+import {SignupBackgroundCardComponent} from './pagegroups/Visitor/signup/signup-background-card/signup-background-card.component';
+import {SignupFormComponent} from './pagegroups/Visitor/signup/signup-form/signup-form.component';
+import {InputFieldComponent} from './sharedComponents/input-field/input-field.component';
+import {SigninComponent} from './pagegroups/Visitor/signin/signin.component';
 import {MyHttpClientInterceptor} from './_interceptors/My-HttpClientInterceptor';
-import { SigninBackgroundCardComponent } from './pagegroups/Visitor/signin/signin-background-card/signin-background-card.component';
-import { SigninFormComponent } from './pagegroups/Visitor/signin/signin-form/signin-form.component';
+import {SigninBackgroundCardComponent} from './pagegroups/Visitor/signin/signin-background-card/signin-background-card.component';
+import {SigninFormComponent} from './pagegroups/Visitor/signin/signin-form/signin-form.component';
 
 @NgModule({
     declarations: [
@@ -89,13 +88,12 @@ import { SigninFormComponent } from './pagegroups/Visitor/signin/signin-form/sig
         HomeModule,
         BeersModule,
         HttpClientModule,
-        LoginModule,
         NgxPaginationModule,
         ReactiveFormsModule,
         BlogModule,
         UsersModule,
         LoadingBarHttpClientModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
     ],
     providers: [{
         provide: HTTP_INTERCEPTORS,
