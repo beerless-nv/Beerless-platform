@@ -1,0 +1,52 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/index.html",
+        "/main.263cce1afec3b657a468.js",
+        "/polyfills.cdb4c28db4c7f67b3480.js",
+        "/runtime.ec2944dd8b20ec099bf3.js",
+        "/styles.358fa6d9ab511629bc19.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/index.html": "fa3afbccd70e160d10cdb27747a8e29a8e1c721b",
+    "/main.263cce1afec3b657a468.js": "d61393c0da5cc5098a5a8c5f65b198fb69e370d7",
+    "/polyfills.cdb4c28db4c7f67b3480.js": "ef2035f0504b4f77eac510c33595c81a5d09e33f",
+    "/runtime.ec2944dd8b20ec099bf3.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
+    "/styles.358fa6d9ab511629bc19.css": "ebac4d12c53c892ccc923a4547ed97be1dd02232"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

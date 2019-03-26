@@ -1,5 +1,4 @@
 .git
 .idea
-.front-end/src/environments/environment.ts
-.front-end/dist/
-.front-end/node_modules/
+/node-modules
+./src/environments/environment.ts
