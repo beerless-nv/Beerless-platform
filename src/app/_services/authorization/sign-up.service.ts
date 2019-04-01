@@ -7,18 +7,13 @@ import {HttpClient} from '@angular/common/http';
 })
 export class SignUpService {
 
-    readonly urlSignUp = environment.backend + 'users/signUp';
+    readonly urlSignUp = environment.backend + 'users';
 
     constructor(private http: HttpClient) {
     }
 
     signUp(user) {
-        return this.http.post(this.urlSignUp, {
-            inputObject: user
-        })
-            .toPromise()
-            .then(data => {
-                return data['success'];
-            });
+        return this.http.post(this.urlSignUp, user)
+            .toPromise();
     }
 }

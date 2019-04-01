@@ -1,0 +1,243 @@
+#tabset-home {
+  tabset {
+    .tabset {
+      width: 100%;
+    }
+
+    ul {
+      float: left;
+      width: 250px;
+      margin-right: 40px;
+      box-shadow: inset -4px 0px 0px $light;
+
+      li {
+        counter-increment: step-counter;
+        padding-bottom: 10px;
+
+        a span {
+          display: flex;
+          align-items: center;
+
+          &::before {
+            height: 40px !important;
+            min-width: 40px !important;
+            content: counter(step-counter);
+            margin-right: 15px;
+            color: $grey;
+            border: 1px solid $muted-light;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            font-size: 13px;
+
+          }
+        }
+      }
+
+      li:last-child {
+        padding-bottom: 0px;
+      }
+
+      a {
+        border-radius: 0px !important;
+        color: $dark;
+
+        &.active {
+          background-color: transparent !important;
+          color: $yellow !important;
+          border-right: $yellow solid 4px;
+
+          span::before {
+            border-color: $yellow;
+            color: $yellow;
+          }
+        }
+
+        &.nav-link {
+          &:hover {
+            color: $yellow;
+          }
+        }
+      }
+    }
+
+    .tab-content {
+      width: calc(100% - 290px);
+    }
+
+    .tab-content tab {
+      //display: flex;
+    }
+
+    .tab-content tab.active {
+      //opacity: 1 !important;
+      animation: fadein 1s;
+
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    tabset {
+      ul {
+        max-width: 200px;
+      }
+
+      .tab-content {
+        width: calc(100% - 240px);
+      }
+    }
+  }
+
+  @media only screen and (max-width: 576px) {
+    tabset {
+      .tabset {
+        width: auto;
+      }
+
+      ul {
+        width: 100%;
+        max-width: 100% !important;
+        box-shadow: none;
+        justify-content: center;
+        padding-bottom: 0px;
+
+        li a span {
+        }
+
+        li {
+          max-width: calc(100% - 110px);
+        }
+
+        a.active {
+          word-break: break-word;
+        }
+
+        a.nav-link {
+          width: 100%;
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        a.active {
+          padding-right: 15px;
+        }
+
+        a span {
+          font-size: 0;
+        }
+
+        a.active {
+          border-right: none;
+
+          span {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      .tab-content {
+        width: 100%;
+      }
+    }
+  }
+}
+
+#tabset-tabs {
+  background-color: white;
+  ul a {
+    padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+    margin-bottom: 0;
+    color: $dark;
+    border-top: 0.25rem solid transparent;
+    &.active {
+      font-weight: bold;
+      padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+      border-top-color: $yellow;
+      //box-shadow: 0 0.25rem 0 0 $yellow inset;
+
+      &:hover {
+        border-top-color: $yellow;
+      }
+    }
+
+    &:hover {
+      border-top-color: $muted-light;
+    }
+  }
+
+  div.tab-content {
+    background-color: white;
+    width: 100%;
+    padding: ($spacer*3) !important;
+    @include media-breakpoint-down(sm) {
+      padding: ($spacer * 1.25) !important;
+    }
+    border: 1px solid $muted-light;
+    border-top: none;
+    border-radius: 0 0 0.25rem 0.25rem;
+
+    tab {
+      width: 100%;
+    }
+  }
+}
+
+
+#tabset-tabs-profile {
+  ul {
+    border: none !important;
+    position: sticky;
+    z-index: 15;
+    top: 108px;
+  }
+  ul a {
+    color: #fff !important;
+    border: none !important;
+    border-bottom: 0.25rem solid !important;
+    border-color: transparent !important;
+    padding: 0.75rem 1.25rem 0.75rem 1.25rem;
+    margin-bottom: 0;
+
+    &.active {
+      font-weight: bold;
+      background-color: transparent !important;
+      border-color: $primary !important;
+
+      &:hover {
+        border-color: $primary !important;
+      }
+    }
+
+    &:hover {
+      //border-bottom: 0.25rem solid $primary !important;
+      border-color: $primary !important;
+    }
+  }
+
+  div.tab-content {
+    width: 100%;
+    border-radius: 0 0 0.25rem 0.25rem;
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    padding-top: ($spacer * 2) !important;
+    @include media-breakpoint-down(sm) {
+      padding: 0 !important;
+      padding-top: ($spacer * 2) !important;
+    }
+
+    tab {
+      width: 100%;
+    }
+  }
+}

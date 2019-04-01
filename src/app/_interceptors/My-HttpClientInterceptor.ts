@@ -20,13 +20,13 @@ export class MyHttpClientInterceptor implements HttpInterceptor {
     constructor(private loadingService: LoadingService, private errorService: ErrorService, private authService: AuthService) {}
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        request = request.clone({
-            setParams: {
-                access_token: this.authService.getToken(),
-            },
-        });
-
-        console.log(request);
+        // request = request.clone({
+        //     setParams: {
+        //         access_token: this.authService.getToken(),
+        //     },
+        // });
+        //
+        // console.log(request);
         this.loadingService.startLoading();
 
         return next.handle(request)
@@ -40,10 +40,10 @@ export class MyHttpClientInterceptor implements HttpInterceptor {
 
                 },
                     (err: any) => {
-
                     if (err instanceof HttpErrorResponse) {
-                        if (err.status === 400) {
-                            this.errorService.handleErrorMsg(err.error['msg']);
+                        if (err.status === 422) {
+                            // console.log(err.error.error.details);
+                            this.errorService.handleErrorMsg(err.error.error.details.messages);
                         } else {
                             this.loadingService.hasError();
                         }

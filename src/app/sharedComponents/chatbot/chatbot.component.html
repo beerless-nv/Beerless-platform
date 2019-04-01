@@ -1,0 +1,65 @@
+<div id="chatbot">
+
+
+    <!-- Chatbot widget -->
+
+    <div class="chatbot-box" [class.scale-in-br]="chatbotShow === true" [class.scale-out-br]="chatbotShow === false" *ngIf="chatbotShow !== null">
+        <div class="chatbot-box-header" (click)="chatbotShow = false">
+            <span></span>
+            <span>
+                Beerless
+            </span>
+            <span (click)="chatbotShow = false">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div class="chatbot-box-body">
+
+
+            <!-- messages -->
+
+            <ng-container *ngFor="let messageArray of messagesArray">
+                <div class="answer">
+                    <div class="message-item" *ngFor="let message of messageArray.messages"
+                         [class.chatbot-message-item]="messageArray.type === 'chatbot'"
+                         [class.user-message-item]="messageArray.type === 'user'">
+                        {{message.message}}
+                    </div>
+                </div>
+
+
+
+            </ng-container>
+        </div>
+        <div class="chatbot-box-footer">
+            <span id="chatbot-box-plus">
+                <i class="fas fa-plus"></i>
+                <div class="extra-hover">
+                    <div>
+                        <i class="far fa-smile-beam"></i>
+                    </div>
+                    <span class="vertical-line"></span>
+                    <div>
+                        <i class="fas fa-paperclip"></i>
+                    </div>
+                </div>
+            </span>
+
+
+            <!-- input -->
+
+            <div data-ph="Type something..." id="chatbot-box-input" class="textarea" contenteditable (keyup.enter)="sendMessage(message.textContent); message.innerHTML = ''" #message></div>
+
+            <span id="chatbot-box-send">
+                <i class="fas fa-paper-plane"></i>
+            </span>
+        </div>
+    </div>
+
+
+    <!-- Chatbot button -->
+
+    <div class="chatbot-button" (click)="open()">
+        <i class="fas fa-comment-alt"></i>
+    </div>
+</div>

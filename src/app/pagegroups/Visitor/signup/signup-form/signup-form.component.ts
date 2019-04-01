@@ -19,28 +19,29 @@ export class SignupFormComponent implements OnInit {
 
     ngOnInit() {
         this.formRegister = new FormGroup({
-            firstName: new FormControl('', [
+            firstName: new FormControl('Test', [
                 Validators.required
             ]),
-            lastName: new FormControl('', [
+            lastName: new FormControl('Test', [
                 Validators.required
             ]),
-            username: new FormControl('', [
+            username: new FormControl('Test112', [
                 Validators.required,
                 Validators.minLength(3),
                 Validators.maxLength(25),
                 Validators.pattern('^([a-zA-ZÀ-ÿ0-9-])*$')
             ]),
-            email: new FormControl('', [
+            email: new FormControl('Test112@test.com', [
                 Validators.required,
                 Validators.email
             ]),
-            password: new FormControl('', [
+            password: new FormControl('Test1234', [
                 Validators.required,
                 Validators.minLength(8),
                 Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
             ]),
             picture: new FormControl('https://avatars.dicebear.com/v2/identicon/' + Math.random().toString(36).substr(0, 13) + '.svg'),
+            favouriteBeerId: new FormControl(0),
         });
 
         this.errorService.messageRegister$.subscribe(data => this.messageRegister = data);
@@ -48,7 +49,8 @@ export class SignupFormComponent implements OnInit {
 
     register() {
         this.signupService.signUp(this.formRegister.value).then(data => {
-            if (data['success'] === true) {
+            console.log(data);
+            if (data !== undefined) {
                 this.registrationSuccessful = true;
             }
         });

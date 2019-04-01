@@ -23,15 +23,22 @@ export class ErrorService {
     }
 
     handleErrorMsg(errorMessages) {
+        // console.log(errorMessages);
+        // console.log(errorMessages.length);
+
         const errorMessageArray = [];
         if (errorMessages != null) {
-            for (let i = 0; i < errorMessages.length; i++) {
-                for (let j = 0; j < this.errorMessages.length; j++) {
-                    if (errorMessages[i] === this.errorMessages[j].error) {
-                        errorMessageArray[j] = this.errorMessages[j].message;
-                    }
-                }
+            for (const key in errorMessages) {
+                errorMessageArray.push(errorMessages[key][1]);
             }
+
+            // for (let i = 0; i < errorMessages.length; i++) {
+            //     for (let j = 0; j < this.errorMessages.length; j++) {
+            //         if (errorMessages[i] === this.errorMessages[j].error) {
+            //             errorMessageArray[j] = this.errorMessages[j].message;
+            //         }
+            //     }
+            // }
         }
 
         this.messageRegister$.next(errorMessageArray);

@@ -1,12 +1,19 @@
 <div *ngIf="!currentUrl?.includes('embed')">
+
+
     <!-- navigation -->
+
     <app-navbar class="d-lg-block d-none"></app-navbar>
     <app-navbar-mobile class="d-lg-none d-block"></app-navbar-mobile>
 
 
     <!-- reserve space for desktop navbar -->
+
     <div class="top-offset-content bg-white d-lg-block d-none"></div>
     <ngx-loading-bar [color]="'#f9b054'" [fixed]="true" [hidden]="error"></ngx-loading-bar>
+
+
+    <!-- loading and error screen -->
 
     <div [hidden]="loading == false && error == false">
         <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
@@ -16,18 +23,29 @@
 </div>
 
 
+<!-- content output -->
 
 <div [hidden]="loading == true || error == true">
     <router-outlet></router-outlet>
 </div>
 
 
+<!-- chatbot -->
+
+<app-chatbot></app-chatbot>
+
+
+
 <div *ngIf="!currentUrl?.includes('embed')">
+
+
     <!-- display toast messages -->
+
     <app-toast></app-toast>
 
 
     <!-- reserve space for navbar-mobile -->
+
     <div class="bottom-offset-content bg-white d-lg-none d-block"></div>
 
     <app-footer class="d-lg-block d-none"></app-footer>

@@ -45,6 +45,10 @@ import {SigninComponent} from './pagegroups/Visitor/signin/signin.component';
 import {MyHttpClientInterceptor} from './_interceptors/My-HttpClientInterceptor';
 import {SigninBackgroundCardComponent} from './pagegroups/Visitor/signin/signin-background-card/signin-background-card.component';
 import {SigninFormComponent} from './pagegroups/Visitor/signin/signin-form/signin-form.component';
+import { ChatbotComponent } from './sharedComponents/chatbot/chatbot.component';
+import {AutosizeModule} from "ngx-autosize";
+import {CookieService} from "ngx-cookie-service";
+import {MyHttpClient} from "./_interceptors/MY-HttpClient";
 
 @NgModule({
     declarations: [
@@ -79,6 +83,7 @@ import {SigninFormComponent} from './pagegroups/Visitor/signin/signin-form/signi
         SigninComponent,
         SigninBackgroundCardComponent,
         SigninFormComponent,
+        ChatbotComponent,
     ],
     imports: [
         BrowserModule,
@@ -94,12 +99,16 @@ import {SigninFormComponent} from './pagegroups/Visitor/signin/signin-form/signi
         UsersModule,
         LoadingBarHttpClientModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+        AutosizeModule
     ],
-    providers: [{
-        provide: HTTP_INTERCEPTORS,
-        useClass: MyHttpClientInterceptor,
-        multi: true
-    }],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: MyHttpClientInterceptor,
+            multi: true
+        },
+        CookieService,
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
