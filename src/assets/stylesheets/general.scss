@@ -78,6 +78,14 @@ a.btn {
   padding: 0.4rem !important;
 }
 
+.btn-outline-primary {
+  color: $primary !important;
+}
+
+.btn-outline-light:hover, .btn-outline-primary:hover {
+  color: $dark !important;
+}
+
 .btn-hover-opacity-15:hover {
   background-color: rgba(255, 255, 255, 0.15);
   color: #fff;

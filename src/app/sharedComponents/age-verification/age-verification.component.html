@@ -1,0 +1,17 @@
+<div class="text-white d-flex justify-content-center flex-wrap py-sm-0 py-4" *ngIf="legalAge === null">
+    <p class="text-uppercase font-weight-bold text-center col-12">
+        You must be of legal drinking age in your country to access this site!
+    </p>
+    <h3 class="text-uppercase font-weight-bold text-center col-12">
+        Are you?
+    </h3>
+    <div class="d-flex justify-content-center col-12 mt-4">
+        <a (click)="answer('yes')" class="btn btn-outline-primary mouse-pointer font-weight-bold text-uppercase mr-5 btn-100">yes</a>
+        <a (click)="answer('no')" class="btn btn-outline-light mouse-pointer font-weight-bold text-uppercase btn-100">no</a>
+    </div>
+</div>
+
+<div class="position-relative age-verification-ban text-white text-center" *ngIf="legalAge === false">
+    <img src="{{imageUrl + 'icon/beerless-ban.svg'}}" alt="">
+    <a (click)="legalAge = null" class="btn btn-outline-light mouse-pointer font-weight-bold text-uppercase btn-100 mt-5">back</a>
+</div>

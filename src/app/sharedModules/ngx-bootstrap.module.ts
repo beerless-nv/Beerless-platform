@@ -1,15 +1,17 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {TabsModule} from 'ngx-bootstrap';
+import {ModalModule, TabsModule} from 'ngx-bootstrap';
 
 @NgModule({
     imports: [
         CommonModule,
-        TabsModule.forRoot()
+        TabsModule.forRoot(),
+        ModalModule.forRoot(),
     ],
     exports: [
-        TabsModule
+        TabsModule,
+        ModalModule,
     ],
     declarations: []
 })

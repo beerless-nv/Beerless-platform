@@ -12,6 +12,7 @@ export const environment = {
     breweryLogoURL: 'https://assets.beerless.be/assets/images/brewery/logo/',
     userPictureURL: 'https://assets.beerless.be/assets/images/user/picture/',
     articlePictureURL: 'https://assets.beerless.be/assets/images/article/hero-picture/',
+    imageURL: 'https://assets.beerless.be/images/',
 };
 
 /*

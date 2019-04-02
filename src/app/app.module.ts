@@ -45,75 +45,85 @@ import {SigninComponent} from './pagegroups/Visitor/signin/signin.component';
 import {MyHttpClientInterceptor} from './_interceptors/My-HttpClientInterceptor';
 import {SigninBackgroundCardComponent} from './pagegroups/Visitor/signin/signin-background-card/signin-background-card.component';
 import {SigninFormComponent} from './pagegroups/Visitor/signin/signin-form/signin-form.component';
-import { ChatbotComponent } from './sharedComponents/chatbot/chatbot.component';
+import {ChatbotComponent} from './sharedComponents/chatbot/chatbot.component';
 import {AutosizeModule} from 'ngx-autosize';
 import {CookieService} from 'ngx-cookie-service';
 import {MyHttpClient} from './_interceptors/MY-HttpClient';
 import {NgScrollbarModule} from 'ngx-scrollbar';
-import {BidiModule} from "@angular/cdk/bidi";
+import {BidiModule} from '@angular/cdk/bidi';
+import {AgeVerificationComponent} from './sharedComponents/age-verification/age-verification.component';
+import {IeWarningComponent} from './sharedComponents/ie-warning/ie-warning.component';
+import {ModalComponent} from './sharedComponents/modal/modal.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        NavbarComponent,
-        HeroComponent,
-        HomeComponent,
-        HeroSubscribeComponent,
-        FooterComponent,
-        TabsetComponent,
-        DetailBeersComponent,
-        BeerprofileComponent,
-        BeerbreweryprofileComponent,
-        WishlistUsersComponent,
-        ProfileUsersComponent,
-        NavbarMobileComponent,
-        ToastComponent,
-        ProfileCoverComponent,
-        ProfileSidebarComponent,
-        ProfileFavouriteComponent,
-        ProfileActivitiesComponent,
-        ProfileContentComponent,
-        ProfileAboutComponent,
-        ProfilePersonalComponent,
-        ProfilePersonalComponent,
-        ErrorComponent,
-        SignupComponent,
-        RegularMenuItemComponent,
-        SignupBackgroundCardComponent,
-        SignupFormComponent,
-        InputFieldComponent,
-        SigninComponent,
-        SigninBackgroundCardComponent,
-        SigninFormComponent,
-        ChatbotComponent,
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        NgBootstrapModule,
-        NgxBootstrapModule,
-        HomeModule,
-        BeersModule,
-        HttpClientModule,
-        NgxPaginationModule,
-        ReactiveFormsModule,
-        BlogModule,
-        UsersModule,
-        LoadingBarHttpClientModule,
-        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-        AutosizeModule,
-        NgScrollbarModule,
-        BidiModule
-    ],
-    providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: MyHttpClientInterceptor,
-            multi: true
-        },
-        CookieService,
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    HeroComponent,
+    HomeComponent,
+    HeroSubscribeComponent,
+    FooterComponent,
+    TabsetComponent,
+    DetailBeersComponent,
+    BeerprofileComponent,
+    BeerbreweryprofileComponent,
+    WishlistUsersComponent,
+    ProfileUsersComponent,
+    NavbarMobileComponent,
+    ToastComponent,
+    ProfileCoverComponent,
+    ProfileSidebarComponent,
+    ProfileFavouriteComponent,
+    ProfileActivitiesComponent,
+    ProfileContentComponent,
+    ProfileAboutComponent,
+    ProfilePersonalComponent,
+    ProfilePersonalComponent,
+    ErrorComponent,
+    SignupComponent,
+    RegularMenuItemComponent,
+    SignupBackgroundCardComponent,
+    SignupFormComponent,
+    InputFieldComponent,
+    SigninComponent,
+    SigninBackgroundCardComponent,
+    SigninFormComponent,
+    ChatbotComponent,
+    AgeVerificationComponent,
+    IeWarningComponent,
+    ModalComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgBootstrapModule,
+    NgxBootstrapModule,
+    HomeModule,
+    BeersModule,
+    HttpClientModule,
+    NgxPaginationModule,
+    ReactiveFormsModule,
+    BlogModule,
+    UsersModule,
+    LoadingBarHttpClientModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+    AutosizeModule,
+    NgScrollbarModule,
+    BidiModule
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MyHttpClientInterceptor,
+      multi: true
+    },
+    CookieService,
+  ],
+  entryComponents: [
+    AgeVerificationComponent,
+    IeWarningComponent,
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }
