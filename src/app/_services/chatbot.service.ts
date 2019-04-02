@@ -23,43 +23,37 @@ export class ChatbotService {
     }
 
 
-
-    sendMessage(message): Observable<any> {
+    sendMessage(message) {
         if (message !== '') {
             if (message !== 'start_conversation') {
-                this.messagesArray.push({'type': 'user', 'message': message});
+                this.messagesArray.push({type: 'user', messages: [{message: message}]});
                 this.messages.next(this.messagesArray);
             }
 
-            return this.http.post(this.apiUrl + '/chats/' + this.chatbotId + '/message?access_token=' + this.accessToken, {
+            this.http.post(this.apiUrl + '/chats/' + this.chatbotId + '/message?access_token=' + this.accessToken, {
                 'message': message,
                 'environment': 'production',
                 'session': this.session,
                 'locale': 'en'
-            }, {headers: this.headers});
+            }, {headers: this.headers})
+                .toPromise()
+                .then(data => {
+                    this.getMessage(data);
+                });
         }
     }
 
     getMessage(data) {
+        const messages = [];
         for (let i = 0; i < data['data'].length; i++) {
-            // this.delayIncommingMessages(i);
-
-            setTimeout(() => {
-                this.messagesArray.push({'type': 'chatbot', 'message': data['data'][i].message});
-                this.messages.next(this.messagesArray);
-                // console.log('messagesArray', this.messagesArray);
-                // console.log('index', i);
-            }, 1500);
+            messages.push({message: data['data'][i]['message']});
         }
 
-        console.log(this.messagesArray);
+        this.messagesArray.push({type: 'chatbot', messages: messages});
+        console.log('array', this.messagesArray);
+        console.log('behaviorsubject', this.messages);
+        this.messages.next(this.messagesArray);
 
-    }
-
-    delayIncommingMessages(i) {
-        setTimeout(() => {
-            console.log(i);
-        }, 1500);
     }
 
     getChat() {

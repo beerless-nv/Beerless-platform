@@ -36,7 +36,7 @@ export class ErrorService {
             // for (let i = 0; i < errorMessages.length; i++) {
             //     for (let j = 0; j < this.errorMessages.length; j++) {
             //         if (errorMessages[i] === this.errorMessages[j].error) {
-            //             errorMessageArray[j] = this.errorMessages[j].message;
+            //             errorMessageArray[j] = this.errorMessages[j].messages;
             //         }
             //     }
             // }

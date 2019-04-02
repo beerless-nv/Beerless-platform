@@ -11,7 +11,7 @@ import {
 import {CookieService} from 'ngx-cookie-service';
 import {Guid} from 'guid-typescript';
 import {ChatbotService} from '../../_services/chatbot.service';
-import {BehaviorSubject, from, Observable} from 'rxjs';
+import {BehaviorSubject, from, Observable, of} from 'rxjs';
 import {delay, map} from 'rxjs/operators';
 
 @Component({
@@ -23,9 +23,9 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
 
     chatbotShow: boolean = null;
     showScrollbar = false;
-    messagesArray= new Observable<any>();
-    
-    helperArray = [];
+    messagesArray = [];
+
+    // helperArray = [];
 
     chatbotMessages = new BehaviorSubject<Object>([]);
     @ViewChild('chatbotInput') chatbotInput: ElementRef;
@@ -39,17 +39,9 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     }
 
     ngOnInit() {
-        this.chatbotMessages.subscribe((item) => console.log('lol', item))
-
-        // this.chatbotService.messages.subscribe(data => {
-        //     this.messagesArray = data;
-        //
-        //
-        //     console.log(data);
-        //
-        //     // scroll to bottom
-        //     this.scrollToBottom();
-        // });
+        this.chatbotService.messages.subscribe(data => {
+            this.messagesArray = data;
+        });
     }
 
     ngAfterViewChecked() {
@@ -79,45 +71,45 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     sendMessage(message) {
         // console.log(messages);
 
-        this.getMessage(this.chatbotService.sendMessage(message));
+        this.chatbotService.sendMessage(message);
+
         // scroll to bottom
-        // this.scrollToBottom();
-
+        this.scrollToBottom();
     }
 
-    getMessage(data: Observable<any>) {
-        // for (let i = 0; i < data['data'].length; i++) {
-        //     // this.delayIncommingMessages(i);
-        //
-        //     setTimeout(() => {
-        //         this.messagesArray.push({'type': 'chatbot', 'message': data['data'][i].message});
-        //         this.messages.next(this.messagesArray);
-        //         // console.log('messagesArray', this.messagesArray);
-        //         // console.log('index', i);
-        //     }, 1500);
-        // }
-
-        console.log(data);
-
-        // data.subscribe(resp => {
-        //     console.log(resp);
-        // });
-
-
-         data.subscribe(((response) => {
-            const messages = response.data;
-
-            messages.map((message) => {
-                const newMessage = {type: 'chatbot', message: message['message']};
-                setTimeout(() => {
-                    this.helperArray.push(newMessage);
-                    this.messagesArray = from(this.helperArray);
-                }, 1500);
-                return newMessage;
-            });
-        }));
-
-    }
+    // getMessage(data: Observable<any>) {
+    //     // for (let i = 0; i < data['data'].length; i++) {
+    //     //     // this.delayIncommingMessages(i);
+    //     //
+    //     //     setTimeout(() => {
+    //     //         this.messagesArray.push({'type': 'chatbot', 'messages': data['data'][i].messages});
+    //     //         this.messages.next(this.messagesArray);
+    //     //         // console.log('messagesArray', this.messagesArray);
+    //     //         // console.log('index', i);
+    //     //     }, 1500);
+    //     // }
+    //
+    //     console.log(data);
+    //
+    //     // data.subscribe(resp => {
+    //     //     console.log(resp);
+    //     // });
+    //
+    //
+    //      data.subscribe(((response) => {
+    //         const messages = response.data;
+    //
+    //         messages.map((messages) => {
+    //             const newMessage = {type: 'chatbot', messages: messages['messages']};
+    //                 this.helperArray.push(newMessage);
+    //                 this.messagesArray = of(this.helperArray).pipe(delay(1000));
+    //                 console.log(this.helperArray);
+    //                 console.log(newMessage);
+    //             return newMessage;
+    //         });
+    //     }));
+    //
+    // }
 
     scrollToBottom(): void {
         try {

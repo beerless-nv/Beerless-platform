@@ -152,15 +152,16 @@
                 margin: 0 10px;
                 overflow: hidden;
                 padding-bottom: 10px;
-                //height: fit-content;
+                display: flex;
+                flex-direction: column;
 
                 .message-item {
                     margin-bottom: 5px;
                     padding: 5px 10px;
                     border-radius: 1rem;
-                    display: block;
+
                     animation: message-show 0.1s;
-                    animation-delay: 2s;
+
                 }
 
                 @keyframes message-show {
@@ -174,16 +175,26 @@
 
                 & .chatbot-message-item {
                     background-color: $muted-light;
-                    display: block;
                     float: left;
                     margin-right: 50px;
                     border-top-left-radius: 0;
+
+                    animation: load-message 1.5s;
+
+                }
+
+                @keyframes load-message {
+                    0% {
+                        background-color: red;
+                    }
+                    100% {
+                        background-color: green;
+                    }
                 }
 
                 & .user-message-item {
                     color: #fff;
                     background-color: $primary;
-                    display: block;
                     float: right;
                     border-bottom-right-radius: 0;
                 }

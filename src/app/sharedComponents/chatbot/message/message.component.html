@@ -1,0 +1,5 @@
+<div class="message-item" *ngIf="showMessage"
+     [class.chatbot-message-item]="type === 'chatbot'"
+     [class.user-message-item]="type === 'user'">
+    {{message}}
+</div>

@@ -56,7 +56,7 @@
                 ></app-beer-item>
 
 
-                <!-- Not found message -->
+                <!-- Not found messages -->
 
                 <div class="card mb-2" [hidden]="!beersListTotal">
                     <div class="card-body p-4 text-center">
@@ -72,14 +72,14 @@
                     <div class="card-body p-4 text-center">
 
 
-                        <!-- No input message -->
+                        <!-- No input messages -->
 
                         <strong [hidden]="beersListTotal || beer.value">
                             Find a beer with the search bar at the top.
                         </strong>
 
 
-                        <!-- No results message -->
+                        <!-- No results messages -->
 
                         <div [hidden]="beersListTotal || !beer.value">
                             <p>
