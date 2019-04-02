@@ -24,6 +24,9 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     chatbotShow: boolean = null;
     showScrollbar = false;
     messagesArray= new Observable<any>();
+    
+    helperArray = [];
+
     chatbotMessages = new BehaviorSubject<Object>([]);
     @ViewChild('chatbotInput') chatbotInput: ElementRef;
     @ViewChild('chatbotBoxBody') chatbotBoxBody: ElementRef;
@@ -33,14 +36,11 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
 
     constructor(private cookieService: CookieService, private chatbotService: ChatbotService, private rd: Renderer2) {
 
-        this.chatbotMessages.subscribe((item) => console.log('lol', item))
     }
 
     ngOnInit() {
-        this.messagesArray.subscribe(data => {
-            console.log(data);
+        this.chatbotMessages.subscribe((item) => console.log('lol', item))
 
-        })
         // this.chatbotService.messages.subscribe(data => {
         //     this.messagesArray = data;
         //
@@ -110,7 +110,8 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
             messages.map((message) => {
                 const newMessage = {type: 'chatbot', message: message['message']};
                 setTimeout(() => {
-                    this.chatbotMessages.next(data);
+                    this.helperArray.push(newMessage);
+                    this.messagesArray = from(this.helperArray);
                 }, 1500);
                 return newMessage;
             });

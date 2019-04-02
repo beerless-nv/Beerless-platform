@@ -30,7 +30,7 @@
 
                 <!-- messages -->
 
-                <ng-container *ngFor="let message of (chatbotMessages | async)">
+                <ng-container *ngFor="let message of (messagesArray | async)">
                     <div class="answer">
                         <!--<div class="message-item" *ngFor="let message of messageArray.messages"-->
                              <!--[class.chatbot-message-item]="messageArray.type === 'chatbot'"-->
