@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import {Guid} from "guid-typescript";
 
@@ -24,35 +24,42 @@ export class ChatbotService {
 
 
 
-    sendMessage(message) {
-
+    sendMessage(message): Observable<any> {
         if (message !== '') {
             if (message !== 'start_conversation') {
-                this.messagesArray.push({'type': 'user', 'messages': [{'message': message}]});
+                this.messagesArray.push({'type': 'user', 'message': message});
+                this.messages.next(this.messagesArray);
             }
 
-            this.http.post(this.apiUrl + '/chats/' + this.chatbotId + '/message?access_token=' + this.accessToken, {
+            return this.http.post(this.apiUrl + '/chats/' + this.chatbotId + '/message?access_token=' + this.accessToken, {
                 'message': message,
                 'environment': 'production',
                 'session': this.session,
                 'locale': 'en'
-            }, {headers: this.headers})
-                .toPromise()
-                .then(data => {
-                    this.getMessage(data);
-                });
+            }, {headers: this.headers});
         }
     }
 
     getMessage(data) {
-        const messageItemArray = [];
-
         for (let i = 0; i < data['data'].length; i++) {
-            messageItemArray.push({'message': data['data'][i].message});
+            // this.delayIncommingMessages(i);
+
+            setTimeout(() => {
+                this.messagesArray.push({'type': 'chatbot', 'message': data['data'][i].message});
+                this.messages.next(this.messagesArray);
+                // console.log('messagesArray', this.messagesArray);
+                // console.log('index', i);
+            }, 1500);
         }
 
-        this.messagesArray.push({type: 'chatbot', messages: messageItemArray});
-        this.messages.next(this.messagesArray);
+        console.log(this.messagesArray);
+
+    }
+
+    delayIncommingMessages(i) {
+        setTimeout(() => {
+            console.log(i);
+        }, 1500);
     }
 
     getChat() {

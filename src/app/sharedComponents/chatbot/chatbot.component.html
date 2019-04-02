@@ -20,60 +20,65 @@
             </div>
 
         </div>
-        <!--<ng-scrollbar>-->
 
         <div class="chatbot-box-body"
              [class.show-scrollbar]="showScrollbar"
-             [class.hide-scrollbar]="showScrollbar === false">
+             [class.hide-scrollbar]="showScrollbar === false"
+             #chatbotContent>
             <div class="chatbot-content-hide-when-animate">
 
 
                 <!-- messages -->
 
-                <ng-container *ngFor="let messageArray of messagesArray">
+                <ng-container *ngFor="let message of (chatbotMessages | async)">
                     <div class="answer">
-                        <div class="message-item" *ngFor="let message of messageArray.messages"
-                             [class.chatbot-message-item]="messageArray.type === 'chatbot'"
-                             [class.user-message-item]="messageArray.type === 'user'">
+                        <!--<div class="message-item" *ngFor="let message of messageArray.messages"-->
+                             <!--[class.chatbot-message-item]="messageArray.type === 'chatbot'"-->
+                             <!--[class.user-message-item]="messageArray.type === 'user'">-->
+                            <!--{{message.message}}-->
+                        <!--</div>-->
+
+                        <div class="message-item"
+                             [class.chatbot-message-item]="message.type === 'chatbot'"
+                             [class.user-message-item]="message.type === 'user'">
                             {{message.message}}
                         </div>
                     </div>
                 </ng-container>
 
-              <div class="answer">
-                <div class="message-item">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?
-                </div>
-              </div>
-              <div class="answer">
-                <div class="message-item">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?
-                </div>
-              </div>
-              <div class="answer">
-                <div class="message-item">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?
-                </div>
-              </div>
-              <div class="answer">
-                <div class="message-item">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?
-                </div>
-              </div>
-              <div class="answer">
-                <div class="message-item">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?
-                </div>
-              </div><div class="answer">
-              <div class="message-item">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?
-              </div>
-            </div>
+                <!--<div class="answer">-->
+                <!--<div class="message-item">-->
+                <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="answer">-->
+                <!--<div class="message-item">-->
+                <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="answer">-->
+                <!--<div class="message-item">-->
+                <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="answer">-->
+                <!--<div class="message-item">-->
+                <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="answer">-->
+                <!--<div class="message-item">-->
+                <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?-->
+                <!--</div>-->
+                <!--</div><div class="answer">-->
+                <!--<div class="message-item">-->
+                <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis culpa facere facilis fugiat sequi? Adipisci blanditiis, dolorum ea earum fuga impedit itaque laboriosam magnam modi numquam, odit, porro praesentium vel?-->
+                <!--</div>-->
+                <!--</div>-->
 
 
             </div>
         </div>
-        <!--</ng-scrollbar>-->
 
         <div class="chatbot-box-footer">
 
