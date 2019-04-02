@@ -46,9 +46,11 @@ import {MyHttpClientInterceptor} from './_interceptors/My-HttpClientInterceptor'
 import {SigninBackgroundCardComponent} from './pagegroups/Visitor/signin/signin-background-card/signin-background-card.component';
 import {SigninFormComponent} from './pagegroups/Visitor/signin/signin-form/signin-form.component';
 import { ChatbotComponent } from './sharedComponents/chatbot/chatbot.component';
-import {AutosizeModule} from "ngx-autosize";
-import {CookieService} from "ngx-cookie-service";
-import {MyHttpClient} from "./_interceptors/MY-HttpClient";
+import {AutosizeModule} from 'ngx-autosize';
+import {CookieService} from 'ngx-cookie-service';
+import {MyHttpClient} from './_interceptors/MY-HttpClient';
+import {NgScrollbarModule} from 'ngx-scrollbar';
+import {BidiModule} from "@angular/cdk/bidi";
 
 @NgModule({
     declarations: [
@@ -99,7 +101,9 @@ import {MyHttpClient} from "./_interceptors/MY-HttpClient";
         UsersModule,
         LoadingBarHttpClientModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-        AutosizeModule
+        AutosizeModule,
+        NgScrollbarModule,
+        BidiModule
     ],
     providers: [
         {

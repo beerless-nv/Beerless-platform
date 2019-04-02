@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import {Guid} from "guid-typescript";
@@ -16,23 +16,32 @@ export class ChatbotService {
     messages = new BehaviorSubject<Array<any>>(null);
     messagesArray = [];
 
+    headers = new HttpHeaders()
+        .append('ignoreLoadingBar', '');
+
     constructor(private http: HttpClient, private cookieService: CookieService) {
     }
 
+
+
     sendMessage(message) {
 
-        this.messagesArray.push({'type': 'user', 'messages': [{'message': message}]});
+        if (message !== '') {
+            if (message !== 'start_conversation') {
+                this.messagesArray.push({'type': 'user', 'messages': [{'message': message}]});
+            }
 
-        this.http.post(this.apiUrl + '/chats/' + this.chatbotId + '/message?access_token=' + this.accessToken, {
-            'message': message,
-            'environment': 'production',
-            'session': this.session,
-            'locale': 'en'
-        })
-            .toPromise()
-            .then(data => {
-                this.getMessage(data);
-            });
+            this.http.post(this.apiUrl + '/chats/' + this.chatbotId + '/message?access_token=' + this.accessToken, {
+                'message': message,
+                'environment': 'production',
+                'session': this.session,
+                'locale': 'en'
+            }, {headers: this.headers})
+                .toPromise()
+                .then(data => {
+                    this.getMessage(data);
+                });
+        }
     }
 
     getMessage(data) {

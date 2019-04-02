@@ -15,6 +15,7 @@ export class ErrorService {
         {error: 'email_not_valid', message: 'Vul een geldig e-mailadres in!'},
         {error: 'email_not_unique', message: 'Dit e-mailadres is al in gebruik!'},
         {error: 'password_required', message: 'Vul een wachtwoord in!'},
+        {error: 'uniqueness', message: 'Vul een wachtwoord in!'},
     ];
 
     messageRegister$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);

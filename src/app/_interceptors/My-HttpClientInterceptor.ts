@@ -27,14 +27,14 @@ export class MyHttpClientInterceptor implements HttpInterceptor {
         // });
         //
         // console.log(request);
-        this.loadingService.startLoading();
+        // this.loadingService.startLoading();
 
         return next.handle(request)
             .pipe(
                 tap((event: HttpEvent<any>) => {
 
                     if (event.type !== 0) {
-                        this.loadingService.finishLoading();
+                        // this.loadingService.finishLoading();
                         this.loadingService.noError();
                     }
 
@@ -42,13 +42,13 @@ export class MyHttpClientInterceptor implements HttpInterceptor {
                     (err: any) => {
                     if (err instanceof HttpErrorResponse) {
                         if (err.status === 422) {
-                            // console.log(err.error.error.details);
-                            this.errorService.handleErrorMsg(err.error.error.details.messages);
+                            console.log(err.error.error.details);
+                            this.errorService.handleErrorMsg(err.error.error.details.codes);
                         } else {
                             this.loadingService.hasError();
                         }
 
-                        this.loadingService.finishLoading();
+                        // this.loadingService.finishLoading();
                     }
 
         }));
