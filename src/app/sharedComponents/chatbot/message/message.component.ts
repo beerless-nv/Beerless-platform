@@ -1,4 +1,5 @@
 import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
+import {ChatbotComponent} from "../chatbot.component";
 
 @Component({
     selector: 'app-message',
@@ -14,12 +15,10 @@ export class MessageComponent implements OnInit {
     showMessageItem = false;
     showMessage = false;
 
-    constructor() {
-
+    constructor(private chatbotComponent: ChatbotComponent) {
     }
 
     ngOnInit() {
-        console.log('message ' + this.messageIndex, (this.delay * this.messageIndex) + this.delay);
 
         if (this.type !== 'user') {
             setTimeout(() => {

@@ -47,6 +47,7 @@
     "ngx-cookie-service": "^2.1.0",
     "ngx-pagination": "^3.2.1",
     "ngx-scrollbar": "^4.1.1",
+    "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~6.2.0",
     "typescript": "~2.9.2",
     "web-animations-js": "^2.3.1",

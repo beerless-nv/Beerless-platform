@@ -1,5 +1,6 @@
 import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
 import {ChatbotService} from '../../../_services/chatbot.service';
+import {ChatbotComponent} from '../chatbot.component';
 
 @Component({
     selector: 'app-messages',
@@ -13,7 +14,7 @@ export class MessagesComponent implements OnInit {
     showTypingIndicator = true;
     showQuickReplies = false;
 
-    constructor(private chatbotService: ChatbotService) {
+    constructor(private chatbotService: ChatbotService, private chatbotComponent: ChatbotComponent) {
     }
 
     ngOnInit() {

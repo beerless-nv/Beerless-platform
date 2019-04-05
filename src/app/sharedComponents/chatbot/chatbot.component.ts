@@ -14,20 +14,21 @@ import {Guid} from 'guid-typescript';
 import {ChatbotService} from '../../_services/chatbot.service';
 import {BehaviorSubject, from, Observable, of} from 'rxjs';
 import {delay, map} from 'rxjs/operators';
+import ResizeObserver from 'resize-observer-polyfill';
 
 @Component({
     selector: 'app-chatbot',
     templateUrl: './chatbot.component.html',
     styles: []
 })
-export class ChatbotComponent implements OnInit, AfterViewChecked {
+export class ChatbotComponent implements OnInit {
 
     chatbotShow: boolean = null;
     showScrollbar = false;
     messagesArray = [];
 
     @ViewChild('chatbotInput') chatbotInput: ElementRef;
-    @ViewChild('chatbotBoxBody') chatbotBoxBody: ElementRef;
+    @ViewChild('chatbotBody') chatbotBody: ElementRef;
     @ViewChild('chatbotContent') chatbotContent: ElementRef;
 
     messages = new BehaviorSubject<Array<any>>(null);
@@ -39,15 +40,7 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     ngOnInit() {
         this.chatbotService.messages.subscribe(data => {
             this.messagesArray = data;
-            // console.log(this.cdref.detectChanges());
-            // console.log('OBSERVABLE', data);
         });
-    }
-
-    ngAfterViewChecked() {
-        // console.log('change');
-    //     scroll to bottom
-    //     this.scrollToBottom();
     }
 
     open() {
@@ -63,6 +56,14 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
                 this.showScrollbar = true;
             }, 800);
 
+            // resize observer of chatbot body content
+            const resizeObserver = new ResizeObserver((entries, observer) => {
+                for (const entry of entries) {
+                    this.scrollToBottom();
+                }
+            });
+            resizeObserver.observe(this.chatbotBody.nativeElement);
+
             // scroll to bottom
             this.scrollToBottom();
         } else {
@@ -75,12 +76,11 @@ export class ChatbotComponent implements OnInit, AfterViewChecked {
     }
 
     sendMessage(message) {
-        // console.log(messages);
 
         this.chatbotService.sendMessage(message);
 
         // scroll to bottom
-        this.scrollToBottom();
+        // this.scrollToBottom();
     }
 
     scrollToBottom(): void {
