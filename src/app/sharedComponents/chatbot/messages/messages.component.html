@@ -1,3 +1,20 @@
-<div *ngFor="let message of messageObject['messages']; let i = index">
-    <app-message [delay]="delay * i" [type]="messageObject['type']" [message]="message.message"></app-message>
+<ng-container *ngFor="let message of messageObject['messages']; let i = index">
+    <app-message [delay]="delay" [messageIndex]="i" [type]="messageObject['type']"
+                 [message]="message.message"></app-message>
+</ng-container>
+
+<div class="message-item" *ngIf="messageObject['quickReplies']?.length > 0 && messageObject['type'] === 'chatbot' && showQuickReplies">
+    <ng-container *ngFor="let quickReply of messageObject['quickReplies']">
+        <a (click)="sendMessage(quickReply['action'])" class="message-item quick-reply">{{quickReply['text']}}</a>
+    </ng-container>
+</div>
+
+<div class="message-item chatbot-message-item"
+     *ngIf="messageObject['type'] === 'chatbot'"
+     [class.inactive]="!showTypingIndicator">
+    <div id="wave">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
 </div>

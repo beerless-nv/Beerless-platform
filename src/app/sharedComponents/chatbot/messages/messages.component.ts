@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
+import {ChatbotService} from '../../../_services/chatbot.service';
 
 @Component({
     selector: 'app-messages',
@@ -8,23 +9,26 @@ import {Component, Input, OnInit} from '@angular/core';
 export class MessagesComponent implements OnInit {
 
     @Input() delay: number;
-    // @Input() type: string;
     @Input() messageObject: Object;
-    showMessage = false;
+    showTypingIndicator = true;
+    showQuickReplies = false;
 
-    constructor() {
-        // setTimeout(() => {
-        //     this.showMessage = true;
-        //     console.log(this.showMessage);
-        //     console.log(this.messageObject);
-        // }, 5000);
+    constructor(private chatbotService: ChatbotService) {
     }
 
     ngOnInit() {
-        console.log(this.delay, this.messageObject);
         setTimeout(() => {
-            this.showMessage = true;
+            this.showTypingIndicator = false;
         }, Number(this.delay * this.messageObject['messages'].length));
+
+        setTimeout(() => {
+            this.showQuickReplies = true;
+        }, Number(this.delay * this.messageObject['messages'].length));
+    }
+
+    sendMessage(quickReply) {
+        this.showQuickReplies = false;
+        this.chatbotService.sendMessage(quickReply);
     }
 
 }

@@ -18,7 +18,6 @@
         bottom: 0px;
         right: 20px;
         border-radius: 0.5rem 0.5rem 0 0;
-        //box-shadow: rgba(0, 0, 0, 0.20) 0px 0px 7px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -32,16 +31,9 @@
         }
 
         &:hover {
-            //transform: scale(1.05, 1.05);
-            //box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 15px;
             color: $grey-dark;
         }
     }
-
-    //.chatbot-button:hover .scale-in-br {
-    //    -webkit-animation: scale-in-br 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    //    animation: scale-in-br 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-    //}
 
     .chatbot-show {
         width: 350px;
@@ -77,11 +69,12 @@
     }
 
     .show-scrollbar {
-        overflow-y: auto;
+        overflow-y: auto !important;
     }
 
     .hide-scrollbar {
         overflow-y: hidden;
+        overflow-y: -moz-scrollbars-none !important;
     }
 
     .chatbot-box {
@@ -140,28 +133,37 @@
         .chatbot-box-body {
             height: calc(100% - 100px);
             background-color: $super-light;
-            padding: 2rem 0 2.2rem 0;
+            padding: 2rem 0 0 0;
             font-size: 0.8rem;
             position: relative;
+            overflow: hidden;
 
             .chatbot-content-hide-when-animate {
                 opacity: 0;
             }
 
             .answer {
-                margin: 0 10px;
+                margin: 0 50px 0 10px;
                 overflow: hidden;
                 padding-bottom: 10px;
                 display: flex;
-                flex-direction: column;
+
+
+                &.right {
+                    margin-left: 50px;
+                    margin-right: 10px;
+                    justify-content: flex-end;
+                }
 
                 .message-item {
                     margin-bottom: 5px;
                     padding: 5px 10px;
                     border-radius: 1rem;
-
                     animation: message-show 0.1s;
 
+                    &.inactive {
+                        display: none !important;
+                    }
                 }
 
                 @keyframes message-show {
@@ -175,32 +177,30 @@
 
                 & .chatbot-message-item {
                     background-color: $muted-light;
-                    float: left;
-                    margin-right: 50px;
+                    display: inline-block;
                     border-top-left-radius: 0;
-
-                    animation: load-message 1.5s;
-
-                }
-
-                @keyframes load-message {
-                    0% {
-                        background-color: red;
-                    }
-                    100% {
-                        background-color: green;
-                    }
                 }
 
                 & .user-message-item {
                     color: #fff;
                     background-color: $primary;
-                    float: right;
+                    display: inline-block;
                     border-bottom-right-radius: 0;
                 }
 
-                &:last-child {
-                    //margin-bottom: calc(2rem - 10px);
+                & .quick-reply {
+                    border: 1.5px solid $grey;
+                    color: $grey;
+                    font-weight: 500;
+                    border-radius: 0;
+                    cursor: pointer;
+                    margin: 5px 10px 0 0;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background-color: $grey;
+                        color: #fff;
+                    }
                 }
             }
 
@@ -208,12 +208,7 @@
                 width: 11px;
             }
 
-            &::-webkit-scrollbar-track {
-                //border: 1.5px solid transparent;
-            }
-
             &::-webkit-scrollbar-thumb {
-                //color: #000;
                 background: $grey;
                 border-radius: 12px;
                 border: 3px solid $super-light;
@@ -224,8 +219,6 @@
             border-radius: 0 0 0.5rem 0.5rem;
             height: 50px;
             box-shadow: rgba(0, 0, 0, 0.20) 0px -7px 14px -8px;
-            //display: flex;
-            //align-items: center;
             position: relative;
 
             div:first-child {
@@ -262,7 +255,7 @@
                 width: 100%;
                 overflow-y: auto;
 
-                &::-webkit-scrollbar, &::-moz-viewport-scroll {
+                &::-webkit-scrollbar {
                     display: none;
                 }
 
@@ -486,5 +479,47 @@
     }
     100% {
         width: 150px;
+    }
+}
+
+//
+// Typing indicator
+//
+
+#wave {
+    position: relative;
+    text-align: center;
+    width: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+
+
+    .dot {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        margin-right: 2.5px;
+        background: $grey;
+        animation: wave 1.3s linear infinite;
+
+        &:nth-child(2) {
+            animation-delay: -1.1s;
+        }
+
+        &:nth-child(3) {
+            animation-delay: -0.9s;
+        }
+    }
+}
+
+@keyframes wave {
+    0%, 60%, 100% {
+        transform: translateY(1px);
+    }
+
+    30% {
+        transform: translateY(-6px);
     }
 }

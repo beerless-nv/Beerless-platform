@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-message',
@@ -8,8 +8,10 @@ import {Component, Input, OnInit} from '@angular/core';
 export class MessageComponent implements OnInit {
 
     @Input() delay: number;
+    @Input() messageIndex: number;
     @Input() type: string;
     @Input() message: string;
+    showMessageItem = false;
     showMessage = false;
 
     constructor() {
@@ -17,13 +19,15 @@ export class MessageComponent implements OnInit {
     }
 
     ngOnInit() {
+        console.log('message ' + this.messageIndex, (this.delay * this.messageIndex) + this.delay);
+
         if (this.type !== 'user') {
             setTimeout(() => {
                 this.showMessage = true;
-            }, Number(this.delay));
+            }, Number((this.delay * this.messageIndex) + this.delay));
         } else {
+            this.showMessageItem = true;
             this.showMessage = true;
         }
     }
-
 }

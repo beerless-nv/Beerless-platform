@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
 import {Guid} from "guid-typescript";
+import {map} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'
@@ -16,6 +17,8 @@ export class ChatbotService {
     messages = new BehaviorSubject<Array<any>>(null);
     messagesArray = [];
 
+    intervalId: number;
+
     headers = new HttpHeaders()
         .append('ignoreLoadingBar', '');
 
@@ -26,7 +29,7 @@ export class ChatbotService {
     sendMessage(message) {
         if (message !== '') {
             if (message !== 'start_conversation') {
-                this.messagesArray.push({type: 'user', messages: [{message: message}]});
+                this.messagesArray.push({type: 'user', messages: [{message: message}], timestamp: Date.now()});
                 this.messages.next(this.messagesArray);
             }
 
@@ -35,25 +38,71 @@ export class ChatbotService {
                 'environment': 'production',
                 'session': this.session,
                 'locale': 'en'
-            }, {headers: this.headers})
-                .toPromise()
-                .then(data => {
-                    this.getMessage(data);
-                });
+            }, {headers: this.headers}).toPromise().then(data => console.log(data));
         }
     }
 
-    getMessage(data) {
+    openChatStream(date, stop) {
+        if (stop === true) {
+            console.log(this.intervalId);
+            clearInterval(this.intervalId);
+        } else {
+            this.intervalId = setInterval(() => {
+
+                // http call to oswald api
+                this.http.get(this.apiUrl + '/chats/' + this.chatbotId + '/session/' + this.session + '/latest/' + date, {headers: this.headers})
+                    .toPromise()
+                    .then(async data => {
+                        console.log(data[0]);
+                        if (data[0]) {
+                            date = await this.processData(data[0]);
+                        }
+                    });
+            }, 1000);
+            console.log(this.intervalId);
+        }
+
+    }
+
+    closeChatStream() {
+
+        // set current datetime
+        const date = new Date(Date.now());
+
+        console.log('ok');
+
+        // clear interval
+        console.log();
+        this.openChatStream(date, true);
+        // clearInterval();
+    }
+
+    processData(data) {
         const messages = [];
+        const quickReplies = [];
+
+        // loading messages
         for (let i = 0; i < data['data'].length; i++) {
             messages.push({message: data['data'][i]['message']});
         }
 
-        this.messagesArray.push({type: 'chatbot', messages: messages});
-        console.log('array', this.messagesArray);
-        console.log('behaviorsubject', this.messages);
+        // loading quick replies
+        if (data['quickReplies']) {
+            for (let i = 0; i < data['quickReplies'].length; i++) {
+                quickReplies.push({text: data['quickReplies'][i]['text'], action: data['quickReplies'][i]['action']});
+            }
+        }
+
+        // put messagesArray in behaviorsubject
+        this.messagesArray.push({
+            type: 'chatbot',
+            messages: messages,
+            quickReplies: quickReplies,
+            timestamp: data['createdAt']
+        });
         this.messages.next(this.messagesArray);
 
+        return data['createdAt'];
     }
 
     getChat() {
@@ -66,13 +115,17 @@ export class ChatbotService {
 
 
     setSession() {
-        const sessionId = this.cookieService.get('chatbotSession');
+        const sessionId = sessionStorage.getItem('chatbotSession');
 
-        if (sessionId !== '') {
+        // set up new sessionId if it doesn't exist
+        if (sessionId !== null) {
             this.session = sessionId;
         } else {
             this.newSession();
         }
+
+        // open stream
+        this.openChatStream(new Date(Date.now()), false);
     }
 
     newSession() {
@@ -83,7 +136,10 @@ export class ChatbotService {
         // set new session
         const timestampExpire = (Date.now() + (3600000 * 24));
         this.session = Guid.create();
-        this.cookieService.set('chatbotSession', this.session, new Date(timestampExpire));
+        sessionStorage.setItem('chatbotSession', JSON.stringify({
+            sessionId: this.session,
+            timestampExpire: new Date(timestampExpire)
+        }));
 
         // wake up chatbot
         this.sendMessage('start_conversation');
