@@ -15,16 +15,23 @@ export class MessagesComponent implements OnInit {
     showQuickReplies = false;
 
     constructor(private chatbotService: ChatbotService, private chatbotComponent: ChatbotComponent) {
+
     }
 
     ngOnInit() {
-        setTimeout(() => {
+        console.log('typingIndicator');
+        if (this.delay === 0) {
             this.showTypingIndicator = false;
-        }, Number(this.delay * this.messageObject['messages'].length));
+            // this.showQuickReplies = false;
+        } else {
+            setTimeout(() => {
+                this.showTypingIndicator = false;
+            }, Number(this.delay * this.messageObject['messages'].length));
 
-        setTimeout(() => {
-            this.showQuickReplies = true;
-        }, Number(this.delay * this.messageObject['messages'].length));
+            setTimeout(() => {
+                this.showQuickReplies = true;
+            }, Number(this.delay * this.messageObject['messages'].length));
+        }
     }
 
     sendMessage(quickReply) {

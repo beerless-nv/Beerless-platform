@@ -39,7 +39,7 @@
 
                 <ng-container *ngFor="let messageArray of messagesArray">
                     <div class="answer" [class.right]="messageArray['type'] === 'user'">
-                        <app-messages [delay]="2250"  [messageObject]="messageArray"></app-messages>
+                        <app-messages [delay]="delay"  [messageObject]="messageArray"></app-messages>
                     </div>
                 </ng-container>
             </div>

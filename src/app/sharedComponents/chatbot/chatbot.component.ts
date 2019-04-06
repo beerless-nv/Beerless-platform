@@ -33,6 +33,10 @@ export class ChatbotComponent implements OnInit {
 
     messages = new BehaviorSubject<Array<any>>(null);
 
+    messageDelay = 1500;
+    sessionDelay = 0;
+    delay = this.messageDelay;
+
     constructor(private cookieService: CookieService, private chatbotService: ChatbotService, private cdref: ChangeDetectorRef) {
 
     }
@@ -48,7 +52,13 @@ export class ChatbotComponent implements OnInit {
 
         if (this.chatbotShow === true) {
             // set session and start stream when opening chatbot
-            this.chatbotService.setSession();
+            const isNew = this.chatbotService.setSession();
+
+            if (isNew === false) {
+                this.chatbotService.getSession();
+                this.delay = this.sessionDelay;
+                console.log('true');
+            }
 
             // focus on input
             setTimeout(() => {
@@ -65,7 +75,7 @@ export class ChatbotComponent implements OnInit {
             resizeObserver.observe(this.chatbotBody.nativeElement);
 
             // scroll to bottom
-            this.scrollToBottom();
+            // this.scrollToBottom();
         } else {
             // hide scrollbar
             this.showScrollbar = false;
@@ -76,11 +86,9 @@ export class ChatbotComponent implements OnInit {
     }
 
     sendMessage(message) {
-
         this.chatbotService.sendMessage(message);
 
-        // scroll to bottom
-        // this.scrollToBottom();
+        this.delay = this.messageDelay;
     }
 
     scrollToBottom(): void {
