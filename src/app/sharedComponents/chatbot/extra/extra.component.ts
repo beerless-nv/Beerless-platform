@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ChatbotComponent} from '../chatbot.component';
 
 @Component({
@@ -15,7 +15,25 @@ export class ExtraComponent implements OnInit {
     }
 
     openEmoticons() {
-        this.chatbotComponent.showExtra = !this.chatbotComponent.showExtra;
+        // open extra modal
+        this.chatbotComponent.showExtra = true;
+
+        // display emoticons
+        this.chatbotComponent.showEmoticons = true;
+
+        // hide other modals
+        this.chatbotComponent.showUpload = false;
+    }
+
+    openUpload() {
+        // open extra modal
+        this.chatbotComponent.showExtra = true;
+
+        // display emoticons
+        this.chatbotComponent.showUpload = true;
+
+        // hide other modals
+        this.chatbotComponent.showEmoticons = false;
     }
 
 }

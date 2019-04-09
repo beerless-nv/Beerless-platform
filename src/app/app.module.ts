@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {ChangeDetectorRef, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -57,8 +57,8 @@ import {ModalComponent} from './sharedComponents/modal/modal.component';
 import {MessagesComponent} from './sharedComponents/chatbot/messages/messages.component';
 import {MessageComponent} from './sharedComponents/chatbot/message/message.component';
 import {SafeHtmlPipe} from './_pipes/safeHtml.pipe';
-import { ExtraComponent } from './sharedComponents/chatbot/extra/extra.component';
-import { EmoticonsComponent } from './sharedComponents/chatbot/extra/emoticons/emoticons.component';
+import {ExtraComponent} from './sharedComponents/chatbot/extra/extra.component';
+import {EmoticonsComponent} from './sharedComponents/chatbot/extra/emoticons/emoticons.component';
 
 @NgModule({
     declarations: [
@@ -119,11 +119,8 @@ import { EmoticonsComponent } from './sharedComponents/chatbot/extra/emoticons/e
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
         AutosizeModule,
         NgScrollbarModule,
-        BidiModule
+        BidiModule,
     ],
-    // exports: [
-    //     SafeHtmlPipe,
-    // ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
@@ -131,6 +128,9 @@ import { EmoticonsComponent } from './sharedComponents/chatbot/extra/emoticons/e
             multi: true
         },
         CookieService,
+        // EmoticonsComponent,
+        // ChatbotComponent,
+        // ChangeDetectorRef,
     ],
     entryComponents: [
         AgeVerificationComponent,

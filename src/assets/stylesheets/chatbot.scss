@@ -394,7 +394,25 @@
         left: 50%;
         transform: translate(-50%, -50%);
         box-shadow: rgba(0, 0, 0, 0.20) 0px 0px 10px;
-        padding: $spacer;
+        padding: 2px;
+
+
+        .chatbot-extra-box {
+            overflow: auto;
+            padding: $spacer;
+            height: 100%;
+
+            &::-webkit-scrollbar {
+                width: 11px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: $grey;
+                border-radius: 12px;
+                border: 3px solid #fff;
+                padding-bottom: 5px;
+            }
+        }
     }
 
     #extra-emoji {

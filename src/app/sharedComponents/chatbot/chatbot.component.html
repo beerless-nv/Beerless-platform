@@ -52,7 +52,13 @@
         <div class="chatbot-extra-container" *ngIf="showExtra" (click)="showExtra = !showExtra">
         </div>
         <div class="chatbot-extra" *ngIf="showExtra">
-            <app-emoticons></app-emoticons>
+            <div class="chatbot-extra-box">
+                <div *ngIf="showEmoticons">
+                    <app-emoticons #emoticonsComponent></app-emoticons>
+                </div>
+                <div *ngIf="showUpload">
+                </div>
+            </div>
         </div>
 
 
@@ -70,13 +76,19 @@
                 <!-- input -->
 
                 <div data-ph="Type something..." id="chatbot-box-input" class="textarea" contenteditable
+                     (keydown.enter)="replaceTextWithEmoticon(chatbotInput.innerHTML)"
                      (keyup.enter)="sendMessage(chatbotInput.textContent); chatbotInput.innerHTML = null"
+                     (mouseup)="getSelectedText()"
+                     (blur)="getSelectedText()"
+                     (keyup.control.a)="getSelectedText()"
+                     (keyup.space)="replaceTextWithEmoticon(chatbotInput.innerHTML)"
                      #chatbotInput></div>
 
 
                 <!-- send messages -->
 
-                <span id="chatbot-box-send" (click)="sendMessage(chatbotInput.textContent); chatbotInput.innerHTML = null">
+                <span id="chatbot-box-send"
+                      (click)="replaceTextWithEmoticon(chatbotInput.innerHTML); sendMessage(chatbotInput.textContent); chatbotInput.innerHTML = null">
                     <i class="fas fa-paper-plane"></i>
                 </span>
             </div>

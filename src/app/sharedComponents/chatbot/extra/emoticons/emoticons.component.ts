@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {ChatbotComponent} from '../../chatbot.component';
+import {ChatbotService} from '../../../../_services/chatbot.service';
 
 @Component({
     selector: 'app-emoticons',
@@ -7,14 +9,26 @@ import {Component, OnInit} from '@angular/core';
 })
 export class EmoticonsComponent implements OnInit {
 
-    emojis = ['&#x1f602', '&#x1F604', '&#x1F34A', '&#x1F344', '&#x1F37F', '&#x1F363', '&#x1F370', '&#x1F355',
-        '&#x1F354', '&#x1F35F', '&#x1F6C0', '&#x1F48E', '&#x1F5FA', '&#x123F0', '&#x1F579', '&#x1F4DA',
-        '&#x1F431', '&#x1F42A', '&#x1F439', '&#x1F424'];
+    emojis = this.chatbotService.emojis;
 
-    constructor() {
+    constructor(private chatbotComponent: ChatbotComponent, private chatbotService: ChatbotService) {
     }
 
     ngOnInit() {
+    }
+
+    appendEmoji(emoji) {
+        if (this.chatbotComponent.selectedText) {
+            console.log(this.chatbotComponent.selectedText);
+            const newString = this.chatbotComponent.chatbotInput.nativeElement.innerHTML.replace(this.chatbotComponent.selectedText, emoji);
+            this.chatbotComponent.chatbotInput.nativeElement.innerHTML = newString;
+        } else {
+            this.chatbotComponent.chatbotInput.nativeElement.innerHTML += emoji;
+        }
+    }
+
+    returnOrder() {
+        return 0;
     }
 
 }
