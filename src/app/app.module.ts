@@ -55,7 +55,10 @@ import {AgeVerificationComponent} from './sharedComponents/age-verification/age-
 import {IeWarningComponent} from './sharedComponents/ie-warning/ie-warning.component';
 import {ModalComponent} from './sharedComponents/modal/modal.component';
 import {MessagesComponent} from './sharedComponents/chatbot/messages/messages.component';
-import { MessageComponent } from './sharedComponents/chatbot/message/message.component';
+import {MessageComponent} from './sharedComponents/chatbot/message/message.component';
+import {SafeHtmlPipe} from './_pipes/safeHtml.pipe';
+import { ExtraComponent } from './sharedComponents/chatbot/extra/extra.component';
+import { EmoticonsComponent } from './sharedComponents/chatbot/extra/emoticons/emoticons.component';
 
 @NgModule({
     declarations: [
@@ -96,6 +99,9 @@ import { MessageComponent } from './sharedComponents/chatbot/message/message.com
         ModalComponent,
         MessagesComponent,
         MessageComponent,
+        SafeHtmlPipe,
+        ExtraComponent,
+        EmoticonsComponent,
     ],
     imports: [
         BrowserModule,
@@ -115,6 +121,9 @@ import { MessageComponent } from './sharedComponents/chatbot/message/message.com
         NgScrollbarModule,
         BidiModule
     ],
+    // exports: [
+    //     SafeHtmlPipe,
+    // ],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
@@ -126,6 +135,7 @@ import { MessageComponent } from './sharedComponents/chatbot/message/message.com
     entryComponents: [
         AgeVerificationComponent,
         IeWarningComponent,
+        BeerprofileComponent,
     ],
     bootstrap: [AppComponent]
 })

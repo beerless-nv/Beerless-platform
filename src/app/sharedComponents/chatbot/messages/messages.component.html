@@ -1,6 +1,6 @@
 <ng-container *ngFor="let message of messageObject['messages']; let i = index">
     <app-message [delay]="delay" [messageIndex]="i" [type]="messageObject['type']"
-                 [message]="message.message"></app-message>
+                 [message]="message"></app-message>
 </ng-container>
 
 <div class="message-item" *ngIf="messageObject['quickReplies']?.length > 0 && messageObject['type'] === 'chatbot' && showQuickReplies">

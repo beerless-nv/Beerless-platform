@@ -121,7 +121,17 @@ export class ChatbotService {
 
         // loading messages
         for (let i = 0; i < response['data'].length; i++) {
-            messages.push({message: response['data'][i]['message']});
+            switch (response['data'][i]['type']) {
+                case 'text':
+                    messages.push({type: 'text', message: response['data'][i]['message']});
+                    break;
+                case 'url':
+                    messages.push({type: 'url', message: response['data'][i]['message'], url: response['data'][i]['url']});
+                    break;
+                case 'image':
+                    messages.push({type: 'image', image: response['data'][i]['image']});
+                    break;
+            }
         }
 
         // loading quick replies
@@ -153,17 +163,29 @@ export class ChatbotService {
             const quickReplies = [];
 
             // load question
-            if (response[j]['metadata']['sentence'] !== 'start_conversation' && response[j]['metadata']) {
-                this.messagesArray.push({
-                    type: 'user',
-                    messages: [{message: response[j]['metadata']['sentence']}],
-                    timestamp: response[j]['createdAt']
-                });
+            if (response[j]['metadata']) {
+                if (response[j]['metadata']['sentence'] !== 'start_conversation') {
+                    this.messagesArray.push({
+                        type: 'user',
+                        messages: [{message: response[j]['metadata']['sentence']}],
+                        timestamp: response[j]['createdAt']
+                    });
+                }
             }
 
             // loading messages
             for (let i = 0; i < response[j]['data'].length; i++) {
-                messages.push({message: response[j]['data'][i]['message']});
+                switch (response[j]['data'][i]['type']) {
+                    case 'text':
+                        messages.push({type: 'text', message: response[j]['data'][i]['message']});
+                        break;
+                    case 'url':
+                        messages.push({type: 'url', message: response[j]['data'][i]['message'], url: response[j]['data'][i]['url']});
+                        break;
+                    case 'image':
+                        messages.push({type: 'image', image: response[j]['data'][i]['image']});
+                        break;
+                }
             }
 
             // loading quick replies
@@ -188,7 +210,6 @@ export class ChatbotService {
         this.messages.next(this.messagesArray);
 
         if (response[response.length - 1]) {
-            console.log('return timestamp', response[response.length - 1]['createdAt']);
             return response[response.length - 1]['createdAt'];
         }
     }

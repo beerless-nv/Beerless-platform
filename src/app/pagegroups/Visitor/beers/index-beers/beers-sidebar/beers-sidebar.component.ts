@@ -23,7 +23,7 @@ export class BeersSidebarComponent implements OnInit {
     }
 
     getBeersNewest() {
-        this.beersService.getBeersNewest(this.numberOfBeers).then(data => {
+        this.beersService.getBeersNewest(this.numberOfBeers).subscribe(data => {
             this.newestBeersList = data;
         });
     }

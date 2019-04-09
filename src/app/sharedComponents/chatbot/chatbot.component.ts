@@ -23,8 +23,9 @@ import ResizeObserver from 'resize-observer-polyfill';
 })
 export class ChatbotComponent implements OnInit {
 
-    chatbotShow: boolean = null;
+    chatbotShow = false;
     showScrollbar = false;
+    showExtra = false;
     messagesArray = [];
 
     @ViewChild('chatbotInput') chatbotInput: ElementRef;
@@ -47,42 +48,48 @@ export class ChatbotComponent implements OnInit {
         });
     }
 
-    open() {
-        this.chatbotShow = !this.chatbotShow;
-
-        if (this.chatbotShow === true) {
-            // set session and start stream when opening chatbot
-            const isNew = this.chatbotService.setSession();
-
-            if (isNew === false) {
-                this.chatbotService.getSession();
-                this.delay = this.sessionDelay;
-                console.log('true');
-            }
-
-            // focus on input
-            setTimeout(() => {
-                this.chatbotInput.nativeElement.focus();
-                this.showScrollbar = true;
-            }, 800);
-
-            // resize observer of chatbot body content
-            const resizeObserver = new ResizeObserver((entries, observer) => {
-                for (const entry of entries) {
-                    this.scrollToBottom();
-                }
-            });
-            resizeObserver.observe(this.chatbotBody.nativeElement);
-
-            // scroll to bottom
-            // this.scrollToBottom();
+    toggle() {
+        if (this.chatbotShow === false) {
+            this.open();
         } else {
-            // hide scrollbar
-            this.showScrollbar = false;
-
-            // stop stream when closing chatbot
-            this.chatbotService.closeChatStream();
+            this.close();
         }
+
+    }
+
+    open() {
+        this.chatbotShow = true;
+
+        const isNew = this.chatbotService.setSession();
+
+        if (isNew === false) {
+            this.chatbotService.getSession();
+            this.delay = this.sessionDelay;
+        }
+
+        // focus on input
+        setTimeout(() => {
+            this.chatbotInput.nativeElement.focus();
+            this.showScrollbar = true;
+        }, 800);
+
+        // resize observer of chatbot body content
+        const resizeObserver = new ResizeObserver((entries, observer) => {
+            for (const entry of entries) {
+                this.scrollToBottom();
+            }
+        });
+        resizeObserver.observe(this.chatbotBody.nativeElement);
+    }
+
+    close() {
+        this.chatbotShow = false;
+
+        // hide scrollbar
+        this.showScrollbar = false;
+
+        // stop stream when closing chatbot
+        this.chatbotService.closeChatStream();
     }
 
     sendMessage(message) {

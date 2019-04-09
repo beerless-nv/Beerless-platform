@@ -101,8 +101,7 @@ export class BeersService {
             .set('filter[order]', 'timestampCreated DESC')
             .set('filter[limit]', limit);
 
-        return this.http.get(this.urlBeer, {params})
-            .toPromise();
+        return this.http.get(this.urlBeer, {params});
     }
 
 

@@ -1,0 +1,7 @@
+<div id="extra-emoji">
+    <ng-container *ngFor="let emoji of emojis">
+        <div class="emoji-container" (click)="appendEmoji()">
+            <span [innerHTML]="emoji" class="emoji"></span>
+        </div>
+    </ng-container>
+</div>

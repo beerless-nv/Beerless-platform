@@ -19,7 +19,6 @@ export class MessagesComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('typingIndicator');
         if (this.delay === 0) {
             this.showTypingIndicator = false;
             // this.showQuickReplies = false;

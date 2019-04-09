@@ -1,24 +1,25 @@
-<div id="chatbot">
+<div id="chatbot"
+     [class.full-width]="chatbotShow">
 
 
     <!-- Chatbot widget -->
 
     <div class="chatbot-box"
-         [class.scale-in]="chatbotShow === true"
-         [class.scale-out]="chatbotShow === false"
-         [class.chatbot-hide]="chatbotShow === null || chatbotShow === false"
-         [class.chatbot-show]="chatbotShow === true">
+         [class.scale-in]="chatbotShow"
+         [class.scale-out]="!chatbotShow"
+         [class.chatbot-hide]="chatbotShow === null || !chatbotShow"
+         [class.chatbot-show]="chatbotShow">
 
 
         <!-- Chatbot header -->
 
-        <div class="chatbot-box-header" (click)="chatbotShow = false; showScrollbar = false">
+        <div class="chatbot-box-header" (click)="close()">
             <div class="chatbot-content-hide-when-animate">
                 <span></span>
                 <span>
                     Beerless
                 </span>
-                <span (click)="chatbotShow = false; showScrollbar = false">
+                <span (click)="close()">
                     <i class="fas fa-times"></i>
                 </span>
             </div>
@@ -30,7 +31,7 @@
 
         <div class="chatbot-box-body"
              [class.show-scrollbar]="showScrollbar"
-             [class.hide-scrollbar]="showScrollbar === false"
+             [class.hide-scrollbar]="!showScrollbar"
              #chatbotContent>
             <div class="chatbot-content-hide-when-animate" #chatbotBody>
 
@@ -46,6 +47,15 @@
         </div>
 
 
+        <!-- Chatbot extra modal -->
+
+        <div class="chatbot-extra-container" *ngIf="showExtra" (click)="showExtra = !showExtra">
+        </div>
+        <div class="chatbot-extra" *ngIf="showExtra">
+            <app-emoticons></app-emoticons>
+        </div>
+
+
         <!-- Chatbot footer -->
 
         <div class="chatbot-box-footer">
@@ -54,18 +64,7 @@
 
                 <!-- extra -->
 
-                <span id="chatbot-box-plus">
-                    <i class="fas fa-plus"></i>
-                    <div class="extra-hover">
-                        <div>
-                            <i class="far fa-smile-beam"></i>
-                        </div>
-                        <span class="vertical-line"></span>
-                        <div>
-                            <i class="fas fa-paperclip"></i>
-                        </div>
-                    </div>
-                </span>
+                <app-extra></app-extra>
 
 
                 <!-- input -->
@@ -77,7 +76,7 @@
 
                 <!-- send messages -->
 
-                <span id="chatbot-box-send">
+                <span id="chatbot-box-send" (click)="sendMessage(chatbotInput.textContent); chatbotInput.innerHTML = null">
                     <i class="fas fa-paper-plane"></i>
                 </span>
             </div>
@@ -87,7 +86,7 @@
 
     <!-- Chatbot button -->
 
-    <div class="chatbot-button" (click)="open()">
+    <div class="chatbot-button" (click)="toggle()">
         Beerless <i class="fas fa-comment-alt ml-2"></i>
     </div>
 </div>

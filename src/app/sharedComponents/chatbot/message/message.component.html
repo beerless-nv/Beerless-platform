@@ -1,8 +1,14 @@
 <div *ngIf="showMessage || type === 'user'">
-    <div class="message-item"
+    <div [class.message-item]="!isComponent && !isImage"
+         [class.component-item]="isComponent"
+         [class.image-item]="isImage"
          [class.chatbot-message-item]="type === 'chatbot'"
          [class.user-message-item]="type === 'user'"
          [class.right]="type === 'user'">
-        {{message}}
+        <span *ngIf="message['type'] === 'text'" [ngbCollapse]="isComponent" [innerHTML]="text | safeHtml"></span>
+        <div #component></div>
+        <span *ngIf="type === 'user'">{{text}}</span>
+        <a href="{{src}}" target="_blank" *ngIf="message['type'] === 'url'">{{text}}</a>
+        <img src="{{src}}" alt="" *ngIf="message['type'] === 'image'">
     </div>
 </div>

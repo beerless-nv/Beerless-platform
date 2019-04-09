@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {environment} from '../../../../../../environments/environment';
 import {BeersService} from '../../../../../_services/beers.service';
 import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
@@ -14,25 +14,16 @@ export class BeerprofileComponent implements OnInit {
     limit = 210;
     moreShown = false;
 
-    constructor(private beersService: BeersService, private route: ActivatedRoute, private router: Router) {
-        router.events.subscribe((e) => {
-            if (e instanceof NavigationEnd) {
-                if (e.url.includes('embed')) {
-                    this.loadItem();
-                }
-            }
-        });
+    constructor(private beersService: BeersService, private route: ActivatedRoute, private router: Router, private elm: ElementRef) {
     }
 
     ngOnInit() {
-    }
-
-    loadItem() {
-        this.route.params.subscribe(params => {
-            this.beersService.getBeerById(params['id'])
+        const itemId = this.elm.nativeElement.getAttribute('item');
+        if (!isNaN(itemId)) {
+            this.beersService.getBeerById(itemId)
                 .then(data => {
                     this.item = data;
                 });
-        });
+        }
     }
 }

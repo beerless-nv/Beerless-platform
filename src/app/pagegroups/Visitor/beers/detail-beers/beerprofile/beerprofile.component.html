@@ -1,4 +1,4 @@
-<div class="card card-sm-100w">
+<div class="card card-sm-100w component-chatbot">
     <div class="card-body">
         <div class="col-12 px-0 d-flex flex-wrap">
             <p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0">Bierprofiel</p>
@@ -8,7 +8,7 @@
 
             <div class="d-flex flex-row align-items-center col-12 px-0">
                 <div class="float-left mr-4">
-                    <img src="{{environment.beerLogoURL + item?.logo}}" alt="Logo bierflesje {{item?.name}}"
+                    <img src="{{environment.imageURL + 'beer/logo/' + item?.logo}}" alt="Logo bierflesje {{item?.name}}"
                          class="bier-item-image" *ngIf="item?.logo">
                 </div>
                 <div>

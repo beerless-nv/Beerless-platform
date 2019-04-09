@@ -123,7 +123,7 @@ export class SettingsProfileComponent implements OnInit {
                 + '.jpg';
 
             // this.onUpload(this.pictureFile, pictureName, '/user/picture/');
-            this.formProfile.value.picture = environment.userPictureURL + pictureName;
+            this.formProfile.value.picture = environment.imageURL + 'user/picture/' + pictureName;
             this.userService.updateUserProfileWithPicture(this.formProfile.value, this.pictureFile, pictureName, '/user/picture/');
         }
     }
