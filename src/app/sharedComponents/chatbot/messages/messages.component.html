@@ -10,7 +10,7 @@
 </div>
 
 <div class="message-item chatbot-message-item"
-     *ngIf="messageObject['type'] === 'chatbot'"
+     *ngIf="messageObject['type'] === 'chatbot' || messageObject['type'] === 'takeover'"
      [class.inactive]="!showTypingIndicator">
     <div id="wave">
         <span class="dot"></span>

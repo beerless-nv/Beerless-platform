@@ -3,6 +3,7 @@
          [class.component-item]="isComponent"
          [class.image-item]="isImage"
          [class.chatbot-message-item]="type === 'chatbot'"
+         [class.takeover-message-item]="type === 'takeover'"
          [class.user-message-item]="type === 'user'"
          [class.right]="type === 'user'">
         <span *ngIf="message['type'] === 'text'" [ngbCollapse]="isComponent" [innerHTML]="text | safeHtml"></span>

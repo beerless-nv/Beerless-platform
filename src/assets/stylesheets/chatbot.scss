@@ -229,6 +229,12 @@
                     border-bottom-right-radius: 0;
                 }
 
+                & .takeover-message-item {
+                    background-color: $light;
+                    display: inline-block;
+                    border-top-left-radius: 0;
+                }
+
                 & .quick-reply {
                     border: 1.5px solid $grey;
                     color: $grey;
@@ -432,9 +438,6 @@
             align-items: center;
 
             .emoji {
-                //padding: 5px;
-                //height: 50px;
-                //width: 50px;
             }
         }
 

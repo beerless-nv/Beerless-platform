@@ -73,6 +73,10 @@ export class ChatbotComponent implements OnInit {
         if (isNew === false) {
             this.chatbotService.getSession();
             this.delay = this.sessionDelay;
+
+            setTimeout(() => {
+                this.delay = this.messageDelay;
+            }, 2000);
         }
 
         // focus on input
@@ -103,7 +107,7 @@ export class ChatbotComponent implements OnInit {
     sendMessage(message) {
         this.chatbotService.sendMessage(message);
 
-        this.delay = this.messageDelay;
+        // this.delay = this.messageDelay;
     }
 
     getSelectedText() {
