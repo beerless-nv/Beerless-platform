@@ -59,6 +59,8 @@ import {MessageComponent} from './sharedComponents/chatbot/message/message.compo
 import {SafeHtmlPipe} from './_pipes/safeHtml.pipe';
 import {ExtraComponent} from './sharedComponents/chatbot/extra/extra.component';
 import {EmoticonsComponent} from './sharedComponents/chatbot/extra/emoticons/emoticons.component';
+import {UploadComponent} from './sharedComponents/chatbot/extra/upload/upload.component';
+import {FileDropModule} from 'ngx-file-drop';
 
 @NgModule({
     declarations: [
@@ -102,6 +104,7 @@ import {EmoticonsComponent} from './sharedComponents/chatbot/extra/emoticons/emo
         SafeHtmlPipe,
         ExtraComponent,
         EmoticonsComponent,
+        UploadComponent,
     ],
     imports: [
         BrowserModule,
@@ -120,6 +123,7 @@ import {EmoticonsComponent} from './sharedComponents/chatbot/extra/emoticons/emo
         AutosizeModule,
         NgScrollbarModule,
         BidiModule,
+        FileDropModule,
     ],
     providers: [
         {
@@ -128,9 +132,6 @@ import {EmoticonsComponent} from './sharedComponents/chatbot/extra/emoticons/emo
             multi: true
         },
         CookieService,
-        // EmoticonsComponent,
-        // ChatbotComponent,
-        // ChangeDetectorRef,
     ],
     entryComponents: [
         AgeVerificationComponent,

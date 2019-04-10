@@ -1,0 +1,25 @@
+<div class="center upload">
+    <file-drop dropZoneLabel="" (onFileDrop)="dropped($event)"
+               (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)"
+               [showBrowseBtn]="true"
+               dropZoneClassName="dropzone"
+               contentClassName="dropzone-content"
+               browseBtnClassName="dropzone-browse"
+               browseBtnLabel="browse">
+        <div>
+            <div><h4 class="font-weight-bold">Drag & drop</h4></div>
+            <span class="small text-grey">your files here, or </span>
+        </div>
+    </file-drop>
+    <div class="upload-table-container">
+        <div class="upload-table">
+            <ng-container *ngFor="let file of fileList">
+                <div *ngFor="let item of file; let i = index" class="upload-item">
+                    <span><i class="far fa-file-image mr-2 text-muted-light"></i></span>
+                    <span class="upload-item-text">{{ item.relativePath }}</span>
+                </div>
+            </ng-container>
+        </div>
+        <a class="btn btn-outline-muted upload-button">Upload</a>
+    </div>
+</div>

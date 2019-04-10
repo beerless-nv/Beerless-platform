@@ -49,14 +49,16 @@
 
         <!-- Chatbot extra modal -->
 
-        <div class="chatbot-extra-container" *ngIf="showExtra" (click)="showExtra = !showExtra">
-        </div>
-        <div class="chatbot-extra" *ngIf="showExtra">
-            <div class="chatbot-extra-box">
-                <div *ngIf="showEmoticons">
-                    <app-emoticons #emoticonsComponent></app-emoticons>
-                </div>
-                <div *ngIf="showUpload">
+        <div class="chatbot-content-hide-when-animate">
+            <div class="chatbot-extra-container" *ngIf="showExtra" (click)="showExtra = !showExtra"></div>
+            <div class="chatbot-extra" *ngIf="showExtra">
+                <div class="chatbot-extra-box">
+                    <ng-container *ngIf="showEmoticons">
+                        <app-emoticons #emoticonsComponent></app-emoticons>
+                    </ng-container>
+                    <ng-container *ngIf="showUpload">
+                        <app-upload #uploadComponent></app-upload>
+                    </ng-container>
                 </div>
             </div>
         </div>

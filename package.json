@@ -45,6 +45,7 @@
     "ngx-autosize": "^1.5.1",
     "ngx-bootstrap": "^3.0.1",
     "ngx-cookie-service": "^2.1.0",
+    "ngx-file-drop": "^6.0.0",
     "ngx-pagination": "^3.2.1",
     "ngx-scrollbar": "^4.1.1",
     "resize-observer-polyfill": "^1.5.1",
