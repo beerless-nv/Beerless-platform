@@ -8,7 +8,6 @@
          [class.right]="type === 'user'">
         <span *ngIf="message['type'] === 'text'" [ngbCollapse]="isComponent" [innerHTML]="text | safeHtml"></span>
         <div #component></div>
-        <span *ngIf="type === 'user'">{{text}}</span>
         <a href="{{src}}" target="_blank" *ngIf="message['type'] === 'url'">{{text}}</a>
         <img src="{{src}}" alt="" *ngIf="message['type'] === 'image'">
     </div>

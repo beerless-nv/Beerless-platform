@@ -19,8 +19,9 @@ export class MessagesComponent implements OnInit {
     }
 
     ngOnInit() {
-        if (this.delay === 0) {
+        if (this.messageObject['oldMessages'] === true) {
             this.showTypingIndicator = false;
+            this.delay = 0;
             // this.showQuickReplies = false;
         } else {
             setTimeout(() => {

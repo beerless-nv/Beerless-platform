@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Guid} from 'guid-typescript';
 
@@ -12,8 +12,11 @@ export class ChatbotService {
     readonly chatbotId = '5c909b61ccc52e00050a6e76';
     readonly accessToken = 'A4oA1hOSefxeOveUe49pBajyykPMhn6vFfnLG9geu4LKTGXUoDaHME9sSN4Tr0gT';
     session = null;
+    isSessionData = true;
+    isNewSession = false;
     messages = new BehaviorSubject<Array<any>>(null);
     messagesArray = [];
+    takeoverSession = false;
 
     intervalId: number;
 
@@ -1169,15 +1172,6 @@ export class ChatbotService {
      */
     sendMessage(message) {
         if (message !== '') {
-            if (message !== 'start_conversation') {
-                this.messagesArray.push({
-                    type: 'user',
-                    messages: [{message: message}],
-                    timestamp: new Date(Date.now()).toISOString()
-                });
-                this.messages.next(this.messagesArray);
-            }
-
             this.http.post(this.apiUrl + '/chats/' + this.chatbotId + '/message?access_token=' + this.accessToken, {
                 'message': message,
                 'environment': 'production',
@@ -1193,30 +1187,14 @@ export class ChatbotService {
      * @param date (date of when you want to retrieve the response message)
      */
     getMessages(date) {
-        // http call to oswald api
-        return this.http.get(this.apiUrl + '/chats/' + this.chatbotId + '/session/' + this.session + '/latest/' + date, {headers: this.headers})
-            .toPromise()
-            .then(data => {
-                if (data[0]) {
-                    return this.processData(data[0]);
-                }
-            });
-    }
+        const params = new HttpParams()
+            .set('types', 'in,out,takeover');
 
-    /**
-     * Get all messages from the chatbot API that were send after a specific date.
-     *
-     * @param date (date of when you want to retrieve messages)
-     */
-    getSessionMessages(date) {
         // http call to oswald api
-        return this.http.get(this.apiUrl + '/chats/' + this.chatbotId + '/session/' + this.session + '/latest/' + date, {headers: this.headers})
-            .toPromise()
-            .then(data => {
-                if (data[0]) {
-                    return this.processSessionData(data);
-                }
-            });
+        return this.http.get(this.apiUrl + '/chats/' + this.chatbotId + '/session/' + this.session + '/latest/' + date, {
+            headers: this.headers,
+            params: params
+        });
     }
 
     /**
@@ -1232,12 +1210,14 @@ export class ChatbotService {
         } else {
             clearInterval(this.intervalId);
             this.intervalId = setInterval(() => {
-                this.getMessages(date).then(data => {
-                    if (data) {
-                        date = data;
-                    }
-                });
-            }, 1000);
+                this.getMessages(date)
+                    .subscribe(async (data) => {
+                        const resp = await this.processData(data);
+                        if (resp) {
+                            date = resp;
+                        }
+                    });
+            }, 300);
         }
     }
 
@@ -1257,144 +1237,121 @@ export class ChatbotService {
      *
      * @param response (response of the data stream)
      */
-    processData(response) {
-        const messages = [];
-        const quickReplies = [];
-        let senderType;
-
-        // set sender type
-        if (response['type'] === 'out') {
-            senderType = 'chatbot';
-        } else if (response['type'] === 'takeover') {
-            senderType = 'takeover';
-        }
-
-        // loading messages
-        for (let i = 0; i < response['data'].length; i++) {
-            switch (response['data'][i]['type']) {
-                case 'text':
-                    messages.push({type: 'text', message: response['data'][i]['message']});
-                    break;
-                case 'url':
-                    messages.push({
-                        type: 'url',
-                        message: response['data'][i]['message'],
-                        url: response['data'][i]['url']
-                    });
-                    break;
-                case 'image':
-                    messages.push({type: 'image', image: response['data'][i]['image']});
-                    break;
-            }
-        }
-
-        // loading quick replies
-        if (response['quickReplies']) {
-            for (let i = 0; i < response['quickReplies'].length; i++) {
-                quickReplies.push({
-                    text: response['quickReplies'][i]['text'],
-                    action: response['quickReplies'][i]['action']
-                });
-            }
-        }
-
-        // put messagesArray in behaviorsubject
-        this.messagesArray.push({
-            type: senderType,
-            messages: messages,
-            quickReplies: quickReplies,
-            timestamp: response['createdAt']
-        });
-
-        this.messages.next(this.messagesArray);
-
-        return response['createdAt'];
-    }
 
     /**
      * process the session data
      *
      * @param response (response of the data stream)
      */
-    processSessionData(response) {
-        for (let j = 0; j < response.length; j++) {
-            const messages = [];
-            const quickReplies = [];
-            let senderType;
+    processData(response): Promise<string> {
+        return new Promise<string>((resolve, reject) => {
+            for (let j = 0; j < response.length; j++) {
+                if (response[j]['message'] !== 'start_conversation') {
 
-            // set sender type
-            if (response[j]['type'] === 'out') {
-                senderType = 'chatbot';
-            } else if (response[j]['type'] === 'takeover') {
-                senderType = 'takeover';
-            }
+                    const messages = [];
+                    const quickReplies = [];
+                    let senderType;
 
-            // load question
-            if (response[j]['metadata']) {
-                if (response[j]['metadata']['sentence'] !== 'start_conversation') {
+                    // set sender type
+                    switch (response[j]['type']) {
+                        case 'in':
+                            senderType = 'user';
+                            break;
+                        case 'out':
+                            senderType = 'chatbot';
+                            break;
+                        case 'takeover':
+                            senderType = 'takeover';
+                            break;
+                    }
+
+                    // loading messages
+                    if (response[j]['data']) {
+                        for (let i = 0; i < response[j]['data'].length; i++) {
+                            switch (response[j]['data'][i]['type']) {
+                                case 'text':
+                                    messages.push({
+                                        type: 'text',
+                                        message: response[j]['data'][i]['message']
+                                    });
+                                    break;
+                                case 'url':
+                                    messages.push({
+                                        type: 'url',
+                                        message: response[j]['data'][i]['message'],
+                                        url: response[j]['data'][i]['url']
+                                    });
+                                    break;
+                                case 'image':
+                                    messages.push({
+                                        type: 'image',
+                                        image: response[j]['data'][i]['image']
+                                    });
+                                    break;
+                            }
+                        }
+                    } else {
+                        messages.push({type: 'text', message: response[j]['message']});
+                    }
+
+                    // loading quick replies
+                    if (response[j]['quickReplies']) {
+                        for (let i = 0; i < response[j]['quickReplies'].length; i++) {
+                            quickReplies.push({
+                                text: response[j]['quickReplies'][i]['text'],
+                                action: response[j]['quickReplies'][i]['action']
+                            });
+                        }
+                    }
+
+                    // put messagesArray in behaviorsubject
                     this.messagesArray.push({
-                        type: 'user',
-                        messages: [{message: response[j]['metadata']['sentence']}],
+                        type: senderType,
+                        messages: messages,
+                        quickReplies: quickReplies,
+                        oldMessages: this.isSessionData,
                         timestamp: response[j]['createdAt']
                     });
+
+                    if (response[j]['takeover'] === '2REQUESTED' || response[j]['takeover'] === '3SUGGESTED') {
+                        this.takeoverSession = true;
+                    } else {
+                        this.takeoverSession = false;
+                    }
                 }
             }
 
-            // loading messages
-            for (let i = 0; i < response[j]['data'].length; i++) {
-                switch (response[j]['data'][i]['type']) {
-                    case 'text':
-                        messages.push({type: 'text', message: response[j]['data'][i]['message']});
-                        break;
-                    case 'url':
-                        messages.push({
-                            type: 'url',
-                            message: response[j]['data'][i]['message'],
-                            url: response[j]['data'][i]['url']
-                        });
-                        break;
-                    case 'image':
-                        messages.push({type: 'image', image: response[j]['data'][i]['image']});
-                        break;
-                }
+            this.messages.next(this.messagesArray);
+
+            if (response[response.length - 1]) {
+                resolve(response[response.length - 1]['createdAt']);
             }
-
-            // loading quick replies
-            if (response[j]['quickReplies']) {
-                for (let i = 0; i < response[j]['quickReplies'].length; i++) {
-                    quickReplies.push({
-                        text: response[j]['quickReplies'][i]['text'],
-                        action: response[j]['quickReplies'][i]['action']
-                    });
-                }
-            }
-
-            // put messagesArray in behaviorsubject
-            this.messagesArray.push({
-                type: senderType,
-                messages: messages,
-                quickReplies: quickReplies,
-                timestamp: response[j]['createdAt']
-            });
-        }
-
-        this.messages.next(this.messagesArray);
-
-        if (response[response.length - 1]) {
-            return response[response.length - 1]['createdAt'];
-        }
+        });
     }
 
     /**
      * Get all the messages of your current session.
      * Is triggered when messagesArray is empty, but the session still exists.
      */
-    getSession() {
+    async getSession() {
         const sessionObject = JSON.parse(sessionStorage.getItem('chatbotSession'));
 
         if (this.messagesArray.length <= 0) {
-            // get previous messages of session
-            this.processSessionData(this.getSessionMessages(sessionObject.timestamp));
+            this.getMessages(sessionObject.timestamp).subscribe(async (data) => {
+                if (data[0]) {
+                    // get date
+                    const date = await this.processData(data);
+
+                    this.isSessionData = false;
+
+                    // open stream
+                    this.openChatStream(date, false);
+                }
+            });
+        } else {
+
+            // open stream
+            this.openChatStream(new Date(Date.now()).toISOString(), false);
         }
     }
 
@@ -1412,20 +1369,19 @@ export class ChatbotService {
             // set sessionId
             this.session = sessionObject.sessionId;
 
-            // open stream
-            this.openChatStream(new Date(Date.now()).toISOString(), false);
-
-            return false;
+            // get session data
+            this.getSession();
         } else {
             const date = new Date(Date.now());
             date.setSeconds(date.getSeconds() - 10);
 
+            this.isSessionData = false;
+
+            // create new session
             this.newSession(date);
 
             // open stream
             this.openChatStream(date.toISOString(), false);
-
-            return true;
         }
     }
 
@@ -1436,6 +1392,7 @@ export class ChatbotService {
      */
     newSession(date) {
         // clear messages when new session
+        this.isNewSession = true;
         this.messagesArray = [];
         this.messages.next(null);
 

@@ -38,7 +38,6 @@ export class MessageComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('type', this.type);
         if (this.type !== 'user') {
             setTimeout(() => {
                 this.showMessage = true;

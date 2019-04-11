@@ -36,10 +36,24 @@
             <div class="chatbot-content-hide-when-animate" #chatbotBody>
 
 
+                <!-- show older messages from session -->
+
+                <div class="button-old-messages">
+                    <a class="btn btn-outline-primary"
+                        (click)="showOlderMessages()"
+                        [hidden]="showOldMessages || isNewSession">
+                        Show older messages
+                    </a>
+                </div>
+
+
                 <!-- messages -->
 
                 <ng-container *ngFor="let messageArray of messagesArray">
-                    <div class="answer" [class.right]="messageArray['type'] === 'user'">
+                    <div class="answer"
+                         [class.right]="messageArray['type'] === 'user'"
+                         [class.hideMessages]="messageArray['oldMessages'] === true"
+                         [class.showMessages]="showOldMessages">
                         <app-messages [delay]="delay"  [messageObject]="messageArray"></app-messages>
                     </div>
                 </ng-container>

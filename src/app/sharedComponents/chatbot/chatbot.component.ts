@@ -27,12 +27,14 @@ export class ChatbotComponent implements OnInit {
     chatbotShow = false;
     showScrollbar = false;
     showExtra = false;
+    showOldMessages = false;
     messagesArray = [];
+    scrollEnabled = true;
+    isNewSession;
 
     @ViewChild('chatbotInput') chatbotInput: ElementRef;
     @ViewChild('chatbotBody') chatbotBody: ElementRef;
     @ViewChild('chatbotContent') chatbotContent: ElementRef;
-    // @ViewChild('emoticonsComponent') emoticonsComponent: EmoticonsComponent;
 
     // extra modal components
     showEmoticons = false;
@@ -40,14 +42,11 @@ export class ChatbotComponent implements OnInit {
 
     messages = new BehaviorSubject<Array<any>>(null);
 
-    messageDelay = 1500;
-    sessionDelay = 0;
-    delay = this.messageDelay;
+    delay = 1500;
 
     selectedText;
 
     constructor(private cookieService: CookieService, private chatbotService: ChatbotService, private cdref: ChangeDetectorRef) {
-
     }
 
     ngOnInit() {
@@ -68,16 +67,8 @@ export class ChatbotComponent implements OnInit {
     open() {
         this.chatbotShow = true;
 
-        const isNew = this.chatbotService.setSession();
-
-        if (isNew === false) {
-            this.chatbotService.getSession();
-            this.delay = this.sessionDelay;
-
-            setTimeout(() => {
-                this.delay = this.messageDelay;
-            }, 2000);
-        }
+        // const isNew = this.chatbotService.setSession();
+        this.chatbotService.setSession();
 
         // focus on input
         setTimeout(() => {
@@ -92,6 +83,9 @@ export class ChatbotComponent implements OnInit {
             }
         });
         resizeObserver.observe(this.chatbotBody.nativeElement);
+
+        this.isNewSession = this.chatbotService.isNewSession;
+        console.log(this.isNewSession);
     }
 
     close() {
@@ -101,13 +95,37 @@ export class ChatbotComponent implements OnInit {
         this.showScrollbar = false;
 
         // stop stream when closing chatbot
-        this.chatbotService.closeChatStream();
+        if (!this.chatbotService.takeoverSession) {
+            setTimeout(() => {
+                this.chatbotService.closeChatStream();
+            }, 300);
+        }
     }
 
     sendMessage(message) {
         this.chatbotService.sendMessage(message);
 
         // this.delay = this.messageDelay;
+    }
+
+    showOlderMessages() {
+        const heightBefore = this.chatbotContent.nativeElement.scrollHeight;
+        let heightAfter;
+
+        // disable scroll
+        this.scrollEnabled = false;
+
+        // show older messages
+        this.showOldMessages = true;
+
+        // resize observer of chatbot body content
+        const resizeObserver = new ResizeObserver((entries, observer) => {
+            for (const entry of entries) {
+                heightAfter = this.chatbotContent.nativeElement.scrollHeight;
+                this.chatbotContent.nativeElement.scrollTop = heightAfter - heightBefore + this.chatbotContent.nativeElement.scrollTop;
+            }
+        });
+        resizeObserver.observe(this.chatbotBody.nativeElement);
     }
 
     getSelectedText() {
@@ -160,9 +178,15 @@ export class ChatbotComponent implements OnInit {
     }
 
     scrollToBottom(): void {
-        try {
-            this.chatbotContent.nativeElement.scrollTop = this.chatbotContent.nativeElement.scrollHeight;
-        } catch (err) {
+        if (this.scrollEnabled) {
+            try {
+                this.chatbotContent.nativeElement.scrollTop = this.chatbotContent.nativeElement.scrollHeight;
+            } catch (err) {
+            }
         }
+    }
+
+    preserveScrollPosition(): void {
+        const heightBefore = this.chatbotContent.nativeElement.scrollHeight;
     }
 }
