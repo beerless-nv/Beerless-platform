@@ -38,11 +38,11 @@
 
                 <!-- show older messages from session -->
 
-                <div class="button-old-messages">
+                <div class="button-old-messages" [hidden]="showOldMessages || isNewSession">
+                    <div class="mb-3 text-grey">Start asking some questions or ...</div>
                     <a class="btn btn-outline-primary"
-                        (click)="showOlderMessages()"
-                        [hidden]="showOldMessages || isNewSession">
-                        Show older messages
+                       (click)="showOlderMessages()">
+                        show older messages
                     </a>
                 </div>
 
@@ -53,8 +53,9 @@
                     <div class="answer"
                          [class.right]="messageArray['type'] === 'user'"
                          [class.hideMessages]="messageArray['oldMessages'] === true"
-                         [class.showMessages]="showOldMessages">
-                        <app-messages [delay]="delay"  [messageObject]="messageArray"></app-messages>
+                         [class.showMessages]="showOldMessages"
+                         [class.carousel-answer]="messageArray['messages'][0]['type'] === 'elements'">
+                        <app-messages [delay]="delay" [messageObject]="messageArray" style="width: 100%"></app-messages>
                     </div>
                 </ng-container>
             </div>

@@ -61,6 +61,7 @@ import {ExtraComponent} from './sharedComponents/chatbot/extra/extra.component';
 import {EmoticonsComponent} from './sharedComponents/chatbot/extra/emoticons/emoticons.component';
 import {UploadComponent} from './sharedComponents/chatbot/extra/upload/upload.component';
 import {FileDropModule} from 'ngx-file-drop';
+import {DragScrollModule} from "ngx-drag-scroll/lib";
 
 @NgModule({
     declarations: [
@@ -124,6 +125,7 @@ import {FileDropModule} from 'ngx-file-drop';
         NgScrollbarModule,
         BidiModule,
         FileDropModule,
+        DragScrollModule,
     ],
     providers: [
         {

@@ -1,21 +1,15 @@
 import {
-    AfterContentChecked,
-    AfterViewChecked,
-    AfterViewInit, ChangeDetectorRef,
+    ChangeDetectorRef,
     Component,
     ElementRef,
     OnInit,
-    Renderer2,
     ViewChild,
-    ViewChildren
 } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {Guid} from 'guid-typescript';
 import {ChatbotService} from '../../_services/chatbot.service';
-import {BehaviorSubject, from, Observable, of} from 'rxjs';
-import {delay, map} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
 import ResizeObserver from 'resize-observer-polyfill';
-import {EmoticonsComponent} from './extra/emoticons/emoticons.component';
+import {AuthService} from '../../_services/authorization/auth.service';
 
 @Component({
     selector: 'app-chatbot',
@@ -46,7 +40,7 @@ export class ChatbotComponent implements OnInit {
 
     selectedText;
 
-    constructor(private cookieService: CookieService, private chatbotService: ChatbotService, private cdref: ChangeDetectorRef) {
+    constructor(private cookieService: CookieService, private chatbotService: ChatbotService, private cdref: ChangeDetectorRef, private authService: AuthService) {
     }
 
     ngOnInit() {
@@ -85,7 +79,6 @@ export class ChatbotComponent implements OnInit {
         resizeObserver.observe(this.chatbotBody.nativeElement);
 
         this.isNewSession = this.chatbotService.isNewSession;
-        console.log(this.isNewSession);
     }
 
     close() {
@@ -109,6 +102,7 @@ export class ChatbotComponent implements OnInit {
     }
 
     showOlderMessages() {
+        this.authService.isAuthenticated();
         const heightBefore = this.chatbotContent.nativeElement.scrollHeight;
         let heightAfter;
 

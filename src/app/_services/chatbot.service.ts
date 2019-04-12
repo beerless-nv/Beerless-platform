@@ -1176,7 +1176,12 @@ export class ChatbotService {
                 'message': message,
                 'environment': 'production',
                 'session': this.session,
-                'locale': 'en'
+                'locale': 'en',
+                'metadata': {
+                    'firstName': 'Tom',
+                    'lastName': 'Nuyts',
+                    'access_token': 'y8lIyPJ4aRyeK4xQc7iZOlu3B1Cday5EI3Ia1I8kBo4FykcdRGhji4VEE1Im21ia'
+                }
             }, {headers: this.headers}).toPromise();
         }
     }
@@ -1288,6 +1293,12 @@ export class ChatbotService {
                                         image: response[j]['data'][i]['image']
                                     });
                                     break;
+                                case 'carrousel':
+                                    messages.push({
+                                        type: 'elements',
+                                        elements: response[j]['data'][i]['elements']
+                                    });
+                                    break;
                             }
                         }
                     } else {
@@ -1349,7 +1360,6 @@ export class ChatbotService {
                 }
             });
         } else {
-
             // open stream
             this.openChatStream(new Date(Date.now()).toISOString(), false);
         }

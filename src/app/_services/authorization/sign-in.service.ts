@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {LocalStorageService} from "../local-storage.service";
-import {BehaviorSubject} from "rxjs";
-import {User} from "../../_interfaces/user";
+import {LocalStorageService} from '../local-storage.service';
+import {BehaviorSubject} from 'rxjs';
+import {User} from '../../_interfaces/user';
 
 @Injectable({
     providedIn: 'root'

@@ -166,6 +166,10 @@
                 padding-bottom: 10px;
                 display: flex;
 
+                &.carousel-answer {
+                    margin: 0 10px 0 10px;
+                }
+
                 &.hideMessages {
                     display: none;
                     opacity: 0;
@@ -181,6 +185,10 @@
                     margin-left: 50px;
                     margin-right: 10px;
                     justify-content: flex-end;
+
+                    .message-item {
+                        float: right;
+                    }
                 }
 
                 .message-item {
@@ -222,6 +230,92 @@
 
                     &.inactive {
                         display: none !important;
+                    }
+                }
+
+                .chatbot-carousel-container {
+                    .arrow-left {
+                        cursor: pointer;
+                        font-size: 1rem;
+                        padding: 5px;
+                        color: $grey;
+                    }
+
+                    .arrow-right {
+                        cursor: pointer;
+                        font-size: 1rem;
+                        padding: 5px;
+                        color: $grey;
+                        float: right;
+                    }
+                }
+
+                .chatbot-carousel {
+                    background-color: transparent !important;
+                    height: auto !important;
+                    display: flex !important;
+                    flex-wrap: nowrap;
+                    flex-direction: row;
+
+                    div {
+                        //overflow: hidden !important;
+                        scrollbar-width: none;
+
+                        &::-webkit-scrollbar {
+                            display: none;
+                        }
+                    }
+
+                    .chatbot-carousel-card {
+                        margin-right: ($spacer * 0.5);
+                        border-radius: 0;
+                        width: 250px !important;
+                        min-width: auto !important;
+
+                        &:first-of-type {
+                            border-radius: 0.5rem 0 0 0.5rem;
+
+                            .card-img-top {
+                                border-radius: 0.5rem 0 0 0;
+                            }
+                        }
+
+                        &:last-of-type {
+                            border-radius: 0 0.5rem 0.5rem 0;
+                            margin-right: 0;
+
+                            .card-img-top {
+                                border-radius: 0 0.5rem 0 0;
+                            }
+                        }
+
+                        .card-img-top {
+                            height:150px;
+                            background-repeat: no-repeat;
+                            background-size: cover;
+                            background-position: center center;
+                        }
+
+                        .card-body {
+                            width: 250px;
+                            white-space: pre-wrap;
+
+                            .carousel-buttons {
+                                display: flex;
+                                justify-content: center;
+                                flex-direction: column;
+
+                                .btn-outline-primary {
+                                    font-size: 0.8rem;
+                                    margin-bottom: ($spacer * 0.5);
+                                }
+                            }
+                        }
+
+                        .card-footer {
+                            display: flex;
+                            justify-content: flex-end;
+                        }
                     }
                 }
 

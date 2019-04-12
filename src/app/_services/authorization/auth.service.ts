@@ -1,26 +1,18 @@
 import {Injectable} from '@angular/core';
-import {JwtHelperService} from '@auth0/angular-jwt';
 import {LocalStorageService} from '../local-storage.service';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    constructor(private localStorageService: LocalStorageService) {}
+    constructor(private localStorageService: LocalStorageService, private http: HttpClient) {}
 
     // Check if user is authenticated
     public isAuthenticated(): boolean {
-        // const jwtHelper = new JwtHelperService();
-        //
-        // const user = this.localStorageService.getUser();
-        // // Check whether the token is expired and return
-        // // true or false
-        // if (user != null) {
-        //     return !jwtHelper.isTokenExpired(user.token);
-        // } else {
-        //     return false;
-        // }
-        return true;
+        const token = this.getToken();
+
+        return !!token;
     }
 
     public getToken(): string {

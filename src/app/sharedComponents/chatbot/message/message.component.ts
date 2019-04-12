@@ -4,11 +4,12 @@ import {
     ComponentFactoryResolver,
     Input,
     OnInit, Renderer2,
-    ViewChild,
+    ViewChild, ViewChildren,
     ViewContainerRef
 } from '@angular/core';
 import {ChatbotComponent} from '../chatbot.component';
 import {BeerprofileComponent} from '../../../pagegroups/Visitor/beers/detail-beers/beerprofile/beerprofile.component';
+import {DragScrollComponent} from "ngx-drag-scroll/lib";
 
 @Component({
     selector: 'app-message',
@@ -26,6 +27,10 @@ export class MessageComponent implements OnInit {
         this.load(component);
     }
 
+    @ViewChildren('nav', {read: DragScrollComponent}) set loadDragScroll(nav) {
+        this.ds = nav;
+    }
+
     component;
     showMessageItem = false;
     showMessage = false;
@@ -33,6 +38,7 @@ export class MessageComponent implements OnInit {
     src;
     isComponent = false;
     isImage = false;
+    ds;
 
     constructor(private chatbotComponent: ChatbotComponent, private componentFactoryResolver: ComponentFactoryResolver, private cdref: ChangeDetectorRef, private renderer2: Renderer2) {
     }
@@ -49,10 +55,12 @@ export class MessageComponent implements OnInit {
     }
 
     load(component) {
+        console.log(this.message);
         if (component) {
             if (this.message['type']) {
                 switch (this.message['type']) {
                     case 'text':
+                        console.log('message');
                         // check if beer profile
                         if (this.message['message'].includes('app-beerprofile')) {
                             this.isComponent = true;
@@ -83,11 +91,23 @@ export class MessageComponent implements OnInit {
                         this.src = this.message['image'];
                         this.cdref.detectChanges();
                         break;
+                    case 'elements':
+                        console.log(this.message['elements']);
+                        break;
                 }
             } else {
                 this.text = this.message['message'];
                 this.cdref.detectChanges();
             }
         }
+    }
+
+    moveLeft() {
+        console.log(this.ds);
+        this.ds.first.moveLeft();
+    }
+
+    moveRight() {
+        this.ds.first.moveRight();
     }
 }
