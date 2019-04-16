@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ChatbotComponent} from '../../chatbot.component';
-import {ChatbotService} from '../../../../_services/chatbot.service';
+import {ChatbotService} from '../../../../_services/chatbot/chatbot.service';
 
 @Component({
     selector: 'app-emoticons',

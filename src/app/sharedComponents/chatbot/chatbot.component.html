@@ -29,17 +29,17 @@
 
         <!-- Chatbot body -->
 
-        <div class="chatbot-box-body"
+        <div class="chatbot-box-body custom-scrollbar"
              [class.show-scrollbar]="showScrollbar"
              [class.hide-scrollbar]="!showScrollbar"
-             #chatbotContent>
+             #chatbotContent id="chatbotBody">
             <div class="chatbot-content-hide-when-animate" #chatbotBody>
 
 
                 <!-- show older messages from session -->
 
                 <div class="button-old-messages" [hidden]="showOldMessages || isNewSession">
-                    <div class="mb-3 text-grey">Start asking some questions or ...</div>
+                    <div class="mb-3 text-grey" [hidden]="hideStartMessage">Start asking some questions or ...</div>
                     <a class="btn btn-outline-primary"
                        (click)="showOlderMessages()">
                         show older messages
@@ -55,7 +55,8 @@
                          [class.hideMessages]="messageArray['oldMessages'] === true"
                          [class.showMessages]="showOldMessages"
                          [class.carousel-answer]="messageArray['messages'][0]['type'] === 'elements'">
-                        <app-messages [delay]="delay" [messageObject]="messageArray" style="width: 100%"></app-messages>
+                        <app-messages [delay]="delay" [messageObject]="messageArray"
+                                      style="width: 100%"></app-messages>
                     </div>
                 </ng-container>
             </div>
@@ -65,16 +66,14 @@
         <!-- Chatbot extra modal -->
 
         <div class="chatbot-content-hide-when-animate">
-            <div class="chatbot-extra-container" *ngIf="showExtra" (click)="showExtra = !showExtra"></div>
+            <div class="chatbot-extra-container" *ngIf="showExtra" (click)="closeExtra()"></div>
             <div class="chatbot-extra" *ngIf="showExtra">
-                <div class="chatbot-extra-box">
-                    <ng-container *ngIf="showEmoticons">
-                        <app-emoticons #emoticonsComponent></app-emoticons>
-                    </ng-container>
-                    <ng-container *ngIf="showUpload">
-                        <app-upload #uploadComponent></app-upload>
-                    </ng-container>
-                </div>
+                <ng-container *ngIf="showEmoticons">
+                    <app-emoticons #emoticonsComponent></app-emoticons>
+                </ng-container>
+                <ng-container *ngIf="showUpload">
+                    <app-upload #uploadComponent></app-upload>
+                </ng-container>
             </div>
         </div>
 
@@ -92,14 +91,15 @@
 
                 <!-- input -->
 
-                <div data-ph="Type something..." id="chatbot-box-input" class="textarea" contenteditable
+                <div data-ph="Type something..." id="chatbot-box-input" class="textarea no-scrollbar" contenteditable
                      (keydown.enter)="replaceTextWithEmoticon(chatbotInput.innerHTML)"
                      (keyup.enter)="sendMessage(chatbotInput.textContent); chatbotInput.innerHTML = null"
                      (mouseup)="getSelectedText()"
                      (blur)="getSelectedText()"
                      (keyup.control.a)="getSelectedText()"
                      (keyup.space)="replaceTextWithEmoticon(chatbotInput.innerHTML)"
-                     #chatbotInput></div>
+                     #chatbotInput>
+                </div>
 
 
                 <!-- send messages -->

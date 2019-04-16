@@ -16,7 +16,7 @@ export class ExtraComponent implements OnInit {
 
     openEmoticons() {
         // open extra modal
-        this.chatbotComponent.showExtra = true;
+        this.chatbotComponent.openExtra();
 
         // display emoticons
         this.chatbotComponent.showEmoticons = true;
@@ -27,7 +27,7 @@ export class ExtraComponent implements OnInit {
 
     openUpload() {
         // open extra modal
-        this.chatbotComponent.showExtra = true;
+        this.chatbotComponent.openExtra();
 
         // display emoticons
         this.chatbotComponent.showUpload = true;

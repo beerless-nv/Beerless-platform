@@ -1,5 +1,5 @@
 import {AfterViewChecked, Component, Input, OnInit} from '@angular/core';
-import {ChatbotService} from '../../../_services/chatbot.service';
+import {ChatbotService} from '../../../_services/chatbot/chatbot.service';
 import {ChatbotComponent} from '../chatbot.component';
 
 @Component({
@@ -26,9 +26,6 @@ export class MessagesComponent implements OnInit {
         } else {
             setTimeout(() => {
                 this.showTypingIndicator = false;
-            }, Number(this.delay * this.messageObject['messages'].length));
-
-            setTimeout(() => {
                 this.showQuickReplies = true;
             }, Number(this.delay * this.messageObject['messages'].length));
         }

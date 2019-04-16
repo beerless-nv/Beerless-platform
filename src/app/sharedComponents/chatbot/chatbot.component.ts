@@ -6,10 +6,14 @@ import {
     ViewChild,
 } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
-import {ChatbotService} from '../../_services/chatbot.service';
+import {ChatbotService} from '../../_services/chatbot/chatbot.service';
 import {BehaviorSubject} from 'rxjs';
 import ResizeObserver from 'resize-observer-polyfill';
 import {AuthService} from '../../_services/authorization/auth.service';
+import {NgScrollbar} from 'ngx-scrollbar';
+
+declare var OverlayScrollbars: any;
+declare var SimpleBar: any;
 
 @Component({
     selector: 'app-chatbot',
@@ -22,13 +26,15 @@ export class ChatbotComponent implements OnInit {
     showScrollbar = false;
     showExtra = false;
     showOldMessages = false;
-    messagesArray = [];
+    messagesArray: Array<any> = null;
     scrollEnabled = true;
     isNewSession;
+    hideStartMessage = false;
 
     @ViewChild('chatbotInput') chatbotInput: ElementRef;
     @ViewChild('chatbotBody') chatbotBody: ElementRef;
     @ViewChild('chatbotContent') chatbotContent: ElementRef;
+    @ViewChild(NgScrollbar) scrollRef: NgScrollbar;
 
     // extra modal components
     showEmoticons = false;
@@ -40,10 +46,15 @@ export class ChatbotComponent implements OnInit {
 
     selectedText;
 
+    scrollbar;
+
     constructor(private cookieService: CookieService, private chatbotService: ChatbotService, private cdref: ChangeDetectorRef, private authService: AuthService) {
     }
 
     ngOnInit() {
+        // hide scrollbar
+        this.hideScrollbar(document.querySelector('.no-scrollbar'));
+
         this.chatbotService.messages.subscribe(data => {
             this.messagesArray = data;
         });
@@ -61,7 +72,6 @@ export class ChatbotComponent implements OnInit {
     open() {
         this.chatbotShow = true;
 
-        // const isNew = this.chatbotService.setSession();
         this.chatbotService.setSession();
 
         // focus on input
@@ -95,31 +105,42 @@ export class ChatbotComponent implements OnInit {
         }
     }
 
-    sendMessage(message) {
-        this.chatbotService.sendMessage(message);
-
-        // this.delay = this.messageDelay;
+    openExtra() {
+        this.showExtra = true;
     }
 
-    showOlderMessages() {
-        this.authService.isAuthenticated();
+    closeExtra() {
+        this.showExtra = false;
+    }
+
+    sendMessage(message) {
+        this.hideStartMessage = true;
+
+        this.chatbotService.sendMessage(message);
+    }
+
+    async showOlderMessages() {
         const heightBefore = this.chatbotContent.nativeElement.scrollHeight;
+        const scrollTop = this.chatbotContent.nativeElement.scrollTop;
         let heightAfter;
 
         // disable scroll
         this.scrollEnabled = false;
 
         // show older messages
-        this.showOldMessages = true;
+        this.chatbotService.getSession().then(data => {
+            this.showOldMessages = true;
 
-        // resize observer of chatbot body content
-        const resizeObserver = new ResizeObserver((entries, observer) => {
-            for (const entry of entries) {
-                heightAfter = this.chatbotContent.nativeElement.scrollHeight;
-                this.chatbotContent.nativeElement.scrollTop = heightAfter - heightBefore + this.chatbotContent.nativeElement.scrollTop;
-            }
+            // resize observer of chatbot body content
+            const resizeObserver = new ResizeObserver((entries, observer) => {
+                for (const entry of entries) {
+                    heightAfter = this.chatbotContent.nativeElement.scrollHeight;
+
+                    this.chatbotContent.nativeElement.scrollTop = heightAfter - heightBefore + scrollTop;
+                }
+            });
+            resizeObserver.observe(this.chatbotBody.nativeElement);
         });
-        resizeObserver.observe(this.chatbotBody.nativeElement);
     }
 
     getSelectedText() {
@@ -180,7 +201,32 @@ export class ChatbotComponent implements OnInit {
         }
     }
 
-    preserveScrollPosition(): void {
-        const heightBefore = this.chatbotContent.nativeElement.scrollHeight;
+    hideScrollbar(child) {
+        function getScrollbarWidth() {
+            const outer = document.createElement('div');
+            outer.style.visibility = 'hidden';
+            outer.style.width = '100px';
+            outer.style.msOverflowStyle = 'scrollbar';
+
+            document.body.appendChild(outer);
+
+            const widthNoScroll = outer.offsetWidth;
+            // force scrollbars
+            outer.style.overflow = 'scroll';
+
+            // add innerdiv
+            const inner = document.createElement('div');
+            inner.style.width = '100%';
+            outer.appendChild(inner);
+
+            const widthWithScroll = inner.offsetWidth;
+
+            // remove divs
+            outer.parentNode.removeChild(outer);
+
+            return widthNoScroll - widthWithScroll;
+        }
+
+        child.style.width = 'calc(100% - 100px + ' + getScrollbarWidth() + 'px)';
     }
 }

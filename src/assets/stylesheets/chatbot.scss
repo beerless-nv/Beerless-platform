@@ -138,7 +138,7 @@
             padding: 2rem 0 0 0;
             font-size: 0.8rem;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
 
             .chatbot-content-hide-when-animate {
                 opacity: 0;
@@ -290,7 +290,7 @@
                         }
 
                         .card-img-top {
-                            height:150px;
+                            height: 150px;
                             background-repeat: no-repeat;
                             background-size: cover;
                             background-position: center center;
@@ -371,16 +371,6 @@
                     }
                 }
             }
-
-            &::-webkit-scrollbar {
-                width: 11px;
-            }
-
-            &::-webkit-scrollbar-thumb {
-                background: $grey;
-                border-radius: 12px;
-                border: 3px solid $super-light;
-            }
         }
 
         .chatbot-box-footer {
@@ -409,23 +399,33 @@
                 height: 50px;
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 cursor: pointer;
             }
 
+            #chatbot-box-send {
+                position: absolute;
+                right: 0;
+                top: 0;
+                background-color: #fff;
+                border-bottom-right-radius: 0.5rem;
+            }
+
+
             #chatbot-box-input {
-                width: calc(100% - 100px);
+                position: relative;
+                width: 100%;
+                left: 0;
             }
 
             .textarea {
                 min-height: 18px;
                 max-height: 36px;
                 font-size: 0.8rem;
-                width: 100%;
+                width: calc(100% - 100px);
                 overflow-y: auto;
-
-                &::-webkit-scrollbar {
-                    display: none;
-                }
+                overflow-x: hidden;
+                overflow-wrap: break-word;
 
                 &:focus {
                     outline: none;
@@ -521,24 +521,8 @@
         left: 50%;
         transform: translate(-50%, -50%);
         box-shadow: rgba(0, 0, 0, 0.20) 0px 0px 10px;
-        padding: 2px;
-
-        .chatbot-extra-box {
-            overflow: auto;
-            padding: $spacer;
-            height: 100%;
-
-            &::-webkit-scrollbar {
-                width: 11px;
-            }
-
-            &::-webkit-scrollbar-thumb {
-                background: $grey;
-                border-radius: 12px;
-                border: 3px solid #fff;
-                padding-bottom: 5px;
-            }
-        }
+        padding: $spacer;
+        overflow: auto;
     }
 
     #extra-emoji {

@@ -45,22 +45,23 @@ export class MessageComponent implements OnInit {
 
     ngOnInit() {
         if (this.type !== 'user') {
-            setTimeout(() => {
+            if (this.delay > 0) {
+                setTimeout(() => {
+                    this.showMessage = true;
+                }, Number((this.delay * this.messageIndex) + this.delay));
+            } else {
                 this.showMessage = true;
-            }, Number((this.delay * this.messageIndex) + this.delay));
+            }
         } else {
-            this.showMessageItem = true;
             this.showMessage = true;
         }
     }
 
     load(component) {
-        console.log(this.message);
         if (component) {
             if (this.message['type']) {
                 switch (this.message['type']) {
                     case 'text':
-                        console.log('message');
                         // check if beer profile
                         if (this.message['message'].includes('app-beerprofile')) {
                             this.isComponent = true;
@@ -92,7 +93,6 @@ export class MessageComponent implements OnInit {
                         this.cdref.detectChanges();
                         break;
                     case 'elements':
-                        console.log(this.message['elements']);
                         break;
                 }
             } else {
@@ -103,7 +103,6 @@ export class MessageComponent implements OnInit {
     }
 
     moveLeft() {
-        console.log(this.ds);
         this.ds.first.moveLeft();
     }
 
