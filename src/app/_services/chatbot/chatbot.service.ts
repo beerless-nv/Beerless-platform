@@ -172,6 +172,13 @@ export class ChatbotService {
                                         image: response[j]['data'][i]['image']
                                     });
                                     break;
+                                case 'location':
+                                    messages.push({
+                                        type: 'location',
+                                        message: response[j]['data'][i]['message'],
+                                        location: response[j]['data'][i]['elements'],
+                                    });
+                                    break;
                                 case 'carrousel':
                                     messages.push({
                                         type: 'elements',

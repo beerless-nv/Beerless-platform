@@ -5,14 +5,8 @@
 export const environment = {
     production: false,
     backend: 'http://localhost:3000/api/',
-    // backend: 'http://localhost/api/',
-    // backend: 'https://api.beerless.be/api/',
-    // beerImageURL: 'https://assets.beerless.be/assets/images/',
-    // beerLogoURL: 'https://assets.beerless.be/assets/images/beer/logo/',
-    // breweryLogoURL: 'https://assets.beerless.be/assets/images/brewery/logo/',
-    // userPictureURL: 'https://assets.beerless.be/assets/images/user/picture/',
-    // articlePictureURL: 'https://assets.beerless.be/assets/images/article/hero-picture/',
     imageURL: 'https://assets.beerless.be/images/',
+    mapsAPIKey: 'AIzaSyBDxPBARHK7z7XuEi2n9XTWhsxv630C6eo',
 };
 
 /*

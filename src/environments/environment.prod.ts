@@ -7,4 +7,5 @@ export const environment = {
     userPictureURL: 'https://assets.beerless.be/assets/images/user/picture/',
     articlePictureURL: 'https://assets.beerless.be/assets/images/article/hero-picture/',
     imageURL: 'https://assets.beerless.be/images/',
+    mapsAPIKey: 'AIzaSyClgBQqM4dO3bBeH2FzypRI3TbBI6MJosA',
 };

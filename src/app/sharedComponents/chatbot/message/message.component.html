@@ -18,6 +18,9 @@
 
         <!-- image -->
         <img src="{{src}}" alt="" *ngIf="message['type'] === 'image'">
+
+        <!-- location -->
+        <iframe *ngIf="message['type'] === 'location'" src="https://www.google.com/maps/embed/v1/place?key={{mapsAPIKey}}&q=Eiffel+Tower,Paris+France" frameborder="0"></iframe>
     </div>
 
     <div *ngIf="message['type'] === 'elements'" class="chatbot-carousel-container">

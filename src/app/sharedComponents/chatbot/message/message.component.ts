@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 import {ChatbotComponent} from '../chatbot.component';
 import {BeerprofileComponent} from '../../../pagegroups/Visitor/beers/detail-beers/beerprofile/beerprofile.component';
-import {DragScrollComponent} from "ngx-drag-scroll/lib";
+import {DragScrollComponent} from 'ngx-drag-scroll/lib';
+import {environment} from '../../../../environments/environment';
 
 @Component({
     selector: 'app-message',
@@ -39,6 +40,8 @@ export class MessageComponent implements OnInit {
     isComponent = false;
     isImage = false;
     ds;
+
+    mapsAPIKey = environment.mapsAPIKey;
 
     constructor(private chatbotComponent: ChatbotComponent, private componentFactoryResolver: ComponentFactoryResolver, private cdref: ChangeDetectorRef, private renderer2: Renderer2) {
     }
@@ -91,6 +94,8 @@ export class MessageComponent implements OnInit {
                         this.isImage = true;
                         this.src = this.message['image'];
                         this.cdref.detectChanges();
+                        break;
+                    case 'location':
                         break;
                     case 'elements':
                         break;
