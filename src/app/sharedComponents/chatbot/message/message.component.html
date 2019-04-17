@@ -1,14 +1,15 @@
 <div *ngIf="showMessage || type === 'user'">
-    <div [class.message-item]="!isComponent && message['type'] !== 'image' && message['type'] !== 'elements'"
+    <div [class.message-item]="!isComponent && message['type'] !== 'image' && message['type'] !== 'elements' && message['type'] !== 'location'"
          [class.component-item]="isComponent"
          [class.image-item]="message['type'] === 'image'"
+         [class.location-item]="message['type'] === 'location'"
          [class.chatbot-message-item]="type === 'chatbot'"
          [class.takeover-message-item]="type === 'takeover'"
          [class.user-message-item]="type === 'user'"
          [class.right]="type === 'user'">
 
         <!-- regular message -->
-        <span *ngIf="message['type'] === 'text'" [ngbCollapse]="isComponent" [innerHTML]="text | safeHtml"></span>
+        <span *ngIf="message['type'] === 'text'" [ngbCollapse]="isComponent" [innerHTML]="text | safeHTML"></span>
 
         <!-- components -->
         <span #component></span>
@@ -20,7 +21,10 @@
         <img src="{{src}}" alt="" *ngIf="message['type'] === 'image'">
 
         <!-- location -->
-        <iframe *ngIf="message['type'] === 'location'" src="https://www.google.com/maps/embed/v1/place?key={{mapsAPIKey}}&q=Eiffel+Tower,Paris+France" frameborder="0"></iframe>
+        <ng-container *ngIf="message['type'] === 'location'">
+            <div>{{text}}</div>
+            <iframe [src]="src | safeURL" frameborder="0" allowfullscreen></iframe>
+        </ng-container>
     </div>
 
     <div *ngIf="message['type'] === 'elements'" class="chatbot-carousel-container">

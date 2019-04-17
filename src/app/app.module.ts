@@ -56,12 +56,13 @@ import {IeWarningComponent} from './sharedComponents/ie-warning/ie-warning.compo
 import {ModalComponent} from './sharedComponents/modal/modal.component';
 import {MessagesComponent} from './sharedComponents/chatbot/messages/messages.component';
 import {MessageComponent} from './sharedComponents/chatbot/message/message.component';
-import {SafeHtmlPipe} from './_pipes/safeHtml.pipe';
+import {SafeHTMLPipe} from './_pipes/safeHTML.pipe';
 import {ExtraComponent} from './sharedComponents/chatbot/extra/extra.component';
 import {EmoticonsComponent} from './sharedComponents/chatbot/extra/emoticons/emoticons.component';
 import {UploadComponent} from './sharedComponents/chatbot/extra/upload/upload.component';
 import {FileDropModule} from 'ngx-file-drop';
 import {DragScrollModule} from 'ngx-drag-scroll/lib';
+import {SafeURLPipe} from './_pipes/safeURL.pipe';
 
 @NgModule({
     declarations: [
@@ -102,7 +103,8 @@ import {DragScrollModule} from 'ngx-drag-scroll/lib';
         ModalComponent,
         MessagesComponent,
         MessageComponent,
-        SafeHtmlPipe,
+        SafeHTMLPipe,
+        SafeURLPipe,
         ExtraComponent,
         EmoticonsComponent,
         UploadComponent,

@@ -41,8 +41,6 @@ export class MessageComponent implements OnInit {
     isImage = false;
     ds;
 
-    mapsAPIKey = environment.mapsAPIKey;
-
     constructor(private chatbotComponent: ChatbotComponent, private componentFactoryResolver: ComponentFactoryResolver, private cdref: ChangeDetectorRef, private renderer2: Renderer2) {
     }
 
@@ -96,6 +94,9 @@ export class MessageComponent implements OnInit {
                         this.cdref.detectChanges();
                         break;
                     case 'location':
+                        this.text = this.message['message'];
+                        this.src = 'https://www.google.com/maps/embed/v1/place?key=' + environment.mapsAPIKey + '&q=' + this.message['location']['streetAndNumber'] + '+' + this.message['location']['place'] + '+' + this.message['location']['postcode'] + '+' + this.message['location']['country'];
+                        this.cdref.detectChanges();
                         break;
                     case 'elements':
                         break;
