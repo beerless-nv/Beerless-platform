@@ -24,7 +24,7 @@ export class MessageComponent implements OnInit {
     @Input() type: string;
     @Input() message: string;
 
-    @ViewChild('component', { read: ViewContainerRef }) set loadMessage(component) {
+    @ViewChild('component', {read: ViewContainerRef}) set loadMessage(component) {
         this.load(component);
     }
 
@@ -64,16 +64,13 @@ export class MessageComponent implements OnInit {
                 switch (this.message['type']) {
                     case 'text':
                         // check if beer profile
-                        if (this.message['message'].includes('app-beerprofile')) {
+                        if (this.message['message']['app-beerprofile']) {
                             this.isComponent = true;
-
-                            // create substring
-                            const item = this.message['message'].split(',')[1];
 
                             // add component
                             const factory = this.componentFactoryResolver.resolveComponentFactory(BeerprofileComponent);
                             const ref = component.createComponent(factory);
-                            this.renderer2.setAttribute(ref.location.nativeElement, 'item', item);
+                            this.renderer2.setAttribute(ref.location.nativeElement, 'item', JSON.stringify(this.message['message']['app-beerprofile'][0]));
                             ref.changeDetectorRef.detectChanges();
                         }
 

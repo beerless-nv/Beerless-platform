@@ -7,13 +7,16 @@ import {environment} from '../../../../../../environments/environment';
     styles: []
 })
 export class BeerbreweryprofileComponent implements OnInit {
-    environment = environment;
+
     @Input() item: any;
+    logo: string;
 
     constructor() {
     }
 
     ngOnInit() {
+        console.log(this.item);
+        this.logo = environment.imageURL + '/brewery/logo/' + this.item.logo;
     }
 
 }

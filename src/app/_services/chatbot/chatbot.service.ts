@@ -11,9 +11,12 @@ declare var emojis: any;
 })
 export class ChatbotService {
 
-    readonly apiUrl = 'https://api.oswald.ai/api/v1';
-    readonly chatbotId = '5c909b61ccc52e00050a6e76';
-    readonly accessToken = 'A4oA1hOSefxeOveUe49pBajyykPMhn6vFfnLG9geu4LKTGXUoDaHME9sSN4Tr0gT';
+    // readonly apiUrl = 'https://api.oswald.ai/api/v1';
+    readonly apiUrl = 'https://api-acc.oswald.ai/api/v1';
+    // readonly chatbotId = '5c909b61ccc52e00050a6e76';
+    readonly chatbotId = '5cb49d7d4648730006815d8d';
+    // readonly accessToken = 'A4oA1hOSefxeOveUe49pBajyykPMhn6vFfnLG9geu4LKTGXUoDaHME9sSN4Tr0gT';
+    readonly accessToken = 'XiPS5w7sT7FEeWI1qFqbI5AmsDRW7ShhgBm2YUEo9zdf55112eVhoaGlQEv3zret';
     session = null;
     isSessionData = true;
     isNewSession = false;
@@ -66,7 +69,6 @@ export class ChatbotService {
      * @param date (date of when you want to retrieve the response message)
      */
     getMessages(date) {
-        console.log('test2');
         const params = new HttpParams()
             .set('types', 'in,out,takeover');
 
@@ -78,22 +80,33 @@ export class ChatbotService {
     }
 
     /**
-     * Set up a chat stream to retrieve messages that are send by the user and bot.
+     * Start a new chat stream.
      *
-     * @param dateTime (date of when you want to retrieve messages)
-     * @param stop (true = start chat stream, false = stop chat stream)
+     * @param date (current date)
      */
-    openChatStream(dateTime) {
+    openChatStream(date) {
         if (this.polling === false) {
             this.polling = true;
-            this.chatStream(dateTime);
+            this.chatStream(date);
         }
     }
 
+    /**
+     * Stop current chat stream.
+     */
+    closeChatStream() {
+        // set current datetime
+        const date = new Date(Date.now());
+    }
+
+    /**
+     * Create chatstream to retrieve messages that are send by the user and bot.
+     *
+     * @param date (date of when you want to retrieve messages)
+     */
     chatStream(date) {
         if (this.polling) {
             setTimeout(() => {
-                console.log(date);
                 this.getMessages(date)
                     .subscribe(async (data) => {
                         const resp = await this.processData(data);
@@ -106,18 +119,6 @@ export class ChatbotService {
                     });
             }, 300);
         }
-    }
-
-    /**
-     * Stop current chat stream.
-     */
-    closeChatStream() {
-        // set current datetime
-        const date = new Date(Date.now());
-
-        // clear interval
-        // this.polling = false;
-        // this.chatStream(date);
     }
 
     /**
@@ -149,7 +150,7 @@ export class ChatbotService {
                             break;
                     }
 
-                    // loading messages
+                    // loading various types of messages
                     if (response[j]['data']) {
                         for (let i = 0; i < response[j]['data'].length; i++) {
                             switch (response[j]['data'][i]['type']) {
@@ -203,6 +204,7 @@ export class ChatbotService {
 
                     // create messages arrays
                     if (this.isSessionData) {
+                        // messages array from old session data
                         oldMessagesArray.push({
                             id: response[j]['id'],
                             type: senderType,
@@ -212,6 +214,7 @@ export class ChatbotService {
                             timestamp: response[j]['createdAt']
                         });
                     } else {
+                        // messages array of new messages
                         this.messagesArray.push({
                             id: response[j]['id'],
                             type: senderType,
@@ -222,6 +225,7 @@ export class ChatbotService {
                         });
                     }
 
+                    // set takeover session
                     if (response[j]['takeover'] === '2REQUESTED' || response[j]['takeover'] === '3SUGGESTED') {
                         this.takeoverSession = true;
                     } else {
@@ -230,14 +234,15 @@ export class ChatbotService {
                 }
             }
 
+            // Concat old and new messages arrays
             if (oldMessagesArray.length > 0) {
                 this.messagesArray = oldMessagesArray.concat(this.messagesArray);
             }
 
             this.messages.next(this.messagesArray);
 
+            // return timestamp of latest message
             if (response[response.length - 1]) {
-                console.log(this.messagesArray.length);
                 resolve(response[response.length - 1]['createdAt']);
             } else {
                 resolve(null);
@@ -257,6 +262,7 @@ export class ChatbotService {
             if (sessionObject !== null) {
                 this.getMessages(sessionObject.timestamp).subscribe(async (data) => {
                     if (data[0]) {
+                        // get timestamp of latest message
                         const dataArray = [];
 
                         for (const message in data) {
@@ -270,7 +276,7 @@ export class ChatbotService {
 
                         this.isSessionData = false;
 
-                        // open stream
+                        // open stream with timestamp of latest message;
                         this.openChatStream(this.messagesArray[this.messagesArray.length - 1]['timestamp']);
 
                         resolve(true);

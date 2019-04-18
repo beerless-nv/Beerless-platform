@@ -18,12 +18,8 @@ export class BeerprofileComponent implements OnInit {
     }
 
     ngOnInit() {
-        const itemId = this.elm.nativeElement.getAttribute('item');
-        if (!isNaN(itemId)) {
-            this.beersService.getBeerById(itemId)
-                .then(data => {
-                    this.item = data;
-                });
+        if (this.elm.nativeElement.getAttribute('item') !== null) {
+            this.item = JSON.parse(this.elm.nativeElement.getAttribute('item'));
         }
     }
 }

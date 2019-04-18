@@ -1,31 +1,27 @@
 <div class="card card-sm-100w component-chatbot">
     <div class="card-body">
         <div class="col-12 px-0 d-flex flex-wrap">
-            <p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0">Bierprofiel</p>
+            <p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0">Beer profile</p>
 
 
             <!-- Beername, brewery and logo -->
 
             <div class="d-flex flex-row align-items-center col-12 px-0">
                 <div class="float-left mr-4">
-                    <img src="{{environment.imageURL + 'beer/logo/' + item?.logo}}" alt="Logo bierflesje {{item?.name}}"
+                    <img src="{{environment.imageURL + 'beer/logo/' + item?.logo}}" alt="Logo {{item?.name}}"
                          class="bier-item-image" *ngIf="item?.logo">
                 </div>
                 <div>
                     <h4 class="font-weight-bold d-sm-block d-none">{{item?.name}}</h4>
                     <h6 class="font-weight-bold d-sm-none d-block">{{item?.name}}</h6>
-                    <a routerLink="" class="link-muted-yellow">{{item?.brewery?.name}}</a>
+                    <ng-container *ngFor="let brewery of item?.breweries">
+                        <a routerLink="" class="link-muted-yellow">{{brewery?.name}}</a>
+                    </ng-container>
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="my-4 py-1">
-                {{item?.description | slice: 0:limit}}
-                <span [hidden]="moreShown">...</span>
-                <a [hidden]="moreShown" href
-                   (click)="limit=item?.description.length; moreShown = true; $event.preventDefault()"
-                   class="ml-2 font-weight-bold"> Toon meer</a>
-                <a [hidden]="!moreShown" href (click)="limit=210; moreShown = false" class="ml-2 font-weight-bold"> Toon
-                    minder</a>
+                <app-text-truncate [text]="item?.description" [limit]="210" [truncateSymbol]="'...'" [truncateText]="'Read more'"></app-text-truncate>
             </div>
             <div class="w-100">
 
@@ -34,16 +30,18 @@
 
                 <table id="table-beer-profile" class="table-valign-top">
                     <tr>
-                        <td class="text-uppercase font-weight-bold small">Stijl</td>
-                        <td *ngIf="item?.beertype?.name && item?.beertype?.name != 0">
-                            {{item?.beertype?.name}}
+                        <td class="text-uppercase font-weight-bold small">Styles</td>
+                        <td *ngIf="item?.styleTags">
+                            <ng-container *ngFor="let styleTag of item?.styleTags">
+                                <span class="badge badge-styletag">{{styleTag?.name}}</span>
+                            </ng-container>
                         </td>
-                        <td *ngIf="!item?.beertype?.name || item?.beertype?.name == 0">
+                        <td *ngIf="!item?.styleTags">
                             --
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-uppercase font-weight-bold small">Gisting</td>
+                        <td class="text-uppercase font-weight-bold small">Fermentation</td>
                         <td *ngIf="item?.fermentation && item?.fermentation != 0">
                             {{item?.fermentation}}
                         </td>
@@ -52,7 +50,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-uppercase font-weight-bold small">Seizoen</td>
+                        <td class="text-uppercase font-weight-bold small">Season</td>
                         <td *ngIf="item?.season && item?.season != 0">
                             {{item?.season}}
                         </td>
@@ -61,7 +59,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-uppercase font-weight-bold small">Glas</td>
+                        <td class="text-uppercase font-weight-bold small">Glass</td>
                         <td *ngIf="item?.glass">{{item?.glass}}</td>
                         <td *ngIf="!item?.glass">
                             --
@@ -127,7 +125,7 @@
                     <div class="card bg-super-light">
                         <div class="card-body p-2">
                             <div>
-                                <small class="text-grey">SINDS</small>
+                                <small class="text-grey">SINCE</small>
                             </div>
                             <div>
                                 <small class="font-weight-bold"

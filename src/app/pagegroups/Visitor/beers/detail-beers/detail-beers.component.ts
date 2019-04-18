@@ -28,6 +28,8 @@ export class DetailBeersComponent implements OnInit {
 
     getBeerById(beerId) {
         this.beersService.getBeerById(beerId)
-            .then(data => this.beer = data);
+            .then(data => {
+                this.beer = data;
+            });
     }
 }

@@ -63,6 +63,7 @@ import {UploadComponent} from './sharedComponents/chatbot/extra/upload/upload.co
 import {FileDropModule} from 'ngx-file-drop';
 import {DragScrollModule} from 'ngx-drag-scroll/lib';
 import {SafeURLPipe} from './_pipes/safeURL.pipe';
+import {TextTruncateComponent} from './sharedComponents/text-truncate/text-truncate.component';
 
 @NgModule({
     declarations: [
@@ -108,6 +109,7 @@ import {SafeURLPipe} from './_pipes/safeURL.pipe';
         ExtraComponent,
         EmoticonsComponent,
         UploadComponent,
+        TextTruncateComponent,
     ],
     imports: [
         BrowserModule,

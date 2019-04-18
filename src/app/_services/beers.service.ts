@@ -87,7 +87,10 @@ export class BeersService {
     // }
 
     getBeerById(id) {
-        return this.http.get(this.urlBeer + '/' + id)
+        const params = new HttpParams()
+            .append('filter', '{"include":[{"relation":"breweries","scope":{"include":{"relation":"beerFromBreweries","scope":{"where":{"beerId":847}}}}},"styleTags"]}');
+
+        return this.http.get(this.urlBeer + '/' + id, {params})
             .toPromise();
     }
 
