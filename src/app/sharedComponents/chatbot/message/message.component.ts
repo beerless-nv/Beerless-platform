@@ -92,7 +92,11 @@ export class MessageComponent implements OnInit {
                         break;
                     case 'location':
                         this.text = this.message['message'];
-                        this.src = 'https://www.google.com/maps/embed/v1/place?key=' + environment.mapsAPIKey + '&q=' + this.message['location']['streetAndNumber'] + '+' + this.message['location']['place'] + '+' + this.message['location']['postcode'] + '+' + this.message['location']['country'];
+                        let query = '';
+                        for (const location in this.message['location']) {
+                            query += this.message['location'][location] + '+';
+                        }
+                        this.src = 'https://www.google.com/maps/embed/v1/place?key=' + environment.mapsAPIKey + '&q=' + query;
                         this.cdref.detectChanges();
                         break;
                     case 'elements':

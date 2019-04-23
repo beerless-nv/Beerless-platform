@@ -64,6 +64,7 @@ import {FileDropModule} from 'ngx-file-drop';
 import {DragScrollModule} from 'ngx-drag-scroll/lib';
 import {SafeURLPipe} from './_pipes/safeURL.pipe';
 import {TextTruncateComponent} from './sharedComponents/text-truncate/text-truncate.component';
+import {BreweriesModule} from './pagegroups/Visitor/breweries/breweries.module';
 
 @NgModule({
     declarations: [
@@ -131,6 +132,7 @@ import {TextTruncateComponent} from './sharedComponents/text-truncate/text-trunc
         FileDropModule,
         DragScrollModule,
         NgScrollbarModule,
+        BreweriesModule,
     ],
     providers: [
         {

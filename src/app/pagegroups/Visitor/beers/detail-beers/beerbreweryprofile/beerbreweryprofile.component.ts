@@ -15,7 +15,6 @@ export class BeerbreweryprofileComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.item);
         this.logo = environment.imageURL + '/brewery/logo/' + this.item.logo;
     }
 

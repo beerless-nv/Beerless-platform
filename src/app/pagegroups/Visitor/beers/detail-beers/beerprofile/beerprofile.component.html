@@ -20,10 +20,10 @@
                 </div>
             </div>
             <div class="clearfix"></div>
-            <div class="my-4 py-1">
+            <div class="mt-4 py-1">
                 <app-text-truncate [text]="item?.description" [limit]="210" [truncateSymbol]="'...'" [truncateText]="'Read more'"></app-text-truncate>
             </div>
-            <div class="w-100">
+            <div class="mt-4 w-100">
 
 
                 <!-- Information in table (beerstyle, fermentation, season, glass) -->
@@ -31,12 +31,12 @@
                 <table id="table-beer-profile" class="table-valign-top">
                     <tr>
                         <td class="text-uppercase font-weight-bold small">Styles</td>
-                        <td *ngIf="item?.styleTags">
+                        <td *ngIf="item?.styleTags?.length > 0">
                             <ng-container *ngFor="let styleTag of item?.styleTags">
                                 <span class="badge badge-styletag">{{styleTag?.name}}</span>
                             </ng-container>
                         </td>
-                        <td *ngIf="!item?.styleTags">
+                        <td *ngIf="item?.styleTags?.length === 0">
                             --
                         </td>
                     </tr>
@@ -136,9 +136,6 @@
                     </div>
                 </div>
             </div>
-            <!--<div class="col-4 justify-content-center align-items-center pr-0 d-sm-flex d-none">-->
-            <!--<img src="{{environment.beerImageURL + item?.picture}}" alt="Afbeelding bierflesje {{item?.name}}" class="image-beer-profile" *ngIf="item?.picture">-->
-            <!--</div>-->
         </div>
     </div>
 </div>

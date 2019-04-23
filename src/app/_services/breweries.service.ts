@@ -31,6 +31,10 @@ export class BreweriesService {
             });
     }
 
+    getBreweryById(id) {
+        return this.http.get(this.urlBrewery + '/' + id);
+    }
+
     getAllBreweries() {
         const params = new HttpParams()
             .set('value', 'ID,name');

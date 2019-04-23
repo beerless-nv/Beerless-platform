@@ -14,18 +14,26 @@ import {AuthGuardService} from './_services/authorization/auth-guard.service';
 import {SignupComponent} from './pagegroups/Visitor/signup/signup.component';
 import {SigninComponent} from './pagegroups/Visitor/signin/signin.component';
 import {BeerprofileComponent} from './pagegroups/Visitor/beers/detail-beers/beerprofile/beerprofile.component';
+import {DetailBreweriesComponent} from './pagegroups/Visitor/breweries/detail-breweries/detail-breweries.component';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'sign-up', component: SignupComponent},
     {path: 'sign-in', component: SigninComponent},
+    // search page
+    {path: 'search', component: IndexBeersComponent},
     // All pages from beers
     {
         path: 'beers', children: [
-            {path: '', component: IndexBeersComponent},
             {path: 'add', component: AddBeersComponent, canActivate: [AuthGuardService]},
-            {path: 'detail/:id', component: DetailBeersComponent},
-            {path: 'detail/embed/:id', component: BeerprofileComponent},
+            {path: ':id', component: DetailBeersComponent},
+        ]
+    },
+    // All pages from breweries
+    {
+        path: 'breweries', children: [
+            // {path: 'add', component: AddBreweriesComponent, canActivate: [AuthGuardService]},
+            {path: ':id', component: DetailBreweriesComponent},
         ]
     },
     // ALL pages from blog
