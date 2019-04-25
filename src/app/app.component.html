@@ -1,24 +1,20 @@
-<div *ngIf="!currentUrl?.includes('embed')">
+<!-- navigation -->
+
+<beerless-navbar class="d-lg-block d-none"></beerless-navbar>
+<beerless-navbar-mobile class="d-lg-none d-block"></beerless-navbar-mobile>
 
 
-    <!-- navigation -->
+<!-- reserve space for desktop navbar -->
 
-    <app-navbar class="d-lg-block d-none"></app-navbar>
-    <app-navbar-mobile class="d-lg-none d-block"></app-navbar-mobile>
-
-
-    <!-- reserve space for desktop navbar -->
-
-    <div class="top-offset-content bg-white d-lg-block d-none"></div>
-    <ngx-loading-bar [color]="'#f9b054'" [fixed]="true" [hidden]="error"></ngx-loading-bar>
+<div class="top-offset-content bg-white d-lg-block d-none"></div>
+<ngx-loading-bar [color]="'#f9b054'" [fixed]="true" [hidden]="error"></ngx-loading-bar>
 
 
-    <!-- loading and error screen -->
+<!-- loading and error screen -->
 
-    <div [hidden]="loading == false && error == false">
-        <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
-            <app-error *ngIf="error == true"></app-error>
-        </div>
+<div [hidden]="loading == false && error == false">
+    <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
+        <beerless-error *ngIf="error == true"></beerless-error>
     </div>
 </div>
 
@@ -32,21 +28,16 @@
 
 <!-- chatbot -->
 
-<app-chatbot></app-chatbot>
+<beerless-chatbot></beerless-chatbot>
 
 
+<!-- display toast messages -->
 
-<div *ngIf="!currentUrl?.includes('embed')">
-
-
-    <!-- display toast messages -->
-
-    <app-toast></app-toast>
+<beerless-toast></beerless-toast>
 
 
-    <!-- reserve space for navbar-mobile -->
+<!-- reserve space for navbar-mobile -->
 
-    <div class="bottom-offset-content bg-white d-lg-none d-block"></div>
+<div class="bottom-offset-content bg-white d-lg-none d-block"></div>
 
-    <app-footer class="d-lg-block d-none"></app-footer>
-</div>
+<app-footer class="d-lg-block d-none"></app-footer>

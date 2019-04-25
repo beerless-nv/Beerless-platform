@@ -3,11 +3,10 @@ import {environment} from '../../environments/environment';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {catchError, share, tap} from 'rxjs/operators';
 import {EMPTY, Observable, BehaviorSubject} from 'rxjs';
-import {User} from '../_interfaces/user';
 import {Router} from '@angular/router';
-import {ToastsService} from './toasts.service';
+import {ToastService} from '../shared/components/toast/toast.service';
 import {LocalStorageService} from './local-storage.service';
-import {AuthService} from './authorization/auth.service';
+import {AuthService} from '../core/authorization/auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -19,13 +18,13 @@ export class LoginService {
     readonly urlUser = environment.backend + 'users/';
     readonly urlUserSocial = environment.backend + 'usersocials';
 
-    userData$: BehaviorSubject<User> = new BehaviorSubject(null);
+    userData$: BehaviorSubject<any> = new BehaviorSubject(null);
 
     messageLogin$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
     messageRegister$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
     errorMessageArray = [];
 
-    constructor(private http: HttpClient, private router: Router, private toastsService: ToastsService, private localStorageService: LocalStorageService, private authService: AuthService) {
+    constructor(private http: HttpClient, private router: Router, private toastsService: ToastService, private localStorageService: LocalStorageService, private authService: AuthService) {
         if (this.authService.isAuthenticated()) {
             this.userData$.next(this.localStorageService.getUser());
         } else {
@@ -33,7 +32,7 @@ export class LoginService {
         }
     }
 
-    // Authenticate user through API
+    // Authenticate member through API
     signIn(username, password) {
         return this.http.post(this.urlSignIn, {
             username: username,
@@ -42,7 +41,7 @@ export class LoginService {
             .toPromise()
             .then(data => {
                 this.localStorageService.clearUser();
-                this.setUserData(data['user'].ID, data['token']);
+                this.setUserData(data['member'].ID, data['token']);
             })
             .catch(error => {
                 this.errorMessageArray = error.error['msg'];
@@ -71,7 +70,7 @@ export class LoginService {
             });
     }
 
-    // Locally log the user out
+    // Locally log the member out
     logout() {
         this.userData$.next(null);
         this.messageLogin$.next(null);
@@ -84,11 +83,11 @@ export class LoginService {
         return this.userData$;
     }
 
-    // Locally log the user in
+    // Locally log the member in
     setUserData(userId: number, token) {
         if (userId !== null) {
             this.getCurrentUser(userId).then(data => {
-                const user = data['user'];
+                const user = data['member'];
                 const usersocial = [];
 
                 for (let i = 0; i < user.usersocial.length; i++) {
@@ -115,7 +114,7 @@ export class LoginService {
         }
     }
 
-    // log in user via social login
+    // log in member via social login
     setUserSocialData(user) {
         if (user !== null) {
             this.getUserSocial('socialID', user.id)
@@ -129,7 +128,7 @@ export class LoginService {
                             email: user.email
                         })
                             .then(newUserObject => {
-                                const newUser = newUserObject['user'];
+                                const newUser = newUserObject['member'];
 
                                 this.insertUserSocial({
                                     userID: newUser.ID,

@@ -3,10 +3,10 @@ import {isPlatformBrowser, LocationStrategy} from '@angular/common';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {LoadingService} from './_services/loading.service';
 import {SwUpdate} from '@angular/service-worker';
-import {ErrorService} from './_services/error.service';
+import {ErrorService} from './shared/components/error/error.service';
 import {CookieService} from 'ngx-cookie-service';
-import {AgeVerificationComponent} from './sharedComponents/age-verification/age-verification.component';
-import {IeWarningComponent} from './sharedComponents/ie-warning/ie-warning.component';
+import {AgeVerificationComponent} from './shared/components/age-verification/age-verification/age-verification.component';
+import {IeWarningComponent} from './shared/components/ie-warning/ie-warning/ie-warning.component';
 import {NgbActiveModal, NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
 declare var OverlayScrollbars: any;
@@ -23,7 +23,6 @@ export class AppComponent implements OnInit {
     private _deferredRestore = false;
     loading: Boolean = false;
     error: Boolean = false;
-    currentUrl;
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
                 public router: Router,
@@ -34,17 +33,6 @@ export class AppComponent implements OnInit {
                 private errorService: ErrorService,
                 private modalService: NgbModal,
                 private cookieService: CookieService) {
-        router.events.subscribe((e) => {
-            if (e instanceof NavigationEnd) {
-                this.currentUrl = e.url;
-
-                // change margin of card-sm-100w when embedding
-                if (e.url.includes('embed')) {
-                    const cardSm100w = document.querySelector('.card-sm-100w');
-                    cardSm100w.className = 'cardEmbed';
-                }
-            }
-        });
 
         // show modal age verification
         this.ageVerification();
@@ -54,9 +42,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        // Change scrollbar
-        // OverlayScrollbars(document.querySelectorAll('body'), {});
-
         // Message to update app when on PWA
         this.swUpdate.available.subscribe(evt => {
             if (confirm('De Beerless app is aangepast. Wil je de nieuwe versie openen?')) {

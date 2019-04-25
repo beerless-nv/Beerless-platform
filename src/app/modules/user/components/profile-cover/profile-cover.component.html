@@ -1,0 +1,81 @@
+<div class="user-profile-cover-picture-container"
+     [class.user-profile-cover-picture-container-scroll]="coverTopMargin">
+    <div class="user-profile-cover-picture" [style.background-image]="'url(' + (backgroundPictureSrc) + ')'">
+        <div class="user-profile-cover-picture-gradient">
+            <div class="container d-flex justify-content-end align-items-end">
+                <div class="col-xl-9 col-lg-8 mb-3 px-0 d-flex flex-wrap">
+                    <div class="px-0 order-1 col-lg-12 col-0">
+                        <div class="hide-scroll d-flex justify-content-between flex-row align-items-lg-end align-items-center">
+                            <div class="d-flex align-items-center">
+
+                                <!-- member picture when small device -->
+                                <div class="mr-3">
+                                    <div class="d-lg-none d-block mb-3">
+                                        <div [style.background-image]="'url(' + (user?.picture || user?.usersocial[0].picture) + ')'"
+                                             class="user-profile-image"></div>
+                                    </div>
+                                </div>
+
+                                <!-- member information when small device -->
+                                <div>
+                                    <h4 class="user-profile-name d-lg-none d-sm-block d-none">{{user?.firstName}}
+                                        {{user?.lastName}}
+                                        <span class="badge badge-primary function-tag">{{user?.totalPoints}}</span>
+                                    </h4>
+                                    <h5 class="user-profile-name d-sm-none d-block">{{user?.firstName}}
+                                        {{user?.lastName}}
+                                        <span class="badge badge-primary function-tag">{{user?.totalPoints}}</span>
+                                    </h5>
+                                    <p class="text-white mb-3 mt-lg-2 mt-1 d-lg-none d-sm-block d-none"
+                                       *ngIf="user?.place || user?.province || user?.country">
+                                        <span *ngIf="user?.place">{{user?.place}}</span>
+                                        <span *ngIf="user?.province">, {{user?.province}}</span>
+                                        <span *ngIf="user?.country">, {{user?.country}}</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- add friend button -->
+                            <!--<div class="mb-3 d-sm-block d-none btn-add-friend">-->
+                                <!--<a routerLink="" class="btn btn-outline-light btn-hover-opacity-15 btn-small">-->
+                                    <!--<small class="p-0">-->
+                                        <!--<i class="fas fa-member-plus mr-md-2 mr-1 ml-1"></i> <span-->
+                                            <!--class="d-md-inline d-none">Vriend toevoegen</span>-->
+                                    <!--</small>-->
+                                <!--</a>-->
+                            <!--</div>-->
+                        </div>
+                        <div class="show-scroll text-white">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="container-name-scroll d-flex align-items-center mb-lg-1 mb-0">
+                                    <div class="mr-3">
+                                        <div class="d-lg-none d-block">
+                                            <div [style.background-image]="'url(' + (user?.picture || user?.usersocial[0].picture) + ')'"
+                                                 class="user-profile-image"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-lg-none d-block">
+                                        <h5 class="user-profile-name mb-0">{{user?.firstName}} {{user?.lastName}}
+                                            <span class="badge badge-primary function-tag">18603</span>
+                                        </h5>
+                                        <p class="text-white mb-0 small d-sm-block d-none">
+                                            <span *ngIf="user?.place">{{user?.place}}</span>
+                                            <span *ngIf="user?.province">, {{user?.province}}</span>
+                                            <span *ngIf="user?.country">, {{user?.country}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <!--<a routerLink="" class="btn btn-outline-light btn-hover-opacity-15 btn-small d-sm-block d-none btn-add-friend">-->
+                                    <!--<small>-->
+                                        <!--<i class="fas fa-member-plus mr-md-2 mr-1 ml-1"></i> <span-->
+                                            <!--class="d-md-inline d-none">Vriend toevoegen</span>-->
+                                    <!--</small>-->
+                                <!--</a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,20 +1,20 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {HomeComponent} from './pagegroups/Visitor/home/home.component';
-import {IndexBeersComponent} from './pagegroups/Visitor/beers/index-beers/index-beers.component';
-import {AddBeersComponent} from './pagegroups/Member/beers/add-beers/add-beers.component';
-import {DetailBeersComponent} from './pagegroups/Visitor/beers/detail-beers/detail-beers.component';
-import {IndexBlogComponent} from './pagegroups/Visitor/blog/index-blog/index-blog.component';
-import {ArticleComponent} from './pagegroups/Visitor/blog/article/article.component';
-import {SettingsUsersComponent} from './pagegroups/Member/users/settings-users/settings-users.component';
-import {ProfileUsersComponent} from './pagegroups/Visitor/users/profile-users/profile-users.component';
-import {WishlistUsersComponent} from './pagegroups/Visitor/users/wishlist-users/wishlist-users.component';
-import {AuthGuardService} from './_services/authorization/auth-guard.service';
-import {SignupComponent} from './pagegroups/Visitor/signup/signup.component';
-import {SigninComponent} from './pagegroups/Visitor/signin/signin.component';
-import {BeerprofileComponent} from './pagegroups/Visitor/beers/detail-beers/beerprofile/beerprofile.component';
-import {DetailBreweriesComponent} from './pagegroups/Visitor/breweries/detail-breweries/detail-breweries.component';
+import {HomeComponent} from './modules/Visitor/home/home.component';
+import {IndexBeersComponent} from './modules/beer/pages/visitor/index-beers/index-beers.component';
+import {AddBeersComponent} from './modules/beer/pages/member/add-beers/add-beers.component';
+import {DetailBeersComponent} from './modules/beer/pages/visitor/detail-beers/detail-beers.component';
+import {IndexBlogComponent} from './modules/blog/pages/visitor/index-blog/index-blog.component';
+import {ArticleComponent} from './modules/blog/pages/visitor/article/article.component';
+import {SettingsUsersComponent} from './modules/user/pages/member/settings-users/settings-users.component';
+import {ProfileUsersComponent} from './modules/user/pages/visitor/profile-users/profile-users.component';
+import {WishlistUsersComponent} from './modules/user/pages/visitor/wishlist-users/wishlist-users.component';
+import {AuthGuardService} from './core/authorization/auth-guard.service';
+import {SignupComponent} from './modules/sign-up/pages/visitor/signup/signup.component';
+import {SigninComponent} from './modules/sign-in/pages/visitor/signin/signin.component';
+import {BeerprofileComponent} from './modules/beer/components/beerprofile/beerprofile.component';
+import {DetailBreweriesComponent} from './modules/brewery/pages/visitor/detail-breweries/detail-breweries.component';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},

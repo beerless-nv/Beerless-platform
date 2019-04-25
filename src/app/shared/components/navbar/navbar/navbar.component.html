@@ -1,0 +1,65 @@
+<!-- MAIN NAVIGATION -->
+
+<nav class="navbar navbar-expand-lg navbar-light px-4 py-0 bg-white fixed-top">
+
+
+    <!-- Logo section -->
+
+    <a class="navbar-brand ml-2" routerLink="/home">
+        <img src="/src/assets/images/logo_beerless_donker.svg" alt="logo Beerless" style="height: 30px" class=""/>
+    </a>
+
+
+    <!-- Menu section -->
+
+    <div class="collapse navbar-collapse my-0" id="navbarNavAltMarkup">
+        <div class="ml-auto row h-100">
+
+
+            <!-- Main menu -->
+
+            <div class="navbar-nav position-relative d-flex align-items-center">
+                <app-regular-menu-item [menuItem]="menuItem" *ngFor="let menuItem of menuItems"></app-regular-menu-item>
+                <div class="nav-divider"></div>
+            </div>
+
+
+            <!-- Right menu (sign-in, signup and profile) -->
+
+            <div class="navbar-nav ml-2rem mr-2 d-flex align-items-center">
+
+
+                <!-- Sign in -->
+
+                <a *ngIf="!user" class="nav-item nav-link" routerLink="/sign-in" routerLinkActive="active">
+                    <i class="fas fa-user-circle"></i> &nbsp;Log in
+                </a>
+
+
+                <!-- User profile -->
+
+                <a *ngIf="user" class="nav-item nav-link mouse-pointer" routerLinkActive="active">
+                    <div class="navbar-profile-picture" [style.background-image]="'url(' + user.picture + ')'"></div>
+                    <span class="ml-2 small font-weight-bold text-grey-dark"
+                          [hidden]="!user.firstName || !user.lastName">{{user.firstName}} {{user.lastName}}</span>
+                    <span class="ml-2 small my-0 font-weight-bold" [hidden]="user.firstName && user.lastName">{{user.username}}</span>
+
+                    <div class="nav-submenu-container nav-submenu-left">
+                        <div class="arrow-container">
+                            <div class="arrow-up float-right"></div>
+                        </div>
+                        <div class="nav-submenu">
+                            <a class="nav-item nav-link nav-link-padding" routerLink="/user/profile/{{user.ID}}"
+                               routerLinkActive="active">Profiel</a>
+                            <!--<a class="nav-item nav-link nav-link-padding" routerLink="/member/wishlist/{{member.ID}}"-->
+                               <!--routerLinkActive="active">Wishlist</a>-->
+                            <a class="nav-item nav-link nav-link-padding" routerLink="/user/settings"
+                               routerLinkActive="active">Instellingen</a>
+                            <a class="nav-item nav-link nav-link-padding" (click)="logout()" routerLinkActive="active">Uitloggen</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>

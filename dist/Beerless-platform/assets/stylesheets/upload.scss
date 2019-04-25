@@ -1,0 +1,113 @@
+.upload {
+    height: 100%;
+
+    .dropzone {
+        border: 1px dashed $muted;
+        height: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.2s ease-in-out;
+        border-radius: 0.25rem;
+    }
+
+    .ngx-file-drop__drop-zone--over {
+        background-color: $light !important;
+    }
+
+    .over {
+        background-color: red;
+    }
+
+    .dropzone-content {
+        color: $dark;
+        text-align: center;
+
+        div:last-child {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .dropzone-browse {
+        background-color: transparent;
+        color: $yellow;
+        cursor: pointer;
+        height: 25px !important;
+        font-size: 0.8rem;
+        display: block;
+        padding: 0 10px;
+        margin-top: ($spacer * 1);
+        border: 1px solid $yellow;
+        border-radius: 0.25rem;
+        transition: background-color 0.2s ease-in-out;
+
+        &:hover {
+            background-color: rgba(249, 176, 84, 0.1);
+        }
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .upload-table-container {
+        height: 40%;
+
+        .upload-table {
+            margin: 0px 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            overflow-x: -moz-scrollbars-none;
+            height: calc(100% - 31.2px - 10px);
+
+            .text-muted-light {
+                color: $grey;
+            }
+
+            .upload-item {
+                padding-bottom: 5px;
+                font-size: 0.8rem;
+                white-space: nowrap;
+                width: 100%;
+                overflow-x: hidden;
+                display: flex;
+
+                .upload-item-text {
+                    text-overflow: ellipsis;
+                    width: calc(100% - (0.8rem + (1rem * 0.5)));
+                    overflow: hidden;
+                    //width: 100%;
+                }
+
+                &:last-child {
+                    padding-bottom: 0px;
+                }
+            }
+
+            &::-webkit-scrollbar {
+                width: 11px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: $grey;
+                border-radius: 12px;
+                border: 3px solid #fff;
+                padding-bottom: 5px;
+            }
+        }
+
+        .upload-button {
+            font-size: $small-font-size;
+            padding: 5px;
+            width: 100%;
+            color: rgba(0, 0, 0, 0.5);
+            border-color: $muted;
+
+            &:hover {
+                color: rgba(0, 0, 0, 0.5);
+                background-color: rgba(0, 0, 0, 0.02);
+            }
+        }
+    }
+}

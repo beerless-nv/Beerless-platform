@@ -1,0 +1,162 @@
+<div class="card border-yellow-top p-0 border-sm-0">
+    <div class="card-body p-sm-5 p-4 pt-5">
+        <div class="d-flex flex-row">
+
+
+            <!-- Message after sign-in up -->
+
+            <div class="h-100 d-flex align-items-center" *ngIf="registrationSuccessful">
+                <div>
+                    <h3 class="mb-5 font-weight-bold text-primary">Proficiat!</h3>
+                    <h5 class="mb-3 text-muted">
+                        Je bent nu officieel lid van de leukste speciaalbier community!
+                    </h5>
+                    <h5 class="mb-3 text-muted">
+                        <a routerLink="/sign-in">Log in</a> om de community te ontdekken.
+                    </h5>
+                    <h5 class="mb-5 text-muted">
+                        Bedankt!
+                    </h5>
+                </div>
+            </div>
+
+
+            <!-- Signup form -->
+
+            <div *ngIf="!registrationSuccessful">
+                <h4 class="mb-3 font-weight-bold text-primary">Registreer</h4>
+                <form novalidate [formGroup]="formRegister" (ngSubmit)="register()" autocomplete="off">
+                    <div class="form-group mb-3">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Voornaam"
+                                   id="firstName"
+                                   formControlName="firstName">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="invalid-input"
+                             *ngIf="formRegister.get('firstName').touched && formRegister.get('firstName').invalid">
+                            <div *ngIf="formRegister.get('firstName').hasError('required')">
+                                Vul een voornaam in!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Achternaam"
+                                   id="lastName"
+                                   formControlName="lastName">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="invalid-input"
+                             *ngIf="formRegister.get('lastName').touched && formRegister.get('lastName').invalid">
+                            <div *ngIf="formRegister.get('lastName').hasError('required')">
+                                Vul een achternaam in!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="input-icon">
+                            <input type="text" class="form-control" placeholder="Gebruikersnaam"
+                                   id="usernameRegister"
+                                   formControlName="username">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="invalid-input"
+                             *ngIf="formRegister.get('username').touched && formRegister.get('username').invalid">
+                            <div *ngIf="formRegister.get('username').hasError('required')">
+                                Vul een gebruikersnaam in!
+                            </div>
+                            <div *ngIf="formRegister.get('username').hasError('minlength')">
+                                Gebruikersnaam moet minimaal 3 karakters bevatten!
+                            </div>
+                            <div *ngIf="formRegister.get('username').hasError('maxlength')">
+                                Gebruikersnaam mag maximaal 25 karakters bevatten!
+                            </div>
+                            <div *ngIf="formRegister.get('username').hasError('pattern')">
+                                Gebruikersnaam mag enkel letters, cijfers en een koppelteken bevatten!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="input-icon">
+                            <input type="email" class="form-control" id="emailRegister"
+                                   placeholder="E-mailadres"
+                                   formControlName="email">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="invalid-input"
+                             *ngIf="formRegister.get('email').touched && formRegister.get('email').invalid">
+                            <div *ngIf="formRegister.get('email').hasError('required')">
+                                Vul een e-mailadres in!
+                            </div>
+                            <div *ngIf="formRegister.get('email').hasError('email')">
+                                Vul een geldig e-mailadres in!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <div class="input-icon">
+                            <input type="password" class="form-control" placeholder="Wachtwoord"
+                                   id="passwordRegister"
+                                   formControlName="password">
+                            <i class="fas fa-unlock-alt"></i>
+                        </div>
+                        <div class="invalid-input"
+                             *ngIf="formRegister.get('password').touched && formRegister.get('password').invalid">
+                            <div *ngIf="formRegister.get('password').hasError('required')">
+                                Vul een wachtwoord in!
+                            </div>
+                            <div *ngIf="formRegister.get('password').hasError('minlength')">
+                                Wachtwoord moet minimaal 8 karakters bevatten!
+                            </div>
+                            <div *ngIf="formRegister.get('password').hasError('pattern')">
+                                Wachtwoord moet minimaal 1 letter, 1 hoofdletter, 1 cijfer en 1 speciaal
+                                karakter bevatten!
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Server side error messages -->
+
+                    <p class="invalid-input text-center" *ngFor="let msg of messageRegister">{{msg}}</p>
+
+
+                    <!-- Warning messages -->
+
+                    <div class="mb-3">
+                        <small>
+                            Je moet de legale drinkleeftijd in je land hebben om je te registreren
+                            bij Beerless.
+                            Door op <strong>Registreer</strong> te klikken, accepteer je onze <a
+                                href="https://www.beerless.be/assets/Voorwaarden/Privacy_Beleid_Beerless.pdf">voorwaarden</a>.
+                        </small>
+                    </div>
+
+
+                    <!-- Submit form -->
+
+                    <div class="form-group text-center">
+                        <button class="btn btn-primary text-white px-5" type="submit"
+                                [disabled]="formRegister.invalid">Registreer
+                        </button>
+                    </div>
+
+
+                    <!-- Link to sign in -->
+
+                    <p class="text-center">
+                        Heeft u al een account?
+                        <strong>
+                            <a routerLink="/sign-in">Inloggen</a>
+                        </strong>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,142 @@
+<div class="card card-sm-100w component-chatbot">
+    <div class="card-body">
+        <div class="col-12 px-0 d-flex flex-wrap">
+            <p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0">Beer profile</p>
+
+
+            <!-- Beername, brewery and logo -->
+
+            <div class="d-flex flex-row align-items-center col-12 px-0">
+                <div class="float-left mr-4">
+                    <img src="{{environment.imageURL + 'beer/logo/' + item?.logo}}" alt="Logo {{item?.name}}"
+                         class="bier-item-image" *ngIf="item?.logo">
+                </div>
+                <div>
+                    <h4 class="font-weight-bold d-sm-block d-none">{{item?.name}}</h4>
+                    <h6 class="font-weight-bold d-sm-none d-block">{{item?.name}}</h6>
+                    <ng-container *ngFor="let brewery of item?.breweries">
+                        <a routerLink="" class="link-muted-yellow">{{brewery?.name}}</a>
+                    </ng-container>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="mt-4 py-1">
+                <beerless-text-truncate [text]="item?.description" [limit]="210" [truncateSymbol]="'...'"
+                                   [truncateText]="'Read more'"></beerless-text-truncate>
+            </div>
+            <div class="mt-4 w-100">
+
+
+                <!-- Information in table (beerstyle, fermentation, season, glass) -->
+
+                <table id="table-beer-profile" class="table-valign-top">
+                    <tr>
+                        <td class="text-uppercase font-weight-bold small">Styles</td>
+                        <td *ngIf="item?.styleTags?.length > 0">
+                            <ng-container *ngFor="let styleTag of item?.styleTags">
+                                <span class="badge badge-styletag">{{styleTag?.name}}</span>
+                            </ng-container>
+                        </td>
+                        <td *ngIf="item?.styleTags?.length === 0">
+                            --
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-uppercase font-weight-bold small">Fermentation</td>
+                        <td *ngIf="item?.fermentation && item?.fermentation != 0">
+                            {{item?.fermentation}}
+                        </td>
+                        <td *ngIf="!item?.fermentation || item?.fermentation == 0">
+                            --
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-uppercase font-weight-bold small">Season</td>
+                        <td *ngIf="item?.season && item?.season != 0">
+                            {{item?.season}}
+                        </td>
+                        <td *ngIf="!item?.season || item?.season == 0">
+                            --
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-uppercase font-weight-bold small">Glass</td>
+                        <td *ngIf="item?.glass">{{item?.glass}}</td>
+                        <td *ngIf="!item?.glass">
+                            --
+                        </td>
+                    </tr>
+                </table>
+
+
+                <!-- Information in card-group (ABV, IBU, EBC, temp., since) -->
+
+                <div class="card-group mt-4 pt-2 text-center card-group-beer-profile">
+                    <div class="card bg-super-light">
+                        <div class="card-body p-2">
+                            <div>
+                                <small class="text-grey">ABV</small>
+                            </div>
+                            <div>
+                                <small class="font-weight-bold" *ngIf="item?.ABV || item?.ABV != 0">{{item?.ABV}}%
+                                </small>
+                                <small class="font-weight-bold" *ngIf="!item?.ABV || item?.ABV == 0">--</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-super-light">
+                        <div class="card-body p-2">
+                            <div>
+                                <small class="text-grey">IBU</small>
+                            </div>
+                            <div>
+                                <small class="font-weight-bold"
+                                       *ngIf="item?.IBU || item?.IBU != 0">{{item?.IBU}}</small>
+                                <small class="font-weight-bold" *ngIf="!item?.IBU || item?.IBU == 0">--</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-super-light">
+                        <div class="card-body p-2">
+                            <div>
+                                <small class="text-grey">EBC</small>
+                            </div>
+                            <div>
+                                <small class="font-weight-bold"
+                                       *ngIf="item?.EBC || item?.EBC != 0">{{item?.EBC}}</small>
+                                <small class="font-weight-bold" *ngIf="!item?.EBC || item?.EBC == 0">--</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-super-light">
+                        <div class="card-body p-2">
+                            <div>
+                                <small class="text-grey">TEMP.</small>
+                            </div>
+                            <div>
+                                <small class="font-weight-bold" *ngIf="item?.temperature || item?.temperature != 0">
+                                    {{item?.temperature}}°C
+                                </small>
+                                <small class="font-weight-bold" *ngIf="!item?.temperature || item?.temperature == 0">
+                                    --
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card bg-super-light">
+                        <div class="card-body p-2">
+                            <div>
+                                <small class="text-grey">SINCE</small>
+                            </div>
+                            <div>
+                                <small class="font-weight-bold"
+                                       *ngIf="item?.since || item?.since != 0">{{item?.since}}</small>
+                                <small class="font-weight-bold" *ngIf="!item?.since || item?.since == 0">--</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
