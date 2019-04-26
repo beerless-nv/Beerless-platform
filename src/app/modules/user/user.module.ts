@@ -13,14 +13,16 @@ import {ProfileAboutComponent} from './components/profile-content/profile-about/
 import {ProfileFavouriteComponent} from './components/profile-content/profile-about/profile-favourite/profile-favourite.component';
 import {ProfilePersonalComponent} from './components/profile-content/profile-about/profile-personal/profile-personal.component';
 import {ProfileActivitiesComponent} from './components/profile-content/profile-activities/profile-activities.component';
-import {AppRoutingModule} from '../../app-routing.module';
+import {ActivityService} from './shared/activity.service';
+import {UserService} from './shared/user.service';
+import {UserRoutingModule} from './user-routing.module';
 
 @NgModule({
     imports: [
         CommonModule,
         NgxBootstrapModule,
         ReactiveFormsModule,
-        AppRoutingModule,
+        UserRoutingModule
     ],
     declarations: [
         SettingsUsersComponent,
@@ -34,7 +36,11 @@ import {AppRoutingModule} from '../../app-routing.module';
         ProfileFavouriteComponent,
         ProfilePersonalComponent,
         ProfileActivitiesComponent,
+    ],
+    providers: [
+        UserService,
+        ActivityService
     ]
 })
-export class UsersModule {
+export class UserModule {
 }

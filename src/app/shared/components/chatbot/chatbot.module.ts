@@ -14,7 +14,7 @@ import {SafeURLPipe} from '../../pipes/safeURL.pipe';
 import {DragScrollModule} from 'ngx-drag-scroll/lib';
 import {AppRoutingModule} from '../../../app-routing.module';
 import {TextTruncateModule} from '../text-truncate/text-truncate.module';
-import {BeerprofileComponent} from '../../../modules/beer/components/beerprofile/beerprofile.component';
+import {BeerprofileComponent} from '../../platform-components/beerprofile/beerprofile/beerprofile.component';
 
 @NgModule({
     imports: [

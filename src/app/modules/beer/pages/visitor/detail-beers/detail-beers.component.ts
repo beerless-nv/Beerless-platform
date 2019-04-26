@@ -13,7 +13,7 @@ export class DetailBeersComponent implements OnInit {
     environment = environment;
     beer;
 
-    constructor(private beersService: BeerService, private route: ActivatedRoute) {
+    constructor(private beerService: BeerService, private route: ActivatedRoute) {
     }
 
     ngOnInit() {
@@ -23,7 +23,7 @@ export class DetailBeersComponent implements OnInit {
     }
 
     getBeerById(beerId) {
-        this.beersService.getBeerById(beerId)
+        this.beerService.getBeerById(beerId)
             .then(data => {
                 this.beer = data;
             });

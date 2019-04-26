@@ -31,6 +31,7 @@
     <div *ngIf="message['type'] === 'elements'" class="chatbot-carousel-container">
         <drag-scroll class="chatbot-carousel" style="width: 100%; height: 100%"
                      [scrollbar-hidden]="true"
+                     [snap-disabled]="true"
                      #nav>
             <!-- carousel -->
             <ng-container *ngIf="message['type'] === 'elements'">

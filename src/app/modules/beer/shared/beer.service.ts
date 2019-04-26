@@ -2,16 +2,18 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {LocalStorageService} from '../../../_services/local-storage.service';
+import {AuthService} from '../../../core/authorization/auth.service';
 import {ToastService} from '../../../shared/components/toast/toast.service';
 
 @Injectable({
     providedIn: 'root'
 })
-export class BeerService {
+export class BeerService extends AuthService {
 
     readonly urlBeer = environment.backend + 'beers';
 
-    constructor(private http: HttpClient, private localStorageService: LocalStorageService, private toastsService: ToastService) {
+    constructor(public http: HttpClient, private toastsService: ToastService, private localStorageService: LocalStorageService) {
+        super(http);
     }
 
     getBeersByNameCount(name, value) {
@@ -56,7 +58,7 @@ export class BeerService {
         this.http.post(this.urlBeer,
             {
                 inputObject: beer
-            })
+            }, {params: this.beerlessAuthParams})
             .subscribe(() => {
                 this.toastsService.addToast('Bevestiging', 'Het bier werd succesvol toegevoegd.', 0);
             });

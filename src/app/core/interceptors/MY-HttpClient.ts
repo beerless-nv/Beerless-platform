@@ -4,12 +4,11 @@ import {
     HttpHandler,
     HttpEvent,
     HttpInterceptor,
-    HttpResponse,
-    HttpErrorResponse, HttpClient,
+    HttpErrorResponse,
 } from '@angular/common/http';
 
-import {Observable, of} from 'rxjs';
-import {catchError, tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 import {LoadingService} from '../../_services/loading.service';
 import {ErrorService} from '../../shared/components/error/error.service';
 import {AuthService} from '../authorization/auth.service';
@@ -21,9 +20,9 @@ export class MyHttpClient implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         request = request.clone({
-            setParams: {
-                access_token: this.authService.getToken(),
-            },
+            // setParams: {
+            //     access_token: this.authService.getToken(),
+            // },
         });
 
         console.log(request);

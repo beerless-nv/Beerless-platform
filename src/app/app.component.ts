@@ -9,8 +9,6 @@ import {AgeVerificationComponent} from './shared/components/age-verification/age
 import {IeWarningComponent} from './shared/components/ie-warning/ie-warning/ie-warning.component';
 import {NgbActiveModal, NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
 
-declare var OverlayScrollbars: any;
-
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',

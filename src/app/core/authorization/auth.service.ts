@@ -1,21 +1,49 @@
 import {Injectable} from '@angular/core';
-import {LocalStorageService} from '../../_services/local-storage.service';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
-    constructor(private localStorageService: LocalStorageService, private http: HttpClient) {}
 
-    // Check if member is authenticated
+    accessToken: string;
+    beerlessAuthParams: HttpParams;
+
+    constructor(public http: HttpClient) {
+        // Set token when loading app
+        this.setToken();
+
+        // Authentication params which are needed for 'member only' spaces
+        this.beerlessAuthParams = new HttpParams()
+            .append('access_token', this.accessToken);
+
+        console.log(this.beerlessAuthParams);
+    }
+
+    /**
+     * Check if member is authenticated.
+     */
     public isAuthenticated(): boolean {
-        const token = this.getToken();
+        this.setToken();
+
+        const token = this.accessToken;
 
         return !!token;
     }
 
+    /**
+     * Get token from Local Storage.
+     */
     public getToken(): string {
-        return this.localStorageService.getAccessToken();
+        return localStorage.getItem('accessToken');
+    }
+
+    /**
+     * If accessToken is empty, assign token from Local Storage.
+     */
+    public setToken() {
+        if (this.accessToken !== this.getToken()) {
+            this.accessToken = this.getToken();
+        }
     }
 }

@@ -13,7 +13,6 @@ export class NavbarComponent implements OnInit {
     user;
 
     menuItems = [
-        {name: 'Home', routerLink: '/home'},
         {name: 'Search', routerLink: '/search'},
         {name: 'Blog', routerLink: '/blog'},
     ];

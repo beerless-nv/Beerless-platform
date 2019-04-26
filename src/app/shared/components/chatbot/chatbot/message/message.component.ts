@@ -8,7 +8,7 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import {ChatbotComponent} from '../chatbot.component';
-import {BeerprofileComponent} from '../../../../../modules/beer/components/beerprofile/beerprofile.component';
+import {BeerprofileComponent} from '../../../../platform-components/beerprofile/beerprofile/beerprofile.component';
 import {DragScrollComponent} from 'ngx-drag-scroll/lib';
 import {environment} from '../../../../../../environments/environment';
 
