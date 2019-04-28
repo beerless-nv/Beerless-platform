@@ -12,7 +12,7 @@
 
 <!-- loading and error screen -->
 
-<div [hidden]="loading == false && error == false">
+<div [hidden]="error == false">
     <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
         <beerless-error *ngIf="error == true"></beerless-error>
     </div>
@@ -21,7 +21,7 @@
 
 <!-- content output -->
 
-<div [hidden]="loading == true || error == true">
+<div [hidden]="error == true">
     <router-outlet></router-outlet>
 </div>
 

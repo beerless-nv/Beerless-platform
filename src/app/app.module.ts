@@ -12,7 +12,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
-import {MyHttpClientInterceptor} from './core/interceptors/My-HttpClientInterceptor';
+import {ErrorInterceptor} from './core/interceptors/errorInterceptor';
 import {AutosizeModule} from 'ngx-autosize';
 import {CookieService} from 'ngx-cookie-service';
 import {NgScrollbarModule} from 'ngx-scrollbar';

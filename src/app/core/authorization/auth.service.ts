@@ -1,3 +1,4 @@
+import {HttpParamsOptions} from '@angular/common/http/src/params';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 
@@ -7,17 +8,16 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 export class AuthService {
 
     accessToken: string;
-    beerlessAuthParams: HttpParams;
+    beerlessAuthParams;
 
     constructor(public http: HttpClient) {
         // Set token when loading app
         this.setToken();
 
         // Authentication params which are needed for 'member only' spaces
-        this.beerlessAuthParams = new HttpParams()
-            .append('access_token', this.accessToken);
-
-        console.log(this.beerlessAuthParams);
+        this.beerlessAuthParams = {
+            access_token: this.accessToken
+        };
     }
 
     /**

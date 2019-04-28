@@ -5,7 +5,8 @@ import {CookieService} from 'ngx-cookie-service';
 import {AuthGuardService} from './authorization/auth-guard.service';
 import {AuthService} from './authorization/auth.service';
 import {RoleGuardService} from './authorization/role-guard.service';
-import {MyHttpClientInterceptor} from './interceptors/My-HttpClientInterceptor';
+import {ErrorInterceptor} from './interceptors/errorInterceptor';
+import {LoggedUserService} from './logged-user.service';
 
 @NgModule({
     imports: [
@@ -18,10 +19,11 @@ import {MyHttpClientInterceptor} from './interceptors/My-HttpClientInterceptor';
         RoleGuardService,
         {
             provide: HTTP_INTERCEPTORS,
-            useClass: MyHttpClientInterceptor,
+            useClass: ErrorInterceptor,
             multi: true
         },
         CookieService,
+        LoggedUserService
     ]
 })
 export class CoreModule {

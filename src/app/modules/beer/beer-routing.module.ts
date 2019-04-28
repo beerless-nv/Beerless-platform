@@ -6,7 +6,7 @@ import {AddBeersComponent} from './pages/member/add-beers/add-beers.component';
 import {DetailBeersComponent} from './pages/visitor/detail-beers/detail-beers.component';
 
 const routes: Routes = [
-    {path: 'add', component: AddBeersComponent, canActivate: [AuthGuardService, RoleGuardService], data: {expectedRole: 'Administrator'}},
+    {path: 'add', component: AddBeersComponent, canActivate: [AuthGuardService, RoleGuardService], data: {expectedRole: 'Contributor'}},
     {path: ':id', component: DetailBeersComponent},
 ];
 

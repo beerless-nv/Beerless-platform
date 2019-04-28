@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Router, CanActivate, ActivatedRouteSnapshot} from '@angular/router';
 import {environment} from '../../../environments/environment';
@@ -15,14 +15,17 @@ export class RoleGuardService implements CanActivate {
      * Check if the user is allowed to access this route.
      * If allowed let him pass, if not reject him.
      *
-     * @param route
+     * @param route (activated route snapshot)
      */
-    async canActivate(route: ActivatedRouteSnapshot): boolean {
+    async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
         // get user role
         const role = await this.getUserRole();
+        const roles = await this.getUserRoles();
+
+        const expectedRoleId = Object.values(roles).filter(item => item['name'] === route.data.expectedRole)[0]['id'];
 
         // depending on user role, pass or reject
-        if (!this.auth.isAuthenticated() || role !== route.data.expectedRole) {
+        if (!this.auth.isAuthenticated() || role['id'] < expectedRoleId) {
             this.router.navigate(['sign-in']);
             return false;
         }
@@ -32,9 +35,22 @@ export class RoleGuardService implements CanActivate {
     /**
      * Get the user role
      */
-    getUserRole() {
-        return this.http.get(environment.backend + 'users/getRole', {params: this.auth.beerlessAuthParams})
-            .toPromise()
-            .then(data => data);
+    async getUserRole() {
+        return await this.http.get(environment.backend + 'users/getRole', {params: this.auth.beerlessAuthParams}).toPromise();
+    }
+
+    /**
+     * Get all user roles
+     */
+    async getUserRoles() {
+        const params = new HttpParams({
+            fromObject: {
+                ...this.auth.beerlessAuthParams,
+                'filter[fields][id]': 'true',
+                'filter[fields][name]': 'true'
+            }
+        });
+
+        return await this.http.get(environment.backend + 'roles', {params: params}).toPromise();
     }
 }

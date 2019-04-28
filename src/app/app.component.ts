@@ -1,8 +1,9 @@
 import {ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {isPlatformBrowser, LocationStrategy} from '@angular/common';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
-import {LoadingService} from './_services/loading.service';
+import {ErrorInterceptorService} from './core/interceptors/errorInterceptor.service';
 import {SwUpdate} from '@angular/service-worker';
+import {ErrorInterceptor} from './core/interceptors/errorInterceptor';
 import {ErrorService} from './shared/components/error/error.service';
 import {CookieService} from 'ngx-cookie-service';
 import {AgeVerificationComponent} from './shared/components/age-verification/age-verification/age-verification.component';
@@ -26,11 +27,12 @@ export class AppComponent implements OnInit {
                 public router: Router,
                 public route: ActivatedRoute,
                 private locStrat: LocationStrategy,
-                private loadingService: LoadingService,
+                private loadingService: ErrorInterceptorService,
                 private swUpdate: SwUpdate,
                 private errorService: ErrorService,
                 private modalService: NgbModal,
-                private cookieService: CookieService) {
+                private cookieService: CookieService,
+                private errorInterceptorService: ErrorInterceptorService) {
 
         // show modal age verification
         this.ageVerification();
@@ -52,10 +54,7 @@ export class AppComponent implements OnInit {
             this.addScrollTopListeners();
         }
 
-        this.loadingService.loading$.subscribe(value => {
-            this.loading = value;
-        });
-        this.loadingService.error$.subscribe(value => {
+        this.errorInterceptorService.error$.subscribe(value => {
             this.error = value;
         });
     }

@@ -1,5 +1,7 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {LoginService} from 'src/app/_services/login.service';
+import {LoggedUserService} from '../../../../core/logged-user.service';
+import {SignInService} from '../../../../modules/sign-in/shared/sign-in.service';
 
 @Component({
     selector: 'beerless-navbar',
@@ -17,17 +19,17 @@ export class NavbarComponent implements OnInit {
         {name: 'Blog', routerLink: '/blog'},
     ];
 
-    constructor(public loginService: LoginService, public cdRef: ChangeDetectorRef) {
+    constructor(private loggedUserService: LoggedUserService, private signInService: SignInService, private cdRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {
-        this.loginService.userData$.subscribe( data => {
+        this.loggedUserService.user$.subscribe( data => {
             this.user = data;
             this.cdRef.detectChanges();
         });
     }
 
     logout() {
-        this.loginService.logout();
+        this.signInService.logout();
     }
 }

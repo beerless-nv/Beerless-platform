@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 import {environment} from '../../../../environments/environment';
 import {LocalStorageService} from '../../../_services/local-storage.service';
 import {BehaviorSubject} from 'rxjs';
+import {LoggedUserService} from '../../../core/logged-user.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +13,8 @@ export class SignInService {
 
     readonly urlUsers = environment.backend + 'users';
 
-    userData$: BehaviorSubject<any> = new BehaviorSubject(null);
-
-    constructor(private http: HttpClient, private localStorageService: LocalStorageService) {
+    constructor(private http: HttpClient, private router: Router, private loggedUserService: LoggedUserService) {
+        this.loggedUserService.user$.subscribe(data => console.log(data));
     }
 
     signIn(user) {
@@ -23,22 +24,26 @@ export class SignInService {
             user.username = null;
         }
 
-        // const header = Hea
-
         return this.http.post(this.urlUsers + '/login', user)
             .toPromise()
-            .then(data => {
-                // delete previous access token
-                // this.deletePreviousAccessToken(data['userId']);
-
+            .then(async data => {
                 // set access_token in local storage
-                this.localStorageService.setAccessToken(data['id']);
+                localStorage.setItem('accessToken', data['id']);
 
                 // set member in local storage
-                this.getUser(data['userId']).then(currentUser => {
-                    this.localStorageService.setUser(currentUser);
-                    this.userData$.next(currentUser);
-                });
+                this.loggedUserService.user$.next(await this.getUser((data['userId'])));
+
+                // redirect to previous page
+                this.router.navigate(['search']);
+            });
+    }
+
+    logout() {
+        this.http.get(this.urlUsers + 'logout')
+            .toPromise()
+            .then(() => {
+                localStorage.removeItem('accessToken');
+                this.loggedUserService.user$.next(null);
             });
     }
 
