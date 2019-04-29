@@ -57,3 +57,17 @@ app-beer-item {
     text-shadow: 1px 1px #e69e39;
     padding: ($spacer * 0.25) ($spacer * 0.5);
 }
+
+.recommendations-text {
+    div:first-child {
+        background-color: $light;
+        width: calc(100% - 40px);
+        height: 4px;
+
+        div {
+            width: 0;
+            height: 4px;
+            background-color: $primary;
+        }
+    }
+}

@@ -109,7 +109,6 @@ export class AppComponent implements OnInit {
         }
 
         this.router.events.subscribe((event) => {
-            this.errorService.messageRegister$.next(null);
             if (event instanceof NavigationStart) {
                 // the position should not be saved at NavigationStart during popstate navigation because it will already be mangled
                 if (!this._isPopState) {

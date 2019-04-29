@@ -1,0 +1,33 @@
+<div class="card card-sm-100w mt-md-0 mt-5">
+    <div class="card-body">
+        <p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0">Top 10 similar beers</p>
+
+        <ng-container *ngFor="let beer of item">
+            <div class="pb-2">
+
+
+                <!-- Beer image -->
+
+                <a routerLink="/beers/{{beer?.beer.id}}" class="link-black-yellow d-flex flex-nowrap align-items-center">
+                    <div class="pr-3 mouse-pointer">
+                        <img [src]="environment.imageURL + 'beer/logo/' + beer?.beer.logo" alt="logo {{beer?.beer.name}}"
+                             class="beers-sidebar-image">
+                    </div>
+
+
+                    <!-- Beer details -->
+
+                    <div class="d-flex flex-column text-truncate w-100">
+                        <div class="text-truncate small">{{beer?.beer.name}}</div>
+                        <div class="text-truncate small text-primary font-weight-bold recommendations-text d-flex align-items-center justify-content-between">
+                            <div>
+                                <div [style.width]="(((1 - beer?.distance) * 100) | number:'1.0-0') + '%'"></div>
+                            </div>
+                            <span>{{ ((1 - beer?.distance) * 100) | number:'1.0-0' }}%</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </ng-container>
+    </div>
+</div>

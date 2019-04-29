@@ -55,13 +55,13 @@
                             <div class="arrow-up float-right"></div>
                         </div>
                         <div class="nav-submenu">
-                            <a class="nav-item nav-link nav-link-padding" routerLink="/user/profile/{{user.ID}}"
+                            <a class="nav-item nav-link nav-link-padding" routerLink="/user/profile/{{user.id}}"
                                routerLinkActive="active">Profiel</a>
                             <!--<a class="nav-item nav-link nav-link-padding" routerLink="/member/wishlist/{{member.ID}}"-->
                                <!--routerLinkActive="active">Wishlist</a>-->
                             <a class="nav-item nav-link nav-link-padding" routerLink="/user/settings"
                                routerLinkActive="active">Instellingen</a>
-                            <a class="nav-item nav-link nav-link-padding" (click)="logout()" routerLinkActive="active">Uitloggen</a>
+                            <a class="nav-item nav-link nav-link-padding" (click)="signOut()" routerLinkActive="active">Uitloggen</a>
                         </div>
                     </div>
                 </a>

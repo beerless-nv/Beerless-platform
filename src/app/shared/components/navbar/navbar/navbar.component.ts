@@ -1,7 +1,6 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {LoginService} from 'src/app/_services/login.service';
-import {LoggedUserService} from '../../../../core/logged-user.service';
-import {SignInService} from '../../../../modules/sign-in/shared/sign-in.service';
+import {LoggedUserService} from '../../../../core/user/logged-user.service';
+import {SignOutService} from '../../../../core/user/sign-out.service';
 
 @Component({
     selector: 'beerless-navbar',
@@ -19,7 +18,7 @@ export class NavbarComponent implements OnInit {
         {name: 'Blog', routerLink: '/blog'},
     ];
 
-    constructor(private loggedUserService: LoggedUserService, private signInService: SignInService, private cdRef: ChangeDetectorRef) {
+    constructor(private loggedUserService: LoggedUserService, private signOutService: SignOutService, private cdRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {
@@ -29,7 +28,7 @@ export class NavbarComponent implements OnInit {
         });
     }
 
-    logout() {
-        this.signInService.logout();
+    signOut() {
+        this.signOutService.signOut();
     }
 }

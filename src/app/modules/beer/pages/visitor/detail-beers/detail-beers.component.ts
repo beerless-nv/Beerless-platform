@@ -12,6 +12,7 @@ export class DetailBeersComponent implements OnInit {
 
     environment = environment;
     beer;
+    recommendations;
 
     constructor(private beerService: BeerService, private route: ActivatedRoute) {
     }
@@ -19,6 +20,7 @@ export class DetailBeersComponent implements OnInit {
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
             this.getBeerById(params.get('id'));
+            this.getItemBasedRecommendations(params.get('id'));
         });
     }
 
@@ -26,6 +28,13 @@ export class DetailBeersComponent implements OnInit {
         this.beerService.getBeerById(beerId)
             .then(data => {
                 this.beer = data;
+            });
+    }
+
+    async getItemBasedRecommendations(beerId) {
+        this.beerService.getItemBasedRecommendations(beerId, 10)
+            .subscribe(data => {
+                this.recommendations = data;
             });
     }
 }

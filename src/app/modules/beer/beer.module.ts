@@ -15,6 +15,7 @@ import {BeerbreweryprofileComponent} from './components/beerbreweryprofile/beerb
 import {TextTruncateModule} from '../../shared/components/text-truncate/text-truncate.module';
 import {BeerService} from './shared/beer.service';
 import {BeertypeService} from './shared/beertype.service';
+import { BeerRecommendationsComponent } from './components/beer-recommendations/beer-recommendations.component';
 
 @NgModule({
     imports: [
@@ -34,6 +35,7 @@ import {BeertypeService} from './shared/beertype.service';
         AddBeerBreweryItemComponent,
         DetailBeersComponent,
         BeerbreweryprofileComponent,
+        BeerRecommendationsComponent,
     ],
     providers: [
         BeerService,

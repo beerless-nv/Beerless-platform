@@ -1,21 +1,34 @@
 <div class="card col-12 px-0 mb-lg-0 mb-3">
     <div class="card-body p-sm-5 p-4">
         <div class="col-lg-5 col-12 px-0 ml-auto">
-            <h2 class="mb-4"><strong>Welkom terug!</strong></h2>
-            Log je automatisch in door op je foto te klikken of handmatig door je gebruikersnaam en wachtwoord in te
-            geven.
 
 
-            <!-- Auto sign in card -->
+            <!-- Manually login -->
 
-            <div class="card auto-sign-in d-flex flex-row align-items-center mouse-pointer card-hover" (click)="signIn()">
-                <img src="/src/assets/images/profielfoto_tom_nuyts.jpg" alt="profielfoto"
-                     class="navbar-profile-picture rounded-circle">
-                <div class="d-flex align-items-center w-100">
-                    <span class="ml-3 font-weight-bold">Tom Nuyts</span>
-                    <i class="fas fa-sign-in-alt text-grey-dark ml-auto"></i>
+            <ng-container *ngIf="!showAutoLogin">
+                <h2 class="mb-4"><strong>Hello there!</strong></h2>
+                <span class="font-weight-500">It looks like I can't remember you, maybe because you're new or because it's been a long time.<br><br>Please, sign yourself in using the form and start discovering new beers!</span>
+            </ng-container>
+
+
+            <!-- Automatically login -->
+
+            <ng-container *ngIf="showAutoLogin">
+                <h2 class="mb-4"><strong>Welcome Back!</strong></h2>
+                <span class="font-weight-500">Automatically sign in by clicking on your foto or manually sign in by filling in your username/email and password.</span>
+
+
+                <!-- Auto sign in card -->
+
+                <div class="card auto-sign-in d-flex flex-row align-items-center mouse-pointer card-hover" (click)="signInRememberedUser()">
+                    <img src="{{rememberedUser?.picture}}" alt="profielfoto"
+                         class="navbar-profile-picture rounded-circle">
+                    <div class="d-flex align-items-center w-100">
+                        <span class="ml-3 font-weight-bold">{{rememberedUser?.firstName}} {{rememberedUser?.lastName}}</span>
+                        <i class="fas fa-sign-in-alt text-grey-dark ml-auto"></i>
+                    </div>
                 </div>
-            </div>
+            </ng-container>
         </div>
         <a href="https://nl.freepik.com/vrije-vector/koud-bier-achtergrond_1536383.htm" class="credit-link-white">
             Designed by Freepik

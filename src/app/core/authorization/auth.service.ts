@@ -1,23 +1,25 @@
-import {HttpParamsOptions} from '@angular/common/http/src/params';
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthService {
 
-    accessToken: string;
-    beerlessAuthParams;
+    accessToken$: BehaviorSubject<any> = new BehaviorSubject(null);
+    beerlessAuthHeaders;
 
     constructor(public http: HttpClient) {
         // Set token when loading app
         this.setToken();
 
         // Authentication params which are needed for 'member only' spaces
-        this.beerlessAuthParams = {
-            access_token: this.accessToken
-        };
+        this.accessToken$.subscribe(data => {
+            this.beerlessAuthHeaders = new HttpHeaders({
+                Authorization: data
+            });
+        });
     }
 
     /**
@@ -26,7 +28,7 @@ export class AuthService {
     public isAuthenticated(): boolean {
         this.setToken();
 
-        const token = this.accessToken;
+        const token = this.accessToken$.value;
 
         return !!token;
     }
@@ -35,15 +37,23 @@ export class AuthService {
      * Get token from Local Storage.
      */
     public getToken(): string {
-        return localStorage.getItem('accessToken');
+        const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+        if (accessToken) {
+            return accessToken['accessToken'];
+        }
+
+        const rememberAccessToken = JSON.parse(localStorage.getItem('rememberAccessToken'));
+        if (rememberAccessToken) {
+            return rememberAccessToken['accessToken'];
+        }
     }
 
     /**
      * If accessToken is empty, assign token from Local Storage.
      */
     public setToken() {
-        if (this.accessToken !== this.getToken()) {
-            this.accessToken = this.getToken();
+        if (this.accessToken$.value !== this.getToken()) {
+            this.accessToken$.next(this.getToken());
         }
     }
 }

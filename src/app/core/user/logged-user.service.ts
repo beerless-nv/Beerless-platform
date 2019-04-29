@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {environment} from '../../environments/environment';
-import {AuthService} from './authorization/auth.service';
+import {environment} from '../../../environments/environment';
+import {AuthService} from '../authorization/auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +21,7 @@ export class LoggedUserService extends AuthService {
     }
 
     getLoggedUser() {
-        this.http.get(this.urlUsers + '/getLoggedUser', {params: this.beerlessAuthParams})
+        this.http.get(this.urlUsers + '/getLoggedUser', {headers: this.beerlessAuthHeaders})
             .toPromise()
             .then(data => {
                 this.user$.next(data);

@@ -53,12 +53,11 @@ export class BeerService extends AuthService {
         return this.http.get(this.urlBeer, {params});
     }
 
-
     insertBeer(beer) {
         this.http.post(this.urlBeer,
             {
                 inputObject: beer
-            }, {params: this.beerlessAuthParams})
+            }, {headers: this.beerlessAuthHeaders})
             .subscribe(() => {
                 this.toastsService.addToast('Bevestiging', 'Het bier werd succesvol toegevoegd.', 0);
             });
@@ -72,5 +71,9 @@ export class BeerService extends AuthService {
 
         this.http.post(this.urlBeer + '/uploadImage', uploadData)
             .subscribe();
+    }
+
+    getItemBasedRecommendations(beerId, amount) {
+        return this.http.get(this.urlBeer + '/itemBasedRecommendation?beerId=' + beerId + '&amount=' + amount);
     }
 }

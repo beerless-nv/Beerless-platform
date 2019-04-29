@@ -6,7 +6,9 @@ import {AuthGuardService} from './authorization/auth-guard.service';
 import {AuthService} from './authorization/auth.service';
 import {RoleGuardService} from './authorization/role-guard.service';
 import {ErrorInterceptor} from './interceptors/errorInterceptor';
-import {LoggedUserService} from './logged-user.service';
+import {LoggedUserService} from './user/logged-user.service';
+import {SignInService} from './user/sign-in.service';
+import {SignOutService} from './user/sign-out.service';
 
 @NgModule({
     imports: [
@@ -23,7 +25,9 @@ import {LoggedUserService} from './logged-user.service';
             multi: true
         },
         CookieService,
-        LoggedUserService
+        LoggedUserService,
+        SignInService,
+        SignOutService
     ]
 })
 export class CoreModule {

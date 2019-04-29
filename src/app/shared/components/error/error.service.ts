@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {ActivatedRoute, NavigationStart, Router} from '@angular/router';
 import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
@@ -6,31 +7,37 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class ErrorService {
 
-    // errorMessages = [
-    //     {error: 'firstName_required', message: 'Vul een voornaam in!'},
-    //     {error: 'lastName_required', message: 'Vul een achternaam in!'},
-    //     {error: 'username_required', message: 'Vul een gebruikersnaam in!'},
-    //     {error: 'username_not_unique', message: 'Deze gebruikersnaam bestaat al!'},
-    //     {error: 'email_required', message: 'Vul een e-mailadres in!'},
-    //     {error: 'email_not_valid', message: 'Vul een geldig e-mailadres in!'},
-    //     {error: 'email_not_unique', message: 'Dit e-mailadres is al in gebruik!'},
-    //     {error: 'password_required', message: 'Vul een wachtwoord in!'},
-    //     {error: 'uniqueness', message: 'Vul een wachtwoord in!'},
-    // ];
+    errorMessages$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
 
-    messageRegister$: BehaviorSubject<Array<string>> = new BehaviorSubject(null);
-
-    constructor() {
+    constructor(private router: Router) {
+        router.events.subscribe(event => {
+            if (event instanceof NavigationStart) {
+                this.errorMessages$.next(null);
+            }
+        });
     }
 
     handleErrorMsg(errorMessages) {
         const errorMessageArray = [];
         if (errorMessages != null) {
             for (const key in errorMessages) {
-                errorMessageArray.push(errorMessages[key][0]);
+                errorMessages[key].map(errorMessage => {
+                    if (/^[A-Z]/.test(errorMessage)) {
+                        errorMessageArray.push(errorMessage);
+                    }
+                });
             }
         }
 
-        this.messageRegister$.next(errorMessageArray);
+        this.errorMessages$.next(errorMessageArray);
+    }
+
+    handleLoginError(errorMessage) {
+        const errorMessageArray = [];
+        if (errorMessage != null) {
+            errorMessageArray.push(errorMessage);
+        }
+
+        this.errorMessages$.next(errorMessageArray);
     }
 }

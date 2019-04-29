@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {SignUpService} from '../../shared/sign-up.service';
-import {ErrorService} from "../../../../shared/components/error/error.service";
+import {ErrorService} from '../../../../shared/components/error/error.service';
 
 @Component({
     selector: 'app-signup-form',
@@ -44,7 +44,7 @@ export class SignupFormComponent implements OnInit {
             favouriteBeerId: new FormControl(0),
         });
 
-        this.errorService.messageRegister$.subscribe(data => this.messageRegister = data);
+        this.errorService.errorMessages$.subscribe(data => this.messageRegister = data);
     }
 
     register() {

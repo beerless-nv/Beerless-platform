@@ -4,7 +4,6 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {SigninBackgroundCardComponent} from './components/signin-background-card/signin-background-card.component';
 import {SigninFormComponent} from './components/signin-form/signin-form.component';
 import {SigninComponent} from './pages/visitor/signin/signin.component';
-import {SignInService} from './shared/sign-in.service';
 import {SignInRoutingModule} from './sign-in-routing.module';
 
 @NgModule({
@@ -18,9 +17,7 @@ import {SignInRoutingModule} from './sign-in-routing.module';
         SigninBackgroundCardComponent,
         SigninFormComponent
     ],
-    providers: [
-        SignInService
-    ]
+    providers: []
 })
 export class SignInModule {
 }
