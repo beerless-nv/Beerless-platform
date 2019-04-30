@@ -6,13 +6,13 @@
 <div>
     <div class="container">
         <div class="col-12 d-flex flex-md-row flex-column p-0">
-            <div class="col-md-9 col-12 pl-0 pr-md-3 pr-0">
+            <div class="col-lg-9 col-md-8 col-12 pl-0 pr-md-3 pr-0">
                 <app-beerprofile [item]="beer"></app-beerprofile>
                 <ng-container *ngFor="let brewery of beer?.breweries">
                     <app-beerbreweryprofile [item]="brewery"></app-beerbreweryprofile>
                 </ng-container>
             </div>
-            <div class="col-md-3 col-12 pr-0 pl-md-3 pl-0">
+            <div class="col-lg-3 col-md-4 col-12 pr-0 pl-md-3 pl-0">
                 <app-beer-recommendations [item]="recommendations"></app-beer-recommendations>
             </div>
         </div>

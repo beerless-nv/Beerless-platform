@@ -8,7 +8,7 @@ import {BehaviorSubject, Observable} from 'rxjs';
 export class AuthService {
 
     accessToken$: BehaviorSubject<any> = new BehaviorSubject(null);
-    beerlessAuthHeaders;
+    beerlessAuthHeaders$: BehaviorSubject<HttpHeaders> = new BehaviorSubject(null);
 
     constructor(public http: HttpClient) {
         // Set token when loading app
@@ -16,9 +16,9 @@ export class AuthService {
 
         // Authentication params which are needed for 'member only' spaces
         this.accessToken$.subscribe(data => {
-            this.beerlessAuthHeaders = new HttpHeaders({
+            this.beerlessAuthHeaders$.next(new HttpHeaders({
                 Authorization: data
-            });
+            }));
         });
     }
 
@@ -40,11 +40,6 @@ export class AuthService {
         const accessToken = JSON.parse(localStorage.getItem('accessToken'));
         if (accessToken) {
             return accessToken['accessToken'];
-        }
-
-        const rememberAccessToken = JSON.parse(localStorage.getItem('rememberAccessToken'));
-        if (rememberAccessToken) {
-            return rememberAccessToken['accessToken'];
         }
     }
 

@@ -91,10 +91,10 @@ export class SearchIndexComponent implements OnInit {
     }
 
     getCurrentBierCount() {
-        this.beersService.getBeersByNameCount('name', this.beerName)
-            .then(data => {
-                this.beersListTotal = data;
-            });
+        // this.beersService.getBeersByNameCount('name', this.beerName)
+        //     .then(data => {
+        //         this.beersListTotal = data;
+        //     });
     }
 
     routeChange(beerName, page) {

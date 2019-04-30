@@ -213,6 +213,19 @@ input.input-dark {
     }
 }
 
+input[readonly] {
+    background-color: $light !important;
+    color: $grey !important;
+    font-weight: 600;
+}
+
+.input-center {
+    //position: absolute;
+    text-align: center;
+    padding-left: -50px !important;
+    color: red !important;
+}
+
 .file-input {
 }
 
@@ -526,3 +539,16 @@ ol {
 // container
 //
 
+
+//
+// opacity
+//
+
+.opacity-0 {
+    opacity: 0;
+}
+
+
+//
+// background images
+//

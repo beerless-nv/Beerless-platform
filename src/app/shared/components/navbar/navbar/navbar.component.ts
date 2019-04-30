@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {AuthService} from '../../../../core/authorization/auth.service';
 import {LoggedUserService} from '../../../../core/user/logged-user.service';
 import {SignOutService} from '../../../../core/user/sign-out.service';
 
@@ -18,7 +19,7 @@ export class NavbarComponent implements OnInit {
         {name: 'Blog', routerLink: '/blog'},
     ];
 
-    constructor(private loggedUserService: LoggedUserService, private signOutService: SignOutService, private cdRef: ChangeDetectorRef) {
+    constructor(private loggedUserService: LoggedUserService, private signOutService: SignOutService, private cdRef: ChangeDetectorRef, private auth: AuthService) {
     }
 
     ngOnInit() {
@@ -28,7 +29,7 @@ export class NavbarComponent implements OnInit {
         });
     }
 
-    signOut() {
-        this.signOutService.signOut();
+    logOut() {
+        this.signOutService.logout(this.user);
     }
 }

@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
+import {throwError} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {LocalStorageService} from '../../../_services/local-storage.service';
 import {AuthService} from '../../../core/authorization/auth.service';
@@ -16,28 +18,11 @@ export class BeerService extends AuthService {
         super(http);
     }
 
-    getBeersByNameCount(name, value) {
-        const params = new HttpParams()
-            .set('joinTables', 'beertype,brewery');
-
-        return this.http.post(this.urlBeer + '/search', {
-            searchParams: [{
-                propName: name,
-                value: value
-            }]
-        }, {params})
-            .toPromise()
-            .then(data => {
-                return data['beers'].length;
-            });
-    }
-
     getBeerById(id) {
         const params = new HttpParams()
-            .append('filter', '{"include":[{"relation":"breweries","scope":{"include":{"relation":"beerFromBreweries","scope":{"where":{"beerId":847}}}}},"styleTags"]}');
+            .append('filter', '{"include":[{"relation":"breweries","scope":{"include":{"relation":"beerFromBreweries","scope":{"where":{"beerId":' + id + '}}}}},"styleTags"]}');
 
-        return this.http.get(this.urlBeer + '/' + id, {params})
-            .toPromise();
+        return this.http.get(this.urlBeer + '/' + id, {params: params});
     }
 
     getBeersNewest(limit) {
@@ -50,14 +35,14 @@ export class BeerService extends AuthService {
             .set('filter[order]', 'timestampCreated DESC')
             .set('filter[limit]', limit);
 
-        return this.http.get(this.urlBeer, {params});
+        return this.http.get(this.urlBeer, {params: params});
     }
 
     insertBeer(beer) {
         this.http.post(this.urlBeer,
             {
                 inputObject: beer
-            }, {headers: this.beerlessAuthHeaders})
+            }, {headers: this.beerlessAuthHeaders$.value})
             .subscribe(() => {
                 this.toastsService.addToast('Bevestiging', 'Het bier werd succesvol toegevoegd.', 0);
             });
@@ -74,6 +59,15 @@ export class BeerService extends AuthService {
     }
 
     getItemBasedRecommendations(beerId, amount) {
-        return this.http.get(this.urlBeer + '/itemBasedRecommendation?beerId=' + beerId + '&amount=' + amount);
+        const params = new HttpParams()
+            .append('beerId', beerId)
+            .append('amount', amount);
+
+        return this.http.get(this.urlBeer + '/itemBasedRecommendation', {params: params})
+            .pipe(
+                catchError(err => {
+                    return throwError(err);
+                })
+            );
     }
 }

@@ -81,6 +81,7 @@
 
     .chatbot-box {
         height: calc(100% - 90px - 79px - 20px);
+        max-height: 600px;
         background-color: #fff;
         box-shadow: rgba(0, 0, 0, 0.20) 0px 0px 10px;
         border-radius: 0.5rem;

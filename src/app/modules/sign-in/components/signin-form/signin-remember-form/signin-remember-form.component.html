@@ -1,0 +1,59 @@
+<form novalidate [formGroup]="formLoginRemembered" (ngSubmit)="signIn()">
+
+
+    <!-- User photo -->
+
+    <div class="mb-4 d-flex justify-content-center">
+        <img src="https://avatars.dicebear.com/v2/identicon/0.f28gvywjm4o.svg" alt="profielfoto"
+             class="rounded-circle border">
+    </div>
+
+
+    <!-- Input fields -->
+
+    <div class="form-group mb-3">
+        <input type="text" class="form-control input-center" placeholder="Username"
+                   formControlName="username" id="usernameLoginRemembered" readonly>
+    </div>
+
+    <div class="form-group mb-3 input-icon">
+        <div class="input-icon">
+            <input type="password" class="form-control" placeholder="Password"
+                   formControlName="password" id="passwordLoginRemembered">
+            <i class="fas fa-unlock-alt"></i>
+        </div>
+        <div class="invalid-input"
+             *ngIf="formLoginRemembered.get('password').touched && formLoginRemembered.get('password').invalid">
+            <div *ngIf="formLoginRemembered.get('password').hasError('required')">
+                Fill in your password!
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Server side error messages -->
+
+    <p class="invalid-input text-center" *ngFor="let msg of messageLogin">{{msg}}</p>
+
+
+    <!-- Submit button -->
+
+    <div class="form-group text-center">
+        <button class="btn btn-primary text-white px-5" type="submit"
+                [disabled]="formLoginRemembered.invalid">Sign in
+        </button>
+    </div>
+
+
+    <!-- Link to sign up -->
+
+    <p class="text-center small">
+        <span class="d-block">
+            Lost password?
+            <strong>
+                <a routerLink="/reset-password">Reset password</a>
+            </strong>
+        </span>
+    </p>
+</form>
+

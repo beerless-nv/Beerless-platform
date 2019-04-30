@@ -21,7 +21,7 @@ export class LoggedUserService extends AuthService {
     }
 
     getLoggedUser() {
-        this.http.get(this.urlUsers + '/getLoggedUser', {headers: this.beerlessAuthHeaders})
+        this.http.get(this.urlUsers + '/getLoggedUser', {headers: this.beerlessAuthHeaders$.value})
             .toPromise()
             .then(data => {
                 this.user$.next(data);

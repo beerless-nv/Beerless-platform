@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 import {BeerService} from '../../../shared/beer.service';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../../../../environments/environment';
@@ -26,7 +28,7 @@ export class DetailBeersComponent implements OnInit {
 
     getBeerById(beerId) {
         this.beerService.getBeerById(beerId)
-            .then(data => {
+            .subscribe(data => {
                 this.beer = data;
             });
     }

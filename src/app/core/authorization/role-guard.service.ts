@@ -36,7 +36,7 @@ export class RoleGuardService implements CanActivate {
      * Get the user role
      */
     async getUserRole() {
-        return await this.http.get(environment.backend + 'users/getRole', {params: this.auth.beerlessAuthParams}).toPromise();
+        return await this.http.get(environment.backend + 'users/getRole', {headers: this.auth.beerlessAuthHeaders$.value}).toPromise();
     }
 
     /**
@@ -45,12 +45,11 @@ export class RoleGuardService implements CanActivate {
     async getUserRoles() {
         const params = new HttpParams({
             fromObject: {
-                ...this.auth.beerlessAuthParams,
                 'filter[fields][id]': 'true',
                 'filter[fields][name]': 'true'
             }
         });
 
-        return await this.http.get(environment.backend + 'roles', {params: params}).toPromise();
+        return await this.http.get(environment.backend + 'roles', {params: params, headers: this.auth.beerlessAuthHeaders$.value}).toPromise();
     }
 }

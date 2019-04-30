@@ -27,13 +27,13 @@ export class SignInService extends AuthService {
             .toPromise()
             .then(async data => {
                 // set access_token in local storage and auth service
-                localStorage.removeItem('rememberAccessToken');
+                localStorage.removeItem('r-u-data');
                 localStorage.setItem('accessToken', JSON.stringify({
                     accessToken: data['id'],
                     userId: data['userId'],
                     expires: Date.parse(data['created']) + (data['ttl'] * 1000)
                 }));
-                this.accessToken$.next(data['id']);
+                this.accessToken$.next(this.getToken());
 
                 // set member in observable
                 this.loggedUserService.user$.next(await this.getUser((data['userId'])));
@@ -43,52 +43,8 @@ export class SignInService extends AuthService {
             });
     }
 
-    signInRememberedUser() {
-        // check if accessToken is set in localStorage
-        const accessToken = JSON.parse(localStorage.getItem('accessToken'));
-        if (accessToken) {
-            // redirect to previous page
-            this.router.navigate(['search']);
-            return;
-        }
-
-        // check if rememberAccessToken is set in localStorage
-        const rememberAccessToken = JSON.parse(localStorage.getItem('rememberAccessToken'));
-        if (!rememberAccessToken) {
-            return;
-        }
-
-        // set accessToken
-        this.accessToken$.next(rememberAccessToken['accessToken']);
-
-        this.http.get(this.urlUsers + '/' + rememberAccessToken['userId'] + '/accessTokens/' + rememberAccessToken['accessToken'], {headers: this.beerlessAuthHeaders})
-            .toPromise()
-            .then(async data => {
-                // If expire dates don't match, return
-                if (Date.now() > (Date.parse(data['created']) + (data['ttl'] * 1000))) {
-                    return;
-                }
-
-                // set accessToken in localStorage
-                localStorage.setItem('accessToken', JSON.stringify({
-                    accessToken: data['id'],
-                    userId: data['userId'],
-                    expires: Date.parse(data['created']) + (data['ttl'] * 1000)
-                }));
-
-                // set member in observable
-                this.loggedUserService.user$.next(await this.getUser((data['userId'])));
-            });
-
-        // remove rememberedAccessToken from localStorage
-        localStorage.removeItem('rememberAccessToken');
-
-        // redirect to previous page
-        this.router.navigate(['search']);
-    }
-
     getUser(userId) {
-        return this.http.get(this.urlUsers + '/' + userId, {headers: this.beerlessAuthHeaders})
+        return this.http.get(this.urlUsers + '/' + userId, {headers: this.beerlessAuthHeaders$.value})
             .toPromise();
     }
 }

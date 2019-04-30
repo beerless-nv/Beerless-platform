@@ -1,5 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
 import {environment} from '../../../environments/environment';
 import {AuthService} from '../authorization/auth.service';
 import {LoggedUserService} from './logged-user.service';
@@ -11,28 +12,29 @@ export class SignOutService extends AuthService {
 
     readonly urlUsers = environment.backend + 'users';
 
-    constructor(public http: HttpClient, private loggedUserService: LoggedUserService) {
+    constructor(public http: HttpClient, private loggedUserService: LoggedUserService, private router: Router) {
         super(http);
     }
 
-    signOut() {
-        const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+    logout(user) {
+        this.accessToken$.next(JSON.parse(localStorage.getItem('accessToken'))['accessToken']);
 
-        localStorage.setItem('rememberAccessToken', JSON.stringify({
-            accessToken: accessToken['accessToken'],
-            userId: accessToken['userId'],
-            expires: accessToken['expires'],
-        }));
-        localStorage.removeItem('accessToken');
-        this.accessToken$.next(null);
-        this.loggedUserService.user$.next(null);
-    }
+        this.http.post(this.urlUsers + '/logout', {}, {headers: this.beerlessAuthHeaders$.value})
+            .subscribe(() => {
+                // Set userId to remember user
+                localStorage.setItem('r-u-data', JSON.stringify({
+                    picture: user.picture,
+                    firstName: user.firstName,
+                    lastName: user.lastName
+                }));
 
-    logout() {
-        this.http.post(this.urlUsers + '/logout', {}, {headers: this.beerlessAuthHeaders})
-            .toPromise()
-            .then(() => {
+                // Remove accessToken from localStorage and clear user object
+                localStorage.removeItem('accessToken');
+                this.accessToken$.next(null);
+                this.loggedUserService.user$.next(null)
 
+                // Redirect to login
+                this.router.navigate(['sign-in']);
             });
     }
 }
