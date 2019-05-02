@@ -1,0 +1,28 @@
+<div class="card card-sm-100w border-yellow-top mt-md-0 mt-5">
+    <div class="card-header">
+        <strong>Beers</strong>
+    </div>
+    <div class="card-body">
+      <ng-container *ngFor="let beer of item">
+          <div class="pb-2">
+
+
+              <!-- Beer image -->
+
+              <a routerLink="/beers/{{beer?.id}}" class="link-black-yellow d-flex flex-nowrap align-items-center">
+                  <div class="pr-3 mouse-pointer">
+                      <img [src]="environment.imageURL + 'beer/logo/' + beer?.logo" alt="logo {{beer?.name}}"
+                           class="beers-sidebar-image">
+                  </div>
+
+
+                  <!-- Beer details -->
+
+                  <div class="d-flex flex-column text-truncate w-100">
+                      <div class="text-truncate small">{{beer?.name}}</div>
+                  </div>
+              </a>
+          </div>
+      </ng-container>
+    </div>
+  </div>
