@@ -1,4 +1,3 @@
-<p>{{item | json}}</p>
 <div class="card card-sm-100w component-chatbot">
     <div class="card-body">
         <div class="col-12 px-0 d-flex flex-wrap">
@@ -10,134 +9,46 @@
             <div class="d-flex flex-row align-items-center col-12 px-0">
                 <div class="float-left mr-4">
                     <img src="{{environment.imageURL + 'brewery/logo/' + item?.logo}}" alt="Logo {{item?.name}}"
-                         class="bier-item-image" *ngIf="item?.logo">
+                        class="bier-item-image" *ngIf="item?.logo">
                 </div>
                 <div>
                     <h4 class="font-weight-bold d-sm-block d-none">{{item?.name}}</h4>
                     <h6 class="font-weight-bold d-sm-none d-block">{{item?.name}}</h6>
-                    <ng-container *ngFor="let brewery of item?.breweries">
-                        <a routerLink="" class="link-muted-yellow">{{brewery?.name}}</a>
-                    </ng-container>
+                    <div>
+                        <div *ngIf="item?.streetAndNumber?.length > 0">
+                            <div>{{item?.streetAndNumber}}</div>
+                            <div>{{item?.place || item?.province}}, {{item?.country}}</div>
+                        </div>
+                        <div *ngIf="item?.streetAndNumber?.length === 0">
+                            --
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="clearfix"></div>
             <div class="mt-4 py-1">
-                <!--<app-text-truncate [text]="item?.description" [limit]="210" [truncateSymbol]="'...'" [truncateText]="'Read more'"></app-text-truncate>-->
+                <beerless-text-truncate [text]="item?.description" [limit]="210" [truncateSymbol]="'...'"
+                    [truncateText]="'Read more'"></beerless-text-truncate>
             </div>
-            <!--<div class="mt-4 w-100">-->
+            <div class="mt-4 w-100">
 
 
-                <!--&lt;!&ndash; Information in table (beerstyle, fermentation, season, glass) &ndash;&gt;-->
+                <!-- Information in table (country, address, province, contact) -->
 
-                <!--<table id="table-beer-profile" class="table-valign-top">-->
-                    <!--<tr>-->
-                        <!--<td class="text-uppercase font-weight-bold small">Styles</td>-->
-                        <!--<td *ngIf="item?.styleTags?.length > 0">-->
-                            <!--<ng-container *ngFor="let styleTag of item?.styleTags">-->
-                                <!--<span class="badge badge-styletag">{{styleTag?.name}}</span>-->
-                            <!--</ng-container>-->
-                        <!--</td>-->
-                        <!--<td *ngIf="item?.styleTags?.length === 0">-->
-                            <!--&#45;&#45;-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td class="text-uppercase font-weight-bold small">Fermentation</td>-->
-                        <!--<td *ngIf="item?.fermentation && item?.fermentation != 0">-->
-                            <!--{{item?.fermentation}}-->
-                        <!--</td>-->
-                        <!--<td *ngIf="!item?.fermentation || item?.fermentation == 0">-->
-                            <!--&#45;&#45;-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td class="text-uppercase font-weight-bold small">Season</td>-->
-                        <!--<td *ngIf="item?.season && item?.season != 0">-->
-                            <!--{{item?.season}}-->
-                        <!--</td>-->
-                        <!--<td *ngIf="!item?.season || item?.season == 0">-->
-                            <!--&#45;&#45;-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td class="text-uppercase font-weight-bold small">Glass</td>-->
-                        <!--<td *ngIf="item?.glass">{{item?.glass}}</td>-->
-                        <!--<td *ngIf="!item?.glass">-->
-                            <!--&#45;&#45;-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                <!--</table>-->
+                <a *ngIf="item?.contact?.facebook?.length > 0" target="_blank" href="{{item?.contact.facebook}}" class="btn btn-social-icon btn-twitter text-large">
+                    <span class="fab fa-facebook fa-2x"></span>
+                </a>
+                <a *ngIf="item?.contact?.twitter?.length > 0" target="_blank" href="{{item?.contact.twitter}}" class="btn btn-social-icon btn-twitter text-large">
+                    <span class="fab fa-twitter fa-2x"></span>
+                </a>
+                <a *ngIf="item?.contact?.instagram?.length > 0" target="_blank" href="{{item?.contact.instagram}}" class="btn btn-social-icon btn-twitter text-large">
+                    <span class="fab fa-instagram fa-2x"></span>
+                </a>
+                <a *ngIf="item?.contact?.website?.length > 0" target="_blank" href="{{item?.contact.website}}" class="btn btn-social-icon btn-twitter text-large">
+                    <span class="fas fa-globe fa-2x"></span>
+                </a>
 
-
-                <!--&lt;!&ndash; Information in card-group (ABV, IBU, EBC, temp., since) &ndash;&gt;-->
-
-                <!--<div class="card-group mt-4 pt-2 text-center card-group-beer-profile">-->
-                    <!--<div class="card bg-super-light">-->
-                        <!--<div class="card-body p-2">-->
-                            <!--<div>-->
-                                <!--<small class="text-grey">ABV</small>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<small class="font-weight-bold" *ngIf="item?.ABV || item?.ABV != 0">{{item?.ABV}}%-->
-                                <!--</small>-->
-                                <!--<small class="font-weight-bold" *ngIf="!item?.ABV || item?.ABV == 0">&#45;&#45;</small>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="card bg-super-light">-->
-                        <!--<div class="card-body p-2">-->
-                            <!--<div>-->
-                                <!--<small class="text-grey">IBU</small>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<small class="font-weight-bold"-->
-                                       <!--*ngIf="item?.IBU || item?.IBU != 0">{{item?.IBU}}</small>-->
-                                <!--<small class="font-weight-bold" *ngIf="!item?.IBU || item?.IBU == 0">&#45;&#45;</small>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="card bg-super-light">-->
-                        <!--<div class="card-body p-2">-->
-                            <!--<div>-->
-                                <!--<small class="text-grey">EBC</small>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<small class="font-weight-bold"-->
-                                       <!--*ngIf="item?.EBC || item?.EBC != 0">{{item?.EBC}}</small>-->
-                                <!--<small class="font-weight-bold" *ngIf="!item?.EBC || item?.EBC == 0">&#45;&#45;</small>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="card bg-super-light">-->
-                        <!--<div class="card-body p-2">-->
-                            <!--<div>-->
-                                <!--<small class="text-grey">TEMP.</small>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<small class="font-weight-bold" *ngIf="item?.temperature || item?.temperature != 0">-->
-                                    <!--{{item?.temperature}}°C-->
-                                <!--</small>-->
-                                <!--<small class="font-weight-bold" *ngIf="!item?.temperature || item?.temperature == 0">-->
-                                    <!--&#45;&#45;-->
-                                <!--</small>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="card bg-super-light">-->
-                        <!--<div class="card-body p-2">-->
-                            <!--<div>-->
-                                <!--<small class="text-grey">SINCE</small>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                                <!--<small class="font-weight-bold"-->
-                                       <!--*ngIf="item?.since || item?.since != 0">{{item?.since}}</small>-->
-                                <!--<small class="font-weight-bold" *ngIf="!item?.since || item?.since == 0">&#45;&#45;</small>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
+            </div>
         </div>
     </div>
 </div>
-
