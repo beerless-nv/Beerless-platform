@@ -1,16 +1,17 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ResetPasswordService} from '../../shared/reset-password.service';
 
 @Component({
-    selector: 'app-reset-password-form',
-    templateUrl: './reset-password-form.component.html',
+    selector: 'app-reset-form',
+    templateUrl: './reset-form.component.html',
     styles: []
 })
-export class ResetPasswordFormComponent implements OnInit {
+export class ResetFormComponent implements OnInit {
 
     resetPasswordForm: FormGroup;
 
-    constructor() {
+    constructor(private resetPasswordService: ResetPasswordService) {
     }
 
     ngOnInit() {
@@ -20,7 +21,10 @@ export class ResetPasswordFormComponent implements OnInit {
                 Validators.email
             ]),
         });
+    }
 
+    reset() {
+        this.resetPasswordService.reset(this.resetPasswordForm.value);
     }
 
 }

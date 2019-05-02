@@ -7,14 +7,12 @@ import {TextTruncateModule} from './shared/components/text-truncate/text-truncat
 import {ToastModule} from './shared/components/toast/toast.module';
 import {NgBootstrapModule} from './shared/modules/ng-bootstrap.module';
 import {NgxBootstrapModule} from './shared/modules/ngx-bootstrap.module';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {ReactiveFormsModule} from '@angular/forms';
 import {LoadingBarHttpClientModule} from '@ngx-loading-bar/http-client';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
-import {ErrorInterceptor} from './core/interceptors/errorInterceptor';
 import {AutosizeModule} from 'ngx-autosize';
-import {CookieService} from 'ngx-cookie-service';
 import {NgScrollbarModule} from 'ngx-scrollbar';
 import {BidiModule} from '@angular/cdk/bidi';
 import {FileDropModule} from 'ngx-file-drop';

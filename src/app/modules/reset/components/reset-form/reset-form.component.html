@@ -1,9 +1,9 @@
-<div class="card border-yellow-top">
+<div class="card border-yellow-top w-100">
     <div class="card-body">
         <h4 class="mb-3 font-weight-bold text-primary">Reset password</h4>
         <p class="my-5">In case you lost your password, fill in your email address and you'll receive an email with instructions to reset your password.</p>
 
-        <form novalidate [formGroup]="resetPasswordForm" (ngSubmit)="resetPassword()">
+        <form novalidate [formGroup]="resetPasswordForm" (ngSubmit)="reset()">
 
 
             <!-- Input fields -->
