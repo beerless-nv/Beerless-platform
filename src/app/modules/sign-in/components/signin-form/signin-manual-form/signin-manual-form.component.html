@@ -1,40 +1,25 @@
 <form novalidate [formGroup]="formLogin" (ngSubmit)="signIn()">
 
-
     <!-- Input fields -->
 
-    <div class="form-group mb-3">
-        <div class="input-icon">
-            <input type="text" class="form-control" placeholder="Username"
-                   formControlName="username" id="usernameLogin">
-            <i class="fas fa-user"></i>
-        </div>
-        <div class="invalid-input"
-             *ngIf="formLogin.get('username').touched && formLogin.get('username').invalid">
-            <div *ngIf="formLogin.get('username').hasError('required')">
-                Fill in your username!
-            </div>
-        </div>
-    </div>
 
-    <div class="form-group mb-3 input-icon">
-        <div class="input-icon">
-            <input type="password" class="form-control" placeholder="Password"
-                   formControlName="password" id="passwordLogin">
-            <i class="fas fa-unlock-alt"></i>
-        </div>
-        <div class="invalid-input"
-             *ngIf="formLogin.get('password').touched && formLogin.get('password').invalid">
-            <div *ngIf="formLogin.get('password').hasError('required')">
-                Fill in your password!
-            </div>
-        </div>
-    </div>
+    <beerless-input [id]="'usernameLogin'" [type]="'text'" [label]="'Username or email'"
+                    [formControl]="formLogin.get('username')"
+                    [errorTypes]="['required']"
+                    [errorMessages]="['Enter your username or email!']"
+                    formControlName="username"
+    ></beerless-input>
+
+    <beerless-input [id]="'passwordLogin'" [type]="'password'" [label]="'Password'"
+                    [formControl]="formLogin.get('password')"
+                    [errorTypes]="['required']"
+                    [errorMessages]="['Enter your password!']"
+                    formControlName="password"
+    ></beerless-input>
 
 
     <!-- Server side error messages -->
-
-    <p class="invalid-input text-center" *ngFor="let msg of messageLogin">{{msg}}</p>
+    <beerless-server-side-messages [messages]="serverSideMessages"></beerless-server-side-messages>
 
 
     <!-- Submit button -->

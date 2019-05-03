@@ -552,3 +552,44 @@ ol {
 //
 // background images
 //
+
+
+
+//
+// errors
+//
+
+
+//
+// inputs
+//
+
+.invalid-input-error {
+    input {
+        border-color: red !important;
+    }
+
+    label {
+        color: red !important;
+    }
+
+    .error-symbol {
+        position: absolute;
+        color: red !important;
+        top: 50%;
+        right: 15px;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+
+    .tooltip-inner {
+        background-color: red !important;
+    }
+
+    .arrow::before {
+        border-top-color: red !important;
+    }
+}

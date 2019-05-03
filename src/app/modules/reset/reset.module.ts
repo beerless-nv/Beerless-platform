@@ -1,6 +1,9 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {InputFieldsModule} from '../../shared/components/input-fields/input-fields.module';
+import {ServerSideMessagesModule} from '../../shared/components/server-side-messages/server-side-messages.module';
 import {ResetFormComponent} from './components/reset-form/reset-form.component';
 import {ResetPasswordComponent} from './pages/visitor/reset-password/reset-password.component';
 import {ResetComponent} from './pages/visitor/reset/reset.component';
@@ -12,7 +15,11 @@ import {ResetPasswordService} from './shared/reset-password.service';
     imports: [
         CommonModule,
         ResetRoutingModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule,
+        NgbTooltipModule,
+        InputFieldsModule,
+        ServerSideMessagesModule
     ],
     declarations: [
         ResetComponent,

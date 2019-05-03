@@ -11,18 +11,25 @@ import {ErrorService} from '../../../../../shared/components/error/error.service
 export class SigninRememberFormComponent implements OnInit {
 
     formLoginRemembered: FormGroup;
-    messageLogin;
+    rememberedUser: any;
+    serverSideMessages: any;
 
     constructor(private signInService: SignInService, private errorService: ErrorService) {
+        const user = JSON.parse(localStorage.getItem('r-u-data'));
+        if (user) {
+            this.rememberedUser = user;
+        }
     }
 
     ngOnInit() {
         this.formLoginRemembered = new FormGroup({
-            username: new FormControl('Test112', Validators.required),
+            username: new FormControl(this.rememberedUser.username, Validators.required),
             password: new FormControl('', Validators.required)
         });
 
-        this.errorService.errorMessages$.subscribe(data => this.messageLogin = data);
+        this.errorService.errorMessages$.subscribe(err => {
+            this.serverSideMessages = {type: 'error', data: err};
+        });
     }
 
     signIn() {

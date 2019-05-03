@@ -8,22 +8,17 @@
 
             <!-- Input fields -->
 
-            <div class="form-group mb-3">
-                <div class="input-icon">
-                    <input type="text" class="form-control" placeholder="Email"
-                           formControlName="email" id="emailResetPassword">
-                    <i class="fas fa-envelope"></i>
-                </div>
-                <div class="invalid-input"
-                     *ngIf="resetPasswordForm.get('email').touched && resetPasswordForm.get('email').invalid">
-                    <div *ngIf="resetPasswordForm.get('email').hasError('required')">
-                        Fill in your email!
-                    </div>
-                    <div *ngIf="resetPasswordForm.get('email').hasError('email')">
-                        Fill in a valid email!
-                    </div>
-                </div>
-            </div>
+            <beerless-input [id]="'emailResetPassword'" [type]="'email'" [label]="'Email'"
+                            [formControl]="resetPasswordForm.get('email')"
+                            [errorTypes]="['required', 'email']"
+                            [errorMessages]="['Enter your email!', 'Enter a valid email!']"
+                            formControlName="email"
+            ></beerless-input>
+
+
+            <!-- Error and success messages -->
+
+            <beerless-server-side-messages [messages]="serverSideMessages"></beerless-server-side-messages>
 
 
             <!-- Submit form -->

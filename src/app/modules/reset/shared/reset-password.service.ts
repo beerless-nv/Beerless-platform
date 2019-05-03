@@ -15,20 +15,18 @@ export class ResetPasswordService extends AuthService {
     }
 
     reset(email) {
-        console.log(email);
-        this.http.post(this.urlResetPassword + '/reset', {email: email.email})
+        return this.http.post(this.urlResetPassword + '/reset', {email: email.email})
             .toPromise()
-            .then(data => console.log(data))
-            .catch(err => console.error(err));
+            .then(() => true);
     }
 
     resetPassword(password, accessToken) {
         const params = new HttpParams()
             .set('access_token', accessToken);
 
-        this.http.post(this.urlResetPassword + '/reset-password', {newPassword: password}, {params: params})
+        return this.http.post(this.urlResetPassword + '/reset-password', {newPassword: password}, {params: params})
             .toPromise()
-            .then(data => console.log(data))
-            .catch(err => console.error(err));
+            .then(data => true)
+            .catch(err => err);
     }
 }

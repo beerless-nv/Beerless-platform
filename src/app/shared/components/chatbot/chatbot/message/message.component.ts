@@ -7,6 +7,7 @@ import {
     ViewChild, ViewChildren,
     ViewContainerRef
 } from '@angular/core';
+import {BreweryprofileComponent} from '../../../../platform-components/breweryprofile/breweryprofile/breweryprofile.component';
 import {ChatbotComponent} from '../chatbot.component';
 import {BeerprofileComponent} from '../../../../platform-components/beerprofile/beerprofile/beerprofile.component';
 import {DragScrollComponent} from 'ngx-drag-scroll/lib';
@@ -65,12 +66,18 @@ export class MessageComponent implements OnInit {
                     case 'text':
                         // check if beer profile
                         if (this.message['message']['app-beerprofile']) {
+                            console.log(this.message['message']['app-beerprofile']);
+
+                            this.loadComponent(component, BeerprofileComponent, this.message['message']['app-beerprofile'][0]);
+                        } else if (this.message['message']['app-breweryprofile']) {
                             this.isComponent = true;
 
+                            console.log(this.message['message']['app-breweryprofile']);
+
                             // add component
-                            const factory = this.componentFactoryResolver.resolveComponentFactory(BeerprofileComponent);
+                            const factory = this.componentFactoryResolver.resolveComponentFactory(BreweryprofileComponent);
                             const ref = component.createComponent(factory);
-                            this.renderer2.setAttribute(ref.location.nativeElement, 'item', JSON.stringify(this.message['message']['app-beerprofile'][0]));
+                            this.renderer2.setAttribute(ref.location.nativeElement, 'item', JSON.stringify(this.message['message']['app-breweryprofile'][0]));
                             ref.changeDetectorRef.detectChanges();
                         }
 
@@ -115,5 +122,15 @@ export class MessageComponent implements OnInit {
 
     moveRight() {
         this.ds.first.moveRight();
+    }
+
+    loadComponent(component, entryComponent, message) {
+        this.isComponent = true;
+
+        // add component
+        const factory = this.componentFactoryResolver.resolveComponentFactory(entryComponent);
+        const ref = component.createComponent(factory);
+        this.renderer2.setAttribute(ref.location.nativeElement, 'item', JSON.stringify(message));
+        ref.changeDetectorRef.detectChanges();
     }
 }

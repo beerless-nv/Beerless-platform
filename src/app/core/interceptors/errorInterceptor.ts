@@ -28,15 +28,28 @@ export class ErrorInterceptor implements HttpInterceptor {
                         }
                     }
                 ), catchError((err) => {
+                    console.log(err.error.error);
                         if (err instanceof HttpErrorResponse) {
-                            if (err.status === 422) {
-                                this.errorService.handleErrorMsg(err.error.error.details.messages);
-                            } else if (err.status === 401 && err.error.error.code === 'LOGIN_FAILED') {
-                                this.errorService.handleLoginError(err.error.error.message);
-
-                            } else {
-                                this.errorInterceptorService.error$.next(true);
+                            switch (err.status) {
+                                case 422:
+                                    this.errorService.handleErrorMsg(err.error.error.details.messages);
+                                    break;
+                                case 404:
+                                case 401:
+                                    this.errorService.handleDefaultError(err.error.error.message);
+                                    break;
+                                default:
+                                    this.errorInterceptorService.error$.next(true);
+                                    break;
                             }
+                            // if (err.status === 422) {
+                            //     this.errorService.handleErrorMsg(err.error.error.details.messages);
+                            // } else if (err.status === 401 && err.error.error.code === 'LOGIN_FAILED') {
+                            //     this.errorService.handleLoginError(err.error.error.message);
+                            //
+                            // } else {
+                            //     this.errorInterceptorService.error$.next(true);
+                            // }
                         }
 
                         return throwError(err.statusText);

@@ -26,103 +26,48 @@
             <div *ngIf="!registrationSuccessful">
                 <h4 class="mb-3 font-weight-bold text-primary">Sign up</h4>
                 <form novalidate [formGroup]="formRegister" (ngSubmit)="register()" autocomplete="off">
-                    <div class="form-group mb-3">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="First name"
-                                   id="firstName"
-                                   formControlName="firstName">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="invalid-input"
-                             *ngIf="formRegister.get('firstName').touched && formRegister.get('firstName').invalid">
-                            <div *ngIf="formRegister.get('firstName').hasError('required')">
-                                Fill in your first name!
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="form-group mb-3">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Last name"
-                                   id="lastName"
-                                   formControlName="lastName">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="invalid-input"
-                             *ngIf="formRegister.get('lastName').touched && formRegister.get('lastName').invalid">
-                            <div *ngIf="formRegister.get('lastName').hasError('required')">
-                                Fill in your last name!
-                            </div>
-                        </div>
-                    </div>
+                    <beerless-input [id]="'firstName'" [type]="'text'" [label]="'First name'"
+                                    [formControl]="formRegister.get('firstName')"
+                                    [errorTypes]="['required']"
+                                    [errorMessages]="['Enter your first name!']"
+                                    formControlName="firstName"
+                    ></beerless-input>
 
-                    <div class="form-group mb-3">
-                        <div class="input-icon">
-                            <input type="text" class="form-control" placeholder="Username"
-                                   id="usernameRegister"
-                                   formControlName="username">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="invalid-input"
-                             *ngIf="formRegister.get('username').touched && formRegister.get('username').invalid">
-                            <div *ngIf="formRegister.get('username').hasError('required')">
-                                Fill in your username!
-                            </div>
-                            <div *ngIf="formRegister.get('username').hasError('minlength')">
-                                Username must contain at least 3 characters!
-                            </div>
-                            <div *ngIf="formRegister.get('username').hasError('maxlength')">
-                                Username can contain a maximum of 25 characters!
-                            </div>
-                            <div *ngIf="formRegister.get('username').hasError('pattern')">
-                                Username can only contain letters, figures and hyphens!
-                            </div>
-                        </div>
-                    </div>
+                    <beerless-input [id]="'lastName'" [type]="'text'" [label]="'Last name'"
+                                    [formControl]="formRegister.get('lastName')"
+                                    [errorTypes]="['required']"
+                                    [errorMessages]="['Enter your last name!']"
+                                    formControlName="lastName"
+                    ></beerless-input>
 
-                    <div class="form-group mb-3">
-                        <div class="input-icon">
-                            <input type="email" class="form-control" id="emailRegister"
-                                   placeholder="Email"
-                                   formControlName="email">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div class="invalid-input"
-                             *ngIf="formRegister.get('email').touched && formRegister.get('email').invalid">
-                            <div *ngIf="formRegister.get('email').hasError('required')">
-                                Fill in your email!
-                            </div>
-                            <div *ngIf="formRegister.get('email').hasError('email')">
-                                Fill in a valid email!
-                            </div>
-                        </div>
-                    </div>
+                    <beerless-input [id]="'username'" [type]="'text'" [label]="'Username'"
+                                    [formControl]="formRegister.get('username')"
+                                    [errorTypes]="['required', 'minlength', 'maxlength', 'pattern']"
+                                    [errorMessages]="['Enter your username!', 'Username must contain at least 3 characters!',
+                                    'Username can contain a maximum of 25 characters!', 'Username can only contain letters, figures and hyphens!']"
+                                    formControlName="username"
+                    ></beerless-input>
 
-                    <div class="form-group mb-3">
-                        <div class="input-icon">
-                            <input type="password" class="form-control" placeholder="Password"
-                                   id="passwordRegister"
-                                   formControlName="password">
-                            <i class="fas fa-unlock-alt"></i>
-                        </div>
-                        <div class="invalid-input"
-                             *ngIf="formRegister.get('password').touched && formRegister.get('password').invalid">
-                            <div *ngIf="formRegister.get('password').hasError('required')">
-                                Fill in a password!
-                            </div>
-                            <div *ngIf="formRegister.get('password').hasError('minlength')">
-                                Password must contain at least 8 characters!
-                            </div>
-                            <div *ngIf="formRegister.get('password').hasError('pattern')">
-                                Password must contain at least 1 letter, 1 capital letter and 1 figure!
-                            </div>
-                        </div>
-                    </div>
+                    <beerless-input [id]="'email'" [type]="'text'" [label]="'Email'"
+                                    [formControl]="formRegister.get('email')"
+                                    [errorTypes]="['required', 'email']"
+                                    [errorMessages]="['Enter your Email!', 'Fill in a valid email!']"
+                                    formControlName="email"
+                    ></beerless-input>
+
+                    <beerless-input [id]="'password'" [type]="'password'" [label]="'Password'"
+                                    [formControl]="formRegister.get('password')"
+                                    [errorTypes]="['required', 'minlength', 'pattern']"
+                                    [errorMessages]="['Enter your password!', 'Password must contain at least 8 characters!',
+                                    'Password must contain at least 1 letter, 1 capital letter and 1 figure!']"
+                                    formControlName="password"
+                    ></beerless-input>
 
 
                     <!-- Server side error messages -->
 
-                    <p class="invalid-input text-center" *ngFor="let msg of messageRegister">{{msg}}</p>
+                    <beerless-server-side-messages [messages]="serverSideMessages"></beerless-server-side-messages>
 
 
                     <!-- Warning messages -->
@@ -131,7 +76,8 @@
                         <small>
                             You must have the legal drinking age in your country in order to sign up at Beerless.
                             By <strong>signin up</strong>, you agree with our
-                            <a href="https://www.beerless.be/assets/Voorwaarden/Privacy_Beleid_Beerless.pdf" target="_blank">terms and conditions</a>.
+                            <a href="https://www.beerless.be/assets/Voorwaarden/Privacy_Beleid_Beerless.pdf"
+                               target="_blank">terms and conditions</a>.
                         </small>
                     </div>
 

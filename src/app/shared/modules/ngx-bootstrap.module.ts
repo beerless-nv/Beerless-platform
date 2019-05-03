@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {ModalModule, TabsModule} from 'ngx-bootstrap';
+import {ModalModule, TabsModule, TooltipModule} from 'ngx-bootstrap';
 
 @NgModule({
     imports: [

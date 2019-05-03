@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {BreweryprofileComponent} from '../../platform-components/breweryprofile/breweryprofile/breweryprofile.component';
 import {ChatbotComponent} from './chatbot/chatbot.component';
 import {EmoticonsComponent} from './chatbot/extra/emoticons/emoticons.component';
 import {UploadComponent} from './chatbot/extra/upload/upload.component';
@@ -40,7 +41,8 @@ import {BeerprofileComponent} from '../../platform-components/beerprofile/beerpr
         ChatbotComponent
     ],
     entryComponents: [
-        BeerprofileComponent
+        BeerprofileComponent,
+        BreweryprofileComponent
     ]
 })
 export class ChatbotModule {

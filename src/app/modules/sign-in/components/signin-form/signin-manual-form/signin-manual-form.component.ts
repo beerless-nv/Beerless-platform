@@ -3,7 +3,6 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../../../../../_services/login.service';
 import {ErrorService} from '../../../../../shared/components/error/error.service';
 import {Router} from '@angular/router';
-import {AuthService, FacebookLoginProvider, GoogleLoginProvider, LinkedinLoginProvider} from 'angular-6-social-login';
 import {SignInService} from '../../../../../core/user/sign-in.service';
 
 @Component({
@@ -14,7 +13,7 @@ import {SignInService} from '../../../../../core/user/sign-in.service';
 export class SigninManualFormComponent implements OnInit {
 
     user = {};
-    messageLogin;
+    serverSideMessages;
     formLogin: FormGroup;
 
     constructor(public signInService: SignInService, private errorService: ErrorService, private router: Router) {
@@ -26,7 +25,7 @@ export class SigninManualFormComponent implements OnInit {
             password: new FormControl('', Validators.required)
         });
 
-        this.errorService.errorMessages$.subscribe(data => this.messageLogin = data);
+        this.errorService.errorMessages$.subscribe(data => this.serverSideMessages = {type: 'error', data: data});
     }
 
     signIn() {

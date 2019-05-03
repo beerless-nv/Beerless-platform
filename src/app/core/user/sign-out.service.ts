@@ -25,7 +25,8 @@ export class SignOutService extends AuthService {
                 localStorage.setItem('r-u-data', JSON.stringify({
                     picture: user.picture,
                     firstName: user.firstName,
-                    lastName: user.lastName
+                    lastName: user.lastName,
+                    username: user.username
                 }));
 
                 // Remove accessToken from localStorage and clear user object

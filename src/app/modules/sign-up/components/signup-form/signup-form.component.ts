@@ -13,29 +13,30 @@ export class SignupFormComponent implements OnInit {
     messageRegister;
     formRegister: FormGroup;
     registrationSuccessful = false;
+    serverSideMessages: any;
 
     constructor(private signupService: SignUpService, private errorService: ErrorService) {
     }
 
     ngOnInit() {
         this.formRegister = new FormGroup({
-            firstName: new FormControl('Test', [
+            firstName: new FormControl('', [
                 Validators.required
             ]),
-            lastName: new FormControl('Test', [
+            lastName: new FormControl('', [
                 Validators.required
             ]),
-            username: new FormControl('Test112', [
+            username: new FormControl('', [
                 Validators.required,
                 Validators.minLength(3),
                 Validators.maxLength(25),
                 Validators.pattern('^([a-zA-ZÀ-ÿ0-9-])*$')
             ]),
-            email: new FormControl('Test112@test.com', [
+            email: new FormControl('', [
                 Validators.required,
                 Validators.email
             ]),
-            password: new FormControl('Test1234', [
+            password: new FormControl('', [
                 Validators.required,
                 Validators.minLength(8),
                 Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
@@ -44,7 +45,9 @@ export class SignupFormComponent implements OnInit {
             favouriteBeerId: new FormControl(0),
         });
 
-        this.errorService.errorMessages$.subscribe(data => this.messageRegister = data);
+        this.errorService.errorMessages$.subscribe(err => {
+            this.serverSideMessages = {type: 'error', data: err};
+        });
     }
 
     register() {

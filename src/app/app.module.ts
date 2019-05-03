@@ -55,7 +55,7 @@ import {PlatformComponentsModule} from './shared/platform-components/platform-co
         ToastModule,
         TextTruncateModule,
         PlatformComponentsModule,
-        CoreModule
+        CoreModule,
     ],
     providers: [
     ],

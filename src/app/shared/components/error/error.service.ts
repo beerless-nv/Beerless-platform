@@ -32,7 +32,7 @@ export class ErrorService {
         this.errorMessages$.next(errorMessageArray);
     }
 
-    handleLoginError(errorMessage) {
+    handleDefaultError(errorMessage) {
         const errorMessageArray = [];
         if (errorMessage != null) {
             errorMessageArray.push(errorMessage);

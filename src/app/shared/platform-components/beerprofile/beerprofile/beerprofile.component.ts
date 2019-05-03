@@ -1,7 +1,5 @@
 import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {environment} from '../../../../../environments/environment';
-import {BeerService} from '../../../../modules/beer/shared/beer.service';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
 
 @Component({
     selector: 'app-beerprofile',
@@ -14,7 +12,7 @@ export class BeerprofileComponent implements OnInit {
     limit = 210;
     moreShown = false;
 
-    constructor(private beersService: BeerService, private route: ActivatedRoute, private router: Router, private elm: ElementRef) {
+    constructor(private elm: ElementRef) {
     }
 
     ngOnInit() {
