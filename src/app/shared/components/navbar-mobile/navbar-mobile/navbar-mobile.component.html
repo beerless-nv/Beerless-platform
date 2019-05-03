@@ -5,19 +5,19 @@
         </a>
         <div class="nav-mobile-submenu" [hidden]="submenu != 'user'" (click)="hideAllSubmenu()">
             <a routerLink="/user/profile/{{user?.ID}}" class="nav-mobile-submenu-item">
-                Profiel
+                Profile
             </a>
             <a routerLink="/user/wishlist/{{user?.ID}}" class="nav-mobile-submenu-item">
                 Wishlist
             </a>
             <a routerLink="/user/settings" class="nav-mobile-submenu-item">
-                Instellingen
+                Settings
             </a>
             <a class="nav-mobile-submenu-item" (click)="logout()" [hidden]="!user">
-                Uitloggen
+                Sign-out
             </a>
             <a routerLink="/login" class="nav-mobile-submenu-item" [hidden]="user">
-                Inloggen
+                Sign-in
             </a>
         </div>
     </div>

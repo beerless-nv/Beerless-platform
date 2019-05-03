@@ -40,7 +40,7 @@
                         <div class="card-img-top" [style.background-image]="'url(' + element['image_url'] + ')'"></div>
                         <div class="card-body">
                             <div class="card-body-text">
-                                <a routerLink="{{ element['buttons'][0]['action'] }}">
+                                <a routerLink="{{ 'beers/' + element['buttons'][0]['action'] }}">
                                     <h5 class="card-title">{{ element['title'] }}</h5>
                                 </a>
                                 <p class="card-text">

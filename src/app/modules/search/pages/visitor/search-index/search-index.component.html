@@ -12,7 +12,7 @@
                 <!-- Search bar -->
 
                 <div class="form-group mb-1 input-icon">
-                    <input type="text" class="form-control" placeholder="Zoek een bier" value="{{beerName}}"
+                    <input type="text" class="form-control" placeholder="Look for a beer/brewery/beerstyle" value="{{beerName}}"
                            #beer
                            (blur)="routeChange(beer.value, 1)"
                            (keyup.enter)="beer.blur()">
