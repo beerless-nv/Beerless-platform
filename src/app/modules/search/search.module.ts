@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NgxPaginationModule} from 'ngx-pagination';
+import {ButtonsModule} from '../../shared/components/buttons/buttons.module';
 import {NgBootstrapModule} from '../../shared/modules/ng-bootstrap.module';
 import {BeerService} from '../beer/shared/beer.service';
 import {BeerItemComponent} from './components/beer-item/beer-item.component';
@@ -14,6 +15,7 @@ import {SearchRoutingModule} from './search-routing.module';
         SearchRoutingModule,
         NgBootstrapModule,
         NgxPaginationModule,
+        ButtonsModule
     ],
     declarations: [
         SearchIndexComponent,

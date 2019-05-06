@@ -1,0 +1,30 @@
+// Import Beerless variables file and bootstrap scss file
+@import "~src/assets/stylesheets/variables";
+@import "~bootstrap/scss/bootstrap.scss";
+
+// Specific component css
+a.btn {
+    padding: 0.75rem 0.75rem;
+}
+
+.btn-small {
+    padding: 0.4rem !important;
+}
+
+.btn-outline-primary {
+    color: $primary !important;
+
+    &:hover {
+        color: $primary !important;
+        background-color: rgba(249, 176, 84, 0.1);
+    }
+}
+
+.btn-outline-light:hover {
+    color: $dark !important;
+}
+
+.btn-hover-opacity-15:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}

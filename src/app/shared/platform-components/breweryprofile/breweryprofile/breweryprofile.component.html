@@ -14,14 +14,17 @@
                 <div>
                     <h4 class="font-weight-bold d-sm-block d-none">{{item?.name}}</h4>
                     <h6 class="font-weight-bold d-sm-none d-block">{{item?.name}}</h6>
-                    <div>
-                        <div *ngIf="item?.streetAndNumber?.length > 0">
+                    <div class="text-grey">
+                        <ng-container *ngIf="item?.streetAndNumber">
                             <div>{{item?.streetAndNumber}}</div>
-                            <div>{{item?.place || item?.province}}, {{item?.country}}</div>
-                        </div>
-                        <div *ngIf="item?.streetAndNumber?.length === 0">
-                            --
-                        </div>
+                        </ng-container>
+                        <ng-container *ngIf="item?.place || item?.province || item?.country || item?.postcode">
+                            <div>
+                                <span *ngIf="item?.postcode">{{item?.postcode}} </span>
+                                <span *ngIf="item?.place || item?.province">{{item?.place || item?.province}},</span>
+                                {{item?.country}}
+                            </div>
+                        </ng-container>
                     </div>
                 </div>
             </div>
@@ -30,25 +33,29 @@
                 <beerless-text-truncate [text]="item?.description" [limit]="210" [truncateSymbol]="'...'"
                     [truncateText]="'Read more'"></beerless-text-truncate>
             </div>
-            <div class="mt-4 w-100">
+            <ng-container *ngIf="item?.contact">
+                <div class="mt-4 w-100">
+                    <p class="font-weight-bold small">Follow the brewery</p>
 
 
-                <!-- Information in table (country, address, province, contact) -->
+                    <!-- Social information -->
 
-                <a *ngIf="item?.contact?.facebook?.length > 0" target="_blank" href="{{item?.contact.facebook}}" class="btn btn-social-icon btn-twitter text-large">
-                    <span class="fab fa-facebook fa-2x"></span>
-                </a>
-                <a *ngIf="item?.contact?.twitter?.length > 0" target="_blank" href="{{item?.contact.twitter}}" class="btn btn-social-icon btn-twitter text-large">
-                    <span class="fab fa-twitter fa-2x"></span>
-                </a>
-                <a *ngIf="item?.contact?.instagram?.length > 0" target="_blank" href="{{item?.contact.instagram}}" class="btn btn-social-icon btn-twitter text-large">
-                    <span class="fab fa-instagram fa-2x"></span>
-                </a>
-                <a *ngIf="item?.contact?.website?.length > 0" target="_blank" href="{{item?.contact.website}}" class="btn btn-social-icon btn-twitter text-large">
-                    <span class="fas fa-globe fa-2x"></span>
-                </a>
-
-            </div>
+                    <div class="d-flex">
+                        <a *ngIf="item?.contact?.facebook" target="_blank" href="{{item?.contact.facebook}}" class="brewery-social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a *ngIf="item?.contact?.twitter" target="_blank" href="{{item?.contact.twitter}}" class="brewery-social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a *ngIf="item?.contact?.instagram" target="_blank" href="{{item?.contact.instagram}}" class="brewery-social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a *ngIf="item?.contact?.website" target="_blank" href="{{item?.contact.website}}" class="brewery-social-icon">
+                            <i class="fas fa-link"></i>
+                        </a>
+                    </div>
+                </div>
+            </ng-container>
         </div>
     </div>
 </div>

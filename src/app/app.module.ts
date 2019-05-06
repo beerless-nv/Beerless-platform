@@ -24,6 +24,9 @@ import {IeWarningModule} from './shared/components/ie-warning/ie-warning.module'
 import {ModalModule} from './shared/components/modal/modal.module';
 import {NavbarModule} from './shared/components/navbar/navbar.module';
 import {NavbarMobileModule} from './shared/components/navbar-mobile/navbar-mobile.module';
+import {PipesModule} from './shared/pipes/pipes.module';
+import {SafeHtmlPipe} from './shared/pipes/safe-html.pipe';
+import {SafeUrlPipe} from './shared/pipes/safe-url.pipe';
 import {PlatformComponentsModule} from './shared/platform-components/platform-components.module';
 
 @NgModule({

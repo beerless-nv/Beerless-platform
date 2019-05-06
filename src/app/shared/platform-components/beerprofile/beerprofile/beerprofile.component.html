@@ -15,7 +15,7 @@
                     <h4 class="font-weight-bold d-sm-block d-none">{{item?.name}}</h4>
                     <h6 class="font-weight-bold d-sm-none d-block">{{item?.name}}</h6>
                     <ng-container *ngFor="let brewery of item?.breweries">
-                        <a routerLink="" class="link-muted-yellow">{{brewery?.name}}</a>
+                        <a routerLink="/breweries/{{brewery?.id}}" class="link-muted-yellow">{{brewery?.name}} </a>
                     </ng-container>
                 </div>
             </div>

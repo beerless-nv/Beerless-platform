@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {throwError} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
 import {LocalStorageService} from '../../../_services/local-storage.service';
 import {AuthService} from '../../../core/authorization/auth.service';
@@ -63,11 +61,6 @@ export class BeerService extends AuthService {
             .append('beerId', beerId)
             .append('amount', amount);
 
-        return this.http.get(this.urlBeer + '/itemBasedRecommendation', {params: params})
-            .pipe(
-                catchError(err => {
-                    return throwError(err);
-                })
-            );
+        return this.http.get(this.urlBeer + '/itemBasedRecommendation', {params: params});
     }
 }

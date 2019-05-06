@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {PipesModule} from '../../pipes/pipes.module';
 import {BreweryprofileComponent} from '../../platform-components/breweryprofile/breweryprofile/breweryprofile.component';
 import {ChatbotComponent} from './chatbot/chatbot.component';
 import {EmoticonsComponent} from './chatbot/extra/emoticons/emoticons.component';
@@ -8,10 +9,8 @@ import {MessageComponent} from './chatbot/message/message.component';
 import {MessagesComponent} from './chatbot/messages/messages.component';
 import {ExtraComponent} from './chatbot/extra/extra.component';
 import {FileDropModule} from 'ngx-file-drop';
-import {SafeHTMLPipe} from '../../pipes/safeHTML.pipe';
 import {NgBootstrapModule} from '../../modules/ng-bootstrap.module';
 import {NgxBootstrapModule} from '../../modules/ngx-bootstrap.module';
-import {SafeURLPipe} from '../../pipes/safeURL.pipe';
 import {DragScrollModule} from 'ngx-drag-scroll/lib';
 import {AppRoutingModule} from '../../../app-routing.module';
 import {TextTruncateModule} from '../text-truncate/text-truncate.module';
@@ -25,11 +24,10 @@ import {BeerprofileComponent} from '../../platform-components/beerprofile/beerpr
         NgxBootstrapModule,
         AppRoutingModule,
         DragScrollModule,
-        TextTruncateModule
+        TextTruncateModule,
+        PipesModule
     ],
     declarations: [
-        SafeHTMLPipe,
-        SafeURLPipe,
         ChatbotComponent,
         EmoticonsComponent,
         UploadComponent,

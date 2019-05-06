@@ -32,11 +32,12 @@
             <!-- Add beer button -->
 
             <div class="mb-1 col-md-4 col-12 p-0 pl-md-3 pl-0 mb-md-0 mb-4 order-md-1 order-0">
-                <a routerLink="/beers/add" [queryParams]="{name: beer.value}" class="btn btn-yellow d-flex text-white">
+                <beerless-link-button [routerLink]="'/beers/add'" [queryParams]="{name: beer.value}"
+                                      [class]="'btn d-flex btn-primary text-white'">
                     <i class="fas fa-plus my-auto mr-3"></i>
                     <span class="d-lg-block d-none">Add new beer</span>
                     <span class="d-lg-none d-block">Add beer</span>
-                </a>
+                </beerless-link-button>
             </div>
         </div>
 

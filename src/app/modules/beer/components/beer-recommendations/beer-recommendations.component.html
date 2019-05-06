@@ -3,34 +3,38 @@
         <strong>Top 10 similar beers</strong>
     </div>
     <div class="card-body">
-        <!--<p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0"></p>-->
+        <p class="small text-uppercase text-grey-light font-weight-bold mb-0 text-center" *ngIf="!item">
+            We've found no similar beers
+        </p>
 
-        <ng-container *ngFor="let beer of item">
-            <div class="pb-2">
-
-
-                <!-- Beer image -->
-
-                <a routerLink="/beers/{{beer?.beer.id}}" class="link-black-yellow d-flex flex-nowrap align-items-center">
-                    <div class="pr-3 mouse-pointer">
-                        <img [src]="environment.imageURL + 'beer/logo/' + beer?.beer.logo" alt="logo {{beer?.beer.name}}"
-                             class="beers-sidebar-image">
-                    </div>
+        <ng-container *ngIf="item">
+            <ng-container *ngFor="let beer of item">
+                <div class="pb-2">
 
 
-                    <!-- Beer details -->
+                    <!-- Beer image -->
 
-                    <div class="d-flex flex-column text-truncate w-100">
-                        <div class="text-truncate small">{{beer?.beer.name}}</div>
-                        <div class="text-truncate small text-primary font-weight-bold recommendations-text d-flex align-items-center justify-content-between">
-                            <div>
-                                <div [style.width]="(((1 - beer?.distance) * 100) | number:'1.0-0') + '%'"></div>
-                            </div>
-                            <span>{{ ((1 - beer?.distance) * 100) | number:'1.0-0' }}%</span>
+                    <a routerLink="/beers/{{beer?.beer.id}}" class="link-black-yellow d-flex flex-nowrap align-items-center">
+                        <div class="pr-3 mouse-pointer">
+                            <img [src]="environment.imageURL + 'beer/logo/' + beer?.beer.logo" alt="logo {{beer?.beer.name}}"
+                                 class="beers-sidebar-image">
                         </div>
-                    </div>
-                </a>
-            </div>
+
+
+                        <!-- Beer details -->
+
+                        <div class="d-flex flex-column text-truncate w-100">
+                            <div class="text-truncate small">{{beer?.beer.name}}</div>
+                            <div class="text-truncate small text-primary font-weight-bold recommendations-text d-flex align-items-center justify-content-between">
+                                <div>
+                                    <div [style.width]="(((1 - beer?.distance) * 100) | number:'1.0-0') + '%'"></div>
+                                </div>
+                                <span>{{ ((1 - beer?.distance) * 100) | number:'1.0-0' }}%</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </ng-container>
         </ng-container>
     </div>
 </div>

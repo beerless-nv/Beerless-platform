@@ -10,7 +10,7 @@
         [class.right]="type === 'user'">
 
         <!-- regular message -->
-        <span *ngIf="message['type'] === 'text'" [ngbCollapse]="isComponent" [innerHTML]="text | safeHTML"></span>
+        <span *ngIf="message['type'] === 'text'" [ngbCollapse]="isComponent" [innerHTML]="text | safeHtml"></span>
 
         <!-- components -->
         <span #component></span>
@@ -24,7 +24,7 @@
         <!-- location -->
         <ng-container *ngIf="message['type'] === 'location'">
             <div>{{text}}</div>
-            <iframe [src]="src | safeURL" frameborder="0" allowfullscreen></iframe>
+            <iframe [src]="src | safeUrl" frameborder="0" allowfullscreen></iframe>
         </ng-container>
     </div>
 

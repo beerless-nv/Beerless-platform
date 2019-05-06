@@ -14,7 +14,8 @@
 
             <a routerLink="/beers/{{beer?.id}}" class="link-white-yellow">
                 <div class="pr-3 mouse-pointer">
-                    <img src="{{environment.imageURL + 'beer/logo/' + beer?.logo}}" alt="logo {{beer?.name}}" [ngbCollapse]="!beer?.logo"
+                    <img src="{{environment.imageURL + 'beer/logo/' + beer?.logo}}" alt="logo {{beer?.name}}"
+                         [ngbCollapse]="!beer?.logo"
                          class="beers-sidebar-image">
                 </div>
             </a>
@@ -23,10 +24,10 @@
             <!-- Beer details -->
 
             <div class="text-truncate">
-                <a routerLink="/beers/{{beer?.id}}" class="link-black-yellow font-weight-bold m-0 small"
-                   ngbTooltip="naam bier">{{beer?.name}}</a>
+                <a routerLink="/beers/{{beer?.id}}"
+                   class="link-black-yellow font-weight-bold m-0 small">{{beer?.name}}</a>
                 <p class="my-0 small text-truncate"><a routerLink="/breweries/{{beer?.breweries[0]?.id}}"
-                                         class="link-black-yellow">{{beer?.breweries[0]?.name}}</a></p>
+                                                       class="link-black-yellow">{{beer?.breweries[0]?.name}}</a></p>
             </div>
         </div>
 

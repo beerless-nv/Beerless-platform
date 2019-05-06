@@ -6,8 +6,16 @@
 <div>
     <div class="container">
         <div class="col-12 d-flex flex-md-row flex-column p-0">
-            <div class="col-md-9 col-12 pl-md-0 px-0">
+            <div class="col-lg-9 col-md-8 col-12 pl-0 pr-md-3 pr-0">
                 <app-breweryprofile [item]="brewery"></app-breweryprofile>
+                <ng-container
+                    *ngIf="brewery?.streetAndNumber && (brewery?.place || brewery?.province || brewery?.country)">
+                    <div class="mt-5">
+                        <app-brewery-location [streetAndNumber]="brewery?.streetAndNumber" [place]="brewery?.place"
+                                              [postcode]="brewery?.postcode" [province]="brewery?.province"
+                                              [country]="brewery?.country"></app-brewery-location>
+                    </div>
+                </ng-container>
             </div>
             <div class="col-lg-3 col-md-4 col-12 pr-0 pl-md-3 pl-0">
                 <app-brewerybeerprofile *ngIf="brewery?.beers" [item]="brewery?.beers"></app-brewerybeerprofile>

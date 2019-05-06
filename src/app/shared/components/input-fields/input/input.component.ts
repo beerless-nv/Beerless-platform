@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
@@ -31,6 +31,10 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     // error messages
     @Input() errorTypes: Array<string>;
     @Input() errorMessages: Array<string>;
+
+
+    @ViewChild('errorTooltip') errorTooltip;
+    hideTooltip = false;
 
 
     // Both onChange and onTouched are functions
@@ -69,6 +73,10 @@ export class InputComponent implements OnInit, ControlValueAccessor {
         this.val = val;
         this.onChange(val);
         this.onTouched();
+
+        if (this.formControl.valid) {
+            this.errorTooltip.close();
+        }
     }
 
     // We implement this method to keep a reference to the onChange

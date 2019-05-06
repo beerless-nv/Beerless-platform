@@ -1,5 +1,6 @@
 <div class="form-group">
-    <div class="border-lable-flt" [class.invalid-input-error]="formControl.touched && formControl.invalid">
+    <div class="border-lable-flt" [class.invalid-input-error]="formControl.touched && formControl.invalid"
+         [ngbTooltip]="tipContent" tooltipClass="errorTooltip" #errorTooltip="ngbTooltip" triggers="none">
         <input [(ngModel)]="value"
                [type]="type" class="form-control" [id]="id" [placeholder]="placeholder" [required]="required">
         <label for="{{ id }}">{{ label }}</label>
@@ -12,7 +13,7 @@
                 </ng-container>
             </div>
         </ng-template>
-        <i class="fas fa-exclamation-circle error-symbol" [ngbTooltip]="tipContent" tooltipClass="error-tooltip"
+        <i class="fas fa-exclamation-circle error-symbol" (mouseover)="errorTooltip.toggle()" (mouseout)="errorTooltip.toggle()"
            *ngIf="formControl.touched && formControl.invalid"></i>
     </div>
 </div>

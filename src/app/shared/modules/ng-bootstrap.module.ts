@@ -1,19 +1,26 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
-import {NgbCollapseModule, NgbModalModule, NgbTooltipModule} from '@ng-bootstrap/ng-bootstrap';
+import {
+    NgbCollapseModule,
+    NgbModalModule,
+    NgbPopoverModule,
+    NgbTooltipModule
+} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
         CommonModule,
         NgbCollapseModule.forRoot(),
         NgbModalModule.forRoot(),
-        NgbTooltipModule.forRoot()
+        NgbTooltipModule.forRoot(),
+        NgbPopoverModule.forRoot()
     ],
     exports: [
         NgbCollapseModule,
         NgbModalModule,
-        NgbTooltipModule
+        NgbTooltipModule,
+        NgbPopoverModule
     ],
     declarations: []
 })

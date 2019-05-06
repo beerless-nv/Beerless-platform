@@ -13,8 +13,16 @@
                         <h6 class="font-weight-bold d-sm-none d-block">{{item?.name}}</h6>
                     </a>
                     <div class="text-grey">
-                        <div>{{item?.streetAndNumber}},</div>
-                        <div>{{item?.place || item?.province}}, {{item?.country}}</div>
+                        <ng-container *ngIf="item?.streetAndNumber">
+                            <div>{{item?.streetAndNumber}}</div>
+                        </ng-container>
+                        <ng-container *ngIf="item?.place || item?.province || item?.country || item?.postcode">
+                            <div>
+                                <span *ngIf="item?.postcode">{{item?.postcode}} </span>
+                                <span *ngIf="item?.place || item?.province">{{item?.place || item?.province}},</span>
+                                {{item?.country}}
+                            </div>
+                        </ng-container>
                     </div>
                 </div>
             </div>

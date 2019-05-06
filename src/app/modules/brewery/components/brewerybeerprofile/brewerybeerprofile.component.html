@@ -3,26 +3,32 @@
         <strong>Beers</strong>
     </div>
     <div class="card-body">
-      <ng-container *ngFor="let beer of item">
-          <div class="pb-2">
+        <p class="small text-uppercase text-grey-light font-weight-bold mb-0 text-center" *ngIf="item.length === 0">
+            We've found no beers for this brewery
+        </p>
+
+        <ng-container *ngIf="item">
+            <ng-container *ngFor="let beer of item">
+                <div class="pb-2">
 
 
-              <!-- Beer image -->
+                    <!-- Beer image -->
 
-              <a routerLink="/beers/{{beer?.id}}" class="link-black-yellow d-flex flex-nowrap align-items-center">
-                  <div class="pr-3 mouse-pointer">
-                      <img [src]="environment.imageURL + 'beer/logo/' + beer?.logo" alt="logo {{beer?.name}}"
-                           class="beers-sidebar-image">
-                  </div>
+                    <a routerLink="/beers/{{beer?.id}}" class="link-black-yellow d-flex flex-nowrap align-items-center">
+                        <div class="pr-3 mouse-pointer">
+                            <img [src]="environment.imageURL + 'beer/logo/' + beer?.logo" alt="logo {{beer?.name}}"
+                                 class="beers-sidebar-image">
+                        </div>
 
 
-                  <!-- Beer details -->
+                        <!-- Beer details -->
 
-                  <div class="d-flex flex-column text-truncate w-100">
-                      <div class="text-truncate small">{{beer?.name}}</div>
-                  </div>
-              </a>
-          </div>
-      </ng-container>
+                        <div class="d-flex flex-column text-truncate w-100">
+                            <div class="text-truncate small">{{beer?.name}}</div>
+                        </div>
+                    </a>
+                </div>
+            </ng-container>
+        </ng-container>
     </div>
-  </div>
+</div>

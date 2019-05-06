@@ -15,7 +15,6 @@ export class BreweryprofileComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.item);
         if (this.elm.nativeElement.getAttribute('item') !== null) {
             this.item = JSON.parse(this.elm.nativeElement.getAttribute('item'));
         }

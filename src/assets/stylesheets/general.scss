@@ -100,53 +100,6 @@ a.btn {
     color: #fff;
 }
 
-input.input-dark {
-    background-color: $dark;
-    color: $grey !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-
-    &::placeholder {
-        color: $grey !important;
-    }
-
-    &:focus {
-        background-color: $dark;
-        box-shadow: none !important;
-        border-color: $grey !important;
-    }
-}
-
-.form-control {
-    height: 50px;
-    border-color: $muted-light !important;
-    color: $dark !important;
-
-    &::placeholder {
-        color: $muted !important;
-    }
-
-    &:focus {
-        box-shadow: none !important;
-        border-color: $input-focus-color !important;
-    }
-}
-
-.input-icon {
-    position: relative;
-
-    & i {
-        color: $grey;
-        position: absolute;
-        top: 50%;
-        left: 13px;
-        transform: translateY(-50%);
-    }
-
-    & input {
-        padding-left: 50px;
-    }
-}
-
 .custom-file {
     .custom-file-input input, label {
         height: 50px !important;
@@ -564,32 +517,6 @@ ol {
 // inputs
 //
 
-.invalid-input-error {
-    input {
-        border-color: red !important;
-    }
 
-    label {
-        color: red !important;
-    }
 
-    .error-symbol {
-        position: absolute;
-        color: red !important;
-        top: 50%;
-        right: 15px;
-        -webkit-transform: translateY(-50%);
-        -moz-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-        -o-transform: translateY(-50%);
-        transform: translateY(-50%);
-    }
 
-    .tooltip-inner {
-        background-color: red !important;
-    }
-
-    .arrow::before {
-        border-top-color: red !important;
-    }
-}
