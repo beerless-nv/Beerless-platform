@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {BsModalRef} from 'ngx-bootstrap';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CookieService} from 'ngx-cookie-service';
 import {environment} from '../../../../../environments/environment';
 

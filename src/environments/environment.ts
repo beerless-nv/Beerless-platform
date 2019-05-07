@@ -7,6 +7,8 @@ export const environment = {
     backend: 'http://localhost:3000/api/',
     imageURL: 'https://assets.beerless.be/images/',
     mapsAPIKey: 'AIzaSyBDxPBARHK7z7XuEi2n9XTWhsxv630C6eo',
+    appURL: 'http://localhost:4200/',
+    websiteURL: 'http://localhost:4201/'
 };
 
 /*

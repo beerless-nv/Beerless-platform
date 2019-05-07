@@ -1,6 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 import {environment} from '../../../environments/environment';
 import {AuthService} from '../authorization/auth.service';
 import {LoggedUserService} from './logged-user.service';
@@ -12,7 +13,7 @@ export class SignOutService extends AuthService {
 
     readonly urlUsers = environment.backend + 'users';
 
-    constructor(public http: HttpClient, private loggedUserService: LoggedUserService, private router: Router) {
+    constructor(public http: HttpClient, private loggedUserService: LoggedUserService, private router: Router, private cookieService: CookieService) {
         super(http);
     }
 
@@ -31,8 +32,10 @@ export class SignOutService extends AuthService {
 
                 // Remove accessToken from localStorage and clear user object
                 localStorage.removeItem('accessToken');
+                this.cookieService.delete('accessToken');
+
                 this.accessToken$.next(null);
-                this.loggedUserService.user$.next(null)
+                this.loggedUserService.user$.next(null);
 
                 // Redirect to login
                 this.router.navigate(['sign-in']);

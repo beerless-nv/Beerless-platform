@@ -1,3 +1,7 @@
+.modal-backdrop, .modal {
+    z-index: 999999999 !important;
+}
+
 .modal-content {
     border: none;
     padding: ($spacer * 4);
@@ -8,7 +12,7 @@
 }
 
 .modal-dialog {
-
+    z-index: 999999 !important;
 }
 
 

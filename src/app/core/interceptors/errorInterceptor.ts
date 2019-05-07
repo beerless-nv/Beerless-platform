@@ -42,14 +42,6 @@ export class ErrorInterceptor implements HttpInterceptor {
                                     this.errorInterceptorService.error$.next(true);
                                     break;
                             }
-                            // if (err.status === 422) {
-                            //     this.errorService.handleErrorMsg(err.error.error.details.messages);
-                            // } else if (err.status === 401 && err.error.error.code === 'LOGIN_FAILED') {
-                            //     this.errorService.handleLoginError(err.error.error.message);
-                            //
-                            // } else {
-                            //     this.errorInterceptorService.error$.next(true);
-                            // }
                         }
 
                         return throwError(err.statusText);

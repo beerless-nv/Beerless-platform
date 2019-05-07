@@ -3,12 +3,12 @@ import {isPlatformBrowser, LocationStrategy} from '@angular/common';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {ErrorInterceptorService} from './core/interceptors/errorInterceptor.service';
 import {SwUpdate} from '@angular/service-worker';
-import {ErrorInterceptor} from './core/interceptors/errorInterceptor';
 import {ErrorService} from './shared/components/error/error.service';
 import {CookieService} from 'ngx-cookie-service';
 import {AgeVerificationComponent} from './shared/components/age-verification/age-verification/age-verification.component';
 import {IeWarningComponent} from './shared/components/ie-warning/ie-warning/ie-warning.component';
 import {NgbActiveModal, NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import {RestrictPlatformComponent} from './shared/components/restrict-platform/restrict-platform/restrict-platform.component';
 
 @Component({
     selector: 'app-root',
@@ -32,13 +32,17 @@ export class AppComponent implements OnInit {
                 private errorService: ErrorService,
                 private modalService: NgbModal,
                 private cookieService: CookieService,
-                private errorInterceptorService: ErrorInterceptorService) {
+                private errorInterceptorService: ErrorInterceptorService,
+                private activeModal: NgbActiveModal) {
 
         // show modal age verification
         this.ageVerification();
 
         // detect Internet Explorer
         this.detectIE();
+
+        // restrict access
+        // this.restrictPlatform();
     }
 
     ngOnInit(): void {
@@ -193,5 +197,25 @@ export class AppComponent implements OnInit {
 
             this.modalService.open(IeWarningComponent, options);
         }
+    }
+
+    restrictPlatform() {
+        this.router.events.subscribe(events => {
+            if (events instanceof NavigationStart) {
+                if (events['url'] !== '/sign-in' && events['url'] !== '/sign-up') {
+                    const options: NgbModalOptions = {
+                        centered: true,
+                        backdrop: 'static',
+                        backdropClass: 'backdrop',
+                        keyboard: false,
+                    };
+
+                    this.modalService.open(RestrictPlatformComponent, options);
+                } else {
+                    console.log('ok');
+                    this.activeModal.close();
+                }
+            }
+        });
     }
 }
