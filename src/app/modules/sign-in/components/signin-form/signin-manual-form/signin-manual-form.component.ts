@@ -1,9 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {CookieService} from 'ngx-cookie-service';
 import {LoginService} from '../../../../../_services/login.service';
+import {AuthService} from '../../../../../core/authorization/auth.service';
+import {LoggedUserService} from '../../../../../core/user/logged-user.service';
 import {ErrorService} from '../../../../../shared/components/error/error.service';
 import {Router} from '@angular/router';
 import {SignInService} from '../../../../../core/user/sign-in.service';
+import {SigninFormComponent} from '../signin-form.component';
 
 @Component({
     selector: 'app-signin-manual-form',
@@ -16,7 +20,7 @@ export class SigninManualFormComponent implements OnInit {
     serverSideMessages;
     formLogin: FormGroup;
 
-    constructor(public signInService: SignInService, private errorService: ErrorService, private router: Router) {
+    constructor(public signInService: SignInService, private errorService: ErrorService, private signinFormComponent: SigninFormComponent) {
     }
 
     ngOnInit() {
@@ -29,7 +33,7 @@ export class SigninManualFormComponent implements OnInit {
     }
 
     signIn() {
-        this.signInService.signIn(this.formLogin.value);
+        this.signinFormComponent.signIn(this.formLogin.value);
     }
 
     socialLogin(socialPlatform: string) {

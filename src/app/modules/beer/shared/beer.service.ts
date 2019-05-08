@@ -40,7 +40,7 @@ export class BeerService extends AuthService {
         this.http.post(this.urlBeer,
             {
                 inputObject: beer
-            }, {headers: this.beerlessAuthHeaders$.value})
+            }, {headers: this.beerlessAuthHeaders})
             .subscribe(() => {
                 this.toastsService.addToast('Bevestiging', 'Het bier werd succesvol toegevoegd.', 0);
             });

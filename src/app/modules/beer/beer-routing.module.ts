@@ -7,7 +7,7 @@ import {DetailBeersComponent} from './pages/visitor/detail-beers/detail-beers.co
 
 const routes: Routes = [
     {path: 'add', component: AddBeersComponent, canActivate: [AuthGuardService, RoleGuardService], data: {expectedRole: 'Contributor'}},
-    {path: ':id', component: DetailBeersComponent},
+    {path: ':id', component: DetailBeersComponent, canActivate: [RoleGuardService], data: {expectedRole: '$everyone'}},
 ];
 
 @NgModule({

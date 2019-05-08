@@ -20,7 +20,7 @@ export class SignOutService extends AuthService {
     logout(user) {
         this.accessToken$.next(JSON.parse(localStorage.getItem('accessToken'))['accessToken']);
 
-        this.http.post(this.urlUsers + '/logout', {}, {headers: this.beerlessAuthHeaders$.value})
+        this.http.post(this.urlUsers + '/logout', {}, {headers: this.beerlessAuthHeaders})
             .subscribe(() => {
                 // Set userId to remember user
                 localStorage.setItem('r-u-data', JSON.stringify({

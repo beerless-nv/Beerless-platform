@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {BehaviorSubject} from 'rxjs';
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'root',
 })
 export class AuthService {
 
-    accessToken$: BehaviorSubject<any> = new BehaviorSubject(null);
-    beerlessAuthHeaders$: BehaviorSubject<HttpHeaders> = new BehaviorSubject(null);
+    accessToken$: BehaviorSubject<string> = new BehaviorSubject(null);
+    beerlessAuthHeader: any;
 
     constructor(public http: HttpClient) {
         // Set token when loading app
@@ -16,10 +16,21 @@ export class AuthService {
 
         // Authentication params which are needed for 'member only' spaces
         this.accessToken$.subscribe(data => {
-            this.beerlessAuthHeaders$.next(new HttpHeaders({
-                Authorization: data
-            }));
+            this.beerlessAuthHeaders = data;
         });
+    }
+
+    /**
+     * Getter and Setter for beerlessAuthHeader
+     */
+    get beerlessAuthHeaders() {
+        return this.beerlessAuthHeader;
+    }
+
+    set beerlessAuthHeaders(data) {
+        this.beerlessAuthHeader = {
+            Authorization: data
+        };
     }
 
     /**

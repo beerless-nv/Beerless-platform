@@ -8,6 +8,8 @@ import {SignupFormComponent} from './components/signup-form/signup-form.componen
 import {SignupComponent} from './pages/visitor/signup/signup.component';
 import {SignUpService} from './shared/sign-up.service';
 import {SignUpRoutingModule} from './sign-up-routing.module';
+import { ConfirmEmailComponent } from './pages/visitor/confirm-email/confirm-email.component';
+import { ConfirmEmailFormComponent } from './components/confirm-email-form/confirm-email-form.component';
 
 @NgModule({
     imports: [
@@ -20,7 +22,9 @@ import {SignUpRoutingModule} from './sign-up-routing.module';
     declarations: [
         SignupComponent,
         SignupBackgroundCardComponent,
-        SignupFormComponent
+        SignupFormComponent,
+        ConfirmEmailComponent,
+        ConfirmEmailFormComponent
     ],
     providers: [
         SignUpService

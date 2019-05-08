@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 import {SignInService} from '../../../../../core/user/sign-in.service';
 import {ErrorService} from '../../../../../shared/components/error/error.service';
+import {SigninFormComponent} from '../signin-form.component';
 
 @Component({
     selector: 'app-signin-remember-form',
@@ -14,10 +16,12 @@ export class SigninRememberFormComponent implements OnInit {
     rememberedUser: any;
     serverSideMessages: any;
 
-    constructor(private signInService: SignInService, private errorService: ErrorService) {
+    constructor(private signInService: SignInService, private errorService: ErrorService, private signinFormComponent: SigninFormComponent, private router: Router) {
         const user = JSON.parse(localStorage.getItem('r-u-data'));
         if (user) {
             this.rememberedUser = user;
+        } else {
+            this.router.navigate(['/sign-in']);
         }
     }
 
@@ -33,7 +37,7 @@ export class SigninRememberFormComponent implements OnInit {
     }
 
     signIn() {
-        this.signInService.signIn(this.formLoginRemembered.value);
+        this.signinFormComponent.signIn(this.formLoginRemembered.value);
     }
 
 }
