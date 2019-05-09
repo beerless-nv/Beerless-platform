@@ -1,6 +1,6 @@
 import {Component, HostListener, Inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from '../../../shared/user.service';
+import {UserService} from '../../../../../core/user/user.service';
 
 @Component({
     selector: 'app-profile-users',

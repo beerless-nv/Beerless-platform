@@ -20,7 +20,7 @@ export class UserService {
     getUserById(userId) {
         return this.http.get(this.URLUsers + '/' + userId)
             .toPromise()
-            .then(data => data['member']);
+            .then(data => data);
     }
 
     updateUserProfileWithPicture(user, selectedPicture, pictureName, picturePath) {

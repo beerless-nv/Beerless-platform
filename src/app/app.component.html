@@ -1,17 +1,7 @@
-<!-- navigation -->
-
-<beerless-navbar class="d-lg-block d-none"></beerless-navbar>
-<beerless-navbar-mobile class="d-lg-none d-block"></beerless-navbar-mobile>
-
-
-<!-- reserve space for desktop navbar -->
-
-<div class="top-offset-content bg-white d-lg-block d-none"></div>
 <ngx-loading-bar [color]="'#f9b054'" [fixed]="true" [hidden]="error"></ngx-loading-bar>
 
 
 <!-- loading and error screen -->
-
 <div [hidden]="error == false">
     <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
         <beerless-error *ngIf="error == true"></beerless-error>
@@ -20,25 +10,15 @@
 
 
 <!-- content output -->
-
 <div [hidden]="error == true">
     <router-outlet></router-outlet>
 </div>
 
 
 <!-- chatbot -->
-
-
 <beerless-chatbot></beerless-chatbot>
 
 
 <!-- display toast messages -->
-
 <beerless-toast></beerless-toast>
 
-
-<!-- reserve space for navbar-mobile -->
-
-<div class="bottom-offset-content bg-white d-lg-none d-block"></div>
-
-<app-footer class="d-lg-block d-none"></app-footer>

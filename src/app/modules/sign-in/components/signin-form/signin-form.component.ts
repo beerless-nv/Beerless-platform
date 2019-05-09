@@ -36,8 +36,6 @@ export class SigninFormComponent implements OnInit {
             this.cookieService.set('accessToken', accessToken.accessToken, new Date(accessToken.expires), '/');
             this.authService.accessToken$.next(data['id']);
 
-            console.log(localStorage.getItem('accessToken'));
-
             // set member in observable
             this.loggedUserService.user$.next(data['user']);
 

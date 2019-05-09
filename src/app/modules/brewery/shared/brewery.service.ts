@@ -26,7 +26,6 @@ export class BreweryService {
         })
             .toPromise()
             .then(data => {
-                console.log(data);
                 return data['breweries'];
             });
     }
@@ -47,7 +46,6 @@ export class BreweryService {
         return this.http.get(this.urlBrewery, { params })
             .toPromise()
             .then(data => {
-                console.log(data);
                 return data['breweries'];
             });
     }

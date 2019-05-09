@@ -10,10 +10,10 @@ import {ErrorService} from '../../../../shared/components/error/error.service';
 })
 export class SignupFormComponent implements OnInit {
 
-    messageRegister;
     formRegister: FormGroup;
     registrationSuccessful = false;
     serverSideMessages: any;
+    user;
 
     constructor(private signupService: SignUpService, private errorService: ErrorService) {
     }
@@ -54,8 +54,13 @@ export class SignupFormComponent implements OnInit {
         this.signupService.signUp(this.formRegister.value).then(data => {
             console.log(data);
             if (data !== undefined) {
+                this.user = data;
                 this.registrationSuccessful = true;
             }
         });
+    }
+
+    sendVerificationEmail() {
+        this.signupService.sendVerificationEmail(this.user.id);
     }
 }

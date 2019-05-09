@@ -93,15 +93,12 @@ export class RoleGuardService implements CanActivate {
             modalReference.map(modal => modal.close());
         }
 
-        if (this.router.url !== '/sign-in') {
-            const options: NgbModalOptions = {
-                centered: true,
-                backdrop: 'static',
-                backdropClass: 'backdrop',
-                keyboard: false,
-            };
+        const options: NgbModalOptions = {
+            centered: true,
+            backdropClass: 'backdrop',
+            keyboard: false,
+        };
 
-            modalReference.push(this.modalService.open(RestrictPlatformComponent, options));
-        }
+        modalReference.push(this.modalService.open(RestrictPlatformComponent, options));
     }
 }

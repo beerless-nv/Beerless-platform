@@ -193,7 +193,6 @@ export class LoginService {
         })
             .toPromise()
             .then(data => {
-                console.log(data);
                 return data['token'];
             })
             .catch(error => {

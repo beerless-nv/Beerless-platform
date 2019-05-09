@@ -14,7 +14,7 @@ import {ProfileFavouriteComponent} from './components/profile-content/profile-ab
 import {ProfilePersonalComponent} from './components/profile-content/profile-about/profile-personal/profile-personal.component';
 import {ProfileActivitiesComponent} from './components/profile-content/profile-activities/profile-activities.component';
 import {ActivityService} from './shared/activity.service';
-import {UserService} from './shared/user.service';
+import {UserService} from '../../core/user/user.service';
 import {UserRoutingModule} from './user-routing.module';
 
 @NgModule({
@@ -38,7 +38,6 @@ import {UserRoutingModule} from './user-routing.module';
         ProfileActivitiesComponent,
     ],
     providers: [
-        UserService,
         ActivityService
     ]
 })

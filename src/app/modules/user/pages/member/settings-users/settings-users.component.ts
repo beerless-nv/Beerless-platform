@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../../../../../_services/login.service';
-import {UserService} from '../../../shared/user.service';
+import {UserService} from '../../../../../core/user/user.service';
 
 @Component({
     selector: 'app-settings-users',

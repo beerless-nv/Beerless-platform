@@ -1,3 +1,9 @@
-<p>
-  confirm-email-form works!
-</p>
+<div class="card border-yellow-top w-100">
+    <div class="card-body p-sm-5 p-4">
+        <h2 class="mb-3 text-primary">Congratulations <strong>{{user?.firstName}}</strong>, <br>you've just been
+            recognised.</h2>
+        <p class="my-5">Go start exploring the Beerless craft beer community!</p>
+        <beerless-link-button routerLink="/" [class]="'btn btn-primary text-white'">Go to app</beerless-link-button>
+    </div>
+</div>
+

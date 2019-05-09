@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../../../../_services/login.service';
 import {environment} from '../../../../../environments/environment';
-import {UserService} from '../../shared/user.service';
+import {UserService} from '../../../../core/user/user.service';
 
 @Component({
     selector: 'app-settings-profile',

@@ -8,7 +8,6 @@ import {CookieService} from 'ngx-cookie-service';
 import {AgeVerificationComponent} from './shared/components/age-verification/age-verification/age-verification.component';
 import {IeWarningComponent} from './shared/components/ie-warning/ie-warning/ie-warning.component';
 import {NgbActiveModal, NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
-import {RestrictPlatformComponent} from './shared/components/restrict-platform/restrict-platform/restrict-platform.component';
 
 @Component({
     selector: 'app-root',
@@ -40,9 +39,6 @@ export class AppComponent implements OnInit {
 
         // detect Internet Explorer
         this.detectIE();
-
-        // restrict access
-        // this.restrictPlatform();
     }
 
     ngOnInit(): void {
@@ -197,25 +193,5 @@ export class AppComponent implements OnInit {
 
             this.modalService.open(IeWarningComponent, options);
         }
-    }
-
-    restrictPlatform() {
-        this.router.events.subscribe(events => {
-            if (events instanceof NavigationStart) {
-                if (events['url'] !== '/sign-in' && events['url'] !== '/sign-up') {
-                    const options: NgbModalOptions = {
-                        centered: true,
-                        backdrop: 'static',
-                        backdropClass: 'backdrop',
-                        keyboard: false,
-                    };
-
-                    this.modalService.open(RestrictPlatformComponent, options);
-                } else {
-                    console.log('ok');
-                    this.activeModal.close();
-                }
-            }
-        });
     }
 }
