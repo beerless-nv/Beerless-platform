@@ -3,6 +3,9 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Guid} from 'guid-typescript';
 import {Emojis} from '../../../../assets/emojis/emojis.js';
+import {environment} from '../../../../environments/environment';
+import {AuthService} from '../../../core/authorization/auth.service';
+import {LoggedUserService} from '../../../core/user/logged-user.service';
 
 declare var emojis: any;
 
@@ -11,12 +14,11 @@ declare var emojis: any;
 })
 export class ChatbotService {
 
-    // readonly apiUrl = 'https://api.oswald.ai/api/v1';
-    readonly apiUrl = 'https://api-acc.oswald.ai/api/v1';
-    // readonly chatbotId = '5c909b61ccc52e00050a6e76';
-    readonly chatbotId = '5cb49d7d4648730006815d8d';
-    // readonly accessToken = 'A4oA1hOSefxeOveUe49pBajyykPMhn6vFfnLG9geu4LKTGXUoDaHME9sSN4Tr0gT';
-    readonly accessToken = 'XiPS5w7sT7FEeWI1qFqbI5AmsDRW7ShhgBm2YUEo9zdf55112eVhoaGlQEv3zret';
+    readonly apiUrl = environment.chatbotApiUrl;
+    readonly chatbotId = environment.chatbotId;
+    readonly accessToken = environment.chatbotAccessToken;
+    userMetadata;
+
     session = null;
     isSessionData = true;
     isNewSession = false;
@@ -27,17 +29,17 @@ export class ChatbotService {
 
     polling = false;
 
-    chatTimestamp;
-
-    intervalId;
-
     emojis;
 
     headers = new HttpHeaders()
         .append('ignoreLoadingBar', '');
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private loggedUserService: LoggedUserService, private auth: AuthService) {
         this.emojis = emojis;
+
+        console.log(this.auth.accessToken$.value);
+
+        console.log(this.loggedUserService.user$.value);
     }
 
     /**
@@ -54,11 +56,7 @@ export class ChatbotService {
                 'environment': 'production',
                 'session': this.session,
                 'locale': 'en',
-                'metadata': {
-                    'firstName': 'Tom',
-                    'lastName': 'Nuyts',
-                    'access_token': 'y8lIyPJ4aRyeK4xQc7iZOlu3B1Cday5EI3Ia1I8kBo4FykcdRGhji4VEE1Im21ia'
-                }
+                'metadata': this.userMetadata
             }, {headers: this.headers}).toPromise();
         }
     }
@@ -303,6 +301,18 @@ export class ChatbotService {
         date.setSeconds(date.getSeconds() - 5);
 
         this.chatStartDate = date.toISOString();
+
+        // set metadata
+        this.loggedUserService.user$.subscribe(user => {
+            console.log(user);
+            this.userMetadata = {
+                'firstName': user.firstName,
+                'lastName': user.lastName,
+                'access_token': this.auth.accessToken$.value
+            };
+
+            console.log(this.auth.accessToken$.value);
+        });
 
         // set up new sessionId if it doesn't exist
         if (sessionObject !== null) {

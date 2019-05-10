@@ -38,7 +38,7 @@ export class RoleGuardService implements CanActivate {
                     return true;
                 }
             }
-            this.restrictPlatform();
+            // this.restrictPlatform();
             this.router.navigate(['sign-in']);
             return false;
         }
@@ -93,12 +93,16 @@ export class RoleGuardService implements CanActivate {
             modalReference.map(modal => modal.close());
         }
 
-        const options: NgbModalOptions = {
-            centered: true,
-            backdropClass: 'backdrop',
-            keyboard: false,
-        };
+        console.log(this.router.url);
 
-        modalReference.push(this.modalService.open(RestrictPlatformComponent, options));
+        if (this.router.url) {
+            const options: NgbModalOptions = {
+                centered: true,
+                backdropClass: 'backdrop',
+                keyboard: false,
+            };
+
+            modalReference.push(this.modalService.open(RestrictPlatformComponent, options));
+        }
     }
 }

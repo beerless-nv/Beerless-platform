@@ -1,0 +1,59 @@
+.card-hover {
+  transition: ease-in-out 0.25s;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 40px;
+  }
+}
+
+.card-hover-blog {
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    .card-title {
+      transition: ease-in-out 0.25s !important;
+      color: $primary;
+    }
+  }
+}
+
+.card-sm-100w {
+  @include media-breakpoint-down(xs) {
+    border-radius: 0;
+    .card-img-top {
+      border-radius: 0;
+    }
+    .card-body {
+      border-radius: 0;
+    }
+    .card-footer {
+      border-radius: 0;
+    }
+
+    border: none;
+    margin: auto -15px;
+  }
+}
+
+.cardEmbed {
+  background-color: #fff;
+  margin: auto 0 !important;
+}
+
+.card-columns {
+  @include media-breakpoint-only(sm) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(md) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(lg) {
+    column-count: 2;
+  }
+  @include media-breakpoint-only(xl) {
+    column-count: 2;
+  }
+}

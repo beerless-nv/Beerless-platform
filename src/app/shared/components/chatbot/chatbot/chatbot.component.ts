@@ -6,6 +6,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
+import {LoggedUserService} from '../../../../core/user/logged-user.service';
 import {ChatbotService} from '../chatbot.service';
 import {BehaviorSubject} from 'rxjs';
 import ResizeObserver from 'resize-observer-polyfill';
@@ -45,7 +46,7 @@ export class ChatbotComponent implements OnInit {
 
     scrollbar;
 
-    constructor(private cookieService: CookieService, private chatbotService: ChatbotService, private cdref: ChangeDetectorRef, private authService: AuthService) {
+    constructor(private cookieService: CookieService, private chatbotService: ChatbotService, private loggedUserService: LoggedUserService) {
     }
 
     ngOnInit() {

@@ -9,5 +9,10 @@ export const environment = {
     imageURL: 'https://assets.beerless.be/images/',
     mapsAPIKey: 'AIzaSyClgBQqM4dO3bBeH2FzypRI3TbBI6MJosA',
     appURL: 'https://app.beerless.be/',
-    websiteURL: 'https://www.beerless.be/'
+    websiteURL: 'https://www.beerless.be/',
+
+    // chatbot
+    chatbotApiUrl: 'https://api-acc.oswald.ai/api/v1',
+    chatbotId: '5cb49d7d4648730006815d8d',
+    chatbotAccessToken: 'XiPS5w7sT7FEeWI1qFqbI5AmsDRW7ShhgBm2YUEo9zdf55112eVhoaGlQEv3zret'
 };

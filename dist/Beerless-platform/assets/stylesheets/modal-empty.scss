@@ -1,0 +1,21 @@
+.modal-backdrop, .modal {
+    z-index: 999999999 !important;
+}
+
+.modal-content {
+    border: none;
+    padding: ($spacer * 4);
+    @include media-breakpoint-down(xs) {
+        padding: ($spacer * 2);
+    }
+    background-color: #111111;
+}
+
+.modal-dialog {
+    z-index: 999999 !important;
+}
+
+
+.backdrop {
+    opacity: 0.75 !important;
+}

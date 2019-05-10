@@ -1,0 +1,122 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/10.e908af98e89f6db63513.js",
+        "/11.15a237504e1c22e8f981.js",
+        "/12.f2d73a6fd06b65682807.js",
+        "/13.bdeff981c88c8563ff7b.js",
+        "/14.59c99dfb41e0be6049ae.js",
+        "/15.9ad21939e4c4d5216276.js",
+        "/2.add83a23b6af130837f0.js",
+        "/3.7ce400b4651bdbe53e77.js",
+        "/7.9563074de049826dde1b.js",
+        "/8.a4ad6e9edb907f463199.js",
+        "/9.58153bf2888ee458ae41.js",
+        "/common.5c2441fb997c720623be.js",
+        "/fa-brands-400.756a62d2a08373077434.svg",
+        "/fa-brands-400.921f1150167369cf4c40.woff2",
+        "/fa-brands-400.9d56249d09070f656a1c.woff",
+        "/fa-brands-400.ab673bac3a9e36cb1d4e.ttf",
+        "/fa-brands-400.f2594ef62455697f61dc.eot",
+        "/fa-regular-400.491a96d8188670aff6f5.eot",
+        "/fa-regular-400.4f8bb28722068f7b6665.woff",
+        "/fa-regular-400.6d4774d4e483e03057f9.svg",
+        "/fa-regular-400.cf6008d396082c09c3dd.woff2",
+        "/fa-regular-400.e6ff1c5d13b778627278.ttf",
+        "/fa-solid-900.1dc5b6dd4bf409a6f919.woff2",
+        "/fa-solid-900.20b351a6af2d523589fd.eot",
+        "/fa-solid-900.63726a69fa60cb674591.ttf",
+        "/fa-solid-900.997f6b1819184c54248d.woff",
+        "/fa-solid-900.bc5fd7c280c3c151e966.svg",
+        "/favicon.ico",
+        "/index.html",
+        "/main.83419ad8fc270c246751.js",
+        "/polyfills.d17e74634c4492040815.js",
+        "/runtime.8d815316cc7579f3e293.js",
+        "/scripts.a22fe3af1f47ed3abb4e.js",
+        "/styles.8b22b1188f03b0796e61.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api",
+      "patterns": [
+        "https:\\/\\/api\\.beerless\\.be\\/.*"
+      ],
+      "strategy": "performance",
+      "maxSize": 100,
+      "maxAge": 7200000,
+      "timeoutMs": 2000,
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/10.e908af98e89f6db63513.js": "ef97ad69b808e0c75274358ba05578e61cb1198e",
+    "/11.15a237504e1c22e8f981.js": "625a95d8c4b35846c882eee5c1ba57651b1db4fa",
+    "/12.f2d73a6fd06b65682807.js": "0672f797707fa152c384772d9cf7ccebe1e0424d",
+    "/13.bdeff981c88c8563ff7b.js": "1d6f6dfeed68b312356f5a2c5b747d6f23b8f285",
+    "/14.59c99dfb41e0be6049ae.js": "6e001271fa79499760be1b989e50572e2b85f681",
+    "/15.9ad21939e4c4d5216276.js": "f5fd90fedb8bd0bbc747f15dcfbcf311c3aebdc0",
+    "/2.add83a23b6af130837f0.js": "681ea70335d85d60f16a327aa173b18fcd76ecb5",
+    "/3.7ce400b4651bdbe53e77.js": "6c6b6329cde64340bd56f7935a20cce3f75486c5",
+    "/7.9563074de049826dde1b.js": "d0f067276239ab690eb7f09af499cecddf03bfe5",
+    "/8.a4ad6e9edb907f463199.js": "273c106155cd6d41c4401a2c4d2df2628c06402d",
+    "/9.58153bf2888ee458ae41.js": "c4bfefd432f267cddfafaf578a7d254289ee1e76",
+    "/common.5c2441fb997c720623be.js": "60bc15b4ae6270338e50c5d10ffaaac3a3f22dff",
+    "/fa-brands-400.756a62d2a08373077434.svg": "48dc4c28b6bca8f4e6f74e44b5378f09c5c54ecb",
+    "/fa-brands-400.921f1150167369cf4c40.woff2": "9b0c2c518f8b97b3ff7cea34c565fd4e70bb7640",
+    "/fa-brands-400.9d56249d09070f656a1c.woff": "3ffac7f4dab27dc44caa600b309581f32bb624e5",
+    "/fa-brands-400.ab673bac3a9e36cb1d4e.ttf": "61d77b2a1c90dfd01f9e2d92853007e7a90de937",
+    "/fa-brands-400.f2594ef62455697f61dc.eot": "dc2a2dc58d3f44442574c030e1ae142a4d869ce6",
+    "/fa-regular-400.491a96d8188670aff6f5.eot": "3538c8aaef9b0d2df93bcbb928fb37de6950081c",
+    "/fa-regular-400.4f8bb28722068f7b6665.woff": "f2c28a0f949957bab62ef798211dfc2eb2963053",
+    "/fa-regular-400.6d4774d4e483e03057f9.svg": "989a1453b7604ce9c85dc1463a73eaa0d4368c2e",
+    "/fa-regular-400.cf6008d396082c09c3dd.woff2": "28ea1ea13a1b1801607c04674cb4cb5fce78c065",
+    "/fa-regular-400.e6ff1c5d13b778627278.ttf": "fe57b173677888afa2a732d61254bbb04756bc3b",
+    "/fa-solid-900.1dc5b6dd4bf409a6f919.woff2": "388c52a87094578015fb41ebb9147821f0bb03a3",
+    "/fa-solid-900.20b351a6af2d523589fd.eot": "2138213b7af335df0cc961389aea48faa2994712",
+    "/fa-solid-900.63726a69fa60cb674591.ttf": "9f69dff7939c697a9445931b919ed09ac3febc9b",
+    "/fa-solid-900.997f6b1819184c54248d.woff": "666be41e11d8fc7e7274cc9254dd54a4a5159948",
+    "/fa-solid-900.bc5fd7c280c3c151e966.svg": "9ad2040dce2b2d93feda1f3efc4c8eb781d3da94",
+    "/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "/index.html": "96bd990958b08731d2af652e163d2f11ad089076",
+    "/main.83419ad8fc270c246751.js": "952d1c075f8a13893272576e1898a3d877467f0f",
+    "/polyfills.d17e74634c4492040815.js": "c92fdab8f07c4d214794fa4b537722ff6301e65d",
+    "/runtime.8d815316cc7579f3e293.js": "70d51cd3685ec16310c93c350080f6079fed9095",
+    "/scripts.a22fe3af1f47ed3abb4e.js": "cb23475c3e291fdc39613f1fc8bfc89d0adaa339",
+    "/styles.8b22b1188f03b0796e61.css": "1e4f62ce581227b7faf6dfd6b437374f734a2c00"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

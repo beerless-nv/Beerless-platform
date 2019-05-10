@@ -1,0 +1,17 @@
+.skeleton-square {
+  background-color: $light;
+  height: 75px;
+  width: 75px;
+
+  @include media-breakpoint-down(sm) {
+    height: 50px;
+    width: 50px;
+  }
+}
+
+.skeleton-line {
+  background-color: $light;
+  height: 1rem;
+  margin: 6px;
+  width: 200px;
+}

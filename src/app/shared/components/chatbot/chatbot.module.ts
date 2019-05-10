@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PipesModule} from '../../pipes/pipes.module';
 import {BreweryprofileComponent} from '../../platform-components/breweryprofile/breweryprofile/breweryprofile.component';
+import {ChatbotService} from './chatbot.service';
 import {ChatbotComponent} from './chatbot/chatbot.component';
 import {EmoticonsComponent} from './chatbot/extra/emoticons/emoticons.component';
 import {UploadComponent} from './chatbot/extra/upload/upload.component';
@@ -37,6 +38,9 @@ import {BeerprofileComponent} from '../../platform-components/beerprofile/beerpr
     ],
     exports: [
         ChatbotComponent
+    ],
+    providers: [
+        ChatbotService
     ],
     entryComponents: [
         BeerprofileComponent,

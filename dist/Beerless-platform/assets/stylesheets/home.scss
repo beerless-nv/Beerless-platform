@@ -1,0 +1,17 @@
+ngb-tabset ul[role=tablist] {
+  width: 200px;
+  margin: 0px !important;
+  padding: 0px !important;
+  display: flex;
+}
+
+.tab-content {
+  width: 200px;
+  display: flex;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+ngb-tabset {
+  width: 200px !important;
+}
