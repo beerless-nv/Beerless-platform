@@ -4,7 +4,9 @@
 
 export const environment = {
     production: false,
+    domain: 'localhost',
     backend: 'http://localhost:3000/api/',
+    backendBaseUrl: 'http://localhost:3000/',
     imageURL: 'https://assets.beerless.be/images/',
     mapsAPIKey: 'AIzaSyBDxPBARHK7z7XuEi2n9XTWhsxv630C6eo',
     appURL: 'http://localhost:4200/',
@@ -12,9 +14,9 @@ export const environment = {
     articlePictureURL: 'https://assets.beerless.be/assets/images/article/hero-picture/',
 
     // chatbot
-    chatbotApiUrl: 'https://api-acc.oswald.ai/api/v1',
-    chatbotId: '5cb49d7d4648730006815d8d',
-    chatbotAccessToken: 'XiPS5w7sT7FEeWI1qFqbI5AmsDRW7ShhgBm2YUEo9zdf55112eVhoaGlQEv3zret'
+    chatbotApiUrl: 'https://api.oswald.ai/api/v1',
+    chatbotId: '5c909b61ccc52e00050a6e76',
+    chatbotAccessToken: 'bab11155-47cd-498f-9b97-f04ec43bdad7'
 };
 
 /*

@@ -1,3 +1,15 @@
 <div class="center-standard-page">
-    d
+    <div class="container container-no-p d-flex flex-wrap">
+        <div [style.background-image]="'url(\'/assets/images/empty-beer.png\')'" class="col-sm-6 col-12 img-404"></div>
+
+        <div class="col-sm-6 col-12 my-auto">
+            <h1 class="font-weight-bold text-uppercase text-primary">404</h1>
+            <h5 class="text-primary">Page not found</h5>
+            <p class="mt-4 mb-0">
+                We've only found some empty bottles at this place.
+                Wouldn't you rather be somewhere where there's still plenty of beer?
+            </p>
+            <a (click)="goBack()" class="btn btn-outline-primary mt-4 mouse-pointer">Take me back!</a>
+        </div>
+    </div>
 </div>

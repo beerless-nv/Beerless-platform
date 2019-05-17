@@ -1,18 +1,19 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'beerless-modal',
-  templateUrl: './modal.component.html',
-  styles: []
+    selector: 'beerless-modal',
+    templateUrl: './modal.component.html',
+    styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
 
-  constructor(public activeModal: NgbActiveModal) {
+    constructor(public activeModal: NgbActiveModal) {
 
-  }
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        console.log('ok');
+    }
 
 }

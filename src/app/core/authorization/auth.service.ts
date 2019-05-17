@@ -11,9 +11,9 @@ export class AuthService {
     beerlessAuthHeader: any;
 
     constructor(public http: HttpClient) {
-        // Set token when loading app
-        this.setToken();
+        document.cookie = 'username=John Smith; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/';
 
+        console.log('ok');
         // Authentication params which are needed for 'member only' spaces
         this.accessToken$.subscribe(data => {
             this.beerlessAuthHeaders = data;
@@ -37,29 +37,8 @@ export class AuthService {
      * Check if member is authenticated.
      */
     public isAuthenticated(): boolean {
-        this.setToken();
-
         const token = this.accessToken$.value;
 
         return !!token;
-    }
-
-    /**
-     * Get token from Local Storage.
-     */
-    public getToken(): string {
-        const accessToken = JSON.parse(localStorage.getItem('accessToken'));
-        if (accessToken) {
-            return accessToken['accessToken'];
-        }
-    }
-
-    /**
-     * If accessToken is empty, assign token from Local Storage.
-     */
-    public setToken() {
-        if (this.accessToken$.value !== this.getToken()) {
-            this.accessToken$.next(this.getToken());
-        }
     }
 }

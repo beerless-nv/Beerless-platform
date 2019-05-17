@@ -3,7 +3,7 @@
         <div class="card-body p-4 d-flex align-items-center">
             <div class="pr-4">
                 <img src="{{environment.imageURL + 'beers/logo/' + item?.logo}}" alt="logo {{item?.name}}" [ngbCollapse]="!item?.logo" class="bier-item-image">
-                <img src="/src/assets/images/beer_no_image.svg" alt="bier zonder afbeelding" [ngbCollapse]="item?.logo" class="bier-item-image">
+                <img src="/assets/images/beer_no_image.svg" alt="bier zonder afbeelding" [ngbCollapse]="item?.logo" class="bier-item-image">
             </div>
             <div class="mr-4">
                 <a routerLink="/beers/{{item?.ID}}" class="link-black-yellow font-weight-bold m-0">{{item?.name}}</a>

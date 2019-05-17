@@ -29,10 +29,9 @@ export class AgeVerificationComponent implements OnInit {
             const year = d.getFullYear();
             const month = d.getMonth();
             const day = d.getDate();
-            const c = new Date(year + 5, month, day);
+            const expireDate = new Date(year + 5, month, day);
 
-
-            this.cookieService.set('legalAge', 'true', c);
+            document.cookie = 'legal_age=true;expires=' + expireDate + ';domain=' + environment.domain + ';path=/';
             this.activeModal.close();
         } else if (response === 'no') {
             this.legalAge = false;

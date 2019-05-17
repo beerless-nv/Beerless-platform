@@ -19,6 +19,7 @@
 
 
     <!-- Server side error messages -->
+
     <beerless-server-side-messages [messages]="serverSideMessages"></beerless-server-side-messages>
 
 
@@ -55,11 +56,16 @@
         <div class="divider-text-circle">OR</div>
     </div>
     <div class="form-group">
-        <a (click)="socialLogin('facebook')" class="btn btn-facebook text-white d-block"><i
+        <a [href]="environment.backendBaseUrl + 'auth/facebook'" class="btn btn-facebook text-white d-block"><i
             class="fab fa-facebook-f mr-3"></i> Sign in with <strong>Facebook</strong></a>
     </div>
     <div class="form-group">
-        <a (click)="socialLogin('google')" class="btn btn-google text-white d-block"><i
+        <a [href]="environment.backendBaseUrl + 'auth/google'" class="btn btn-google text-white d-block"><i
             class="fab fa-google mr-3"></i> Sign in with <strong>Google</strong></a>
     </div>
+
+
+    <!-- Server side error messages -->
+
+    <beerless-server-side-messages [messages]="socialErrorMessages"></beerless-server-side-messages>
 </form>

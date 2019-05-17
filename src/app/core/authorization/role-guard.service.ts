@@ -23,8 +23,7 @@ export class RoleGuardService implements CanActivate {
     async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
         // check token
         if (!await this.loggedUserService.checkToken()) {
-            console.log('ok');
-            this.router.navigate(['sign-in']);
+            this.router.navigate(['/sign-in']);
             return false;
         }
 
@@ -39,7 +38,7 @@ export class RoleGuardService implements CanActivate {
                 }
             }
             // this.restrictPlatform();
-            this.router.navigate(['sign-in']);
+            this.router.navigate(['/sign-in']);
             return false;
         }
 
@@ -49,7 +48,7 @@ export class RoleGuardService implements CanActivate {
 
         // depending on user role, pass or reject
         if (!this.authService.isAuthenticated() || role['id'] < expectedRoleId) {
-            this.router.navigate(['sign-in']);
+            this.router.navigate(['/sign-in']);
             return false;
         }
         return true;
@@ -93,12 +92,10 @@ export class RoleGuardService implements CanActivate {
             modalReference.map(modal => modal.close());
         }
 
-        console.log(this.router.url);
-
         if (this.router.url) {
             const options: NgbModalOptions = {
                 centered: true,
-                backdropClass: 'backdrop',
+                windowClass: 'dark-modal',
                 keyboard: false,
             };
 

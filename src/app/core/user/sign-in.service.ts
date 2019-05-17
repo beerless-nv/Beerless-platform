@@ -8,12 +8,11 @@ import {AuthService} from '../authorization/auth.service';
 @Injectable({
     providedIn: 'root'
 })
-export class SignInService extends AuthService {
+export class SignInService {
 
     readonly urlUsers = environment.backend + 'users';
 
-    constructor(public http: HttpClient, private router: Router, private cookieService: CookieService) {
-        super(http);
+    constructor(public http: HttpClient, private router: Router, private cookieService: CookieService, private auth: AuthService) {
     }
 
     signIn(user) {

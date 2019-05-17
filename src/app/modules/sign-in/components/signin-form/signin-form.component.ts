@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CookieService} from 'ngx-cookie-service';
+import {environment} from '../../../../../environments/environment';
 import {AuthService} from '../../../../core/authorization/auth.service';
 import {LoggedUserService} from '../../../../core/user/logged-user.service';
 import {SignInService} from '../../../../core/user/sign-in.service';
@@ -26,18 +27,11 @@ export class SigninFormComponent implements OnInit {
     signIn(credentials) {
         this.signInService.signIn(credentials).subscribe(data => {
             // set access_token in local storage and auth service
-            localStorage.removeItem('r-u-data');
-            const accessToken = {
-                accessToken: data['id'],
-                userId: data['userId'],
-                expires: Date.parse(data['created']) + (data['ttl'] * 1000)
-            };
-            localStorage.setItem('accessToken', JSON.stringify(accessToken));
-            this.cookieService.set('accessToken', accessToken.accessToken, new Date(accessToken.expires), '/');
-            this.authService.accessToken$.next(data['id']);
+            this.cookieService.delete('r-u-data');
 
-            // set member in observable
-            this.loggedUserService.user$.next(data['user']);
+            // set new access_token and userId cookie
+            document.cookie = 'access_token=' + data['id'] + ';expires=' + new Date(Date.parse(data['created']) + (data['ttl'] * 1000)) + ';domain=' + environment.domain + ';path=/';
+            document.cookie = 'userId=' + data['userId'] + ';expires=' + new Date(Date.parse(data['created']) + (data['ttl'] * 1000)) + ';domain=' + environment.domain + ';path=/';
 
             // redirect to previous page
             this.router.navigate(['/']);

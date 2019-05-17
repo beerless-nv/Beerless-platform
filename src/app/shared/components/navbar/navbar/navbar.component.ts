@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../../../core/authorization/auth.service';
 import {LoggedUserService} from '../../../../core/user/logged-user.service';
 import {SignOutService} from '../../../../core/user/sign-out.service';
@@ -23,10 +23,7 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.loggedUserService.user$.subscribe( data => {
-            this.user = data;
-            this.cdRef.detectChanges();
-        });
+        this.user = this.loggedUserService.user$.value;
     }
 
     logOut() {

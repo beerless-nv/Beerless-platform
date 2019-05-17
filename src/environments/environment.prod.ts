@@ -1,6 +1,8 @@
 export const environment = {
     production: true,
+    domain: '.beerless.be',
     backend: 'https://api.beerless.be/api/',
+    backendBaseUrl: 'https://api.beerless.be/',
     beerImageURL: 'https://assets.beerless.be/assets/images/beer/image/',
     beerLogoURL: 'https://assets.beerless.be/assets/images/beer/logo/',
     breweryLogoURL: 'https://assets.beerless.be/assets/images/brewery/logo/',

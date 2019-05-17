@@ -5,6 +5,7 @@ import {BreweryprofileModule} from './breweryprofile/breweryprofile.module';
 import {ErrorPagesModule} from './error-pages/error-pages.module';
 import {BlankLayoutModule} from './layouts/blank-layout/blank-layout.module';
 import {StandardLayoutModule} from './layouts/standard-layout/standard-layout.module';
+import {SocialCredentialModule} from './modals/social-credential/social-credential.module';
 
 @NgModule({
     imports: [
@@ -13,7 +14,8 @@ import {StandardLayoutModule} from './layouts/standard-layout/standard-layout.mo
         BreweryprofileModule,
         StandardLayoutModule,
         BlankLayoutModule,
-        ErrorPagesModule
+        ErrorPagesModule,
+        SocialCredentialModule
     ],
     declarations: [],
     exports: [
@@ -21,7 +23,8 @@ import {StandardLayoutModule} from './layouts/standard-layout/standard-layout.mo
         BreweryprofileModule,
         StandardLayoutModule,
         BlankLayoutModule,
-        ErrorPagesModule
+        ErrorPagesModule,
+        SocialCredentialModule
     ]
 })
 export class PlatformComponentsModule {

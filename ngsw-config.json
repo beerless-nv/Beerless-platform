@@ -25,17 +25,5 @@
                 ]
             }
         }
-    ],
-    "dataGroups": [
-        {
-            "name": "api",
-            "urls": ["https://api.beerless.be/**"],
-            "cacheConfig": {
-                "Strategy": "freshness",
-                "maxSize": 100,
-                "maxAge": "2h",
-                "timeout": "2s"
-            }
-        }
     ]
 }

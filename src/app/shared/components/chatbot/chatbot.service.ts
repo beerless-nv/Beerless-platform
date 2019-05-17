@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import {Guid} from 'guid-typescript';
 import {Emojis} from '../../../../assets/emojis/emojis.js';
 import {environment} from '../../../../environments/environment';
@@ -36,10 +36,6 @@ export class ChatbotService {
 
     constructor(private http: HttpClient, private loggedUserService: LoggedUserService, private auth: AuthService) {
         this.emojis = emojis;
-
-        console.log(this.auth.accessToken$.value);
-
-        console.log(this.loggedUserService.user$.value);
     }
 
     /**
@@ -302,18 +298,6 @@ export class ChatbotService {
 
         this.chatStartDate = date.toISOString();
 
-        // set metadata
-        this.loggedUserService.user$.subscribe(user => {
-            console.log(user);
-            this.userMetadata = {
-                'firstName': user.firstName,
-                'lastName': user.lastName,
-                'access_token': this.auth.accessToken$.value
-            };
-
-            console.log(this.auth.accessToken$.value);
-        });
-
         // set up new sessionId if it doesn't exist
         if (sessionObject !== null) {
             // set sessionId
@@ -345,6 +329,15 @@ export class ChatbotService {
         const sessionId = Guid.create();
         this.session = sessionId['value'];
         sessionStorage.setItem('chatbotSession', JSON.stringify({sessionId: this.session, timestamp: date}));
+
+        // set metadata
+        this.loggedUserService.user$.subscribe(user => {
+            this.userMetadata = {
+                'firstName': user.firstName,
+                'lastName': user.lastName,
+                'access_token': this.auth.accessToken$.value
+            };
+        });
 
         // wake up chatbot
         this.sendMessage('start_conversation');

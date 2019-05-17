@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {CookieService} from 'ngx-cookie-service';
 import {AuthService} from '../../../../core/authorization/auth.service';
 import {SignInService} from '../../../../core/user/sign-in.service';
 import {SigninRememberFormComponent} from '../signin-form/signin-remember-form/signin-remember-form.component';
@@ -15,14 +16,14 @@ export class SigninBackgroundCardComponent implements OnInit {
     rememberedUser: any;
     showRemembered = false;
 
-    constructor(private signInService: SignInService, private authService: AuthService, private router: Router, private route: ActivatedRoute) {
+    constructor(private signInService: SignInService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private cookieService: CookieService) {
         route.queryParams.subscribe(params => {
             this.showRemembered = !!params['remembered'];
         });
     }
 
     ngOnInit() {
-        if (localStorage.getItem('r-u-data')) {
+        if (this.cookieService.get('r-u-data')) {
             this.showAutoLogin = true;
             this.getRememberedUser();
         }
@@ -38,7 +39,7 @@ export class SigninBackgroundCardComponent implements OnInit {
     }
 
     async getRememberedUser() {
-        const user = JSON.parse(localStorage.getItem('r-u-data'));
+        const user = JSON.parse(this.cookieService.get('r-u-data'));
         if (user) {
             this.rememberedUser = user;
         }

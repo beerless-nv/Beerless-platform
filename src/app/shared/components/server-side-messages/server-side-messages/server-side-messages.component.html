@@ -1,6 +1,8 @@
-<ng-container *ngIf="messages.type === 'error'">
-    <p class="server-side-error-message" *ngFor="let msg of messages.data">{{msg}}</p>
-</ng-container>
-<ng-container *ngIf="messages.type === 'success'">
-    <p class="success-message" *ngFor="let msg of messages.data">{{msg}}</p>
+<ng-container *ngIf="messages">
+    <ng-container *ngIf="messages.type === 'error'">
+        <p class="server-side-error-message" *ngFor="let msg of messages.data">{{msg}}</p>
+    </ng-container>
+    <ng-container *ngIf="messages.type === 'success'">
+        <p class="success-message" *ngFor="let msg of messages.data">{{msg}}</p>
+    </ng-container>
 </ng-container>

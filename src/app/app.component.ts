@@ -171,11 +171,11 @@ export class AppComponent implements OnInit {
         const options: NgbModalOptions = {
             centered: true,
             backdrop: 'static',
-            backdropClass: 'backdrop',
+            windowClass: 'dark-modal',
             keyboard: false,
         };
 
-        if (!this.cookieService.get('legalAge')) {
+        if (!this.cookieService.get('legal_age')) {
             this.modalService.open(AgeVerificationComponent, options);
         }
     }
@@ -187,7 +187,7 @@ export class AppComponent implements OnInit {
             const options: NgbModalOptions = {
                 centered: true,
                 backdrop: 'static',
-                backdropClass: 'backdrop',
+                windowClass: 'dark-modal',
                 keyboard: false,
             };
 

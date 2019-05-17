@@ -9,32 +9,34 @@ import {LoggedUserService} from './logged-user.service';
 @Injectable({
     providedIn: 'root'
 })
-export class SignOutService extends AuthService {
+export class SignOutService {
 
     readonly urlUsers = environment.backend + 'users';
 
-    constructor(public http: HttpClient, private loggedUserService: LoggedUserService, private router: Router, private cookieService: CookieService) {
-        super(http);
+    constructor(public http: HttpClient, private loggedUserService: LoggedUserService, private router: Router, private cookieService: CookieService, private auth: AuthService) {
     }
 
     logout(user) {
-        this.accessToken$.next(JSON.parse(localStorage.getItem('accessToken'))['accessToken']);
-
-        this.http.post(this.urlUsers + '/logout', {}, {headers: this.beerlessAuthHeaders})
+        this.http.post(this.urlUsers + '/logout', {}, {headers: this.auth.beerlessAuthHeaders})
             .subscribe(() => {
-                // Set userId to remember user
-                localStorage.setItem('r-u-data', JSON.stringify({
+                // Set r-u-data cookie to remember user
+                const remeberUserObject = {
                     picture: user.picture,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     username: user.username
-                }));
+                };
+                const date = new Date(Date.now());
+                date.setFullYear(date.getFullYear() + 1);
+                this.cookieService.set('r-u-data', JSON.stringify(remeberUserObject), date , '/');
 
-                // Remove accessToken from localStorage and clear user object
-                localStorage.removeItem('accessToken');
-                this.cookieService.delete('accessToken');
+                // Remove accessToken and userId from cookies and clear user object
+                document.cookie = 'access_token=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=' + environment.domain + ';path=/';
+                document.cookie = 'userId=;expires=Thu, 01 Jan 1970 00:00:00 GMT;domain=' + environment.domain + ';path=/';
 
-                this.accessToken$.next(null);
+                // this.cookieService.delete('access_token');
+                // this.cookieService.delete('userId');
+                this.auth.accessToken$.next(null);
                 this.loggedUserService.user$.next(null);
 
                 // Redirect to login
