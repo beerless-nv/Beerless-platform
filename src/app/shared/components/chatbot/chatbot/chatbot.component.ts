@@ -10,7 +10,6 @@ import {LoggedUserService} from '../../../../core/user/logged-user.service';
 import {ChatbotService} from '../chatbot.service';
 import {BehaviorSubject} from 'rxjs';
 import ResizeObserver from 'resize-observer-polyfill';
-import {AuthService} from '../../../../core/authorization/auth.service';
 import {NgScrollbar} from 'ngx-scrollbar';
 
 @Component({
@@ -56,6 +55,10 @@ export class ChatbotComponent implements OnInit {
         this.chatbotService.messages.subscribe(data => {
             this.messagesArray = data;
         });
+
+        this.chatbotService.isOpen$.subscribe(data => {
+            this.chatbotShow = data;
+        });
     }
 
     toggle() {
@@ -68,7 +71,7 @@ export class ChatbotComponent implements OnInit {
     }
 
     open() {
-        this.chatbotShow = true;
+        this.chatbotService.isOpen$.next(true);
 
         this.chatbotService.setSession();
 
@@ -90,17 +93,10 @@ export class ChatbotComponent implements OnInit {
     }
 
     close() {
-        this.chatbotShow = false;
+        this.chatbotService.isOpen$.next(false);
 
         // hide scrollbar
         this.showScrollbar = false;
-
-        // stop stream when closing chatbot
-        if (!this.chatbotService.takeoverSession) {
-            setTimeout(() => {
-                this.chatbotService.closeChatStream();
-            }, 300);
-        }
     }
 
     openExtra() {

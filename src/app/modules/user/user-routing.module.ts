@@ -7,8 +7,8 @@ import {WishlistUsersComponent} from './pages/visitor/wishlist-users/wishlist-us
 
 const routes: Routes = [
     {path: 'settings', component: SettingsUsersComponent, canActivate: [RoleGuardService], data: {expectedRole: '$everyone'}},
-    {path: 'profile/:id', component: ProfileUsersComponent, canActivate: [RoleGuardService], data: {expectedRole: '$everyone'}},
-    {path: 'wishlist/:id', component: WishlistUsersComponent, canActivate: [RoleGuardService], data: {expectedRole: '$everyone'}},
+    {path: ':username', component: ProfileUsersComponent, canActivate: [RoleGuardService], data: {expectedRole: '$everyone'}},
+    {path: ':username/wishlist', component: WishlistUsersComponent, canActivate: [RoleGuardService], data: {expectedRole: '$everyone'}},
 ];
 
 @NgModule({

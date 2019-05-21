@@ -15,7 +15,7 @@ import {SignOutService} from './user/sign-out.service';
 @NgModule({
     imports: [
         CommonModule,
-        ErrorHandlerModule
+        ErrorHandlerModule,
     ],
     declarations: [
         CookieSetterComponent

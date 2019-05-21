@@ -1,57 +1,30 @@
-<div class="card shadow-lg" [class.user-sidebar-sticky]="sidebarSticky">
-    <div class="card-img-top d-lg-block d-none"
-         [style.background-image]="'url(' + (user?.picture || user?.usersocial[0].picture) + ')'">
-        <div class="profile-picture-details">
-            <div class="profile-picture-category">
-                <small>Moderator</small>
-            </div>
-            <div class="profile-picture-name">
-                <span>{{user?.firstName}} {{user?.lastName}}</span>
-                <span class="small">{{user?.totalPoints}}</span>
-            </div>
-        </div>
+<div class="d-lg-block d-none">
+    <div id="user-profile-picture">
+        <div class="picture" [style.background-image]="'url(' + user?.picture + ')'"></div>
     </div>
-    <div class="card-body">
-        <div class="text-grey small d-sm-none d-block">
-            <p class="font-weight-bold mb-0">
-                {{user?.firstName}} {{user?.lastName}}
+</div>
+<div class="mt-4">
+    <h4 class="font-weight-bold text-center">{{user?.firstName}} {{user?.lastName}}</h4>
+    <div class="text-center small mb-4">
+        <a [routerLink]="'/user/' + user?.username">@{{user?.username}}</a>
+    </div>
+
+    <div class="card border-0">
+        <div class="card-body">
+            <ng-container *ngIf="addressArray.length > 0">
+                <p class="small">
+                    <i class="fas fa-map-marker-alt mr-1"></i>
+                    {{ addressArray.join(', ') }}
+                </p>
+            </ng-container>
+            <p class="small">
+                <beerless-text-truncate
+                    text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dicta enim expedita incidunt placeat quae ut vel. Aperiam dignissimos maxime officiis! Cumque dignissimos, optio? Cum doloribus ipsum libero placeat unde."
+                    truncateSymbol="..."
+                    truncateText="Show more"
+                    limit="150"
+                ></beerless-text-truncate>
             </p>
-            <p>
-                {{user?.place}}, {{user?.province}}, {{user?.country}}
-            </p>
-        </div>
-        <div class="mt-1 mb-4 stats">
-            <p class="title">Stats</p>
-            <div>
-                <div class="stat">
-                    <div [style.background-image]="'url(/src/assets/images/beer-glass.svg)'" class="icon-stats"></div>
-                    <div class="stat-text">
-                        <small>Bieren</small>
-                        <div>85</div>
-                    </div>
-                </div>
-                <div class="stat">
-                    <div [style.background-image]="'url(/src/assets/images/brewery.svg)'" class="icon-stats"></div>
-                    <div class="stat-text">
-                        <small>Brouwerijen</small>
-                        <div>13</div>
-                    </div>
-                </div>
-                <div class="stat">
-                    <div [style.background-image]="'url(/src/assets/images/article.svg)'" class="icon-stats"></div>
-                    <div class="stat-text">
-                        <small>Artikels</small>
-                        <div>5</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="d-sm-none d-block text-center mt-3">
-            <a routerLink="" class="btn btn-outline-primary btn-small">
-                <small class="p-0">
-                    <i class="fas fa-user-plus mr-md-2 mr-1 ml-1"></i> Vriend toevoegen
-                </small>
-            </a>
         </div>
     </div>
 </div>

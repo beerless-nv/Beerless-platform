@@ -1,42 +1,47 @@
 <div>
-    <h3 class="mb-3 pb-3 grey-title">Recente activiteit</h3>
-    <div class="card p-3 py-5 text-center" [hidden]="activities?.length > 0">Deze gebruiker heeft nog geen activiteit!
+    <h3 class="mb-3 pb-3 grey-title">Recent activities</h3>
+    <div class="card p-3 py-5 text-center font-weight-bold text-grey-light text-uppercase small"
+         *ngIf="!(activities$ | async)">
+        This user has no activity yet
     </div>
-    <div class="card p-3" [hidden]="activities?.length == 0">
-        <div class="activity">
-            <div *ngFor="let activity of activities">
-                <div class="d-flex flex-row align-items-center mb-3">
-                    <div class="mr-3">
-                        <img src="{{user?.picture || user?.usersocial[0].picture}}"
-                             alt="" class="activity-image">
-                    </div>
-                    <div class="mr-3">
-                        <div>
+    <div class="card" *ngIf="(activities$ | async)">
+        <div class="card-body">
+            <div class="activity">
+                <div *ngFor="let activity of (activities$ | async)">
+                    <div class="d-flex flex-row align-items-center mb-3">
+                        <div class="mr-3">
+                            <img src="{{user?.picture || user?.usersocial[0].picture}}"
+                                 alt="" class="activity-image">
+                        </div>
+                        <div class="mr-3">
+                            <div>
                             <span class="badge badge-pill badge-muted py-1 px-2">
                                 <small class="text-uppercase text-white font-weight-bold">Nieuw bier</small>
                             </span>
+                            </div>
+                            <div class="my-2">
+                                <a routerLink="/user/profile/{{user?.ID}}" class="font-weight-bold">{{user?.firstName}}
+                                    {{user?.lastName}}</a> heeft
+                                een
+                                <a routerLink="/beers/detail/{{activity.beer.ID}}"
+                                   class="font-weight-bold">{{activity.beer.name}}</a> toegevoegd.
+                            </div>
+                            <div>
+                                <small class="text-grey">{{activity.timestampCreated | date}}</small>
+                            </div>
                         </div>
-                        <div class="my-2">
-                            <a routerLink="/user/profile/{{user?.ID}}" class="font-weight-bold">{{user?.firstName}}
-                                {{user?.lastName}}</a> heeft
-                            een
-                            <a routerLink="/beers/detail/{{activity.beer.ID}}"
-                               class="font-weight-bold">{{activity.beer.name}}</a> toegevoegd.
-                        </div>
-                        <div>
-                            <small class="text-grey">{{activity.timestampCreated | date}}</small>
+                        <div class="ml-auto">
+                            <img src="{{environment.beerLogoURL + activity.beer.logo}}"
+                                 alt="" class="activity-image">
                         </div>
                     </div>
-                    <div class="ml-auto">
-                        <img src="{{environment.beerLogoURL + activity.beer.logo}}"
-                             alt="" class="activity-image">
-                    </div>
+                    <div class="divider mb-3"></div>
                 </div>
-                <div class="divider mb-3"></div>
-            </div>
-            <div class="text-center">
-                <a routerLink="/user/profile/{{user?.ID}}" class="my-3 text-primary font-weight-bold">Laad
-                    meer...</a>
+                <div class="text-center">
+                    <a routerLink="/user/profile/{{user?.ID}}" class="my-3 text-primary font-weight-bold">
+                        Load more...
+                    </a>
+                </div>
             </div>
         </div>
     </div>

@@ -1,5 +1,6 @@
-import {Component, HostListener, Inject, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Observable} from 'rxjs';
 import {UserService} from '../../../../../core/user/user.service';
 
 @Component({
@@ -8,9 +9,8 @@ import {UserService} from '../../../../../core/user/user.service';
     styles: []
 })
 export class ProfileUsersComponent implements OnInit {
-    userId;
-    user;
 
+    user$: Observable<any>;
     sidebarSticky = false;
     sidebarTopMargin = false;
 
@@ -20,15 +20,12 @@ export class ProfileUsersComponent implements OnInit {
 
     ngOnInit() {
         this.route.paramMap.subscribe(params => {
-            this.userId = params.get('id');
-            this.getUserById(this.userId);
+            this.getUserByName(params.get('username'));
         });
-
-
     }
 
-    getUserById(userId) {
-        this.userService.getUserById(userId).then(data => this.user = data);
+    getUserByName(username: string) {
+        this.user$ = this.userService.getUserByName(username);
     }
 
     @HostListener('window:scroll', [])

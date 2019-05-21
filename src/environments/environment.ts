@@ -13,10 +13,12 @@ export const environment = {
     websiteURL: 'http://localhost:4201/',
     articlePictureURL: 'https://assets.beerless.be/assets/images/article/hero-picture/',
 
-    // chatbot
+    // chatbot beerless
     chatbotApiUrl: 'https://api.oswald.ai/api/v1',
-    chatbotId: '5c909b61ccc52e00050a6e76',
-    chatbotAccessToken: 'bab11155-47cd-498f-9b97-f04ec43bdad7'
+    chatbotId_beerless: '5c909b61ccc52e00050a6e76',
+    chatbotAccessToken_beerless: 'bab11155-47cd-498f-9b97-f04ec43bdad7',
+    chatbotId_beerless_login: '5cda65f029ba2e00052af2b4',
+    chatbotAccessToken_beerless_login: '8be2c207-9447-473b-9f98-596cf3e51460'
 };
 
 /*

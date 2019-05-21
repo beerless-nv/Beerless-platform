@@ -12,22 +12,10 @@ export class ActivityService {
     constructor(private http: HttpClient) {
     }
 
-    getAllActivitiesByUserId(userId) {
+    getAllActivitiesByUserId(userId: number, limit: number) {
         const params = new HttpParams()
-            .set('joinTables', 'activityType,member,article,beer,brewery');
-        return this.http.post(this.urlActivities + '/search', {
-            searchParams: [{
-                propName: 'userID',
-                value: userId,
-                operator: '='
-            }]
-        }, {params})
-            .toPromise()
-            .then(data => {
-                return data['activities'];
-            })
-            .catch(error => {
-                console.log(error);
-            });
+            .set('filter', '{"where":{"userId":' + userId + '},"include":["beer","brewery","article"],"limit":' + limit + '}');
+
+        return this.http.get(this.urlActivities, {params});
     }
 }

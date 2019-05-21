@@ -13,8 +13,10 @@ export const environment = {
     appURL: 'https://app.beerless.be/',
     websiteURL: 'https://www.beerless.be/',
 
-    // chatbot
-    chatbotApiUrl: 'https://api-acc.oswald.ai/api/v1',
-    chatbotId: '5cb49d7d4648730006815d8d',
-    chatbotAccessToken: 'XiPS5w7sT7FEeWI1qFqbI5AmsDRW7ShhgBm2YUEo9zdf55112eVhoaGlQEv3zret'
+    // chatbot beerless
+    chatbotApiUrl: 'https://api.oswald.ai/api/v1',
+    chatbotId_beerless: '5c909b61ccc52e00050a6e76',
+    chatbotAccessToken_beerless: 'bab11155-47cd-498f-9b97-f04ec43bdad7',
+    chatbotId_beerless_login: '5cda65f029ba2e00052af2b4',
+    chatbotAccessToken_beerless_login: '8be2c207-9447-473b-9f98-596cf3e51460'
 };

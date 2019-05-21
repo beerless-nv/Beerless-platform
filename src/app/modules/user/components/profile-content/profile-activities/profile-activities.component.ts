@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Observable} from 'rxjs';
 import {ActivityService} from '../../../shared/activity.service';
 import {environment} from '../../../../../../environments/environment';
 
@@ -10,20 +11,18 @@ import {environment} from '../../../../../../environments/environment';
 export class ProfileActivitiesComponent implements OnInit, OnChanges {
 
     @Input() user: any;
-    activities;
     environment = environment;
+    activities$: Observable<any>;
 
-    constructor(private activitiesService: ActivityService) {
+    constructor(private activityService: ActivityService) {
     }
 
     ngOnInit() {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.user.currentValue != null) {
-            this.activitiesService.getAllActivitiesByUserId(changes.user.currentValue.ID).then(data => {
-                this.activities = data;
-            });
+        if (this.user) {
+            this.activities$ = this.activityService.getAllActivitiesByUserId(this.user.id, 5);
         }
     }
 }

@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {CookieService} from 'ngx-cookie-service';
+import {map} from 'rxjs/operators';
 import {environment} from 'src/environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {LoginService} from 'src/app/_services/login.service';
 import {ToastService} from 'src/app/shared/components/toast/toast.service';
 import {LocalStorageService} from 'src/app/_services/local-storage.service';
 import {AuthService} from '../authorization/auth.service';
-import {LoggedUserService} from './logged-user.service';
-
 
 @Injectable({
     providedIn: 'root'
@@ -27,21 +26,23 @@ export class UserService {
             .catch(err => null);
     }
 
+    getUserByName(username: string) {
+        const params = new HttpParams()
+            .append('filter', '{"where":{"username":"' + username + '"},"include":[' +
+                '{"relation":"favouriteBeer","scope":{"include":"breweries"}},' +
+                '{"relation":"role"},' +
+                '{"relation":"beerActivities"},' +
+                '{"relation":"breweryActivities"},' +
+                '{"relation":"articleActivities"}' +
+                ']}');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return this.http.get(this.urlUsers, {params: params, headers: this.auth.beerlessAuthHeaders})
+            .pipe(
+                map(data => {
+                    return data[0];
+                })
+            );
+    }
 
 
     getUserById(userId) {

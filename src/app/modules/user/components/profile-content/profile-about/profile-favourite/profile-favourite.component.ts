@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {environment} from '../../../../../../../environments/environment';
 
 @Component({
     selector: 'app-profile-favourite',
@@ -8,6 +9,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class ProfileFavouriteComponent implements OnInit {
 
     @Input() user: any;
+    environment = environment;
 
     constructor() {
     }

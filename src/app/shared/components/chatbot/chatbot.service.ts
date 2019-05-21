@@ -14,9 +14,10 @@ declare var emojis: any;
 })
 export class ChatbotService {
 
-    readonly apiUrl = environment.chatbotApiUrl;
-    readonly chatbotId = environment.chatbotId;
-    readonly accessToken = environment.chatbotAccessToken;
+
+    private apiUrl = environment.chatbotApiUrl;
+    private chatbotId;
+    private chatbotAccessToken;
     userMetadata;
 
     session = null;
@@ -30,6 +31,8 @@ export class ChatbotService {
     polling = false;
 
     emojis;
+
+    isOpen$ = new BehaviorSubject<boolean>(false);
 
     headers = new HttpHeaders()
         .append('ignoreLoadingBar', '');
@@ -47,7 +50,7 @@ export class ChatbotService {
      */
     sendMessage(message) {
         if (message !== '') {
-            this.http.post(this.apiUrl + '/chats/' + this.chatbotId + '/message?access_token=' + this.accessToken, {
+            this.http.post(this.apiUrl + '/chats/' + this.chatbotId + '/message?access_token=' + this.chatbotAccessToken, {
                 'message': message,
                 'environment': 'production',
                 'session': this.session,
@@ -89,8 +92,6 @@ export class ChatbotService {
      * Stop current chat stream.
      */
     closeChatStream() {
-        // set current datetime
-        const date = new Date(Date.now());
     }
 
     /**
@@ -291,12 +292,27 @@ export class ChatbotService {
      * If the sessionStorage lacks a sessionId, a new session is created.
      */
     setSession() {
+        // get chatbotSession
         const sessionObject = JSON.parse(sessionStorage.getItem('chatbotSession'));
-
         const date = new Date(Date.now());
         date.setSeconds(date.getSeconds() - 5);
-
         this.chatStartDate = date.toISOString();
+
+        // set metadata and chatbotId, chatbotAccessToken
+        if (this.loggedUserService.user$.value) {
+            this.loggedUserService.user$.subscribe(user => {
+                this.userMetadata = {
+                    'firstName': user.firstName,
+                    'lastName': user.lastName,
+                    'access_token': this.auth.accessToken$.value
+                };
+            });
+            this.chatbotId = environment.chatbotId_beerless;
+            this.chatbotAccessToken = environment.chatbotAccessToken_beerless;
+        } else {
+            this.chatbotId = environment.chatbotId_beerless_login;
+            this.chatbotAccessToken = environment.chatbotAccessToken_beerless_login;
+        }
 
         // set up new sessionId if it doesn't exist
         if (sessionObject !== null) {
@@ -329,15 +345,6 @@ export class ChatbotService {
         const sessionId = Guid.create();
         this.session = sessionId['value'];
         sessionStorage.setItem('chatbotSession', JSON.stringify({sessionId: this.session, timestamp: date}));
-
-        // set metadata
-        this.loggedUserService.user$.subscribe(user => {
-            this.userMetadata = {
-                'firstName': user.firstName,
-                'lastName': user.lastName,
-                'access_token': this.auth.accessToken$.value
-            };
-        });
 
         // wake up chatbot
         this.sendMessage('start_conversation');

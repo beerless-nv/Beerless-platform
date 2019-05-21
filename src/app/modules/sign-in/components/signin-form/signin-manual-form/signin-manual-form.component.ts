@@ -47,6 +47,10 @@ export class SigninManualFormComponent implements OnInit {
         this.signinFormComponent.signIn(this.formLogin.value);
     }
 
+    removeSession() {
+        sessionStorage.removeItem('chatbotSession');
+    }
+
     socialLogin(provider: string) {
 
         // let socialPlatformProvider;
