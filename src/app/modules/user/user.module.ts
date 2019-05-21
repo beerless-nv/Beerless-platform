@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {InputFieldsModule} from '../../shared/components/input-fields/input-fields.module';
 import {TextTruncateModule} from '../../shared/components/text-truncate/text-truncate.module';
 import {SettingsUsersComponent} from './pages/member/settings-users/settings-users.component';
 import {NgxBootstrapModule} from '../../shared/modules/ngx-bootstrap.module';
@@ -23,7 +24,8 @@ import {UserRoutingModule} from './user-routing.module';
         NgxBootstrapModule,
         ReactiveFormsModule,
         UserRoutingModule,
-        TextTruncateModule
+        TextTruncateModule,
+        InputFieldsModule
     ],
     declarations: [
         SettingsUsersComponent,

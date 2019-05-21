@@ -3,7 +3,7 @@
         <div class="picture" [style.background-image]="'url(' + user?.picture + ')'"></div>
     </div>
 </div>
-<div class="mt-4">
+<div class="mt-4 mb-lg-0 mb-5">
     <h4 class="font-weight-bold text-center">{{user?.firstName}} {{user?.lastName}}</h4>
     <div class="text-center small mb-4">
         <a [routerLink]="'/user/' + user?.username">@{{user?.username}}</a>

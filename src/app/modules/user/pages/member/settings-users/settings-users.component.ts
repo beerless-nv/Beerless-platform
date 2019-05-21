@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../../../../../_services/login.service';
+import {LoggedUserService} from '../../../../../core/user/logged-user.service';
 import {UserService} from '../../../../../core/user/user.service';
 
 @Component({
@@ -9,17 +10,14 @@ import {UserService} from '../../../../../core/user/user.service';
 })
 export class SettingsUsersComponent implements OnInit {
 
-    userId;
     user;
 
-    constructor(private loginService: LoginService, private userService: UserService) {
+    constructor(private loggedUserService: LoggedUserService, private userService: UserService) {
     }
 
     ngOnInit() {
-        this.loginService.userData$.subscribe(data => {
-            this.userId = data.ID;
-
-            this.userService.getUserById(this.userId).then(user => {
+        this.loggedUserService.user$.subscribe(loggedUser => {
+            this.userService.getUserById(loggedUser.id).then(user => {
                 this.user = user;
             });
         });

@@ -68,8 +68,8 @@ export class SettingsProfileComponent implements OnInit {
         this.formPassword = new FormGroup({
             currentPassword: new FormControl('', [
                 Validators.required,
-                Validators.minLength(8),
-                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
+                // Validators.minLength(8),
+                // Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
             ]),
             newPassword: new FormControl('', [
                 Validators.required,
