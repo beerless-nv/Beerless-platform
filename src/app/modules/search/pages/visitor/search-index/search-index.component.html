@@ -7,32 +7,14 @@
     <div class="container">
         <div class="col-12 p-0 d-flex flex-md-row flex-column mb-2">
             <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1 position-relative">
-
-
-                <!-- Search bar -->
-
-                <div class="form-group mb-1 input-icon">
-                    <input type="text" class="form-control" placeholder="Look for a beer/brewery/beerstyle" value="{{beerName}}"
-                           #beer
-                           (blur)="routeChange(beer.value, 1)"
-                           (keyup.enter)="beer.blur()">
-                    <i class="fas fa-search"></i>
-                </div>
-                <small class="text-grey font-italic mb-5 position-absolute" [ngbCollapse]="!beersListTotal">
-                    <strong>
-                        {{ beersListTotal }}
-                        <span [ngbCollapse]="beersListTotal==1">results</span>
-                        <span [ngbCollapse]="beersListTotal!=1">result</span>
-                    </strong>
-                    for <strong>"{{beerName}}"</strong>
-                </small>
+                <app-search-bar [totalResults]="(searchResults$ | async)?.total.value"></app-search-bar>
             </div>
 
 
             <!-- Add beer button -->
 
             <div class="mb-1 col-md-4 col-12 p-0 pl-md-3 pl-0 mb-md-0 mb-4 order-md-1 order-0">
-                <beerless-link-button [routerLink]="'/beers/add'" [queryParams]="{name: beer.value}"
+                <beerless-link-button [routerLink]="'/beers/add'" [queryParams]="{name: q}"
                                       [class]="'btn d-flex btn-primary text-white'">
                     <i class="fas fa-plus my-auto mr-3"></i>
                     <span class="d-lg-block d-none">Add new beer</span>
@@ -46,60 +28,7 @@
 
         <div class="col-12 d-flex flex-wrap p-0">
             <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 pt-5 d-flex flex-column">
-
-
-                <!-- Search result items -->
-
-                <app-beer-item
-                        *ngFor="let beer of beersList?.search_result; let i = index"
-                        [item]="beer"
-                        [index]="i"
-                ></app-beer-item>
-
-
-                <!-- Not found messages -->
-
-                <div class="card mb-2" [hidden]="!beersListTotal">
-                    <div class="card-body p-4 text-center">
-                        <strong>
-                            Didn't find the beer you're looking for?
-                            <a routerLink="/beers/add" [queryParams]="{name: beer.value}">Add the beer</a>.
-                        </strong>
-                    </div>
-                </div>
-
-
-                <div class="card mb-2" [hidden]="beersListTotal">
-                    <div class="card-body p-4 text-center">
-
-
-                        <!-- No input messages -->
-
-                        <strong [hidden]="beersListTotal || beer.value">
-                            Find a beer with the search bar at the top.
-                        </strong>
-
-
-                        <!-- No results messages -->
-
-                        <div [hidden]="beersListTotal || !beer.value">
-                            <p>
-                                We couldn't find beers that match your search term
-                                "<strong>{{beerName}}</strong>".
-                            </p>
-                            <p class="m-0">
-                                Make sure that you've correctly spelled the name of the beer or add the beer.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-center mt-3">
-                    <pagination-controls (pageChange)="getPage($event)"
-                                         [autoHide]="!beersListTotal"
-                                         class="pagination-style"
-                                         [ngbCollapse]="!beersList">
-                    </pagination-controls>
-                </div>
+                <app-search-results [searchResult]="(searchResults$ | async)" [q]="q"></app-search-results>
             </div>
 
             <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 pt-5">

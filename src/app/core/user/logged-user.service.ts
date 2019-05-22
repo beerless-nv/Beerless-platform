@@ -18,7 +18,6 @@ export class LoggedUserService {
     constructor(public http: HttpClient, private router: Router, private cookieService: CookieService, private auth: AuthService, private modalService: ModalService) {
         router.events.subscribe(event => {
             if (event instanceof NavigationStart) {
-                console.log(event.url);
                 this.setToken();
                 this.checkToken().then(isValid => {
                     if (isValid) {

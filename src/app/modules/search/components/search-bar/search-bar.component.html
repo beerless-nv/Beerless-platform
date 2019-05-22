@@ -1,0 +1,23 @@
+<div id="search-bar-container">
+    <div class="form-group mb-1 input-icon" id="search-bar">
+        <input type="text" class="form-control" placeholder="Search for a beer/brewery/beerstyle" value="{{searchedValue}}"
+               #value
+               (keyup.enter)="search(value.value)"
+               (keyup)="suggest(value.value, $event)">
+    </div>
+    <small class="text-grey font-italic mb-5 position-absolute" *ngIf="totalResults > 0">
+        <strong>
+            {{ totalResults }}
+            <span [ngbCollapse]="totalResults==1">results</span>
+            <span [ngbCollapse]="totalResults!=1">result</span>
+        </strong>
+        for <strong>"{{searchedValue}}"</strong>
+    </small>
+    <div id="search-suggestion-container" *ngIf="suggestions.length > 0 && showSuggestions">
+        <div id="search-suggestions" class="shadow">
+            <ng-container *ngFor="let suggestion of suggestions; let i = index">
+                <div class="suggest-item" (click)="search(suggestion?._source?.name)" tabindex="{{i}}">{{suggestion?._source?.name}}</div>
+            </ng-container>
+        </div>
+    </div>
+</div>
