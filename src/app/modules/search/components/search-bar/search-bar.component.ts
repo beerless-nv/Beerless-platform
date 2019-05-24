@@ -55,7 +55,7 @@ export class SearchBarComponent implements OnInit {
             if (!name) {
                 this.suggestions = [];
             } else {
-                this.suggestions = await this.searchService.suggest(name, 'Beer');
+                this.suggestions = await this.searchService.suggest(name, this.searchedType);
                 this.showSuggestions = true;
             }
         }
@@ -96,7 +96,7 @@ export class SearchBarComponent implements OnInit {
     }
 
     selectType(selectedValue: string) {
-        this.searchDropdown.nativeElement.innerHTML = selectedValue;
+        this.searchedType = selectedValue;
         this.router.navigate([], {
             relativeTo: this.route,
             queryParams: {

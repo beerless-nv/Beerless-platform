@@ -1,0 +1,31 @@
+.modal-backdrop, .modal {
+    z-index: 999999999 !important;
+}
+
+.modal-dialog {
+    z-index: 999999 !important;
+}
+
+.dark-modal {
+    .modal-content {
+        border: none;
+        padding: ($spacer * 4);
+        @include media-breakpoint-down(xs) {
+            padding: ($spacer * 2);
+        }
+        background-color: #111111 !important;
+        color: #fff;
+    }
+}
+
+.white-modal {
+    .modal-content {
+        border: none;
+        padding: ($spacer * 4);
+        @include media-breakpoint-down(xs) {
+            padding: ($spacer * 2);
+        }
+        background-color: #fff !important;
+        color: $dark;
+    }
+}

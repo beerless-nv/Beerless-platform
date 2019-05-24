@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ButtonsModule} from '../../shared/components/buttons/buttons.module';
 import {NgBootstrapModule} from '../../shared/modules/ng-bootstrap.module';
@@ -21,7 +20,6 @@ import {ClickOutsideModule} from 'ng-click-outside';
         NgxPaginationModule,
         ButtonsModule,
         ClickOutsideModule,
-        InfiniteScrollModule,
     ],
     declarations: [
         SearchIndexComponent,

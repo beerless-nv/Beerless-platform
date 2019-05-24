@@ -59,9 +59,9 @@ export class SearchService {
                         .append('size', '2');
                     break;
                 case 'Brewery':
-                    paramsBeer
+                    paramsBeer = paramsBeer
                         .append('size', '2');
-                    paramsBrewery
+                    paramsBrewery = paramsBrewery
                         .append('size', '3');
                     break;
             }
@@ -80,13 +80,19 @@ export class SearchService {
             // push responses to array
             result.push({
                 type: 'Beer',
+                size: paramsBeer.get('size'),
                 results: beerSuggestions
             });
 
             result.push({
                 type: 'Brewery',
+                size: paramsBrewery.get('size'),
                 results: brewerySuggestions
             });
+
+            // sort result array
+            result.sort((a, b) => (a.size < b.size) ? 1 : -1);
+            console.log(result);
         }
 
         return result;
