@@ -52,7 +52,6 @@ export class SignupFormComponent implements OnInit {
 
     register() {
         this.signupService.signUp(this.formRegister.value).then(data => {
-            console.log(data);
             if (data !== undefined) {
                 this.user = data;
                 this.registrationSuccessful = true;

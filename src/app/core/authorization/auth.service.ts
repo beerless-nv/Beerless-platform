@@ -13,7 +13,6 @@ export class AuthService {
     constructor(public http: HttpClient) {
         document.cookie = 'username=John Smith; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/';
 
-        console.log('ok');
         // Authentication params which are needed for 'member only' spaces
         this.accessToken$.subscribe(data => {
             this.beerlessAuthHeaders = data;

@@ -5,7 +5,6 @@ import {CookieService} from 'ngx-cookie-service';
 import {AuthGuardService} from './authorization/auth-guard.service';
 import {AuthService} from './authorization/auth.service';
 import {RoleGuardService} from './authorization/role-guard.service';
-import {CookieSetterComponent} from './cookies/cookie-setter.component';
 import {ErrorHandlerModule} from './error-handler/error-handler.module';
 import {ErrorInterceptor} from './interceptors/errorInterceptor';
 import {LoggedUserService} from './user/logged-user.service';
@@ -18,7 +17,6 @@ import {SignOutService} from './user/sign-out.service';
         ErrorHandlerModule,
     ],
     declarations: [
-        CookieSetterComponent
     ],
     providers: [
         AuthService,
@@ -35,7 +33,6 @@ import {SignOutService} from './user/sign-out.service';
         SignOutService
     ],
     exports: [
-        CookieSetterComponent
     ]
 })
 export class CoreModule {

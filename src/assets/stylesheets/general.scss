@@ -73,6 +73,10 @@ input, button {
     height: 50px !important;
 }
 
+.form-control {
+    border-color: $border-color;
+}
+
 a.btn {
     padding: 0.75rem 0.75rem;
 }

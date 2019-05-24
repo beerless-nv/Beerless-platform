@@ -1,5 +1,6 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {empty} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({
@@ -7,7 +8,8 @@ import {environment} from '../../../../environments/environment';
 })
 export class SearchService {
 
-    readonly urlBeerSearch = environment.backend + '/beers';
+    readonly urlBeerSearch = environment.backend + 'beers';
+    readonly urlBrewerySearch = environment.backend + 'breweries';
 
     headers = new HttpHeaders()
         .append('ignoreLoadingBar', '');
@@ -15,23 +17,78 @@ export class SearchService {
     constructor(public http: HttpClient) {
     }
 
-    search(q, from, size) {
+    search(q, from, size, type) {
         const params = new HttpParams()
             .append('q', q)
             .append('from', from)
             .append('size', size);
 
         if (q) {
-            return this.http.get(this.urlBeerSearch + '/search', {params});
+            let result;
+
+            switch (type) {
+                case 'Beer':
+                    result = this.http.get(this.urlBeerSearch + '/search', {params, headers: this.headers});
+                    break;
+                case 'Brewery':
+                    result = this.http.get(this.urlBrewerySearch + '/search', {params, headers: this.headers});
+                    break;
+            }
+
+            return result;
         }
+        return empty();
     }
 
-    suggest(q) {
-        const params = new HttpParams()
-            .append('q', q);
+    async suggest(q, type) {
+        const result = [];
 
         if (q) {
-            return this.http.get(this.urlBeerSearch + '/suggest', {params, headers: this.headers});
+            let paramsBeer = new HttpParams()
+                .append('q', q);
+
+            let paramsBrewery = new HttpParams()
+                .append('q', q);
+
+            // type based params
+            switch (type) {
+                case 'Beer':
+                    paramsBeer = paramsBeer
+                        .append('size', '3');
+                    paramsBrewery = paramsBrewery
+                        .append('size', '2');
+                    break;
+                case 'Brewery':
+                    paramsBeer
+                        .append('size', '2');
+                    paramsBrewery
+                        .append('size', '3');
+                    break;
+            }
+
+            // requests for suggestions
+            const beerSuggestions = await this.http.get(this.urlBeerSearch + '/suggest', {
+                params: paramsBeer,
+                headers: this.headers
+            }).toPromise();
+
+            const brewerySuggestions = await this.http.get(this.urlBrewerySearch + '/suggest', {
+                params: paramsBrewery,
+                headers: this.headers
+            }).toPromise();
+
+            // push responses to array
+            result.push({
+                type: 'Beer',
+                results: beerSuggestions
+            });
+
+            result.push({
+                type: 'Brewery',
+                results: brewerySuggestions
+            });
         }
+
+        return result;
     }
 }

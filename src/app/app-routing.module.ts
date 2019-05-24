@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {CookieSetterComponent} from './core/cookies/cookie-setter.component';
 import {StandardLayoutComponent} from './shared/platform-components/layouts/standard-layout/standard-layout/standard-layout.component';
 
 const routes: Routes = [
@@ -19,7 +18,6 @@ const routes: Routes = [
     {path: 'sign-up', loadChildren: './modules/sign-up/sign-up.module#SignUpModule'},
     {path: 'sign-in', loadChildren: './modules/sign-in/sign-in.module#SignInModule'},
     {path: 'reset', loadChildren: './modules/reset/reset.module#ResetModule'},
-    {path: 'cookie-setter', component: CookieSetterComponent},
     {path: '**', redirectTo: '/error/404'},
 ];
 

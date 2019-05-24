@@ -19,7 +19,6 @@ export class EmoticonsComponent implements OnInit {
 
     appendEmoji(emoji) {
         if (this.chatbotComponent.selectedText) {
-            console.log(this.chatbotComponent.selectedText);
             const newString = this.chatbotComponent.chatbotInput.nativeElement.innerHTML.replace(this.chatbotComponent.selectedText, emoji);
             this.chatbotComponent.chatbotInput.nativeElement.innerHTML = newString;
         } else {

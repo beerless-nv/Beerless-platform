@@ -1,0 +1,24 @@
+<a [routerLink]="'/' + type + '/' + content?.id" class="link-black-yellow">
+    <div class="card mb-2 card-hover">
+        <div class="card-body p-4 d-flex align-items-center">
+            <div class="pr-4">
+                <img src="{{environment.imageURL + type + '/logo/' + content?.logo}}" alt="logo {{content?.name}}"
+                     class="beer-item-image">
+            </div>
+            <div class="mr-4">
+                <a [routerLink]="'/' + type + '/' + content?.id" class="link-black-yellow font-weight-bold m-0">{{content?.name}}</a>
+                <p class="my-0 small text-dark" *ngIf="content?.breweries?.length > 0">
+                    <ng-container *ngFor="let brewery of content?.breweries; let i = index">
+                        {{brewery?.name}}<span *ngIf="(i + 1) !== content?.breweries?.length">,&nbsp;</span>
+                    </ng-container>
+                </p>
+                <p class="text-grey m-0 small" *ngIf="content?.styleTags?.length > 0">
+                    <ng-container *ngFor="let styleTag of content?.styleTags">
+                        {{styleTag.name}}
+                    </ng-container>
+                </p>
+            </div>
+            <a class="ml-auto"><i class="fas fa-arrow-circle-right mouse-pointer"></i></a>
+        </div>
+    </div>
+</a>

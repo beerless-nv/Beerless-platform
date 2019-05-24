@@ -15,14 +15,22 @@
             background-color: #fff;
             border-radius: 0.25rem;
             cursor: pointer;
+            font-size: 0.8rem;
+
+            .suggest-type {
+                padding: ($spacer * 0.75) ($spacer * 1.25);
+                background-color: $light;
+                font-weight: bold;
+            }
 
             .suggest-item {
                 padding: ($spacer * 0.75) ($spacer * 1.25);
                 border-bottom: 1px solid $light;
 
-                &:hover {
+                &:hover, &:focus {
                     background-color: $super-light;
                     font-weight: 600;
+                    outline: none;
                 }
 
                 &:last-child {
@@ -30,5 +38,51 @@
                 }
             }
         }
+    }
+}
+
+#search-bar {
+    .form-control {
+        &::placeholder {
+            color: $grey;
+        }
+
+        &:focus {
+            border-color: $dark;
+            box-shadow: none;
+        }
+    }
+}
+
+.search-dropdown-button {
+    background-color: #fff;
+    border-radius: 0 0.25rem 0.25rem 0;
+    border: 1px solid $border-color;
+    border-left: none;
+    color: $grey;
+
+    &:focus {
+        border-color: $dark;
+        box-shadow: -1px 0 1px #000;
+    }
+
+    &:hover {
+        background-color: $super-light;
+    }
+
+    &::after {
+        margin-left: ($spacer * 0.5);
+    }
+}
+
+.search-dropdown-item {
+    color: $grey;
+    padding: 0.5rem;
+    cursor: pointer;
+
+    &:hover {
+        color: $dark;
+        font-weight: 600;
+        background-color: $super-light;
     }
 }

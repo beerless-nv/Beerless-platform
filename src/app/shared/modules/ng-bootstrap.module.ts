@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 import {
-    NgbCollapseModule,
+    NgbCollapseModule, NgbDropdownModule,
     NgbModalModule,
     NgbPopoverModule,
     NgbTooltipModule
@@ -14,13 +14,15 @@ import {
         NgbCollapseModule.forRoot(),
         NgbModalModule.forRoot(),
         NgbTooltipModule.forRoot(),
-        NgbPopoverModule.forRoot()
+        NgbPopoverModule.forRoot(),
+        NgbDropdownModule.forRoot()
     ],
     exports: [
         NgbCollapseModule,
         NgbModalModule,
         NgbTooltipModule,
-        NgbPopoverModule
+        NgbPopoverModule,
+        NgbDropdownModule
     ],
     declarations: []
 })

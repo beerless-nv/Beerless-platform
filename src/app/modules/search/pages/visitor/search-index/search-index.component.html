@@ -1,13 +1,13 @@
 <div class="page-header">
     <div class="container-no-m">
-        <span class="page-header-title">Beers</span>
+        <span class="page-header-title">Search</span>
     </div>
 </div>
 <div class="bg-super-light">
     <div class="container">
         <div class="col-12 p-0 d-flex flex-md-row flex-column mb-2">
             <div class="col-md-8 col-12 p-0 pr-md-3 pr-0 order-md-0 order-1 position-relative">
-                <app-search-bar [totalResults]="(searchResults$ | async)?.total.value"></app-search-bar>
+                <app-search-bar [totalResults]="searchResultsTotal"></app-search-bar>
             </div>
 
 
@@ -26,9 +26,10 @@
 
         <!-- Search result space -->
 
+
         <div class="col-12 d-flex flex-wrap p-0">
-            <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 pt-5 d-flex flex-column">
-                <app-search-results [searchResult]="(searchResults$ | async)" [q]="q"></app-search-results>
+            <div class="col-md-8 col-12 pl-0 pr-md-3 pr-0 pt-5 d-flex flex-column" #resultScroll>
+                <app-search-results [searchResult]="searchResults" [searchResultsTotal]="searchResultsTotal" [q]="q"></app-search-results>
             </div>
 
             <div class="col-md-4 col-12 pl-md-3 pl-0 pr-0 pt-5">
@@ -36,5 +37,7 @@
             </div>
 
         </div>
+
+
     </div>
 </div>

@@ -25,7 +25,7 @@ input.input-dark {
 
 .form-control {
     height: 50px;
-    border-color: $muted-light !important;
+    border-color: $border-color !important;
     color: $dark !important;
 
     &::placeholder {
@@ -34,7 +34,7 @@ input.input-dark {
 
     &:focus {
         box-shadow: none !important;
-        border-color: $input-focus-color !important;
+        border-color: $dark !important;
     }
 }
 

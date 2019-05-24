@@ -66,13 +66,10 @@ export class MessageComponent implements OnInit {
                     case 'text':
                         // check if beer profile
                         if (this.message['message']['app-beerprofile']) {
-                            console.log(this.message['message']['app-beerprofile']);
 
                             this.loadComponent(component, BeerprofileComponent, this.message['message']['app-beerprofile'][0]);
                         } else if (this.message['message']['app-breweryprofile']) {
                             this.isComponent = true;
-
-                            console.log(this.message['message']['app-breweryprofile']);
 
                             // add component
                             const factory = this.componentFactoryResolver.resolveComponentFactory(BreweryprofileComponent);

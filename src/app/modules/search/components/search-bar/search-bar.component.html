@@ -1,10 +1,34 @@
-<div id="search-bar-container">
-    <div class="form-group mb-1 input-icon" id="search-bar">
-        <input type="text" class="form-control" placeholder="Search for a beer/brewery/beerstyle" value="{{searchedValue}}"
+<div id="search-bar-container" (blur)="showSuggestions = false" (clickOutside)="showSuggestions = false">
+
+
+    <!-- input field (search) -->
+
+    <div class="input-group mb-1" id="search-bar">
+        <input type="text" class="form-control" placeholder="Search for a beer/brewery/beerstyle"
+               [value]="searchedValue"
                #value
-               (keyup.enter)="search(value.value)"
-               (keyup)="suggest(value.value, $event)">
+               (keyup.enter)="search(value.value, searchedType)"
+               (keyup)="suggest(value.value, $event)"
+               (keydown)="select($event)">
+
+        <div ngbDropdown class="d-inline-block" placement="bottom-right">
+            <button class="btn search-dropdown-button" id="dropdownBasic1" ngbDropdownToggle #searchDropdown [value]="searchedType">
+                {{searchedType}}
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <div ngbDropdownItem (click)="selectType('Beer')" class="search-dropdown-item">
+                    Beer
+                </div>
+                <div ngbDropdownItem (click)="selectType('Brewery')" class="search-dropdown-item">
+                    Brewery
+                </div>
+            </div>
+        </div>
     </div>
+
+
+    <!-- result text -->
+
     <small class="text-grey font-italic mb-5 position-absolute" *ngIf="totalResults > 0">
         <strong>
             {{ totalResults }}
@@ -13,10 +37,28 @@
         </strong>
         for <strong>"{{searchedValue}}"</strong>
     </small>
-    <div id="search-suggestion-container" *ngIf="suggestions.length > 0 && showSuggestions">
+
+
+    <!-- suggestions -->
+
+    <div id="search-suggestion-container"
+         *ngIf="(suggestions[0]?.results?.length > 0 || suggestions[1]?.results?.length > 0) && showSuggestions">
         <div id="search-suggestions" class="shadow">
-            <ng-container *ngFor="let suggestion of suggestions; let i = index">
-                <div class="suggest-item" (click)="search(suggestion?._source?.name)" tabindex="{{i}}">{{suggestion?._source?.name}}</div>
+            <ng-container *ngFor="let result of suggestions; let i = index">
+                <ng-container *ngIf="result.results.length > 0">
+                    <div class="suggest-type">{{result.type}}</div>
+                    <ng-container *ngFor="let suggestion of result.results; let i = index">
+                        <div class="suggest-item"
+                             (click)="search(suggestion.text, result.type); searchedType = result.type"
+                             (keyup.enter)="suggestItem.click()"
+                             (keydown)="select($event)"
+                             [id]="i"
+                             [tabIndex]="-1"
+                             #suggestItem>
+                            {{suggestion.text}}
+                        </div>
+                    </ng-container>
+                </ng-container>
             </ng-container>
         </div>
     </div>

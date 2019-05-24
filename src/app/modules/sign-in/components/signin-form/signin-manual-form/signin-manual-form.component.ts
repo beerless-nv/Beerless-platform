@@ -50,23 +50,4 @@ export class SigninManualFormComponent implements OnInit {
     removeSession() {
         sessionStorage.removeItem('chatbotSession');
     }
-
-    socialLogin(provider: string) {
-
-        // let socialPlatformProvider;
-        // if (socialPlatform === 'facebook') {
-        //     socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
-        // } else if (socialPlatform === 'google') {
-        //     socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
-        // } else if (socialPlatform === 'linkedin') {
-        //     socialPlatformProvider = LinkedinLoginProvider.PROVIDER_ID;
-        // }
-        //
-        // this.socialAuthService.signIn(socialPlatformProvider).then(
-        //     (userData) => {
-        //         console.log(userData);
-        //         // this.loginService.setUserSocialData(userData);
-        //     }
-        // );
-    }
 }

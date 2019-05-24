@@ -1,30 +1,30 @@
 <!-- Search result items -->
 
-<app-beer-item
-    *ngFor="let beer of searchResult?.hits; let i = index"
-    [item]="beer?._source"
+<app-search-item
+    *ngFor="let beer of searchResult; let i = index"
+    [item]="beer"
     [index]="i"
-></app-beer-item>
+></app-search-item>
 
 <!-- Not found messages -->
 
-<!--<div class="card mb-2" *ngIf="searchResult?.total.value === 0">-->
-<!--<div class="card-body p-4 text-center">-->
-<!--<strong>-->
-<!--Didn't find the beer you're looking for?-->
-<!--<a routerLink="/beers/add" [queryParams]="{name: q}">Add the beer</a>.-->
-<!--</strong>-->
-<!--</div>-->
-<!--</div>-->
+<div class="card mb-2" *ngIf="searchResultsTotal > 0">
+    <div class="card-body p-4 text-center">
+        <strong>
+            Didn't find the beer you're looking for?
+            <a routerLink="/beers/add" [queryParams]="{name: q}">Add the beer</a>
+        </strong>
+    </div>
+</div>
 
-<ng-container *ngIf="!searchResult || searchResult?.total?.value === 0">
+<ng-container *ngIf="searchResult.length === 0 || searchResultsTotal === 0">
     <div class="card mb-2">
         <div class="card-body p-4 text-center">
 
 
             <!-- No input messages -->
 
-            <ng-container *ngIf="!searchResult && !q">
+            <ng-container *ngIf="searchResult.length === 0 && !q">
                 <strong>
                     Find a beer with the search bar at the top.
                 </strong>
@@ -33,22 +33,17 @@
 
             <!-- No results messages -->
 
-            <ng-container *ngIf="(!searchResult || searchResult?.total?.value === 0) && q">
+            <ng-container *ngIf="(searchResult.length === 0 || searchResultsTotal === 0) && q">
                 <p>
                     We couldn't find beers that match your search term
                     "<strong>{{q}}</strong>".
                 </p>
                 <p class="m-0">
-                    Make sure that you've correctly spelled the name of the beer or add the beer.
+                    Make sure that you've correctly spelled the name of the beer or <a routerLink="/beers/add"
+                                                                                       [queryParams]="{name: q}">add the
+                    beer</a>.
                 </p>
             </ng-container>
         </div>
     </div>
 </ng-container>
-<div class="text-center mt-3">
-    <!--<pagination-controls (pageChange)="getPage($event)"-->
-    <!--[autoHide]="!beersListTotal"-->
-    <!--class="pagination-style"-->
-    <!--[ngbCollapse]="!beersList">-->
-    <!--</pagination-controls>-->
-</div>

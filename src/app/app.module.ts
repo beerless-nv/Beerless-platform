@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {NgbActiveModal, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
@@ -27,6 +27,8 @@ import {ModalModule} from './shared/components/modal/modal.module';
 import {NavbarModule} from './shared/components/navbar/navbar.module';
 import {NavbarMobileModule} from './shared/components/navbar-mobile/navbar-mobile.module';
 import {PlatformComponentsModule} from './shared/platform-components/platform-components.module';
+import {ClickOutsideModule} from 'ng-click-outside';
+
 
 @NgModule({
     declarations: [
@@ -58,7 +60,8 @@ import {PlatformComponentsModule} from './shared/platform-components/platform-co
         TextTruncateModule,
         PlatformComponentsModule,
         CoreModule,
-        RestrictPlatformModule
+        RestrictPlatformModule,
+        ClickOutsideModule
     ],
     providers: [
         NgbActiveModal
