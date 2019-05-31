@@ -2,7 +2,6 @@
 
 @include media-breakpoint-down(md) {
     .user-profile-cover-picture-container {
-        top: -70px !important;
         margin-bottom: 100px;
 
         .user-profile-cover-picture {
@@ -12,10 +11,9 @@
 }
 
 // desktop
-
 .profile-picture-upload {
-    height: (10.2rem - ($spacer * 1));
-    width: (10.2rem - ($spacer * 1));
+    height: 150px;
+    width: 150px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -52,8 +50,6 @@
 .user-profile {
     .user-profile-cover-picture-container {
         z-index: 10;
-        position: sticky;
-        top: -140px;
 
         .user-profile-cover-picture {
             height: 300px;

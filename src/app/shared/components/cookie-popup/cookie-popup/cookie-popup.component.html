@@ -1,0 +1,11 @@
+<div id="cookie-popup" *ngIf="!accepted">
+    <p>
+        We use cookies to personalise our content, to analyse our traffic and to enhance your experience on our website.
+        You consent to our cookies if you continue to use this website.
+    </p>
+    <div class="d-flex justify-content-between">
+        <a (click)="consent()" class="btn btn-primary text-white"><i class="fas fa-check mr-2"></i> Accept cookies</a>
+        <a target="_blank" href="https://beerless.be/policies/cookie" class="btn btn-light">Read more <i
+            class="fas fa-long-arrow-alt-right ml-2"></i></a>
+    </div>
+</div>

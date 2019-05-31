@@ -1,18 +1,23 @@
-<div class="page-header">
-    <div class="container-no-m">
-        <span class="page-header-title">{{beer?.name}}</span>
-    </div>
-</div>
+<beerless-sticky-header>{{beer?.name}}</beerless-sticky-header>
 <div>
     <div class="container">
         <div class="col-12 d-flex flex-md-row flex-column p-0">
             <div class="col-lg-9 col-md-8 col-12 pl-0 pr-md-3 pr-0">
                 <app-beerprofile [item]="beer"></app-beerprofile>
+                <app-beer-tasting-profile [tastingprofiles]="tastingprofiles"></app-beer-tasting-profile>
+                <a [routerLink]="'add/tastingprofile'" class="btn btn-primary text-white my-5 w-100 text-left d-md-none d-block">
+                    <img src="https://assets.beerless.be/images/icon/tasting-profile.svg" alt="icon tastingprofile" class="add-tastingprofile mr-2">
+                    Add tasting profile
+                </a>
                 <ng-container *ngFor="let brewery of beer?.breweries">
                     <app-beerbreweryprofile [item]="brewery"></app-beerbreweryprofile>
                 </ng-container>
             </div>
             <div class="col-lg-3 col-md-4 col-12 pr-0 pl-md-3 pl-0">
+                <a [routerLink]="'add/tastingprofile'" class="btn btn-primary text-white mb-5 w-100 text-left d-md-block d-none">
+                    <img src="https://assets.beerless.be/images/icon/tasting-profile.svg" alt="icon tastingprofile" class="add-tastingprofile mr-2">
+                    Add tasting profile
+                </a>
                 <app-beer-recommendations [item]="recommendations"></app-beer-recommendations>
             </div>
         </div>

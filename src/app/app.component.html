@@ -1,24 +1,34 @@
-<ngx-loading-bar [color]="'#f9b054'" [fixed]="true" [hidden]="error"></ngx-loading-bar>
+<div (click)="checkFocusedElement()">
+    <ngx-loading-bar [color]="'#f9b054'" [fixed]="true" [hidden]="error"></ngx-loading-bar>
 
 
-<!-- loading and error screen -->
-<div [hidden]="error == false">
-    <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
-        <beerless-error *ngIf="error == true"></beerless-error>
+    <!-- loading and error screen -->
+    <div [hidden]="error == false">
+        <div class="loading-screen mt-5 d-flex align-items-center justify-content-center">
+            <beerless-error *ngIf="error == true"></beerless-error>
+        </div>
     </div>
+
+
+    <!-- content output -->
+    <div [hidden]="error == true">
+        <router-outlet></router-outlet>
+    </div>
+
+
+    <!-- chatbot -->
+    <ng-container *ngIf="showChatbot">
+        <div [class.chatbotBottom]="chatbotBottom">
+            <beerless-chatbot></beerless-chatbot>
+        </div>
+    </ng-container>
+
+
+    <!-- cookie popup -->
+    <beerless-cookie-popup></beerless-cookie-popup>
+
+
+    <!-- display toast messages -->
+    <beerless-toast></beerless-toast>
 </div>
-
-
-<!-- content output -->
-<div [hidden]="error == true">
-    <router-outlet></router-outlet>
-</div>
-
-
-<!-- chatbot -->
-<beerless-chatbot></beerless-chatbot>
-
-
-<!-- display toast messages -->
-<beerless-toast></beerless-toast>
 

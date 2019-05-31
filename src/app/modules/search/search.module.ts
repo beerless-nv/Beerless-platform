@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {ButtonsModule} from '../../shared/components/buttons/buttons.module';
+import {HeadersModule} from '../../shared/components/headers/headers.module';
 import {NgBootstrapModule} from '../../shared/modules/ng-bootstrap.module';
 import {BeerService} from '../beer/shared/beer.service';
 import {SearchItemComponent} from './components/search-item/search-item.component';
@@ -20,6 +21,7 @@ import {ClickOutsideModule} from 'ng-click-outside';
         NgxPaginationModule,
         ButtonsModule,
         ClickOutsideModule,
+        HeadersModule
     ],
     declarations: [
         SearchIndexComponent,

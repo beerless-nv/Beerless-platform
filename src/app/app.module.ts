@@ -4,6 +4,7 @@ import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CoreModule} from './core/core.module';
+import {CookiePopupModule} from './shared/components/cookie-popup/cookie-popup.module';
 import {RestrictPlatformModule} from './shared/components/restrict-platform/restrict-platform.module';
 import {TextTruncateModule} from './shared/components/text-truncate/text-truncate.module';
 import {ToastModule} from './shared/components/toast/toast.module';
@@ -61,7 +62,8 @@ import {ClickOutsideModule} from 'ng-click-outside';
         PlatformComponentsModule,
         CoreModule,
         RestrictPlatformModule,
-        ClickOutsideModule
+        ClickOutsideModule,
+        CookiePopupModule
     ],
     providers: [
         NgbActiveModal

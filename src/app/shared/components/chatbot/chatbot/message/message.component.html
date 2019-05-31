@@ -16,7 +16,7 @@
         <span #component></span>
 
         <!-- url  -->
-        <a href="{{src}}" target="_blank" *ngIf="message['type'] === 'url'">{{text}}</a>
+        <a href="{{src}}" *ngIf="message['type'] === 'url'">{{text}}</a>
 
         <!-- image -->
         <img src="{{src}}" alt="" *ngIf="message['type'] === 'image'">

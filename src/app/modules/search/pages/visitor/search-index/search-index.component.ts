@@ -31,9 +31,8 @@ export class SearchIndexComponent implements OnInit {
             if (!this.q) {
                 this.searchResultsTotal = 0;
                 this.searchResults = [];
-            } else {
-                this.search(false);
             }
+            this.search(false);
         });
     }
 

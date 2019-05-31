@@ -1,0 +1,168 @@
+// Import Beerless variables file and bootstrap scss file
+@import "~src/assets/stylesheets/variables";
+@import "~bootstrap/scss/bootstrap.scss";
+
+// Specific component css
+input {
+    height: 50px !important;
+}
+
+input.input-dark {
+    background-color: $dark;
+    color: $grey !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+
+    &::placeholder {
+        color: $grey !important;
+    }
+
+    &:focus {
+        background-color: $dark;
+        box-shadow: none !important;
+        border-color: $grey !important;
+    }
+}
+
+.form-control {
+    height: 50px;
+    border-color: $border-color !important;
+    color: $dark !important;
+
+    &::placeholder {
+        color: $muted !important;
+    }
+
+    &:focus {
+        box-shadow: none !important;
+        border-color: $dark !important;
+    }
+}
+
+.input-icon {
+    position: relative;
+
+    & i {
+        color: $grey;
+        position: absolute;
+        top: 50%;
+        left: 13px;
+        transform: translateY(-50%);
+    }
+
+    & input {
+        padding-left: 50px;
+    }
+}
+
+.border-lable-flt {
+    display: block;
+    position: relative;
+}
+
+.border-lable-flt label, .border-lable-flt > span {
+    color: #ccc;
+    position: absolute;
+    left: 0;
+    top: 0;
+    cursor: text;
+    font-size: 75%;
+    opacity: 1;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    top: -.5em;
+    left: 0.75rem;
+    z-index: 3;
+    line-height: 1;
+    padding: 0 1px;
+
+}
+
+.border-lable-flt label::after, .border-lable-flt > span::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    background: #fff;
+    height: 1rem;
+    top: 0;
+    left: -.2em;
+    right: -.2em;
+    z-index: -1;
+}
+
+.border-lable-flt .form-control::-webkit-input-placeholder {
+    opacity: 1;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+}
+
+.border-lable-flt .form-control:placeholder-shown:not(:focus)::-webkit-input-placeholder {
+    opacity: 0;
+}
+
+.border-lable-flt .form-control:placeholder-shown:not(:focus)::-moz-placeholder {
+    opacity: 0;
+}
+
+.border-lable-flt .form-control:placeholder-shown:not(:focus) + * {
+    font-size: 100%;
+    opacity: 1;
+    top: 0.7rem;
+}
+
+.form-control:focus + label {
+    color: $dark !important;
+}
+
+.invalid-input-error {
+    textarea {
+        border-color: $danger !important;
+    }
+
+    .form-control:focus + label {
+        color: $danger !important;
+    }
+
+    label, .character-counter {
+        color: $danger !important;
+    }
+
+    .error-symbol {
+        position: absolute;
+        color: $danger !important;
+        top: 50%;
+        right: 15px;
+        -webkit-transform: translateY(-50%);
+        -moz-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        -o-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+}
+
+::ng-deep .tooltip-inner {
+    background-color: $danger !important;
+}
+
+::ng-deep .arrow::before {
+    border-top-color: $danger !important;
+}
+
+::ng-deep .tooltip {
+    margin-bottom: 2.5px !important;
+}
+
+.character-counter {
+    position: absolute;
+    right: 1px;
+    bottom: 1px;
+    background-color: $super-light;
+    border-top: 1px solid $muted-light;
+    border-left: 1px solid $muted-light;
+    padding: 5px 0;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 0.25rem 0 0.25rem 0;
+    width: 40px;
+    text-align: center;
+}
+

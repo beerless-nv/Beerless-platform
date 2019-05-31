@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {LayoutsService} from '../../layouts.service';
 
 @Component({
-  selector: 'app-standard-layout',
-  templateUrl: './standard-layout.component.html',
-  styles: []
+    selector: 'app-standard-layout',
+    templateUrl: './standard-layout.component.html',
+    styles: []
 })
-export class StandardLayoutComponent implements OnInit {
+export class StandardLayoutComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+    constructor(private layoutsService: LayoutsService) {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        console.log('chatbot up');
+        this.layoutsService.layout$.next('standard');
+    }
+
+    ngOnDestroy(): void {
+        console.log('chatbot down');
+    }
 
 }

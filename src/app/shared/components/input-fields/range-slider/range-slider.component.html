@@ -1,0 +1,11 @@
+<div class="form-group">
+    <div class="range-slider">
+    <span class="range-slider__label">
+        {{name}}
+        <span class="range-slider__value" #rangeSliderValue>{{rangeSlider.value}}</span>
+    </span>
+        <input class="range-slider__range" type="range" [(ngModel)]="value" [min]="min" [max]="max" [step]="step"
+               #rangeSlider
+               (input)="rangeSliderValue.innerHTML = rangeSlider.value">
+    </div>
+</div>

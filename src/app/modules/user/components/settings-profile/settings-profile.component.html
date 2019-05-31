@@ -1,42 +1,33 @@
 <div>
     <h6 class="intermediate-title">Profile</h6>
     <form [formGroup]="formProfile" (ngSubmit)="updateProfile()" autocomplete="off" novalidate>
-        <div class="d-flex flex-wrap">
-            <div class="col-lg-10 col-md-9 col-12 px-0 pr-md-3 pr-lg-4 pr-xl-0 order-1 order-md-0">
-                <beerless-input id="username" type="text" label="Username"
-                                [formControl]="formProfile.get('username')"
-                                [errorTypes]="['required', 'minlength', 'mexlength']"
-                                [errorMessages]="['Enter a username!', 'Username must contain at least 3 characters!',
-                                'Username can contain a maximum of 255 characters!']"
-                                formControlName="password"
-                ></beerless-input>
-
-                <beerless-input id="email" type="email" label="E-mailaddress"
-                                [formControl]="formProfile.get('email')"
-                                [errorTypes]="['required', 'email']"
-                                [errorMessages]="['Enter an e-mail address!', 'E-mail address is not valid!']"
-                                formControlName="email"
-                ></beerless-input>
-            </div>
-            <div class="col-lg-2 col-md-3 col-12 pl-0 pr-md-0 order-0 order-md-1">
-                <div class="mb-3 float-md-right float-left">
-                    <label for="picture">Profile picture</label>
-                    <input type="file" accept="image/x-png,image/gif,image/jpeg" [hidden]="true"
-                           #profilePictureUpload id="picture"
-                           formControlName="picture" (change)="showProfilePicture($event)"/>
-                    <div class="card profile-picture-upload"
-                         [style.background-image]="'url(' + (pictureSrc || user.picture) + ')'">
-                        <div class="profile-picture-upload-button-container" (click)="profilePictureUpload.click()">
-                            <i class="fas fa-pen fa-3x profile-picture-upload-button"></i>
-                        </div>
-                    </div>
-                    <div class="invalid-input" *ngIf="!pictureSrc && !user.picture">
-                        Choose a profile picture!
-                    </div>
+        <div class="mb-3 d-flex justify-content-center">
+            <input type="file" accept="image/x-png,image/gif,image/jpeg" [hidden]="true"
+                   #profilePictureUpload id="picture"
+                   formControlName="picture" (change)="showProfilePicture($event)"/>
+            <div class="card profile-picture-upload"
+                 [style.background-image]="'url(' + (pictureSrc || user.picture) + ')'">
+                <div class="profile-picture-upload-button-container" (click)="profilePictureUpload.click()">
+                    <i class="fas fa-pen fa-3x profile-picture-upload-button"></i>
                 </div>
             </div>
+            <div class="invalid-input" *ngIf="!pictureSrc && !user.picture">
+                Choose a profile picture!
+            </div>
         </div>
-
+        <beerless-input id="username" type="text" label="Username"
+                        [formControl]="formProfile.get('username')"
+                        [errorTypes]="['required', 'minlength', 'mexlength']"
+                        [errorMessages]="['Enter a username!', 'Username must contain at least 3 characters!',
+                                'Username can contain a maximum of 255 characters!']"
+                        formControlName="username"
+        ></beerless-input>
+        <beerless-input id="email" type="email" label="E-mailaddress"
+                        [formControl]="formProfile.get('email')"
+                        [errorTypes]="['required', 'email']"
+                        [errorMessages]="['Enter an e-mail address!', 'E-mail address is not valid!']"
+                        formControlName="email"
+        ></beerless-input>
         <beerless-input id="firstName" type="text" label="First name"
                         [formControl]="formProfile.get('firstName')"
                         [errorTypes]="['required', 'maxlength']"
@@ -49,23 +40,15 @@
                         [errorMessages]="['Enter your last name', 'Last name can contain a maximum of 255 characters!']"
                         formControlName="lastName"
         ></beerless-input>
+        <beerless-textarea id="bio" label="About myself" placeholder="About myself" [characterCounter]="true"
+                           maxCharacters="500" rows="5"
+                           [formControl]="formProfile.get('bio')"
+                           [errorTypes]="['maxlength']"
+                           [errorMessages]="['Your bio can contain a maximum of 500 characters']"
+                           formControlName="bio"></beerless-textarea>
 
-        <div class="form-group">
-            <label for="bio">Over mezelf</label>
-            <div class="position-relative">
-                <textarea type="text" class="form-control textareaCounter" id="bio" formControlName="bio"
-                          rows="4"
-                          placeholder="Over mezelf..."
-                          value="data.bio"
-                          #bio></textarea>
-                <div class="character-counter">{{(maxLengthTextarea - bio.value.length)}}</div>
-            </div>
-            <div class="invalid-input" *ngIf="formProfile.get('bio').touched && formProfile.get('bio').invalid">
-                <div *ngIf="formProfile.get('bio').hasError('maxlength')">
-                    Your bio can contain a maximum of 500 characters
-                </div>
-            </div>
-        </div>
+        <beerless-server-side-messages [messages]="profileServerSideMessages"></beerless-server-side-messages>
+
         <div class="form-group text-center">
             <button type="submit" class="btn btn-primary text-white px-sm-5"
                     [disabled]="formProfile.invalid || (formProfile.value.username == '' && formProfile.value.email == '' && formProfile.value.firstName == '' && formProfile.value.lastName == '' && formProfile.value.bio == '')">
@@ -96,6 +79,8 @@
                         formControlName="country"
         ></beerless-input>
 
+        <beerless-server-side-messages [messages]="addressServerSideMessages"></beerless-server-side-messages>
+
         <div class="form-group text-center">
             <button type="submit" class="btn btn-primary text-white px-sm-5"
                     [disabled]="formAddress.invalid || (formAddress.value.place == '' && formAddress.value.province == '' && formAddress.value.country == '')">
@@ -106,26 +91,33 @@
 
     <h6 class="intermediate-title mt-5">Password</h6>
     <form [formGroup]="formPassword" (ngSubmit)="updatePassword()" autocomplete="off" novalidate>
-        <beerless-input id="currentPassword" type="text" label="Current password"
-                        [formControl]="formPassword.get('currentPassword')"
-                        [errorTypes]="['required']"
-                        [errorMessages]="['Enter your current password!']"
-                        formControlName="currentPassword"
-        ></beerless-input>
-        <beerless-input id="newPassword" type="text" label="New password"
-                        [formControl]="formPassword.get('newPassword')"
-                        [errorTypes]="['required', 'minlength', 'pattern']"
-                        [errorMessages]="['Enter a new password!', 'Password must contain at least 8 characters!',
+        <div formGroupName="passwords">
+            <beerless-input id="currentPassword" type="password" label="Current password"
+                            [formControl]="formPassword.get('passwords').get('currentPassword')"
+                            [errorTypes]="['required']"
+                            [errorMessages]="['Enter your current password!']"
+                            formControlName="currentPassword"
+            ></beerless-input>
+            <beerless-input id="newPassword" type="password" label="New password"
+                            [formControl]="formPassword.get('passwords').get('password')"
+                            [errorTypes]="['required', 'minlength', 'pattern']"
+                            [errorMessages]="['Enter a new password!', 'Password must contain at least 8 characters!',
                         'Password must contain at least 1 letter, 1 capital letter and 1 figure!']"
-                        formControlName="newPassword"
-        ></beerless-input>
-        <beerless-input id="repeatPassword" type="text" label="Repeat password"
-                        [formControl]="formPassword.get('repeatPassword')"
-                        [errorTypes]="['required', 'minlength', 'pattern']"
-                        [errorMessages]="['Repeat your password!', 'Password must contain at least 8 characters!',
+                            formControlName="newPassword"
+            ></beerless-input>
+            <beerless-input id="repeatPassword" type="password" label="Repeat password"
+                            [formControl]="formPassword.get('passwords').get('passwordRepeat')"
+                            [errorTypes]="['required', 'minlength', 'pattern']"
+                            [errorMessages]="['Repeat your password!', 'Password must contain at least 8 characters!',
                         'Password must contain at least 1 letter, 1 capital letter and 1 figure!']"
-                        formControlName="repeatPassword"
-        ></beerless-input>
+                            formControlName="repeatPassword"
+            ></beerless-input>
+        </div>
+
+        <beerless-server-side-messages
+            *ngIf="formPassword.get('passwords').get('password').touched && formPassword.get('passwords').get('passwordRepeat').touched && formPassword.invalid"
+            [messages]="{type: 'error', data: ['Passwords don\'t match!']}"></beerless-server-side-messages>
+        <beerless-server-side-messages [messages]="passwordServerSideMessages"></beerless-server-side-messages>
 
         <div class="form-group text-center">
             <button type="submit" class="btn btn-primary text-white px-sm-5" [disabled]="formPassword.invalid">

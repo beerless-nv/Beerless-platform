@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
+import {BlankLayoutComponent} from './shared/platform-components/layouts/blank-layout/blank-layout/blank-layout.component';
 import {StandardLayoutComponent} from './shared/platform-components/layouts/standard-layout/standard-layout/standard-layout.component';
 
 const routes: Routes = [
@@ -15,9 +16,14 @@ const routes: Routes = [
             {path: 'error', loadChildren: './shared/platform-components/error-pages/error-pages.module#ErrorPagesModule'},
         ]
     },
-    {path: 'sign-up', loadChildren: './modules/sign-up/sign-up.module#SignUpModule'},
-    {path: 'sign-in', loadChildren: './modules/sign-in/sign-in.module#SignInModule'},
-    {path: 'reset', loadChildren: './modules/reset/reset.module#ResetModule'},
+    {
+        path: '', component: BlankLayoutComponent,
+        children: [
+            {path: 'sign-up', loadChildren: './modules/sign-up/sign-up.module#SignUpModule'},
+            {path: 'sign-in', loadChildren: './modules/sign-in/sign-in.module#SignInModule'},
+            {path: 'reset', loadChildren: './modules/reset/reset.module#ResetModule'},
+        ]
+    },
     {path: '**', redirectTo: '/error/404'},
 ];
 

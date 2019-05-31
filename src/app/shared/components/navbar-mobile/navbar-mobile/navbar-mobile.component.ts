@@ -1,5 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {LoginService} from '../../../../_services/login.service';
+import {NavService} from '../../../../core/nav/nav.service';
+import {LoggedUserService} from '../../../../core/user/logged-user.service';
+import {SignOutService} from '../../../../core/user/sign-out.service';
 
 @Component({
     selector: 'beerless-navbar-mobile',
@@ -10,14 +14,21 @@ export class NavbarMobileComponent implements OnInit {
 
     submenu;
     user;
+    showNav = true;
 
-    constructor(private loginService: LoginService) {
+    constructor(private loginService: LoginService, private loggedUserService: LoggedUserService, private signOutService: SignOutService, private router: Router, private navService: NavService) {
     }
 
     ngOnInit() {
-        this.loginService.userData$.subscribe( data => {
-            this.user = data;
+        this.loggedUserService.user$.subscribe(user => {
+            this.user = user;
         });
+
+        this.navService.keyboardIsOpen$.subscribe(isOpen => {
+            this.showNav = !isOpen;
+        });
+
+        console.log('nav mobile');
     }
 
     openSubmenu(submenu) {
@@ -32,7 +43,7 @@ export class NavbarMobileComponent implements OnInit {
         this.submenu = null;
     }
 
-    logout() {
-        this.loginService.logout();
+    logOut() {
+        this.signOutService.logout(this.user);
     }
 }

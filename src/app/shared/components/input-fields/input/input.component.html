@@ -2,8 +2,9 @@
     <div class="border-lable-flt" [class.invalid-input-error]="formControl.touched && formControl.invalid"
          [ngbTooltip]="tipContent" tooltipClass="errorTooltip" #errorTooltip="ngbTooltip" triggers="none">
         <input [(ngModel)]="value"
-               [type]="type" class="form-control" [id]="id" [placeholder]="placeholder" [required]="required">
-        <label for="{{ id }}">{{ label }}</label>
+               [type]="type" class="form-control" [id]="id" [placeholder]="placeholder" [required]="required"
+               #input/>
+        <label for="{{ id }}" (click)="input.focus()" class="mouse-pointer">{{ label }}</label>
         <ng-template #tipContent>
             <div *ngIf="formControl.touched && formControl.invalid" class="d-block">
                 <ng-container *ngFor="let errorType of errorTypes; let i = index">

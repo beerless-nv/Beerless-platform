@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {throwError} from 'rxjs';
-import {catchError} from 'rxjs/operators';
 import {BeerService} from '../../../shared/beer.service';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from '../../../../../../environments/environment';
@@ -15,6 +13,7 @@ export class DetailBeersComponent implements OnInit {
     environment = environment;
     beer;
     recommendations;
+    tastingprofiles;
 
     constructor(private beerService: BeerService, private route: ActivatedRoute) {
     }
@@ -23,6 +22,7 @@ export class DetailBeersComponent implements OnInit {
         this.route.paramMap.subscribe(params => {
             this.getBeerById(params.get('id'));
             this.getItemBasedRecommendations(params.get('id'));
+            this.getTastingProfiles(params.get('id'));
         });
     }
 
@@ -38,5 +38,11 @@ export class DetailBeersComponent implements OnInit {
             .subscribe(data => {
                 this.recommendations = data;
             });
+    }
+
+    getTastingProfiles(beerId) {
+        this.beerService.getTastingprofiles(beerId).subscribe(tastingprofiles => {
+            this.tastingprofiles = tastingprofiles;
+        });
     }
 }

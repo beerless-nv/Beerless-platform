@@ -1,8 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {ChartModule} from '../../shared/components/charts/charts.module';
+import {HeadersModule} from '../../shared/components/headers/headers.module';
+import {InputFieldsModule} from '../../shared/components/input-fields/input-fields.module';
+import {ServerSideMessagesModule} from '../../shared/components/server-side-messages/server-side-messages.module';
 import {BeerprofileModule} from '../../shared/platform-components/beerprofile/beerprofile.module';
 import {BeerRoutingModule} from './beer-routing.module';
-import {RouterModule} from '@angular/router';
 import {AddBeersComponent} from './pages/member/add-beers/add-beers.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NgBootstrapModule} from '../../shared/modules/ng-bootstrap.module';
@@ -15,7 +18,10 @@ import {BeerbreweryprofileComponent} from './components/beerbreweryprofile/beerb
 import {TextTruncateModule} from '../../shared/components/text-truncate/text-truncate.module';
 import {BeerService} from './shared/beer.service';
 import {BeertypeService} from './shared/beertype.service';
-import { BeerRecommendationsComponent } from './components/beer-recommendations/beer-recommendations.component';
+import {BeerRecommendationsComponent} from './components/beer-recommendations/beer-recommendations.component';
+import {BeerTastingProfileComponent} from './components/beer-tasting-profile/beer-tasting-profile.component';
+import { AddTastingprofilesComponent } from './pages/member/add-tastingprofiles/add-tastingprofiles.component';
+import { AddTastingprofileComponent } from './components/add-tastingprofile/add-tastingprofile.component';
 
 @NgModule({
     imports: [
@@ -28,6 +34,10 @@ import { BeerRecommendationsComponent } from './components/beer-recommendations/
         TextTruncateModule,
         BeerRoutingModule,
         BeerprofileModule,
+        ChartModule,
+        InputFieldsModule,
+        ServerSideMessagesModule,
+        HeadersModule
     ],
     declarations: [
         AddBeersComponent,
@@ -36,6 +46,9 @@ import { BeerRecommendationsComponent } from './components/beer-recommendations/
         DetailBeersComponent,
         BeerbreweryprofileComponent,
         BeerRecommendationsComponent,
+        BeerTastingProfileComponent,
+        AddTastingprofilesComponent,
+        AddTastingprofileComponent,
     ],
     providers: [
         BeerService,

@@ -11,6 +11,7 @@ import {ToastService} from '../../../shared/components/toast/toast.service';
 export class BeerService extends AuthService {
 
     readonly urlBeer = environment.backend + 'beers';
+    readonly urlTastingprofile = environment.backend + 'tastingprofiles';
 
     constructor(public http: HttpClient, private toastsService: ToastService, private localStorageService: LocalStorageService) {
         super(http);
@@ -34,6 +35,10 @@ export class BeerService extends AuthService {
             .set('filter[limit]', limit);
 
         return this.http.get(this.urlBeer, {params: params});
+    }
+
+    getTastingprofiles(beerId: number) {
+        return this.http.get(this.urlTastingprofile + '/averages/' + beerId);
     }
 
     insertBeer(beer) {

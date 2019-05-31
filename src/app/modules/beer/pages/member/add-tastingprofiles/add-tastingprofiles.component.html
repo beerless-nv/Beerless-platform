@@ -1,0 +1,28 @@
+<beerless-sticky-header>Add tasting profile</beerless-sticky-header>
+<div class="container pb-1">
+    <div class="col-12 p-0 d-flex flex-lg-row flex-column">
+        <div class="col-lg-7 pl-md-0 pr-lg-3 px-0 order-lg-0 order-1 mt-lg-0 mt-5">
+            <app-add-tastingprofile></app-add-tastingprofile>
+        </div>
+        <div class="col-lg-5 pr-md-0 pl-lg-3 px-0 order-lg-1 order-0">
+            <div class="card card-sm-100w border-yellow-top">
+                <div class="card-header font-weight-bold">Beer</div>
+                <div class="card-body">
+                    <div class="d-flex flex-row align-items-center col-12 px-0">
+                        <div class="float-left mr-4">
+                            <img src="{{environment.imageURL + 'beers/logo/' + beer?.logo}}" alt="Logo {{beer?.name}}"
+                                 class="beer-item-image" *ngIf="beer?.logo">
+                        </div>
+                        <div>
+                            <h4 class="font-weight-bold d-sm-block d-none">{{beer?.name}}</h4>
+                            <h6 class="font-weight-bold d-sm-none d-block">{{beer?.name}}</h6>
+                            <ng-container *ngFor="let brewery of beer?.breweries">
+                                <a routerLink="/breweries/{{brewery?.id}}" class="link-muted-yellow">{{brewery?.name}} </a>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

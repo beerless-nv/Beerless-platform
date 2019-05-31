@@ -1,0 +1,22 @@
+<div class="form-group">
+    <div class="border-lable-flt" [class.invalid-input-error]="formControl.touched && formControl.invalid"
+         [ngbTooltip]="tipContent" tooltipClass="errorTooltip" #errorTooltip="ngbTooltip" triggers="none">
+        <textarea [(ngModel)]="value" class="form-control {{class}}" [id]="id"
+                  [placeholder]="placeholder" [required]="required"
+                  [rows]="rows" #textarea [maxlength]="maxCharacters"></textarea>
+        <label for="{{ id }}" (click)="textarea.focus()" class="mouse-pointer">{{ label }}</label>
+        <ng-template #tipContent>
+            <div *ngIf="formControl.touched && formControl.invalid" class="d-block">
+                <ng-container *ngFor="let errorType of errorTypes; let i = index">
+                    <div *ngIf="formControl.hasError(errorType)">
+                        {{ errorMessages[i] }}
+                    </div>
+                </ng-container>
+            </div>
+        </ng-template>
+        <i class="fas fa-exclamation-circle error-symbol" (mouseover)="errorTooltip.toggle()"
+           (mouseout)="errorTooltip.toggle()"
+           *ngIf="formControl.touched && formControl.invalid"></i>
+        <div class="character-counter" *ngIf="characterCounter">{{(maxCharacters - textarea.value.length)}}</div>
+    </div>
+</div>

@@ -17,14 +17,16 @@
                     {{ addressArray.join(', ') }}
                 </p>
             </ng-container>
-            <p class="small">
-                <beerless-text-truncate
-                    text="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dicta enim expedita incidunt placeat quae ut vel. Aperiam dignissimos maxime officiis! Cumque dignissimos, optio? Cum doloribus ipsum libero placeat unde."
-                    truncateSymbol="..."
-                    truncateText="Show more"
-                    limit="150"
-                ></beerless-text-truncate>
-            </p>
+            <ng-container *ngIf="user?.bio">
+                <p class="small">
+                    <beerless-text-truncate
+                        [text]="user?.bio"
+                        truncateSymbol="..."
+                        truncateText="Show more"
+                        limit="150"
+                    ></beerless-text-truncate>
+                </p>
+            </ng-container>
         </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {empty} from 'rxjs';
+import {BehaviorSubject, empty} from 'rxjs';
 import {environment} from '../../../../environments/environment';
 
 @Injectable({
@@ -10,6 +10,8 @@ export class SearchService {
 
     readonly urlBeerSearch = environment.backend + 'beers';
     readonly urlBrewerySearch = environment.backend + 'breweries';
+
+    loadingResults$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     headers = new HttpHeaders()
         .append('ignoreLoadingBar', '');
@@ -35,8 +37,13 @@ export class SearchService {
                     break;
             }
 
+            setTimeout(() => {
+                this.loadingResults$.next(false);
+            }, 300);
+
             return result;
         }
+        this.loadingResults$.next(false);
         return empty();
     }
 

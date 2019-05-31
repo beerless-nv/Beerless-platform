@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {HeadersModule} from '../../shared/components/headers/headers.module';
 import {PipesModule} from '../../shared/pipes/pipes.module';
 import {BreweryprofileModule} from '../../shared/platform-components/breweryprofile/breweryprofile.module';
 import {BreweryRoutingModule} from './brewery-routing.module';
@@ -15,7 +16,8 @@ import { BreweryLocationComponent } from './components/brewery-location/brewery-
         BreweryRoutingModule,
         TextTruncateModule,
         BreweryprofileModule,
-        PipesModule
+        PipesModule,
+        HeadersModule
     ],
     declarations: [
         DetailBreweriesComponent,

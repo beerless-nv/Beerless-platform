@@ -3,11 +3,13 @@ import {isPlatformBrowser, LocationStrategy} from '@angular/common';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {ErrorInterceptorService} from './core/interceptors/errorInterceptor.service';
 import {SwUpdate} from '@angular/service-worker';
+import {NavService} from './core/nav/nav.service';
 import {ErrorService} from './shared/components/error/error.service';
 import {CookieService} from 'ngx-cookie-service';
 import {AgeVerificationComponent} from './shared/components/age-verification/age-verification/age-verification.component';
 import {IeWarningComponent} from './shared/components/ie-warning/ie-warning/ie-warning.component';
 import {NgbActiveModal, NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import {LayoutsService} from './shared/platform-components/layouts/layouts.service';
 
 @Component({
     selector: 'app-root',
@@ -21,6 +23,8 @@ export class AppComponent implements OnInit {
     private _deferredRestore = false;
     loading: Boolean = false;
     error: Boolean = false;
+    showChatbot = true;
+    chatbotBottom;
 
     constructor(@Inject(PLATFORM_ID) private platformId: Object,
                 public router: Router,
@@ -32,7 +36,9 @@ export class AppComponent implements OnInit {
                 private modalService: NgbModal,
                 private cookieService: CookieService,
                 private errorInterceptorService: ErrorInterceptorService,
-                private activeModal: NgbActiveModal) {
+                private activeModal: NgbActiveModal,
+                private navService: NavService,
+                private layoutsService: LayoutsService) {
 
         // show modal age verification
         this.ageVerification();
@@ -44,7 +50,7 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         // Message to update app when on PWA
         this.swUpdate.available.subscribe(evt => {
-            if (confirm('De Beerless app is aangepast. Wil je de nieuwe versie openen?')) {
+            if (confirm('The Beerless app has been modified. Would you like to open the new version?')) {
                 window.location.reload();
             }
         });
@@ -56,6 +62,10 @@ export class AppComponent implements OnInit {
 
         this.errorInterceptorService.error$.subscribe(value => {
             this.error = value;
+        });
+
+        this.layoutsService.layout$.subscribe(layout => {
+            this.chatbotBottom = layout === 'blank';
         });
     }
 
@@ -192,6 +202,20 @@ export class AppComponent implements OnInit {
             };
 
             this.modalService.open(IeWarningComponent, options);
+        }
+    }
+
+    checkFocusedElement() {
+        const tagName = document.activeElement.tagName;
+
+        if (tagName === 'INPUT' || tagName === 'TEXTAREA') {
+            this.navService.keyboardIsOpen$.next(true);
+            this.showChatbot = false;
+        } else {
+            setTimeout(() => {
+                this.navService.keyboardIsOpen$.next(false);
+                this.showChatbot = true;
+            }, 100);
         }
     }
 }

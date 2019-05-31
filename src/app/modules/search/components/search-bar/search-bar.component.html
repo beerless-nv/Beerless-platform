@@ -4,16 +4,34 @@
     <!-- input field (search) -->
 
     <div class="input-group mb-1" id="search-bar">
-        <input type="text" class="form-control" placeholder="Search for a beer/brewery/beerstyle"
+        <input type="text" class="form-control" placeholder="Search Beerless..."
                [value]="searchedValue"
                #value
                (keyup.enter)="search(value.value, searchedType)"
                (keyup)="suggest(value.value, $event)"
-               (keydown)="select($event)">
+               (keydown)="select($event)"/>
+        <div class="input-group-append">
+            <i class="fas fa-search icon-search mouse-pointer" *ngIf="!(loadingResults$ | async) && !value.value"
+               (click)="value.focus()"></i>
+            <i class="fas fa-times search-delete mouse-pointer" *ngIf="!(loadingResults$ | async) && value.value"
+               (click)="searchedValue = ''; value.focus(); clearResults()"></i>
+            <div class="search-load" *ngIf="(loadingResults$ | async)"></div>
+        </div>
 
-        <div ngbDropdown class="d-inline-block" placement="bottom-right">
-            <button class="btn search-dropdown-button" id="dropdownBasic1" ngbDropdownToggle #searchDropdown [value]="searchedType">
-                {{searchedType}}
+        <div ngbDropdown class="d-inline-block dropdown" placement="bottom-right">
+            <button class="btn search-dropdown-button" id="dropdownBasic1" ngbDropdownToggle #searchDropdown
+                    [value]="searchedType">
+                <span class="d-sm-inline d-none">{{searchedType}}</span>
+                <span class="d-sm-none d-inline">
+                    <ng-container *ngIf="searchedType === 'Beer'">
+                        <img [src]="environment.imageURL + '/icon/beer-glass.svg'" alt="beer icon"
+                             class="search-dropdown-icon">
+                    </ng-container>
+                    <ng-container *ngIf="searchedType === 'Brewery'">
+                        <img [src]="environment.imageURL + '/icon/brewery.svg'" alt="beer icon"
+                             class="search-dropdown-icon">
+                    </ng-container>
+                </span>
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
                 <div ngbDropdownItem (click)="selectType('Beer')" class="search-dropdown-item">
@@ -35,7 +53,7 @@
             <span [ngbCollapse]="totalResults==1">results</span>
             <span [ngbCollapse]="totalResults!=1">result</span>
         </strong>
-        for <strong>"{{searchedValue}}"</strong>
+        for <strong>"{{searchedTerm}}"</strong>
     </small>
 
 

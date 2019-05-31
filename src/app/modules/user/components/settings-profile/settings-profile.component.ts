@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {LoginService} from '../../../../_services/login.service';
 import {environment} from '../../../../../environments/environment';
-import {UserService} from '../../../../core/user/user.service';
+import {ErrorService} from '../../../../shared/components/error/error.service';
+import {UserSettingsService} from '../../shared/user-settings.service';
 
 @Component({
     selector: 'app-settings-profile',
@@ -13,7 +14,9 @@ export class SettingsProfileComponent implements OnInit {
 
     @Input() user: any;
 
-    maxLengthTextarea = 500;
+    profileServerSideMessages: any;
+    addressServerSideMessages: any;
+    passwordServerSideMessages: any;
 
     formProfile: FormGroup;
     formAddress: FormGroup;
@@ -24,7 +27,7 @@ export class SettingsProfileComponent implements OnInit {
 
     passwordMatch = true;
 
-    constructor(private loginService: LoginService, private userService: UserService) {
+    constructor(private formBuilder: FormBuilder, private loginService: LoginService, private userSettingsService: UserSettingsService, private errorService: ErrorService) {
     }
 
     ngOnInit() {
@@ -39,7 +42,7 @@ export class SettingsProfileComponent implements OnInit {
                 Validators.required,
                 Validators.email
             ]),
-            picture: new FormControl(''),
+            picture: new FormControl(this.user.picture),
             firstName: new FormControl(this.user.firstName, [
                 Validators.required,
                 Validators.maxLength(255)
@@ -65,23 +68,25 @@ export class SettingsProfileComponent implements OnInit {
             ]),
         });
 
-        this.formPassword = new FormGroup({
-            currentPassword: new FormControl('', [
-                Validators.required,
-                // Validators.minLength(8),
-                // Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
-            ]),
-            newPassword: new FormControl('', [
-                Validators.required,
-                Validators.minLength(8),
-                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
-            ]),
-            repeatPassword: new FormControl('', [
-                Validators.required,
-                Validators.minLength(8),
-                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
-            ]),
+        this.formPassword = this.formBuilder.group({
+            passwords: this.formBuilder.group({
+                currentPassword: new FormControl('', [
+                    Validators.maxLength(255)
+                ]),
+                password: new FormControl('', [
+                    Validators.required,
+                    Validators.minLength(8),
+                    Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{0,}$')
+                ]),
+                passwordRepeat: new FormControl('')
+            }, {validator: this.passwordConfirming})
         });
+    }
+
+    passwordConfirming(c: AbstractControl): { invalid: boolean } {
+        if (c.get('password').value !== c.get('passwordRepeat').value) {
+            return {invalid: true};
+        }
     }
 
     showProfilePicture(event) {
@@ -90,59 +95,63 @@ export class SettingsProfileComponent implements OnInit {
 
             const reader = new FileReader();
             reader.onload = e => this.pictureSrc = reader.result;
+            console.log(this.pictureSrc);
 
             reader.readAsDataURL(this.pictureFile);
         }
     }
 
-    // update profile
-
-    onUpload(selectedPicture, pictureName, picturePath) {
-        console.log(pictureName);
-        console.log(selectedPicture);
-        this.userService.uploadPicture(selectedPicture, pictureName, picturePath);
-    }
-
     updateProfile() {
-        let pictureName;
-
-        if (this.formProfile.value.picture === '') {
-            this.formProfile.value.picture = this.user.picture;
-
-            this.userService.updateUserProfile(this.formProfile.value);
-        } else {
-            const dateToday = new Date();
-            pictureName = 'picture-member-' + this.user.ID + '-'
-                + (dateToday.getDate() < 10 ? '0' + dateToday.getDate() : dateToday.getDate())
-                + ((dateToday.getMonth() + 1) < 10 ? '0' + (dateToday.getMonth() + 1) : (dateToday.getMonth() + 1))
-                + dateToday.getFullYear()
-                + '-'
-                + (dateToday.getHours() < 10 ? '0' + dateToday.getHours() : dateToday.getHours())
-                + (dateToday.getMinutes() < 10 ? '0' + dateToday.getMinutes() : dateToday.getMinutes())
-                + (dateToday.getSeconds() < 10 ? '0' + dateToday.getSeconds() : dateToday.getSeconds())
-                + '.jpg';
-
-            // this.onUpload(this.pictureFile, pictureName, '/member/picture/');
-            this.formProfile.value.picture = environment.imageURL + 'member/picture/' + pictureName;
-            this.userService.updateUserProfileWithPicture(this.formProfile.value, this.pictureFile, pictureName, '/member/picture/');
-        }
+        this.userSettingsService.updateProfile(this.formProfile.value)
+            .then(data => {
+                if (data === true) {
+                    this.profileServerSideMessages = {
+                        type: 'success',
+                        data: ['Your profile details have been successfully updated!']
+                    };
+                } else {
+                    this.errorService.errorMessages$.subscribe(err => {
+                        this.profileServerSideMessages = {type: 'error', data: err};
+                    });
+                }
+            });
+        // }
     }
 
     // update address
-
     updateAddress() {
-        this.userService.updateUserAddress(this.formAddress.value);
+        this.userSettingsService.updateProfile(this.formAddress.value)
+            .then(data => {
+                if (data === true) {
+                    this.addressServerSideMessages = {
+                        type: 'success',
+                        data: ['Your address details have been successfully updated!']
+                    };
+                } else {
+                    this.errorService.errorMessages$.subscribe(err => {
+                        this.addressServerSideMessages = {type: 'error', data: err};
+                    });
+                }
+            });
     }
 
     // update password
-
     updatePassword() {
-        if (this.formPassword.value.newPassword !== this.formPassword.value.repeatPassword) {
-            this.passwordMatch = false;
-        } else {
-            this.passwordMatch = true;
-
-            // submit formPassword
+        if (this.formPassword.valid) {
+            this.userSettingsService.resetPassword(this.formPassword.value.passwords.currentPassword, this.formPassword.value.passwords.password)
+                .then(data => {
+                    if (data === true) {
+                        this.passwordServerSideMessages = {
+                            type: 'success',
+                            data: ['Your password has been successfully reset!']
+                        };
+                    } else {
+                        this.passwordServerSideMessages = {
+                            type: 'error',
+                            data: ['Something went wrong, please try again!']
+                        };
+                    }
+                });
         }
     }
 

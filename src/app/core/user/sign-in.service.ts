@@ -17,9 +17,13 @@ export class SignInService {
 
     signIn(user) {
         // Change object, if email is entered in order to send it correctly to the API.
-        if (user.username.indexOf('@') >= 0) {
-            user.email = user.username;
-            user.username = null;
+        if (user) {
+            if (user.username) {
+                if (user.username.indexOf('@') >= 0) {
+                    user.email = user.username;
+                    delete user.username;
+                }
+            }
         }
 
         const params = new HttpParams()

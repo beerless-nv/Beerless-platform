@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {HeadersModule} from '../../shared/components/headers/headers.module';
 import {InputFieldsModule} from '../../shared/components/input-fields/input-fields.module';
+import {ServerSideMessagesModule} from '../../shared/components/server-side-messages/server-side-messages.module';
 import {TextTruncateModule} from '../../shared/components/text-truncate/text-truncate.module';
 import {SettingsUsersComponent} from './pages/member/settings-users/settings-users.component';
 import {NgxBootstrapModule} from '../../shared/modules/ngx-bootstrap.module';
@@ -16,6 +18,7 @@ import {ProfileFavouriteComponent} from './components/profile-content/profile-ab
 import {ProfileStatsComponent} from './components/profile-content/profile-about/profile-stats/profile-stats.component';
 import {ProfileActivitiesComponent} from './components/profile-content/profile-activities/profile-activities.component';
 import {ActivityService} from './shared/activity.service';
+import {UserSettingsService} from './shared/user-settings.service';
 import {UserRoutingModule} from './user-routing.module';
 
 @NgModule({
@@ -25,7 +28,9 @@ import {UserRoutingModule} from './user-routing.module';
         ReactiveFormsModule,
         UserRoutingModule,
         TextTruncateModule,
-        InputFieldsModule
+        InputFieldsModule,
+        ServerSideMessagesModule,
+        HeadersModule
     ],
     declarations: [
         SettingsUsersComponent,
@@ -41,7 +46,8 @@ import {UserRoutingModule} from './user-routing.module';
         ProfileActivitiesComponent,
     ],
     providers: [
-        ActivityService
+        ActivityService,
+        UserSettingsService
     ]
 })
 export class UserModule {

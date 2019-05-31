@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {HeadersModule} from '../../shared/components/headers/headers.module';
 import {BlogRoutingModule} from './blog-routing.module';
 import {IndexBlogComponent} from './pages/visitor/index-blog/index-blog.component';
 import {ArticleComponent} from './pages/visitor/article/article.component';
@@ -13,7 +14,8 @@ import {TagService} from './shared/tag.service';
 @NgModule({
     imports: [
         CommonModule,
-        BlogRoutingModule
+        BlogRoutingModule,
+        HeadersModule
     ],
     declarations: [
         IndexBlogComponent,

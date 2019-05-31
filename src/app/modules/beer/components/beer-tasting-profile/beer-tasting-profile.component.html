@@ -1,0 +1,10 @@
+<div class="card card-sm-100w mt-5">
+    <div class="card-body">
+        <div class="col-12 px-0">
+            <p class="small text-uppercase text-primary font-weight-bold mb-4 pb-0">Tasting profile</p>
+            <ng-container *ngIf="datasets[0].data.length > 0">
+                <beerless-charts type="radar" [labels]="labels" [datasets]="datasets" [draggable]="false" [dragDataRound]="1" [options]="options"></beerless-charts>
+            </ng-container>
+        </div>
+    </div>
+</div>

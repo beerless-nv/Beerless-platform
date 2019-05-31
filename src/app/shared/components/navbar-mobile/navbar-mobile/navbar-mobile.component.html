@@ -1,19 +1,19 @@
-<div class="nav-mobile">
+<div class="nav-mobile" *ngIf="showNav">
     <div>
         <a class="nav-mobile-item" (click)="openSubmenu('user')">
             <i class="fas fa-user"></i>
         </a>
         <div class="nav-mobile-submenu" [hidden]="submenu != 'user'" (click)="hideAllSubmenu()">
-            <a routerLink="/user/profile/{{user?.ID}}" class="nav-mobile-submenu-item">
+            <a class="nav-mobile-submenu-item" routerLink="/user/{{user.username}}">
                 Profile
             </a>
-            <a routerLink="/user/wishlist/{{user?.ID}}" class="nav-mobile-submenu-item">
-                Wishlist
-            </a>
+            <!--<a routerLink="/user/wishlist/{{user?.ID}}" class="nav-mobile-submenu-item">-->
+                <!--Wishlist-->
+            <!--</a>-->
             <a routerLink="/user/settings" class="nav-mobile-submenu-item">
                 Settings
             </a>
-            <a class="nav-mobile-submenu-item" (click)="logout()" [hidden]="!user">
+            <a class="nav-mobile-submenu-item" (click)="logOut()" [hidden]="!user">
                 Sign-out
             </a>
             <a routerLink="/login" class="nav-mobile-submenu-item" [hidden]="user">

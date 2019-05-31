@@ -1,5 +1,16 @@
-import {Component, ElementRef, Input, OnInit, ViewChild, ViewChildren} from '@angular/core';
+import {
+    AfterViewChecked,
+    AfterViewInit, ChangeDetectorRef,
+    Component,
+    ElementRef,
+    Input,
+    OnInit,
+    ViewChild,
+    ViewChildren
+} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {BehaviorSubject} from 'rxjs';
+import {environment} from '../../../../../environments/environment';
 import {SearchService} from '../../shared/search.service';
 
 @Component({
@@ -7,29 +18,47 @@ import {SearchService} from '../../shared/search.service';
     templateUrl: './search-bar.component.html',
     styleUrls: []
 })
-export class SearchBarComponent implements OnInit {
+export class SearchBarComponent implements OnInit, AfterViewChecked {
 
     @Input() totalResults: any;
+    environment = environment;
     searchedValue: string;
+    searchedTerm: any;
     searchedType: string;
     suggestions: Array<any> = [];
     showSuggestions = false;
     suggestionDivs;
     focusedSuggestion = -1;
+    loadingResults$: BehaviorSubject<boolean> = new BehaviorSubject(false);
     @ViewChild('searchDropdown') searchDropdown: ElementRef;
     @ViewChildren('search-dropdown-item') searchDropdownItems: ElementRef;
 
-    constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService, private elRef: ElementRef) {
+    constructor(private router: Router, private route: ActivatedRoute, private searchService: SearchService, private elRef: ElementRef, private cdRef: ChangeDetectorRef) {
     }
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
             this.searchedValue = (params['q'] || null);
+            this.searchedTerm = (params['q'] || null);
             this.searchedType = (params['type'] || 'Beer');
+        });
+
+        this.searchService.loadingResults$.subscribe(isLoading => {
+            this.loadingResults$ = this.searchService.loadingResults$;
         });
     }
 
+    ngAfterViewChecked(): void {
+        this.cdRef.detectChanges();
+    }
+
     search(name: string, type: string) {
+        if (name) {
+            // loading starts
+            this.searchService.loadingResults$.next(true);
+        }
+
+        // change url
         const result = new Promise((resolve, reject) => {
             this.router.navigate([], {
                 relativeTo: this.route,
@@ -45,6 +74,7 @@ export class SearchBarComponent implements OnInit {
             resolve(true);
         });
 
+        // hide suggestions after search
         result.then(() => {
             this.showSuggestions = false;
         });
@@ -64,13 +94,12 @@ export class SearchBarComponent implements OnInit {
     }
 
     select(event) {
-        if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'Tab') {
+        if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Tab') {
             event.preventDefault();
 
             this.suggestionDivs = this.elRef.nativeElement.querySelectorAll('.suggest-item');
 
             switch (event.key) {
-                case 'ArrowRight':
                 case 'ArrowDown':
                     if (this.suggestionDivs.length > this.focusedSuggestion + 1) {
                         this.focusedSuggestion++;
@@ -78,7 +107,6 @@ export class SearchBarComponent implements OnInit {
                         this.focusedSuggestion = 0;
                     }
                     break;
-                case 'ArrowLeft':
                 case 'ArrowUp':
                     if (this.focusedSuggestion > 0) {
                         this.focusedSuggestion--;
@@ -101,6 +129,16 @@ export class SearchBarComponent implements OnInit {
             relativeTo: this.route,
             queryParams: {
                 type: selectedValue
+            },
+            queryParamsHandling: 'merge',
+        });
+    }
+
+    clearResults() {
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: {
+                q: null
             },
             queryParamsHandling: 'merge',
         });

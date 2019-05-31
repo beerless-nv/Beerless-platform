@@ -112,7 +112,7 @@ export class ChatbotService {
                             this.chatStream(date);
                         }
                     });
-            }, 300);
+            }, 500);
         }
     }
 

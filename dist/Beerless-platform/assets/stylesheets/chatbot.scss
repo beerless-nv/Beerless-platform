@@ -1,3 +1,14 @@
+.chatbotBottom {
+    background-color: red;
+
+    .chatbot-button {
+        bottom: 20px !important;
+        @include media-breakpoint-up(lg) {
+            bottom: 0 !important;
+        }
+    }
+}
+
 #chatbot {
     position: fixed;
     z-index: 9998;

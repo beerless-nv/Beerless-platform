@@ -1,0 +1,38 @@
+<div class="card card-sm-100w">
+    <div class="card-body">
+        <beerless-charts type="radar" [labels]="labels" [datasets]="datasets" [draggable]="false" [dragDataRound]="1"
+                         [options]="options"></beerless-charts>
+
+        <div class="sliders mt-5">
+            <form novalidate [formGroup]="tastingprofileForm" (ngSubmit)="addTastingprofile()">
+                <beerless-range-slider name="Malty" [value]="0" [min]="0" [max]="5" [step]="0.1"
+                                       formControlName="malty"
+                                       (input)="changeValue(tastingprofileForm.get('malty'), 'malty')"></beerless-range-slider>
+                <beerless-range-slider name="Sweet" [value]="0" [min]="0" [max]="5" [step]="0.1"
+                                       formControlName="sweet"
+                                       (input)="changeValue(tastingprofileForm.get('sweet'), 'sweet')"></beerless-range-slider>
+                <beerless-range-slider name="Sour" [value]="0" [min]="0" [max]="5" [step]="0.1"
+                                       formControlName="sour"
+                                       (input)="changeValue(tastingprofileForm.get('sour'), 'sour')"></beerless-range-slider>
+                <beerless-range-slider name="Hoppy" [value]="0" [min]="0" [max]="5" [step]="0.1"
+                                       formControlName="hoppy"
+                                       (input)="changeValue(tastingprofileForm.get('hoppy'), 'hoppy')"></beerless-range-slider>
+                <beerless-range-slider name="Bitter" [value]="0" [min]="0" [max]="5" [step]="0.1"
+                                       formControlName="bitter"
+                                       (input)="changeValue(tastingprofileForm.get('bitter'), 'bitter')"></beerless-range-slider>
+                <beerless-range-slider name="Fruity" [value]="0" [min]="0" [max]="5" [step]="0.1"
+                                       formControlName="fruity"
+                                       (input)="changeValue(tastingprofileForm.get('fruity'), 'fruity')"></beerless-range-slider>
+
+                <beerless-server-side-messages [messages]="serverSideMessages"></beerless-server-side-messages>
+
+                <div class="text-center form-group">
+                    <button type="submit" class="btn btn-primary text-white px-5"
+                            [disabled]="tastingprofileForm.invalid">
+                        Add tasting profile
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
