@@ -65,6 +65,47 @@ html, body {
     }
 }
 
+.content-with-sidebar {
+    position: relative;
+    left: 250px;
+    width: calc(100% - 250px);
+    padding: $spacer * 1;
+}
+
+.sidebar-open-content {
+    //left: 250px;
+    -webkit-animation: slide-content-in 0.5s;
+    animation: slide-content-in 0.5s;
+}
+
+
+@-webkit-keyframes slide-content-in {
+    0% { left: 0; width: 100%; }
+    100% { left: 250px; width: calc(100% - 250px); }
+}
+
+@keyframes slide-content-in {
+    0% { left: 0; width: 100%; }
+    100% { left: 250px; width: calc(100% - 250px); }
+}
+
+.sidebar-close-content {
+    left: 0;
+    width: 100%;
+    -webkit-animation: slide-content-out 0.5s;
+    animation: slide-content-out 0.5s;
+}
+
+@-webkit-keyframes slide-content-out {
+    0% { margin-left: 250px; width: calc(100% - 250px);  }
+    100% { margin-left: 0; width: 100%; }
+}
+
+@keyframes slide-content-out {
+    0% { margin-left: 250px; width: calc(100% - 250px); }
+    100% { margin-left: 0; width: 100%; }
+}
+
 //
 //  buttons, input fields
 //

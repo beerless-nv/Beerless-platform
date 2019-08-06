@@ -12,12 +12,10 @@ export class StandardLayoutComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        console.log('chatbot up');
         this.layoutsService.layout$.next('standard');
     }
 
     ngOnDestroy(): void {
-        console.log('chatbot down');
     }
 
 }

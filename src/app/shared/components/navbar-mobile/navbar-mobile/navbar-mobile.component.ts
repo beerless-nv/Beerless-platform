@@ -27,8 +27,6 @@ export class NavbarMobileComponent implements OnInit {
         this.navService.keyboardIsOpen$.subscribe(isOpen => {
             this.showNav = !isOpen;
         });
-
-        console.log('nav mobile');
     }
 
     openSubmenu(submenu) {

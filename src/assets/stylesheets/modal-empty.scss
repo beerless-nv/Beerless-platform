@@ -29,3 +29,51 @@
         color: $dark;
     }
 }
+
+.small-modal {
+    .modal-content {
+        padding: ($spacer * 1);
+    }
+}
+
+.text-centered-modal {
+    .modal-content {
+        text-align: center;
+    }
+}
+
+.confirm-modal {
+    width: 300px;
+
+    .modal-content {
+        border: none;
+        background-color: #fff !important;
+        color: $dark;
+        text-align: center;
+    }
+
+    .modal-body {
+        padding: $spacer * 2;
+    }
+
+    .modal-footer {
+        border-top: none;
+        padding: 0 !important;
+
+        .btn-confirm {
+            width: 50%;
+            border-radius: 0;
+            margin: 0;
+            font-weight: bold;
+            text-transform: uppercase;
+
+            &:first-child {
+                border-radius: 0 0 0 0.25rem;
+            }
+
+            &:last-child {
+                border-radius: 0 0 0.25rem 0;
+            }
+        }
+    }
+}

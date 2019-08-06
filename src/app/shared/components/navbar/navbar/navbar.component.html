@@ -1,6 +1,14 @@
 <!-- MAIN NAVIGATION -->
 
+
 <nav class="navbar navbar-expand-lg navbar-light px-4 py-0 bg-white fixed-top">
+
+    <ng-template [ngIf]="sidebar">
+        <div id="sidebar-hamburger" (click)="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </ng-template>
+
 
 
     <!-- Logo section -->
@@ -8,6 +16,7 @@
     <a class="navbar-brand ml-2" routerLink="/">
         <img src="/assets/images/logo_beerless_donker.svg" alt="logo Beerless" style="height: 30px" class=""/>
     </a>
+
 
 
     <!-- Menu section -->
@@ -19,7 +28,9 @@
             <!-- Main menu -->
 
             <div class="navbar-nav position-relative d-flex align-items-center">
-                <app-regular-menu-item [menuItem]="menuItem" *ngFor="let menuItem of menuItems"></app-regular-menu-item>
+                <a class="nav-item nav-link nav-link-padding" routerLink="/search" routerLinkActive="active">Search</a>
+                <a class="nav-item nav-link nav-link-padding" routerLink="/blog" routerLinkActive="active">Blog</a>
+                <a class="nav-item nav-link nav-link-padding" routerLink="/admin/approval-system" *ngIf="role > 3" routerLinkActive="active">Admin</a>
                 <div class="nav-divider"></div>
             </div>
 

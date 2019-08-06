@@ -1,0 +1,92 @@
+// Import Beerless variables file and bootstrap scss file
+@import "~src/assets/stylesheets/variables";
+@import "~bootstrap/scss/bootstrap.scss";
+
+// Specific component css
+#sidebar {
+    width: 250px;
+    height: 100%;
+    position: fixed;
+    border-right: 1px solid $border-color;
+}
+
+.sidebar-item-link {
+
+    &:hover {
+        text-decoration: none;
+
+        .sidebar-item {
+            color: $dark !important;
+            background-color: $light;
+            box-shadow: 4px 0 inset $grey;
+        }
+    }
+
+    &.active {
+        &:hover {
+            text-decoration: none;
+
+            .sidebar-item {
+                color: $primary !important;
+            }
+        }
+
+        .sidebar-item {
+            color: $primary;
+            font-weight: bolder;
+            background-color: rgba($primary, 0.05);
+            box-shadow: 4px 0 inset $primary;
+            cursor: default;
+        }
+    }
+
+    .sidebar-item {
+        width: 100%;
+        padding: $spacer ($spacer * 1.5);
+        color: $dark;
+
+        &:hover {
+            color: $primary;
+            cursor: pointer;
+        }
+
+        .sidebar-badge-pill {
+            color: #fff;
+            font-weight: 500;
+            font-size: 0.8rem;
+            margin-left: $spacer * 0.5;
+        }
+    }
+}
+
+.sidebar-close {
+    left: -250px;
+    -webkit-animation: slide-out 0.5s;
+    animation: slide-out 0.5s;
+}
+
+@-webkit-keyframes slide-out {
+    0% { left: 0; }
+    100% { left: -250px; }
+}
+
+@keyframes slide-out {
+    0% { left: 0; }
+    100% { left: -250px; }
+}
+
+.sidebar-open {
+    left: 0;
+    -webkit-animation: slide-in 0.5s;
+    animation: slide-in 0.5s;
+}
+
+@-webkit-keyframes slide-in {
+    0% { left: -250px; }
+    100% { left: 0; }
+}
+
+@keyframes slide-in {
+    0% { left: -250px; }
+    100% { left: 0; }
+}

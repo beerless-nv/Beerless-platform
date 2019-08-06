@@ -1,7 +1,10 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {BlankLayoutComponent} from './shared/platform-components/layouts/blank-layout/blank-layout/blank-layout.component';
-import {StandardLayoutComponent} from './shared/platform-components/layouts/standard-layout/standard-layout/standard-layout.component';
+import {AuthGuardService} from './core/authorization/auth-guard.service';
+import {RoleGuardService} from './core/authorization/role-guard.service';
+import {AdminLayoutComponent} from './core/layouts/admin-layout/admin-layout/admin-layout.component';
+import {BlankLayoutComponent} from './core/layouts/blank-layout/blank-layout/blank-layout.component';
+import {StandardLayoutComponent} from './core/layouts/standard-layout/standard-layout/standard-layout.component';
 
 const routes: Routes = [
     {
@@ -13,7 +16,24 @@ const routes: Routes = [
             {path: 'breweries', loadChildren: './modules/brewery/brewery.module#BreweryModule'},
             {path: 'blog', loadChildren: './modules/blog/blog.module#BlogModule'},
             {path: 'user', loadChildren: './modules/user/user.module#UserModule'},
-            {path: 'error', loadChildren: './shared/platform-components/error-pages/error-pages.module#ErrorPagesModule'},
+            {
+                path: 'error',
+                loadChildren: './shared/platform-components/error-pages/error-pages.module#ErrorPagesModule'
+            },
+        ]
+    },
+    {
+        path: '', component: AdminLayoutComponent,
+        canActivate: [AuthGuardService, RoleGuardService], data: {expectedRole: 'Editor'},
+        children: [
+            {
+                path: 'admin/approval-system',
+                loadChildren: './modules/approval-system/approval-system.module#ApprovalSystemModule'
+            },
+            {
+                path: 'admin/dashboard',
+                loadChildren: './modules/approval-system/approval-system.module#ApprovalSystemModule'
+            },
         ]
     },
     {

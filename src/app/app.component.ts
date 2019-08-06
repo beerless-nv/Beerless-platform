@@ -3,13 +3,13 @@ import {isPlatformBrowser, LocationStrategy} from '@angular/common';
 import {ActivatedRoute, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {ErrorInterceptorService} from './core/interceptors/errorInterceptor.service';
 import {SwUpdate} from '@angular/service-worker';
+import {LayoutsService} from './core/layouts/layouts.service';
 import {NavService} from './core/nav/nav.service';
 import {ErrorService} from './shared/components/error/error.service';
 import {CookieService} from 'ngx-cookie-service';
 import {AgeVerificationComponent} from './shared/components/age-verification/age-verification/age-verification.component';
 import {IeWarningComponent} from './shared/components/ie-warning/ie-warning/ie-warning.component';
 import {NgbActiveModal, NgbModal, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
-import {LayoutsService} from './shared/platform-components/layouts/layouts.service';
 
 @Component({
     selector: 'app-root',

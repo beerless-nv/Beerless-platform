@@ -1,0 +1,22 @@
+<div class="approval-example-item">
+    <ng-container *ngFor="let item of entry | keyvalue; let i = index">
+        <ng-container *ngIf="changedProperties.indexOf(item.key) === -1">
+            <beerless-input [id]="item.key" [type]="'text'" [label]="item.key | titlecase" class="readonly"
+                            [value]="item.value"
+                            *ngIf="hiddenProperties.indexOf(item.key) === -1 && objectProperties.indexOf(item.key) === -1"
+            ></beerless-input>
+            <beerless-input [id]="item.key" [type]="'text'" [label]="item.key | titlecase" class="readonly"
+                            [value]="entry[item.key][0]?.name" *ngIf="objectProperties.indexOf(item.key) > -1"
+            ></beerless-input>
+        </ng-container>
+        <ng-container *ngIf="changedProperties.indexOf(item.key) > -1">
+            <beerless-input [id]="item.key" [type]="'text'" [label]="item.key | titlecase" class="readonly highlight"
+                            [value]="item.value"
+                            *ngIf="hiddenProperties.indexOf(item.key) === -1 && objectProperties.indexOf(item.key) === -1"
+            ></beerless-input>
+            <beerless-input [id]="item.key" [type]="'text'" [label]="item.key | titlecase" class="readonly highlight"
+                            [value]="entry[item.key][0]?.name" *ngIf="objectProperties.indexOf(item.key) > -1"
+            ></beerless-input>
+        </ng-container>
+    </ng-container>
+</div>

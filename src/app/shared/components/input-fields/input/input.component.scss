@@ -85,6 +85,7 @@ input.input-dark {
     left: -.2em;
     right: -.2em;
     z-index: -1;
+    border-radius: 0.25rem;
 }
 .border-lable-flt .form-control::-webkit-input-placeholder {
     opacity: 1;
@@ -130,17 +131,37 @@ input.input-dark {
         -o-transform: translateY(-50%);
         transform: translateY(-50%);
     }
+
+    ::ng-deep .tooltip-inner {
+        background-color: $danger !important;
+    }
+
+    ::ng-deep .arrow::before {
+        border-top-color: $danger !important;
+    }
+
+    ::ng-deep .tooltip {
+        margin-bottom: 2.5px !important;
+    }
 }
 
-::ng-deep .tooltip-inner {
-    background-color: $danger !important;
+.readonly {
+    .border-lable-flt, .form-group {
+        pointer-events: none;
+    }
+
+    input {
+        pointer-events: none;
+        background-color: $light;
+        color: #828282;
+    }
 }
 
-::ng-deep .arrow::before {
-    border-top-color: $danger !important;
-}
+//.highlight {
+//    input {
+//        background-color: rgba($primary, 0.05);
+//        border-color: $primary !important;
+//    }
+//}
 
-::ng-deep .tooltip {
-    margin-bottom: 2.5px !important;
-}
 

@@ -168,6 +168,15 @@ nav {
     background-size: cover;
 }
 
+#sidebar-hamburger {
+    background-color: $super-light;
+    padding: 28px 33px;
+    margin-left: -24px;
+    margin-right: 16px;
+    //box-shadow: 0px 1px $super-light, 1px 0px $border-color;
+    cursor: pointer;
+}
+
 .ml-2rem {
     margin-left: 2rem;
 }

@@ -1,0 +1,58 @@
+<ng-container *ngIf="!original">
+    <div class="approval-content-new">
+        <span class="approval-content-label">
+            New
+        </span>
+        <div class="approval-actions">
+            <div class="approval-action accept" ngbTooltip="Accept" (click)="openModal(accept)">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="approval-action decline" ngbTooltip="Decline" (click)="openModal(decline)">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <app-approval-example-item [entry]="entry"></app-approval-example-item>
+    </div>
+</ng-container>
+<ng-container *ngIf="original">
+    <div class="approval-content-original">
+        <span class="approval-content-label">
+            Original
+        </span>
+        <app-approval-example-item [entry]="original" [original]="entry"></app-approval-example-item>
+    </div>
+    <div class="approval-content-changed">
+        <span class="approval-content-label">
+            Changed
+        </span>
+        <div class="approval-actions">
+            <div class="approval-action accept" ngbTooltip="Accept" (click)="openModal(accept)">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="approval-action decline" ngbTooltip="Decline" (click)="openModal(decline)">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <app-approval-example-item [entry]="entry" [original]="original"></app-approval-example-item>
+    </div>
+</ng-container>
+
+<ng-template #accept>
+    <div class="modal-body">
+        <div>Are you sure to accept this entry?</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-confirm" (click)="cancel()">Cancel</button>
+        <button type="button" class="btn btn-success btn-confirm" (click)="acceptEntry()">Accept</button>
+    </div>
+</ng-template>
+
+<ng-template #decline>
+    <div class="modal-body">
+        <div>Are you sure to decline this entry?</div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light btn-confirm" (click)="cancel()">Cancel</button>
+        <button type="button" class="btn btn-danger btn-confirm" (click)="declineEntry()">Decline</button>
+    </div>
+</ng-template>

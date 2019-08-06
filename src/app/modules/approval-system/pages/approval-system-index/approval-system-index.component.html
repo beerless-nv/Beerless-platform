@@ -1,0 +1,16 @@
+<div class="d-flex flex-wrap position-relative approval-container">
+    <div class="approval-list">
+        <div class="approval-heading">
+            <div class="total">
+                Total entries: <span class="font-weight-bold">{{(entries | async)?.length}}</span>
+            </div>
+        </div>
+        <ng-container *ngFor="let entry of (entries | async)">
+            <app-approval-item [entry]="entry"></app-approval-item>
+        </ng-container>
+    </div>
+
+    <div class="approval-example">
+        <app-approval-example></app-approval-example>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+<div id="sidebar" [class.sidebar-close]="isOpen === false" [class.sidebar-open]="isOpen === true">
+    <a routerLink="/admin/dashboard" routerLinkActive="active" class="sidebar-item-link">
+        <div class="sidebar-item">Dashboard</div>
+    </a>
+    <a routerLink="/admin/approval-system" routerLinkActive="active" class="sidebar-item-link">
+        <div class="sidebar-item">
+            Approval system
+            <!--<span class="badge badge-pill badge-primary sidebar-badge-pill">156</span>-->
+        </div>
+    </a>
+    <a routerLink="/search" routerLinkActive="active" class="sidebar-item-link">
+        <div class="sidebar-item">Messages</div>
+    </a>
+    <a routerLink="/search" routerLinkActive="active" class="sidebar-item-link">
+        <div class="sidebar-item">Settings</div>
+    </a>
+</div>

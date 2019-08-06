@@ -3,8 +3,6 @@ import {CommonModule} from '@angular/common';
 import {BeerprofileModule} from './beerprofile/beerprofile.module';
 import {BreweryprofileModule} from './breweryprofile/breweryprofile.module';
 import {ErrorPagesModule} from './error-pages/error-pages.module';
-import {BlankLayoutModule} from './layouts/blank-layout/blank-layout.module';
-import {StandardLayoutModule} from './layouts/standard-layout/standard-layout.module';
 import {SocialCredentialModule} from './modals/social-credential/social-credential.module';
 
 @NgModule({
@@ -12,8 +10,6 @@ import {SocialCredentialModule} from './modals/social-credential/social-credenti
         CommonModule,
         BeerprofileModule,
         BreweryprofileModule,
-        StandardLayoutModule,
-        BlankLayoutModule,
         ErrorPagesModule,
         SocialCredentialModule
     ],
@@ -21,8 +17,6 @@ import {SocialCredentialModule} from './modals/social-credential/social-credenti
     exports: [
         BeerprofileModule,
         BreweryprofileModule,
-        StandardLayoutModule,
-        BlankLayoutModule,
         ErrorPagesModule,
         SocialCredentialModule
     ]

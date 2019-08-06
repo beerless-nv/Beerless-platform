@@ -27,6 +27,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     @Input() placeholder: string;
     @Input() required = false;
     @Input() type = 'text';
+    @Input() class: string;
 
     // error messages
     @Input() errorTypes: Array<string>;
@@ -55,7 +56,7 @@ export class InputComponent implements OnInit, ControlValueAccessor {
         if (!this.label) {
             throw new TypeError('\'Label\' is required');
         }
-        if (!this.formControl) {
+        if (!this.formControl && (this.errorTypes || this.errorMessages)) {
             throw new TypeError('\'FormControl\' is required');
         }
 
