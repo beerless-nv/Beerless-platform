@@ -1,4 +1,4 @@
-<ng-container *ngIf="!original">
+<ng-container *ngIf="entry?.activity?.beerId === 0">
     <div class="approval-content-new">
         <span class="approval-content-label">
             New
@@ -11,15 +11,15 @@
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <app-approval-example-item [entry]="entry"></app-approval-example-item>
+        <app-approval-example-item [entry]="entry?.beerEntry"></app-approval-example-item>
     </div>
 </ng-container>
-<ng-container *ngIf="original">
+<ng-container *ngIf="entry?.activity?.beerId > 0">
     <div class="approval-content-original">
         <span class="approval-content-label">
             Original
         </span>
-        <app-approval-example-item [entry]="original" [original]="entry"></app-approval-example-item>
+        <app-approval-example-item [entry]="entry?.activity?.beer" [original]="entry?.beerEntry"></app-approval-example-item>
     </div>
     <div class="approval-content-changed">
         <span class="approval-content-label">
@@ -33,7 +33,7 @@
                 <i class="fas fa-times"></i>
             </div>
         </div>
-        <app-approval-example-item [entry]="entry" [original]="original"></app-approval-example-item>
+        <app-approval-example-item [entry]="entry?.beerEntry" [original]="entry?.activity?.beer"></app-approval-example-item>
     </div>
 </ng-container>
 

@@ -166,3 +166,15 @@ input.input-dark {
     text-align: center;
 }
 
+.readonly {
+    .border-lable-flt, .form-group {
+        pointer-events: none;
+    }
+
+    input {
+        pointer-events: none;
+        background-color: $light;
+        color: #828282;
+    }
+}
+

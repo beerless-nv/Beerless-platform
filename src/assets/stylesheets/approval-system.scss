@@ -128,7 +128,7 @@
 
 .approval-content-original {
     .highlight {
-        input {
+        input, textarea {
             background-color: rgba($danger, 0.10) !important;
             border-color: $danger !important;
         }
@@ -137,7 +137,7 @@
 
 .approval-content-changed {
     .highlight {
-        input {
+        input, textarea {
             background-color: rgba($success, 0.10) !important;
             border-color: $success !important;
         }

@@ -4,7 +4,7 @@
              [ngbTooltip]="tipContent" tooltipClass="errorTooltip" #errorTooltip="ngbTooltip" triggers="none">
             <input [(ngModel)]="value"
                    [type]="type" class="form-control" [id]="id" [placeholder]="placeholder" [required]="required"
-                   #input disabled="{{class.indexOf('readonly') > -1}}"/>
+                   #input disabled="{{(class?.indexOf('readonly') || -1) > -1}}"/>
             <label for="{{ id }}" (click)="input.focus()" class="mouse-pointer">{{ label }}</label>
             <ng-template #tipContent>
                 <div *ngIf="formControl.touched && formControl.invalid" class="d-block">
@@ -24,7 +24,7 @@
         <div class="border-lable-flt {{class}}">
             <input [(ngModel)]="value"
                    [type]="type" class="form-control" [id]="id" [placeholder]="placeholder" [required]="required"
-                   #input disabled="{{class.indexOf('readonly') > -1}}"/>
+                   #input disabled="{{(class?.indexOf('readonly') || -1) > -1}}"/>
             <label for="{{ id }}" (click)="input.focus()" class="mouse-pointer">{{ label }}</label>
         </div>
     </ng-container>

@@ -21,9 +21,9 @@ export class InputComponent implements OnInit, ControlValueAccessor {
     // required attributes
     @Input() id: string;
     @Input() label: string;
-    @Input() formControl: any;
 
     // optional attributes
+    @Input() formControl: any;
     @Input() placeholder: string;
     @Input() required = false;
     @Input() type = 'text';

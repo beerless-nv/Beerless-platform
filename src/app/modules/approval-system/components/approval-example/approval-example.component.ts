@@ -16,7 +16,6 @@ export class ApprovalExampleComponent implements OnInit {
         class: 'modal-dialog-centered confirm-modal'
     };
     entry: any;
-    original: any;
 
     constructor(private modalService: BsModalService, private route: ActivatedRoute, private approvalSystemService: ApprovalSystemService) {
     }
@@ -36,15 +35,7 @@ export class ApprovalExampleComponent implements OnInit {
     getEntry(id) {
         this.approvalSystemService.getEntry(id).subscribe(entry => {
             this.entry = entry;
-            if (this.entry.originalId !== 0) {
-                this.approvalSystemService.getEntry(this.entry.originalId).subscribe(original => {
-                    this.original = original;
-                });
-            } else {
-                this.original = null;
-            }
         });
-
     }
 
     acceptEntry(id) {
@@ -56,7 +47,7 @@ export class ApprovalExampleComponent implements OnInit {
         console.log('decline entry');
 
         this.modalRef.hide();
-        this.approvalSystemService.declineEntry(this.entry.id, this.entry);
+        // this.approvalSystemService.declineEntry(this.entry.id, this.entry);
 
     }
 

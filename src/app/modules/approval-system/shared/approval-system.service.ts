@@ -12,23 +12,24 @@ export class ApprovalSystemService {
     }
 
     getEntries() {
+        /**
+         * {"where":{"statusId":"1"},"include":[{"relation":"activity","scope":{"include":["user","beer","brewery","article","activityType"]}},{"relation":"beerEntry","scope":{"include":["beerstyleEntries","beerFromBreweryEntries"]}},{"relation":"breweryEntry","scope":{"include":"contactEntry"}},"articleEntry"]}
+         */
         const params = new HttpParams()
-            .append('filter[where][statusId]', '1')
-            .append('filter[include]', 'editors')
-            .append('filter[include]', 'activityTypes');
+            .append('filter', '{"where":{"statusId":"1"},"include":[{"relation":"activity",' +
+                '"scope":{"include":["user","activityType"]}},"beerEntry","breweryEntry","articleEntry"]}');
 
-        return this.http.get(environment.backend + 'beers', {params: params, headers: this.auth.beerlessAuthHeaders});
+        return this.http.get(environment.backend + 'entries', {params: params, headers: this.auth.beerlessAuthHeaders});
     }
 
     getEntry(id: number) {
         const params = new HttpParams()
-            .append('filter[where][statusId]', '1')
-            .append('filter[include]', 'editors')
-            .append('filter[include]', 'activityTypes')
-            .append('filter[include]', 'breweries')
-            .append('filter[include]', 'styleTags');
+            .append('filter', '{"where":{"statusId":"1"},"include":[{"relation":"activity",' +
+                '"scope":{"include":["user","beer","brewery","article","activityType"]}},' +
+                '{"relation":"beerEntry","scope":{"include":["beerstyleEntries","beerFromBreweryEntries"]}},' +
+                '{"relation":"breweryEntry","scope":{"include":"contactEntry"}},"articleEntry"]}');
 
-        return this.http.get(environment.backend + 'beers/' + id, {params: params, headers: this.auth.beerlessAuthHeaders});
+        return this.http.get(environment.backend + 'entries/' + id, {params: params, headers: this.auth.beerlessAuthHeaders});
     }
 
     acceptEntry(id: number, entry: any) {

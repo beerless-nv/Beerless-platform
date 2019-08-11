@@ -21,13 +21,13 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
     // required attributes
     @Input() id: string;
     @Input() label: string;
-    @Input() formControl: any;
 
     // optional attributes
+    @Input() formControl: any;
     @Input() placeholder: string;
     @Input() required = false;
     @Input() rows = 2;
-    @Input() class = null;
+    @Input() class: string;
     @Input() characterCounter = false;
 
     // required if characterCounter is true
@@ -60,7 +60,7 @@ export class TextareaComponent implements OnInit, ControlValueAccessor {
         if (!this.label) {
             throw new TypeError('\'Label\' is required');
         }
-        if (!this.formControl) {
+        if (!this.formControl && (this.errorTypes || this.errorMessages)) {
             throw new TypeError('\'FormControl\' is required');
         }
         if (this.characterCounter) {
