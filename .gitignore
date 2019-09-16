@@ -1,5 +1,5 @@
 .git
 .idea
-/node-modules
-./src/environments/environment.ts
-.dist
+node-modules
+src/environments/environment.ts
+dist
