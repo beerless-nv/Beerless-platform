@@ -61,7 +61,7 @@
     "resize-observer-polyfill": "^1.5.1",
     "rxjs": "~6.2.0",
     "simplebar": "^4.0.0-alpha.3",
-    "tar": "^4.4.10",
+    "tar": "^4.4.15",
     "typescript": "~2.9.2",
     "web-animations-js": "^2.3.1",
     "webpack-dev-server": "^3.1.14",
